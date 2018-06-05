@@ -12,7 +12,7 @@ class MainActivityPresenter constructor(
 ): MvpPresenter<MainActivityView>() {
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
-        //selectHome()
+        selectHome()
     }
 
     fun selectHome() = mRouter.newRootScreen(Screens.FRAGMENT_HOME)
