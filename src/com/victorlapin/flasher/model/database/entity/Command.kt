@@ -11,9 +11,9 @@ data class Command(
         @ColumnInfo(name = "type")
         var type: Int,
         @ColumnInfo(name = "arg1")
-        var arg1: String?,
+        var arg1: String? = null,
         @ColumnInfo(name = "arg2")
-        var arg2: String?
+        var arg2: String? = null
 ) {
     companion object {
         const val TYPE_WIPE = 0

@@ -18,6 +18,10 @@ interface CommandDao {
     fun insert(command: Command): Long
 
     @Transaction
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insert(commands: List<Command>)
+
+    @Transaction
     @Update(onConflict = OnConflictStrategy.REPLACE)
     fun update(command: Command)
 
