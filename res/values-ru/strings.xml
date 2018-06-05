@@ -6,6 +6,9 @@
     <string name="action_home">Главная</string>
     <string name="action_settings">Настройки</string>
 
+    <!-- Fragment titles -->
+    <string name="title_home">Очередь команд</string>
+
     <!-- Preferences strings -->
     <string name="pref_category_appearance">Внешний вид</string>
     <string name="pref_title_theme">Тема приложения</string>
