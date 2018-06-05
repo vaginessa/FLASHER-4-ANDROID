@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="activity_generic_horizontal_margin">@dimen/margin_8</dimen>
+    <dimen name="card_margin">@dimen/margin_8</dimen>
+    <dimen name="card_margin_top">@dimen/margin_16</dimen>
+    <dimen name="card_corner_radius">@dimen/margin_4</dimen>
+    <dimen name="card_elevation">@dimen/margin_2</dimen>
+
+    <dimen name="margin_0">0dp</dimen>
+    <dimen name="margin_2">2dp</dimen>
+    <dimen name="margin_4">4dp</dimen>
+    <dimen name="margin_8">8dp</dimen>
+    <dimen name="margin_16">16dp</dimen>
+    <dimen name="margin_24">24dp</dimen>
+    <dimen name="margin_32">32dp</dimen>
+    <dimen name="margin_48">48dp</dimen>
+    <dimen name="margin_64">64dp</dimen>
+
+    <dimen name="fab_elevation">@dimen/margin_8</dimen>
+    <dimen name="fab_elevation_pressed">12dp</dimen>
+    <dimen name="bottom_navigation_elevation">@dimen/margin_8</dimen>
+</resources>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Flasher</string>
+
+    <!-- Action strings -->
+    <string name="action_home">Главная</string>
+    <string name="action_settings">Настройки</string>
+
+    <!-- Preferences strings -->
+    <string name="pref_category_appearance">Внешний вид</string>
+    <string name="pref_title_theme">Тема приложения</string>
+    <string name="theme_light">Светлая</string>
+    <string name="theme_dark">Темная</string>
+    <string name="theme_black">Черная</string>
+</resources>

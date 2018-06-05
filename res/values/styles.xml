@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="AppTheme.Light" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@android:color/transparent</item>
+        <item name="colorPrimaryDark">@android:color/transparent</item>
+        <item name="colorAccent">@color/accent</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowBackground">@android:color/white</item>
+        <!--Preferences-->
+        <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
+        <item name="android:activatedBackgroundIndicator">?android:attr/selectableItemBackground</item>
+    </style>
+
+    <style name="AppTheme.Dark" parent="Theme.AppCompat.NoActionBar">
+        <item name="colorPrimary">@android:color/transparent</item>
+        <item name="colorPrimaryDark">@android:color/transparent</item>
+        <item name="colorAccent">@color/accent</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <!--Preferences-->
+        <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
+        <item name="android:activatedBackgroundIndicator">?android:attr/selectableItemBackground</item>
+    </style>
+
+    <style name="Fab">
+        <item name="android:layout_marginBottom">@dimen/margin_16</item>
+        <item name="borderWidth">0dp</item>
+        <item name="elevation">@dimen/fab_elevation</item>
+        <item name="pressedTranslationZ">@dimen/fab_elevation_pressed</item>
+        <item name="rippleColor">@android:color/white</item>
+        <item name="backgroundTint">@color/accent</item>
+        <item name="android:tint">@android:color/white</item>
+        <item name="fabSize">normal</item>
+    </style>
+
+    <style name="Card">
+        <item name="android:layout_marginTop">@dimen/card_margin_top</item>
+        <item name="android:layout_marginStart">@dimen/card_margin</item>
+        <item name="android:layout_marginEnd">@dimen/card_margin</item>
+        <item name="cardCornerRadius">@dimen/card_corner_radius</item>
+    </style>
+
+    <style name="Button">
+        <item name="android:backgroundTint">@color/accent</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+</resources>

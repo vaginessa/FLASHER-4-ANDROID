@@ -1,0 +1,94 @@
+buildscript {
+    apply from: 'versions.gradle'
+    addRepos(repositories)
+    dependencies {
+        classpath deps.android_gradle_plugin
+        classpath deps.kotlin.plugin
+    }
+}
+
+allprojects {
+    addRepos(repositories)
+}
+
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
+android {
+    compileSdkVersion build_versions.target_sdk
+    buildToolsVersion build_versions.build_tools
+
+    defaultConfig {
+        applicationId "com.victorlapin.flasher"
+        minSdkVersion build_versions.min_sdk
+        targetSdkVersion build_versions.target_sdk
+        versionCode 100
+        versionName "1.0.0"
+        archivesBaseName = "Flasher"
+    }
+
+    signingConfigs {
+        debug {
+            v1SigningEnabled true
+            v2SigningEnabled true
+        }
+        release {
+            v1SigningEnabled true
+            v2SigningEnabled true
+        }
+    }
+
+    buildTypes {
+        debug {
+            versionNameSuffix "-debug"
+            signingConfig signingConfigs.debug
+        }
+        release {
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+    }
+
+    sourceSets {
+        main.res.srcDirs = ['res']
+        main.java.srcDirs = ['src']
+        main.manifest.srcFile 'AndroidManifest.xml'
+    }
+
+    packagingOptions {
+        exclude 'META-INF/rxjava.properties'
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+apply from: 'keystore.gradle'
+
+dependencies {
+    kapt deps.moxy.compiler
+    kapt deps.room.compiler
+
+    implementation deps.kotlin.stdlib
+    implementation deps.support.design
+    implementation deps.support.cardview
+    implementation deps.support.preferences
+    implementation deps.constraint_layout
+    implementation deps.moxy.runtime
+    implementation deps.rxjava2
+    implementation deps.rx_android
+    implementation deps.room.runtime
+    implementation deps.room.rxjava2
+    implementation deps.koin
+    implementation deps.cicerone
+    implementation deps.text_drawable
+    implementation deps.bottom_ex
+
+    debugImplementation deps.db_inspector
+}
