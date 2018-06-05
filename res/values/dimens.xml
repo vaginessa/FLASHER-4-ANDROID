@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="activity_generic_horizontal_margin">@dimen/margin_8</dimen>
+    <dimen name="activity_generic_horizontal_margin">@dimen/margin_16</dimen>
     <dimen name="card_margin">@dimen/margin_8</dimen>
     <dimen name="card_margin_top">@dimen/margin_16</dimen>
     <dimen name="card_corner_radius">@dimen/margin_4</dimen>
