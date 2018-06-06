@@ -12,6 +12,7 @@ versions.koin = "0.9.3"
 versions.text_drawable = "1.0.1"
 versions.db_inspector = "3.4.1"
 versions.bottom_ex = "1.2.4"
+versions.dialogs = "0.9.6.0"
 
 versions.android_gradle_plugin = "3.1.2"
 
@@ -38,6 +39,11 @@ def moxy = [:]
 moxy.runtime = "com.arello-mobile:moxy-app-compat:$versions.moxy"
 moxy.compiler = "com.arello-mobile:moxy-compiler:$versions.moxy"
 deps.moxy = moxy
+
+def dialogs = [:]
+dialogs.core = "com.afollestad.material-dialogs:core:$versions.dialogs"
+dialogs.commons = "com.afollestad.material-dialogs:commons:$versions.dialogs"
+deps.dialogs = dialogs
 
 deps.constraint_layout = "com.android.support.constraint:constraint-layout:$versions.constraint_layout"
 deps.rxjava2 = "io.reactivex.rxjava2:rxjava:$versions.rxjava2"

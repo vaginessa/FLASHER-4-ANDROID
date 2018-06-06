@@ -89,6 +89,8 @@ dependencies {
     implementation deps.cicerone
     implementation deps.text_drawable
     implementation deps.bottom_ex
+    implementation deps.dialogs.core
+    implementation deps.dialogs.commons
 
     debugImplementation deps.db_inspector
 }
