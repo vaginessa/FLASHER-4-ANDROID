@@ -76,7 +76,7 @@ class HomeFragment : BaseFragment(), HomeFragmentView {
 
     private fun setupEvents() {
         mAdapter.updateEvent
-                .subscribe { presenter.onCommandClicked(it) }
+                .subscribe { presenter.onCommandUpdated(it) }
                 .addTo(mEventsDisposable)
     }
 

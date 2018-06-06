@@ -6,11 +6,9 @@ import com.victorlapin.flasher.model.database.entity.Command
 import com.victorlapin.flasher.model.interactor.CommandsInteractor
 import com.victorlapin.flasher.view.HomeFragmentView
 import io.reactivex.disposables.Disposable
-import ru.terrakok.cicerone.Router
 
 @InjectViewState
 class HomeFragmentPresenter constructor(
-        private val mRouter: Router,
         private val mCommandsInteractor: CommandsInteractor
 ) : MvpPresenter<HomeFragmentView>() {
     private var mDisposable: Disposable? = null
@@ -29,9 +27,8 @@ class HomeFragmentPresenter constructor(
         super.detachView(view)
     }
 
-    fun onCommandClicked(command: Command?) {
-
-    }
+    fun onCommandUpdated(command: Command) =
+            mCommandsInteractor.updateCommand(command)
 
     fun onCommandSwiped(id: Long) {
         mCommandsInteractor.getCommand(id)
