@@ -1,33 +1,29 @@
 package com.victorlapin.flasher.ui.adapters
 
-import android.support.v4.app.FragmentActivity
+import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import com.afollestad.materialdialogs.MaterialDialog
-import com.afollestad.materialdialogs.folderselector.FileChooserDialog
 import com.victorlapin.flasher.R
 import com.victorlapin.flasher.inflate
 import com.victorlapin.flasher.model.database.entity.Command
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.item_command.view.*
-import java.io.File
 
 class HomeAdapter constructor(
-        activity: FragmentActivity
+        context: Context
 ) : RecyclerView.Adapter<HomeAdapter.ViewHolder>() {
-    private val mFm = activity.supportFragmentManager
     private val mItems: ArrayList<Command> = arrayListOf()
-    private val mCommands = activity.resources.getStringArray(R.array.commands)
-    private val mDefaultArgText = activity.resources.getString(R.string.command_tap_to_select)
-    private val mWipePartitions = activity.resources.getStringArray(R.array.wipe_partitions).toList()
-    private val mBackupPartitions = activity.resources.getStringArray(R.array.backup_partitions).toList()
+    private val mCommands = context.resources.getStringArray(R.array.commands)
+    private val mDefaultArgText = context.resources.getString(R.string.command_tap_to_select)
 
     // events stuff
     private val mUpdateSubject = PublishSubject.create<Command>()
     val updateEvent: PublishSubject<Command> = mUpdateSubject
+    private val mArgsClickSubject = PublishSubject.create<Command>()
+    val argsClickEvent: PublishSubject<Command> = mArgsClickSubject
 
     init {
         setHasStableIds(true)
@@ -80,64 +76,7 @@ class HomeAdapter constructor(
                     }
 
             itemView.lbl_arg1.text = if (command.arg1 != null) command.arg1 else mDefaultArgText
-            itemView.lbl_arg1.setOnClickListener {
-                when (command.type) {
-                    Command.TYPE_WIPE -> {
-                        val indices = if (command.arg1 != null) {
-                            val preselected = toArray(command.arg1!!)
-                            val i = arrayListOf<Int>()
-                            preselected.forEach { i.add(mWipePartitions.indexOf(it)) }
-                            i.toTypedArray()
-                        } else null
-                        MaterialDialog.Builder(itemView.context)
-                                .title(itemView.spinner_type.selectedItem.toString())
-                                .items(mWipePartitions)
-                                .itemsCallbackMultiChoice(indices, { _, _, items ->
-                                    command.arg1 = flatten(items.toSet().toString())
-                                    mUpdateSubject.onNext(command)
-                                    return@itemsCallbackMultiChoice true
-                                })
-                                .positiveText(android.R.string.ok)
-                                .negativeText(android.R.string.cancel)
-                                .show()
-                    }
-
-                    Command.TYPE_BACKUP -> {
-                        val indices = if (command.arg1 != null) {
-                            val preselected = toArray(command.arg1!!)
-                            val i = arrayListOf<Int>()
-                            preselected.forEach { i.add(mBackupPartitions.indexOf(it)) }
-                            i.toTypedArray()
-                        } else null
-                        MaterialDialog.Builder(itemView.context)
-                                .title(itemView.spinner_type.selectedItem.toString())
-                                .items(mBackupPartitions)
-                                .itemsCallbackMultiChoice(indices, { _, _, items ->
-                                    command.arg1 = flatten(items.toSet().toString())
-                                    mUpdateSubject.onNext(command)
-                                    return@itemsCallbackMultiChoice true
-                                })
-                                .positiveText(android.R.string.ok)
-                                .negativeText(android.R.string.cancel)
-                                .show()
-                    }
-
-                    Command.TYPE_FLASH -> {
-                        FileChooserDialog.Builder(itemView.context)
-                                .initialPath(command.arg2)
-                                .extensionsFilter(".zip")
-                                .callback(object : FileChooserDialog.FileCallback {
-                                    override fun onFileChooserDismissed(dialog: FileChooserDialog) { }
-                                    override fun onFileSelection(dialog: FileChooserDialog, file: File) {
-                                        command.arg1 = file.absolutePath
-                                        command.arg2 = file.parent
-                                        mUpdateSubject.onNext(command)
-                                    }
-                                })
-                                .show(mFm)
-                    }
-                }
-            }
+            itemView.lbl_arg1.setOnClickListener { mArgsClickSubject.onNext(command) }
         }
 
         fun unbind() {
@@ -151,13 +90,5 @@ class HomeAdapter constructor(
         mItems.clear()
         mItems.addAll(words)
         notifyItemRangeInserted(0, mItems.size)
-    }
-
-    companion object {
-        private fun flatten(set: String) = set.replace("\\[|]".toRegex(), "")
-        private fun toArray(set: String) =
-                set.split(",")
-                        .map { it.trim() }
-                        .toTypedArray()
     }
 }

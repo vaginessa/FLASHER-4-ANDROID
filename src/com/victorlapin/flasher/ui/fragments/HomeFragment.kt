@@ -5,6 +5,8 @@ import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
+import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.folderselector.FileChooserDialog
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.victorlapin.flasher.R
@@ -19,6 +21,7 @@ import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.include_toolbar.*
 import org.koin.android.ext.android.inject
 import org.koin.android.ext.android.releaseContext
+import java.io.File
 
 class HomeFragment : BaseFragment(), HomeFragmentView {
     override val layoutRes = R.layout.fragment_home
@@ -33,12 +36,16 @@ class HomeFragment : BaseFragment(), HomeFragmentView {
 
     private val mEventsDisposable = CompositeDisposable()
 
-    private lateinit var mAdapter: HomeAdapter
+    private val mAdapter by inject<HomeAdapter>()
+
+    private lateinit var mWipePartitions: List<String>
+    private lateinit var mBackupPartitions: List<String>
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        mWipePartitions = resources.getStringArray(R.array.wipe_partitions).toList()
+        mBackupPartitions = resources.getStringArray(R.array.backup_partitions).toList()
 
-        mAdapter = HomeAdapter(activity!!)
         setupEvents()
         list.apply {
             layoutManager = LinearLayoutManager(context)
@@ -79,6 +86,9 @@ class HomeFragment : BaseFragment(), HomeFragmentView {
         mAdapter.updateEvent
                 .subscribe { presenter.onCommandUpdated(it) }
                 .addTo(mEventsDisposable)
+        mAdapter.argsClickEvent
+                .subscribe { presenter.onArgumentsClicked(it) }
+                .addTo(mEventsDisposable)
     }
 
     override fun setData(commands: List<Command>) {
@@ -90,7 +100,68 @@ class HomeFragment : BaseFragment(), HomeFragmentView {
         }
     }
 
+    override fun showWipeDialog(command: Command) {
+        val indices = if (command.arg1 != null) {
+            val preselected = toArray(command.arg1!!)
+            val i = arrayListOf<Int>()
+            preselected.forEach { i.add(mWipePartitions.indexOf(it)) }
+            i.toTypedArray()
+        } else null
+        MaterialDialog.Builder(context!!)
+                .title(R.string.command_wipe)
+                .items(mWipePartitions)
+                .itemsCallbackMultiChoice(indices, { _, _, items ->
+                    command.arg1 = flatten(items.toSet().toString())
+                    presenter.onCommandUpdated(command)
+                    return@itemsCallbackMultiChoice true
+                })
+                .positiveText(android.R.string.ok)
+                .negativeText(android.R.string.cancel)
+                .show()
+    }
+
+    override fun showBackupDialog(command: Command) {
+        val indices = if (command.arg1 != null) {
+            val preselected = toArray(command.arg1!!)
+            val i = arrayListOf<Int>()
+            preselected.forEach { i.add(mBackupPartitions.indexOf(it)) }
+            i.toTypedArray()
+        } else null
+        MaterialDialog.Builder(context!!)
+                .title(R.string.command_backup)
+                .items(mBackupPartitions)
+                .itemsCallbackMultiChoice(indices, { _, _, items ->
+                    command.arg1 = flatten(items.toSet().toString())
+                    presenter.onCommandUpdated(command)
+                    return@itemsCallbackMultiChoice true
+                })
+                .positiveText(android.R.string.ok)
+                .negativeText(android.R.string.cancel)
+                .show()
+    }
+
+    override fun showFlashDialog(command: Command) {
+        FileChooserDialog.Builder(context!!)
+                .initialPath(command.arg2)
+                .extensionsFilter(".zip")
+                .callback(object : FileChooserDialog.FileCallback {
+                    override fun onFileChooserDismissed(dialog: FileChooserDialog) { }
+                    override fun onFileSelection(dialog: FileChooserDialog, file: File) {
+                        command.arg1 = file.absolutePath
+                        command.arg2 = file.parent
+                        presenter.onCommandUpdated(command)
+                    }
+                })
+                .show(activity!!)
+    }
+
     companion object {
         fun newInstance() = HomeFragment()
+
+        private fun flatten(set: String) = set.replace("\\[|]".toRegex(), "")
+        private fun toArray(set: String) =
+                set.split(",")
+                        .map { it.trim() }
+                        .toTypedArray()
     }
 }

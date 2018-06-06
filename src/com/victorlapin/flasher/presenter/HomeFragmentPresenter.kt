@@ -36,4 +36,11 @@ class HomeFragmentPresenter constructor(
                     mCommandsInteractor.deleteCommand(it)
                 }
     }
+
+    fun onArgumentsClicked(command: Command) = when (command.type) {
+        Command.TYPE_WIPE -> viewState.showWipeDialog(command)
+        Command.TYPE_BACKUP -> viewState.showBackupDialog(command)
+        Command.TYPE_FLASH -> viewState.showFlashDialog(command)
+        else -> Unit
+    }
 }
