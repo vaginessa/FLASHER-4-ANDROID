@@ -20,6 +20,7 @@ class HomeAdapter constructor(
     private val mCommands = context.resources.getStringArray(R.array.commands)
     private val mDefaultArgText = context.resources.getString(R.string.command_tap_to_select)
     private val mWipePartitions = context.resources.getStringArray(R.array.wipe_partitions).toList()
+    private val mBackupPartitions = context.resources.getStringArray(R.array.backup_partitions).toList()
 
     // events stuff
     private val mUpdateSubject = PublishSubject.create<Command>()
@@ -88,6 +89,26 @@ class HomeAdapter constructor(
                         MaterialDialog.Builder(itemView.context)
                                 .title(itemView.spinner_type.selectedItem.toString())
                                 .items(mWipePartitions)
+                                .itemsCallbackMultiChoice(indices, { _, _, items ->
+                                    command.arg1 = flatten(items.toSet().toString())
+                                    mUpdateSubject.onNext(command)
+                                    return@itemsCallbackMultiChoice true
+                                })
+                                .positiveText(android.R.string.ok)
+                                .negativeText(android.R.string.cancel)
+                                .show()
+                    }
+
+                    Command.TYPE_BACKUP -> {
+                        val indices = if (command.arg1 != null) {
+                            val preselected = toArray(command.arg1!!)
+                            val i = arrayListOf<Int>()
+                            preselected.forEach { i.add(mBackupPartitions.indexOf(it)) }
+                            i.toTypedArray()
+                        } else null
+                        MaterialDialog.Builder(itemView.context)
+                                .title(itemView.spinner_type.selectedItem.toString())
+                                .items(mBackupPartitions)
                                 .itemsCallbackMultiChoice(indices, { _, _, items ->
                                     command.arg1 = flatten(items.toSet().toString())
                                     mUpdateSubject.onNext(command)

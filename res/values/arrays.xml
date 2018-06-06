@@ -12,4 +12,11 @@
         <item>System</item>
         <item>Data</item>
     </string-array>
+
+    <string-array name="backup_partitions">
+        <item>Boot</item>
+        <item>Cache</item>
+        <item>System</item>
+        <item>Data</item>
+    </string-array>
 </resources>
