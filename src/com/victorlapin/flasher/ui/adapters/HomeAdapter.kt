@@ -44,7 +44,7 @@ class HomeAdapter constructor(
 
         fun bind(command: Command) {
             when (command.type) {
-                Command.TYPE_WIPE -> itemView.image.setImageResource(R.drawable.folder_remove)
+                Command.TYPE_WIPE -> itemView.image.setImageResource(R.drawable.cellphone_erase)
                 Command.TYPE_BACKUP -> itemView.image.setImageResource(R.drawable.backup_restore)
                 Command.TYPE_FLASH -> itemView.image.setImageResource(R.drawable.flash)
             }
