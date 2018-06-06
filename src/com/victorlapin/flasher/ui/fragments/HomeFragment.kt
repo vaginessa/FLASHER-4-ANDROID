@@ -80,8 +80,13 @@ class HomeFragment : BaseFragment(), HomeFragmentView {
                 .addTo(mEventsDisposable)
     }
 
-    override fun setData(words: List<Command>) {
-        list.post { mAdapter.setData(words) }
+    override fun setData(commands: List<Command>) {
+        list.post {
+            mAdapter.setData(commands)
+            if (commands.isNotEmpty()) {
+                list.scrollToPosition(commands.size - 1)
+            }
+        }
     }
 
     companion object {
