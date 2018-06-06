@@ -35,6 +35,11 @@ class HomeAdapter constructor(
         holder.bind(channel)
     }
 
+    override fun onViewRecycled(holder: ViewHolder) {
+        holder.unbind()
+        super.onViewRecycled(holder)
+    }
+
     override fun getItemCount(): Int = mItems.size
 
     override fun getItemId(position: Int): Long = mItems[position].id!!
@@ -59,13 +64,19 @@ class HomeAdapter constructor(
                     object : AdapterView.OnItemSelectedListener {
                         override fun onNothingSelected(parent: AdapterView<*>?) {}
                         override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
-                            command.type = position
-                            command.arg1 = null
-                            command.arg2 = null
-                            mUpdateSubject.onNext(command)
+                            if (command.type != position) {
+                                command.type = position
+                                command.arg1 = null
+                                command.arg2 = null
+                                mUpdateSubject.onNext(command)
+                            }
                         }
                     }
             itemView.lbl_arg1.text = if (command.arg1 != null) command.arg1 else mDefaultArgText
+        }
+
+        fun unbind() {
+            itemView.spinner_type.onItemSelectedListener = null
         }
     }
 
