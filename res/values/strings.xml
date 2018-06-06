@@ -23,4 +23,7 @@
     <string name="command_wipe">Wipe</string>
     <string name="command_backup">Backup</string>
     <string name="command_flash">Flash</string>
+
+    <!-- Permissions -->
+    <string name="permission_denied_storage">Storage permission has been denied. App will be closed.</string>
 </resources>

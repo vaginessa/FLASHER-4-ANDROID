@@ -23,4 +23,7 @@
     <string name="command_wipe">Вайп</string>
     <string name="command_backup">Резервная копия</string>
     <string name="command_flash">Прошивка</string>
+
+    <!-- Permissions -->
+    <string name="permission_denied_storage">Доступ к памяти устройства не был разрешен. Приложение будет закрыто.</string>
 </resources>

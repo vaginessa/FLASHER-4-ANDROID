@@ -1,10 +1,14 @@
 package com.victorlapin.flasher.ui.activities
 
+import android.Manifest
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
+import android.support.v4.content.ContextCompat
+import android.support.v7.app.AlertDialog
 import android.view.MenuItem
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
@@ -34,12 +38,29 @@ class MainActivity : BaseActivity(), MainActivityView,
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        bottom_bar.enableAnimation(false)
-        bottom_bar.enableShiftingMode(false)
-        bottom_bar.enableItemShiftingMode(false)
-        bottom_bar.onNavigationItemSelectedListener = this
-        bottom_bar.setOnNavigationItemReselectedListener(this)
-        fab.setOnClickListener { presenter.onFabClicked() }
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
+                    REQUEST_PERMISSIONS_CODE)
+        } else {
+            setupControls()
+        }
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == REQUEST_PERMISSIONS_CODE) {
+            if (grantResults.none { it == PackageManager.PERMISSION_DENIED }) {
+                setupControls()
+            } else {
+                AlertDialog.Builder(this)
+                        .setTitle(R.string.app_name)
+                        .setMessage(R.string.permission_denied_storage)
+                        .setCancelable(false)
+                        .setPositiveButton(android.R.string.ok, { _, _ -> finish() })
+                        .show()
+            }
+        }
     }
 
     override fun onStop() {
@@ -63,5 +84,18 @@ class MainActivity : BaseActivity(), MainActivityView,
             //Screens.FRAGMENT_SETTINGS -> SettingsGlobalFragment.newInstance()
             else -> null
         }
+    }
+
+    private fun setupControls() {
+        bottom_bar.enableAnimation(false)
+        bottom_bar.enableShiftingMode(false)
+        bottom_bar.enableItemShiftingMode(false)
+        bottom_bar.onNavigationItemSelectedListener = this
+        bottom_bar.setOnNavigationItemReselectedListener(this)
+        fab.setOnClickListener { presenter.onFabClicked() }
+    }
+
+    companion object {
+        private const val REQUEST_PERMISSIONS_CODE = 14
     }
 }
