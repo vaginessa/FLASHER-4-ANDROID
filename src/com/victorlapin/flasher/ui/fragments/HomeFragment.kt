@@ -147,12 +147,12 @@ class HomeFragment : BaseFragment(), HomeFragmentView {
                 .show()
     }
 
-    override fun showFlashDialog(command: Command) {
+    override fun showFlashDialog(command: Command, startPath: String?) {
         mRxPermissions.request(Manifest.permission.READ_EXTERNAL_STORAGE)
                 .subscribe { granted ->
                     if (granted) {
                         FileChooserDialog.Builder(context!!)
-                                .initialPath(command.arg2)
+                                .initialPath(startPath)
                                 .extensionsFilter(".zip")
                                 .callback(object : FileChooserDialog.FileCallback {
                                     override fun onFileChooserDismissed(dialog: FileChooserDialog) { }
@@ -160,6 +160,7 @@ class HomeFragment : BaseFragment(), HomeFragmentView {
                                         command.arg1 = file.absolutePath
                                         command.arg2 = file.parent
                                         presenter.onCommandUpdated(command)
+                                        presenter.onFileSelected(file)
                                     }
                                 })
                                 .show(activity!!)

@@ -12,5 +12,5 @@ interface HomeFragmentView : MvpView {
     @StateStrategyType(SkipStrategy::class)
     fun showBackupDialog(command: Command)
     @StateStrategyType(SkipStrategy::class)
-    fun showFlashDialog(command: Command)
+    fun showFlashDialog(command: Command, startPath: String?)
 }

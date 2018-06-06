@@ -7,6 +7,7 @@ import com.victorlapin.flasher.R
 class SettingsManager(context: Context) {
     companion object {
         const val KEY_THEME = "interface_theme"
+        const val KEY_LAST_USED_PATH = "last_used_path"
     }
 
     private val mPrefs = PreferenceManager.getDefaultSharedPreferences(context)
@@ -16,4 +17,8 @@ class SettingsManager(context: Context) {
 
     val theme: Int
         get() = Integer.parseInt(themeString)
+
+    var lastUsedPath: String?
+        get() = mPrefs.getString(KEY_LAST_USED_PATH, null)
+        set(path) = mPrefs.edit().putString(KEY_LAST_USED_PATH, path).apply()
 }
