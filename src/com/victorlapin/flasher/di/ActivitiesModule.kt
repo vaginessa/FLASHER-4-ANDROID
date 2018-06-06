@@ -8,7 +8,7 @@ import org.koin.dsl.module.applicationContext
 
 val mainActivityModule = applicationContext {
     context(Screens.ACTIVITY_MAIN) {
-        factory { MainActivityPresenter(get()) }
+        factory { MainActivityPresenter(get(), get()) }
 
         context(Screens.FRAGMENT_HOME) {
             factory { HomeFragmentPresenter(get(), get()) }

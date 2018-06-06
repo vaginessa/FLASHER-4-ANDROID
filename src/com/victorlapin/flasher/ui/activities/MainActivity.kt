@@ -39,6 +39,7 @@ class MainActivity : BaseActivity(), MainActivityView,
         bottom_bar.enableItemShiftingMode(false)
         bottom_bar.onNavigationItemSelectedListener = this
         bottom_bar.setOnNavigationItemReselectedListener(this)
+        fab.setOnClickListener { presenter.onFabClicked() }
     }
 
     override fun onStop() {

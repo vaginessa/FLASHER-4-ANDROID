@@ -23,4 +23,6 @@ class CommandsInteractor constructor(
     fun updateCommand(command: Command) = mRepo.updateCommand(command)
 
     fun deleteCommand(command: Command) = mRepo.deleteCommand(command)
+
+    fun addStubCommand() = insertCommand(Command(type = Command.TYPE_FLASH))
 }
