@@ -90,6 +90,7 @@ dependencies {
     implementation deps.text_drawable
     implementation deps.bottom_ex
     implementation deps.dialogs.core
+    implementation deps.rx_permissions
 
     debugImplementation deps.db_inspector
 }
