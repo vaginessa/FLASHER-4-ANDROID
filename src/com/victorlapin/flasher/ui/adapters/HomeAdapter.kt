@@ -1,26 +1,29 @@
 package com.victorlapin.flasher.ui.adapters
 
-import android.content.Context
+import android.support.v4.app.FragmentActivity
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.folderselector.FileChooserDialog
 import com.victorlapin.flasher.R
 import com.victorlapin.flasher.inflate
 import com.victorlapin.flasher.model.database.entity.Command
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.item_command.view.*
+import java.io.File
 
 class HomeAdapter constructor(
-        context: Context
+        activity: FragmentActivity
 ) : RecyclerView.Adapter<HomeAdapter.ViewHolder>() {
+    private val mFm = activity.supportFragmentManager
     private val mItems: ArrayList<Command> = arrayListOf()
-    private val mCommands = context.resources.getStringArray(R.array.commands)
-    private val mDefaultArgText = context.resources.getString(R.string.command_tap_to_select)
-    private val mWipePartitions = context.resources.getStringArray(R.array.wipe_partitions).toList()
-    private val mBackupPartitions = context.resources.getStringArray(R.array.backup_partitions).toList()
+    private val mCommands = activity.resources.getStringArray(R.array.commands)
+    private val mDefaultArgText = activity.resources.getString(R.string.command_tap_to_select)
+    private val mWipePartitions = activity.resources.getStringArray(R.array.wipe_partitions).toList()
+    private val mBackupPartitions = activity.resources.getStringArray(R.array.backup_partitions).toList()
 
     // events stuff
     private val mUpdateSubject = PublishSubject.create<Command>()
@@ -117,6 +120,21 @@ class HomeAdapter constructor(
                                 .positiveText(android.R.string.ok)
                                 .negativeText(android.R.string.cancel)
                                 .show()
+                    }
+
+                    Command.TYPE_FLASH -> {
+                        FileChooserDialog.Builder(itemView.context)
+                                .initialPath(command.arg2)
+                                .extensionsFilter(".zip")
+                                .callback(object : FileChooserDialog.FileCallback {
+                                    override fun onFileChooserDismissed(dialog: FileChooserDialog) { }
+                                    override fun onFileSelection(dialog: FileChooserDialog, file: File) {
+                                        command.arg1 = file.absolutePath
+                                        command.arg2 = file.parent
+                                        mUpdateSubject.onNext(command)
+                                    }
+                                })
+                                .show(mFm)
                     }
                 }
             }

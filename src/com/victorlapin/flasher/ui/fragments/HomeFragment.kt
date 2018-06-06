@@ -33,11 +33,12 @@ class HomeFragment : BaseFragment(), HomeFragmentView {
 
     private val mEventsDisposable = CompositeDisposable()
 
-    private val mAdapter by inject<HomeAdapter>()
+    private lateinit var mAdapter: HomeAdapter
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+        mAdapter = HomeAdapter(activity!!)
         setupEvents()
         list.apply {
             layoutManager = LinearLayoutManager(context)

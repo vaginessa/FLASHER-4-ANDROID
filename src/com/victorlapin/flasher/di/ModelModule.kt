@@ -22,6 +22,7 @@ val modelModule = applicationContext {
                             val data = ArrayList<Command>()
                             data.add(Command(type = Command.TYPE_BACKUP, arg1 = "Boot, Cache, System, Data"))
                             data.add(Command(type = Command.TYPE_WIPE, arg1 = "Cache, Dalvik-cache, System"))
+                            data.add(Command(type = Command.TYPE_FLASH))
                             get<CommandDao>().insert(data)
                             emitter.onSuccess(Any())
                         }
