@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import com.afollestad.materialdialogs.MaterialDialog
 import com.victorlapin.flasher.R
 import com.victorlapin.flasher.inflate
 import com.victorlapin.flasher.model.database.entity.Command
@@ -18,6 +19,7 @@ class HomeAdapter constructor(
     private val mItems: ArrayList<Command> = arrayListOf()
     private val mCommands = context.resources.getStringArray(R.array.commands)
     private val mDefaultArgText = context.resources.getString(R.string.command_tap_to_select)
+    private val mWipePartitions = context.resources.getStringArray(R.array.wipe_partitions).toList()
 
     // events stuff
     private val mUpdateSubject = PublishSubject.create<Command>()
@@ -72,11 +74,36 @@ class HomeAdapter constructor(
                             }
                         }
                     }
+
             itemView.lbl_arg1.text = if (command.arg1 != null) command.arg1 else mDefaultArgText
+            itemView.lbl_arg1.setOnClickListener {
+                when (command.type) {
+                    Command.TYPE_WIPE -> {
+                        val indices = if (command.arg1 != null) {
+                            val preselected = toArray(command.arg1!!)
+                            val i = arrayListOf<Int>()
+                            preselected.forEach { i.add(mWipePartitions.indexOf(it)) }
+                            i.toTypedArray()
+                        } else null
+                        MaterialDialog.Builder(itemView.context)
+                                .title(itemView.spinner_type.selectedItem.toString())
+                                .items(mWipePartitions)
+                                .itemsCallbackMultiChoice(indices, { _, _, items ->
+                                    command.arg1 = flatten(items.toSet().toString())
+                                    mUpdateSubject.onNext(command)
+                                    return@itemsCallbackMultiChoice true
+                                })
+                                .positiveText(android.R.string.ok)
+                                .negativeText(android.R.string.cancel)
+                                .show()
+                    }
+                }
+            }
         }
 
         fun unbind() {
             itemView.spinner_type.onItemSelectedListener = null
+            itemView.lbl_arg1.setOnClickListener(null)
         }
     }
 
@@ -85,5 +112,13 @@ class HomeAdapter constructor(
         mItems.clear()
         mItems.addAll(words)
         notifyItemRangeInserted(0, mItems.size)
+    }
+
+    companion object {
+        private fun flatten(set: String) = set.replace("\\[|]".toRegex(), "")
+        private fun toArray(set: String) =
+                set.split(",")
+                        .map { it.trim() }
+                        .toTypedArray()
     }
 }

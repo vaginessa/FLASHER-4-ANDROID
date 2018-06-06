@@ -20,10 +20,8 @@ val modelModule = applicationContext {
                         super.onCreate(db)
                         Single.create<Any> { emitter ->
                             val data = ArrayList<Command>()
-                            data.add(Command(type = Command.TYPE_WIPE, arg1 = "cache"))
-                            data.add(Command(type = Command.TYPE_WIPE, arg1 = "dalvik-cache"))
-                            data.add(Command(type = Command.TYPE_WIPE, arg1 = "system"))
                             data.add(Command(type = Command.TYPE_BACKUP))
+                            data.add(Command(type = Command.TYPE_WIPE, arg1 = "Cache, Dalvik-cache, System"))
                             get<CommandDao>().insert(data)
                             emitter.onSuccess(Any())
                         }
