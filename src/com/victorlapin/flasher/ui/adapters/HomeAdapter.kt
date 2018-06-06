@@ -35,6 +35,11 @@ class HomeAdapter : RecyclerView.Adapter<HomeAdapter.ViewHolder>() {
             RecyclerView.ViewHolder(parent.inflate(R.layout.item_command)) {
 
         fun bind(command: Command) {
+            when (command.type) {
+                Command.TYPE_WIPE -> itemView.image.setImageResource(R.drawable.folder_remove)
+                Command.TYPE_BACKUP -> itemView.image.setImageResource(R.drawable.backup_restore)
+                Command.TYPE_FLASH -> itemView.image.setImageResource(R.drawable.flash)
+            }
             itemView.card.setOnClickListener { mClickSubject.onNext(command) }
         }
     }

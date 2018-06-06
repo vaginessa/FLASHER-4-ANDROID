@@ -7,17 +7,25 @@
     android:layout_marginEnd="@dimen/card_margin"
     android:layout_marginStart="@dimen/card_margin"
     android:layout_marginTop="@dimen/card_margin_top"
+    android:layout_marginBottom="@dimen/card_margin_bottom"
+    android:background="?attr/selectableItemBackground"
     app:cardCornerRadius="@dimen/card_corner_radius">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:padding="@dimen/margin_16">
 
-        <include
-            android:id="@+id/header_container"
-            layout="@layout/include_card_header"
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="@dimen/card_image_size"
+            android:layout_height="@dimen/card_image_size"
+            android:scaleType="fitCenter"
+            android:src="@drawable/flash"
+            android:tint="?android:attr/textColorTertiary"
+            android:tintMode="src_in"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
     </android.support.constraint.ConstraintLayout>
