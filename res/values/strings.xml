@@ -2,6 +2,8 @@
 <resources>
     <string name="app_name">Flash</string>
     <string name="command_type">Command type</string>
+    <string name="command_args">Arguments</string>
+    <string name="command_tap_to_select">Tap to select…</string>
 
     <!-- Action strings -->
     <string name="action_home">Home</string>

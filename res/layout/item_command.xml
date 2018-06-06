@@ -40,6 +40,7 @@
             android:paddingTop="@dimen/margin_8"
             android:text="@string/command_type"
             android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            android:textColor="?android:attr/textColorTertiary"
             app:layout_constraintEnd_toStartOf="@id/image"
             app:layout_constraintStart_toStartOf="parent" />
 
@@ -47,13 +48,42 @@
             android:id="@+id/spinner_type"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/margin_16"
+            android:layout_marginStart="@dimen/margin_16"
             android:paddingBottom="@dimen/margin_8"
-            android:paddingEnd="@dimen/margin_16"
-            android:paddingStart="@dimen/margin_16"
             android:paddingTop="@dimen/margin_8"
             app:layout_constraintEnd_toStartOf="@id/image"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/lbl_type" />
+
+        <TextView
+            android:id="@+id/lbl_args"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/margin_8"
+            android:paddingEnd="@dimen/margin_16"
+            android:paddingStart="@dimen/margin_16"
+            android:paddingTop="@dimen/margin_16"
+            android:text="@string/command_args"
+            android:textColor="?android:attr/textColorTertiary"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            app:layout_constraintEnd_toStartOf="@id/image"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/spinner_type" />
+
+        <TextView
+            android:id="@+id/lbl_arg1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/margin_8"
+            android:paddingEnd="@dimen/margin_16"
+            android:paddingStart="@dimen/margin_16"
+            android:paddingTop="@dimen/margin_16"
+            android:text="@string/command_tap_to_select"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            app:layout_constraintEnd_toStartOf="@id/image"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/lbl_args" />
 
     </android.support.constraint.ConstraintLayout>
 

@@ -17,6 +17,7 @@ class HomeAdapter constructor(
 ) : RecyclerView.Adapter<HomeAdapter.ViewHolder>() {
     private val mItems: ArrayList<Command> = arrayListOf()
     private val mCommands = context.resources.getStringArray(R.array.commands)
+    private val mDefaultArgText = context.resources.getString(R.string.command_tap_to_select)
 
     // events stuff
     private val mUpdateSubject = PublishSubject.create<Command>()
@@ -64,6 +65,7 @@ class HomeAdapter constructor(
                             mUpdateSubject.onNext(command)
                         }
                     }
+            itemView.lbl_arg1.text = if (command.arg1 != null) command.arg1 else mDefaultArgText
         }
     }
 

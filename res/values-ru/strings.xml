@@ -2,6 +2,8 @@
 <resources>
     <string name="app_name">Flasher</string>
     <string name="command_type">Тип команды</string>
+    <string name="command_args">Аргументы</string>
+    <string name="command_tap_to_select">Нажмите чтобы выбрать…</string>
 
     <!-- Action strings -->
     <string name="action_home">Главная</string>
