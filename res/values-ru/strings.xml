@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Flasher</string>
+    <string name="command_type">Тип команды</string>
 
     <!-- Action strings -->
     <string name="action_home">Главная</string>
@@ -15,4 +16,9 @@
     <string name="theme_light">Светлая</string>
     <string name="theme_dark">Темная</string>
     <string name="theme_black">Черная</string>
+
+    <!-- Command names -->
+    <string name="command_wipe">Вайп</string>
+    <string name="command_backup">Резервная копия</string>
+    <string name="command_flash">Прошивка</string>
 </resources>

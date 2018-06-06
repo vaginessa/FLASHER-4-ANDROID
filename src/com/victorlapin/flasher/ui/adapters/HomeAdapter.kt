@@ -1,19 +1,26 @@
 package com.victorlapin.flasher.ui.adapters
 
+import android.content.Context
 import android.support.v7.widget.RecyclerView
+import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import com.victorlapin.flasher.R
 import com.victorlapin.flasher.inflate
 import com.victorlapin.flasher.model.database.entity.Command
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.item_command.view.*
 
-class HomeAdapter : RecyclerView.Adapter<HomeAdapter.ViewHolder>() {
+class HomeAdapter constructor(
+        context: Context
+) : RecyclerView.Adapter<HomeAdapter.ViewHolder>() {
     private val mItems: ArrayList<Command> = arrayListOf()
+    private val mCommands = context.resources.getStringArray(R.array.commands)
 
     // events stuff
-    private val mClickSubject = PublishSubject.create<Command>()
-    val clickEvent: PublishSubject<Command> = mClickSubject
+    private val mUpdateSubject = PublishSubject.create<Command>()
+    val updateEvent: PublishSubject<Command> = mUpdateSubject
 
     init {
         setHasStableIds(true)
@@ -40,7 +47,23 @@ class HomeAdapter : RecyclerView.Adapter<HomeAdapter.ViewHolder>() {
                 Command.TYPE_BACKUP -> itemView.image.setImageResource(R.drawable.backup_restore)
                 Command.TYPE_FLASH -> itemView.image.setImageResource(R.drawable.flash)
             }
-            itemView.card.setOnClickListener { mClickSubject.onNext(command) }
+
+            val adapter = ArrayAdapter<String>(itemView.context,
+                    R.layout.item_spinner,
+                    mCommands)
+            adapter.setDropDownViewResource(R.layout.item_spinner_dropdown)
+            itemView.spinner_type.adapter = adapter
+            itemView.spinner_type.setSelection(command.type)
+            itemView.spinner_type.onItemSelectedListener =
+                    object : AdapterView.OnItemSelectedListener {
+                        override fun onNothingSelected(parent: AdapterView<*>?) {}
+                        override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
+                            command.type = position
+                            command.arg1 = null
+                            command.arg2 = null
+                            mUpdateSubject.onNext(command)
+                        }
+                    }
         }
     }
 

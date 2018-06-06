@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="commands">
+        <item>@string/command_wipe</item>
+        <item>@string/command_backup</item>
+        <item>@string/command_flash</item>
+    </string-array>
+</resources>
