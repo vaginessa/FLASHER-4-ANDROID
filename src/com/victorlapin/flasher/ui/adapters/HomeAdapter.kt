@@ -20,8 +20,8 @@ class HomeAdapter constructor(
     private val mDefaultArgText = context.resources.getString(R.string.command_tap_to_select)
 
     // events stuff
-    private val mUpdateSubject = PublishSubject.create<Command>()
-    val updateEvent: PublishSubject<Command> = mUpdateSubject
+    private val mChangeTypeSubject = PublishSubject.create<Pair<Command, Int>>()
+    val changeTypeEvent: PublishSubject<Pair<Command, Int>> = mChangeTypeSubject
     private val mArgsClickSubject = PublishSubject.create<Command>()
     val argsClickEvent: PublishSubject<Command> = mArgsClickSubject
 
@@ -66,12 +66,8 @@ class HomeAdapter constructor(
                     object : AdapterView.OnItemSelectedListener {
                         override fun onNothingSelected(parent: AdapterView<*>?) {}
                         override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
-                            if (command.type != position) {
-                                command.type = position
-                                command.arg1 = null
-                                command.arg2 = null
-                                mUpdateSubject.onNext(command)
-                            }
+                            val pair = Pair(command, position)
+                            mChangeTypeSubject.onNext(pair)
                         }
                     }
 

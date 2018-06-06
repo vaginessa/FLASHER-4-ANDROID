@@ -43,4 +43,15 @@ class HomeFragmentPresenter constructor(
         Command.TYPE_FLASH -> viewState.showFlashDialog(command)
         else -> Unit
     }
+
+    fun onCommandTypeChanged(pair: Pair<Command, Int>) {
+        val command = pair.first
+        val newType = pair.second
+        if (command.type != newType) {
+            command.type = newType
+            command.arg1 = null
+            command.arg2 = null
+            onCommandUpdated(command)
+        }
+    }
 }

@@ -83,8 +83,8 @@ class HomeFragment : BaseFragment(), HomeFragmentView {
     }
 
     private fun setupEvents() {
-        mAdapter.updateEvent
-                .subscribe { presenter.onCommandUpdated(it) }
+        mAdapter.changeTypeEvent
+                .subscribe { presenter.onCommandTypeChanged(it) }
                 .addTo(mEventsDisposable)
         mAdapter.argsClickEvent
                 .subscribe { presenter.onArgumentsClicked(it) }
