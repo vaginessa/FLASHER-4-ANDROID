@@ -1,6 +1,8 @@
 package com.victorlapin.flasher.ui.fragments
 
+import android.Manifest
 import android.os.Bundle
+import android.support.v7.app.AlertDialog
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -9,6 +11,7 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.folderselector.FileChooserDialog
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
+import com.tbruyelle.rxpermissions2.RxPermissions
 import com.victorlapin.flasher.R
 import com.victorlapin.flasher.Screens
 import com.victorlapin.flasher.addTo
@@ -37,6 +40,10 @@ class HomeFragment : BaseFragment(), HomeFragmentView {
     private val mEventsDisposable = CompositeDisposable()
 
     private val mAdapter by inject<HomeAdapter>()
+
+    private val mRxPermissions by lazy {
+        RxPermissions(activity!!)
+    }
 
     private lateinit var mWipePartitions: List<String>
     private lateinit var mBackupPartitions: List<String>
@@ -141,18 +148,30 @@ class HomeFragment : BaseFragment(), HomeFragmentView {
     }
 
     override fun showFlashDialog(command: Command) {
-        FileChooserDialog.Builder(context!!)
-                .initialPath(command.arg2)
-                .extensionsFilter(".zip")
-                .callback(object : FileChooserDialog.FileCallback {
-                    override fun onFileChooserDismissed(dialog: FileChooserDialog) { }
-                    override fun onFileSelection(dialog: FileChooserDialog, file: File) {
-                        command.arg1 = file.absolutePath
-                        command.arg2 = file.parent
-                        presenter.onCommandUpdated(command)
+        mRxPermissions.request(Manifest.permission.READ_EXTERNAL_STORAGE)
+                .subscribe { granted ->
+                    if (granted) {
+                        FileChooserDialog.Builder(context!!)
+                                .initialPath(command.arg2)
+                                .extensionsFilter(".zip")
+                                .callback(object : FileChooserDialog.FileCallback {
+                                    override fun onFileChooserDismissed(dialog: FileChooserDialog) { }
+                                    override fun onFileSelection(dialog: FileChooserDialog, file: File) {
+                                        command.arg1 = file.absolutePath
+                                        command.arg2 = file.parent
+                                        presenter.onCommandUpdated(command)
+                                    }
+                                })
+                                .show(activity!!)
+                    } else {
+                        AlertDialog.Builder(context!!)
+                                .setTitle(R.string.app_name)
+                                .setMessage(R.string.permission_denied_storage)
+                                .setCancelable(true)
+                                .setPositiveButton(android.R.string.ok, null)
+                                .show()
                     }
-                })
-                .show(activity!!)
+                }
     }
 
     companion object {
