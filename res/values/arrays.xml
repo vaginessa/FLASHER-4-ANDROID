@@ -18,5 +18,6 @@
         <item>Cache</item>
         <item>System</item>
         <item>Data</item>
+        <item>Recovery</item>
     </string-array>
 </resources>
