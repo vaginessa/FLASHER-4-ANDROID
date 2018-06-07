@@ -81,10 +81,10 @@ class HomeAdapter constructor(
         }
     }
 
-    fun setData(words: List<Command>) {
+    fun setData(commands: List<Command>) {
         notifyItemRangeRemoved(0, mItems.size)
         mItems.clear()
-        mItems.addAll(words)
+        mItems.addAll(commands)
         notifyItemRangeInserted(0, mItems.size)
     }
 }
