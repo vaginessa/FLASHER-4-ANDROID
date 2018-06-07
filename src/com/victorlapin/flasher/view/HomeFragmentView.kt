@@ -3,6 +3,7 @@ package com.victorlapin.flasher.view
 import com.arellomobile.mvp.MvpView
 import com.arellomobile.mvp.viewstate.strategy.SkipStrategy
 import com.arellomobile.mvp.viewstate.strategy.StateStrategyType
+import com.victorlapin.flasher.model.EventArgs
 import com.victorlapin.flasher.model.database.entity.Command
 
 interface HomeFragmentView : MvpView {
@@ -15,4 +16,8 @@ interface HomeFragmentView : MvpView {
     fun showFlashDialog(command: Command, startPath: String?)
     @StateStrategyType(SkipStrategy::class)
     fun showDeletedSnackbar(command: Command)
+    @StateStrategyType(SkipStrategy::class)
+    fun showInfoSnackbar(args: EventArgs)
+    @StateStrategyType(SkipStrategy::class)
+    fun showRebootSnackbar()
 }

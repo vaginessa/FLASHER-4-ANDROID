@@ -5,6 +5,7 @@ import com.arellomobile.mvp.MvpPresenter
 import com.victorlapin.flasher.manager.SettingsManager
 import com.victorlapin.flasher.model.database.entity.Command
 import com.victorlapin.flasher.model.interactor.CommandsInteractor
+import com.victorlapin.flasher.model.interactor.RecoveryScriptInteractor
 import com.victorlapin.flasher.view.HomeFragmentView
 import io.reactivex.disposables.Disposable
 import java.io.File
@@ -12,6 +13,7 @@ import java.io.File
 @InjectViewState
 class HomeFragmentPresenter constructor(
         private val mCommandsInteractor: CommandsInteractor,
+        private val mScriptInteractor: RecoveryScriptInteractor,
         private val mSettings: SettingsManager
 ) : MvpPresenter<HomeFragmentView>() {
     private var mDisposable: Disposable? = null
@@ -75,5 +77,19 @@ class HomeFragmentPresenter constructor(
 
     fun onFileSelected(file: File) {
         mSettings.lastUsedPath = file.parent
+    }
+
+    fun buildAndDeploy() {
+        mScriptInteractor.buildScript()
+                .subscribe({
+                    val result = mScriptInteractor.deployScript(it)
+                    if (result.isSuccess) {
+                        viewState.showRebootSnackbar()
+                    } else {
+                        viewState.showInfoSnackbar(result)
+                    }
+                }, {
+                    it.printStackTrace()
+                })
     }
 }

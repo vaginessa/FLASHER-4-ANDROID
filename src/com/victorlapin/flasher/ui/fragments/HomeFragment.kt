@@ -17,6 +17,7 @@ import com.victorlapin.flasher.R
 import com.victorlapin.flasher.Screens
 import com.victorlapin.flasher.addTo
 import com.victorlapin.flasher.manager.ResourcesManager
+import com.victorlapin.flasher.model.EventArgs
 import com.victorlapin.flasher.model.database.entity.Command
 import com.victorlapin.flasher.presenter.HomeFragmentPresenter
 import com.victorlapin.flasher.ui.adapters.HomeAdapter
@@ -65,6 +66,16 @@ class HomeFragment : BaseFragment(), HomeFragmentView {
             adapter = mAdapter
         }
         toolbar.setTitle(R.string.title_home)
+        toolbar.inflateMenu(R.menu.fragment_home)
+        toolbar.setOnMenuItemClickListener { item ->
+            when (item.itemId) {
+                R.id.action_build -> {
+                    presenter.buildAndDeploy()
+                    true
+                }
+                else -> false
+            }
+        }
 
         val swipeCallback = object : ItemTouchHelper.SimpleCallback(0,
                 ItemTouchHelper.START or ItemTouchHelper.END) {
@@ -182,6 +193,25 @@ class HomeFragment : BaseFragment(), HomeFragmentView {
     override fun showDeletedSnackbar(command: Command) {
         Snackbar.make(coordinator, R.string.command_deleted, Snackbar.LENGTH_LONG)
                 .setAction(R.string.action_undo, { presenter.onUndoDelete(command) })
+                .show()
+    }
+
+    override fun showInfoSnackbar(args: EventArgs) {
+        args.message?.let {
+            Snackbar.make(coordinator, it.replace("\n", "").trim(),
+                    Snackbar.LENGTH_LONG).show()
+            return
+        }
+        args.messageId?.let {
+            Snackbar.make(coordinator, mResources.getString(it),
+                    Snackbar.LENGTH_LONG).show()
+        }
+    }
+
+    override fun showRebootSnackbar() {
+        //TODO: add reboot presenter action
+        Snackbar.make(coordinator, R.string.reboot, Snackbar.LENGTH_LONG)
+                .setAction(R.string.action_reboot, {  })
                 .show()
     }
 

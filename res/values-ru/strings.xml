@@ -6,12 +6,15 @@
     <string name="command_tap_to_select">Нажмите чтобы выбрать…</string>
     <string name="command_deleted">Команда удалена</string>
     <string name="not_found">Не найден</string>
+    <string name="reboot">Скрипт успешно установлен. Перезагрузиться в рекавери?</string>
 
     <!-- Action strings -->
     <string name="action_home">Главная</string>
     <string name="action_settings">Настройки</string>
     <string name="action_undo">Отменить</string>
     <string name="action_about">О приложении</string>
+    <string name="action_build">Собрать и установить</string>
+    <string name="action_reboot">Перезагрузка</string>
 
     <!-- Fragment titles -->
     <string name="title_home">Очередь команд</string>
