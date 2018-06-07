@@ -10,6 +10,8 @@
         <!--Preferences-->
         <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
         <item name="android:activatedBackgroundIndicator">?android:attr/selectableItemBackground</item>
+        <!--Dialogs-->
+        <item name="md_dark_theme">false</item>
     </style>
 
     <style name="AppTheme.Dark" parent="Theme.AppCompat.NoActionBar">
@@ -21,6 +23,8 @@
         <!--Preferences-->
         <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
         <item name="android:activatedBackgroundIndicator">?android:attr/selectableItemBackground</item>
+        <!--Dialogs-->
+        <item name="md_dark_theme">true</item>
     </style>
 
     <style name="Fab">
