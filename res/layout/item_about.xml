@@ -14,8 +14,8 @@
 
     <ImageView
         android:id="@+id/img_picture"
-        android:layout_width="@dimen/card_image_size"
-        android:layout_height="@dimen/card_image_size"
+        android:layout_width="@dimen/about_image_size"
+        android:layout_height="@dimen/about_image_size"
         android:clickable="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
