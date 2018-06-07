@@ -1,5 +1,6 @@
 package com.victorlapin.flasher.di
 
+import com.victorlapin.flasher.manager.ResourcesManager
 import com.victorlapin.flasher.manager.SettingsManager
 import org.koin.dsl.module.applicationContext
 import ru.terrakok.cicerone.Cicerone
@@ -11,4 +12,5 @@ val appModule = applicationContext {
     bean { get<Cicerone<Router>>().navigatorHolder }
 
     bean { SettingsManager(get()) }
+    bean { ResourcesManager(get()) }
 }
