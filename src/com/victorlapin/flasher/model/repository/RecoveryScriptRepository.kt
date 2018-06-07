@@ -52,20 +52,23 @@ class RecoveryScriptRepository constructor(
             EventArgs(isSuccess = false, message = ex.toString())
         }
     } else {
-        EventArgs(isSuccess = false, messageId = R.string.permission_denied_su)
+        mSuDeniedArgs
     }
 
     fun rebootRecovery(): EventArgs = if (Shell.rootAccess()) {
         Shell.Sync.su("svc power reboot recovery")
         EventArgs(isSuccess = true)
     } else {
-        EventArgs(isSuccess = false, messageId = R.string.permission_denied_su)
+        mSuDeniedArgs
     }
 
     private fun toArray(set: String) =
             set.split(",")
                     .map { it.trim().toLowerCase() }
                     .toTypedArray()
+
+    private val mSuDeniedArgs =
+            EventArgs(isSuccess = false, messageId = R.string.permission_denied_su)
 
     companion object {
         private const val SCRIPT_FILENAME = "/cache/recovery/openrecoveryscript"
