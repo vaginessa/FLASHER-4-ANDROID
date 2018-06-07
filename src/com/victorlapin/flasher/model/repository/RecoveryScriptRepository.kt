@@ -34,7 +34,7 @@ class RecoveryScriptRepository constructor(
                                     partString.append(it[0].toUpperCase())
                                 }
                                 if (partString.isNotEmpty()) {
-                                    result.appendln("backup ${partString}M")
+                                    result.appendln("backup $partString")
                                 }
                             }
                             Command.TYPE_FLASH -> it.arg1?.let {
