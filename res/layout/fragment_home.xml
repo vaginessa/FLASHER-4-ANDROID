@@ -17,7 +17,6 @@
         android:fitsSystemWindows="true"
         android:paddingEnd="@dimen/activity_generic_horizontal_margin"
         android:paddingStart="@dimen/activity_generic_horizontal_margin"
-        android:scrollbars="vertical"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
 </android.support.design.widget.CoordinatorLayout>

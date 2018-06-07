@@ -28,7 +28,8 @@
             android:tintMode="src_in"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0" />
 
         <TextView
             android:id="@+id/lbl_type"
@@ -65,8 +66,8 @@
             android:paddingStart="@dimen/margin_16"
             android:paddingTop="@dimen/margin_16"
             android:text="@string/command_args"
-            android:textColor="?android:attr/textColorTertiary"
             android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            android:textColor="?android:attr/textColorTertiary"
             app:layout_constraintEnd_toStartOf="@id/image"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/spinner_type" />

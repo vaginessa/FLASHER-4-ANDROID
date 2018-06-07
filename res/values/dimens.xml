@@ -2,8 +2,8 @@
 <resources>
     <dimen name="activity_generic_horizontal_margin">@dimen/margin_16</dimen>
     <dimen name="card_margin">@dimen/margin_8</dimen>
-    <dimen name="card_margin_top">@dimen/margin_8</dimen>
-    <dimen name="card_margin_bottom">@dimen/margin_8</dimen>
+    <dimen name="card_margin_top">@dimen/margin_2</dimen>
+    <dimen name="card_margin_bottom">@dimen/margin_16</dimen>
     <dimen name="card_corner_radius">@dimen/margin_4</dimen>
     <dimen name="card_elevation">@dimen/margin_2</dimen>
 
