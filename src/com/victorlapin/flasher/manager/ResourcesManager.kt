@@ -15,14 +15,14 @@ class ResourcesManager(private val mContext: Context) {
 
     fun getDrawable(@DrawableRes id: Int): Drawable = mContext.getDrawable(id)
 
-    val resolver: ContentResolver
-        get() = mContext.contentResolver
-
     fun getColor(@ColorRes id: Int): Int =
             ContextCompat.getColor(mContext, id)
 
-    fun getStringSet(@ArrayRes id: Int): Set<String> =
-            mContext.resources.getStringArray(id).toSet()
+    fun getStringArray(@ArrayRes id: Int): Array<String> =
+            mContext.resources.getStringArray(id)
+
+    fun getStringList(@ArrayRes id: Int): List<String> =
+            getStringArray(id).toList()
 
     val resources: Resources
         get() = mContext.resources

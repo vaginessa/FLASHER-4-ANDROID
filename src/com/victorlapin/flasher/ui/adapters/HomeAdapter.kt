@@ -1,6 +1,5 @@
 package com.victorlapin.flasher.ui.adapters
 
-import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
@@ -8,16 +7,17 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import com.victorlapin.flasher.R
 import com.victorlapin.flasher.inflate
+import com.victorlapin.flasher.manager.ResourcesManager
 import com.victorlapin.flasher.model.database.entity.Command
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.item_command.view.*
 
 class HomeAdapter constructor(
-        context: Context
+        resources: ResourcesManager
 ) : RecyclerView.Adapter<HomeAdapter.ViewHolder>() {
     private val mItems: ArrayList<Command> = arrayListOf()
-    private val mCommands = context.resources.getStringArray(R.array.commands)
-    private val mDefaultArgText = context.resources.getString(R.string.command_tap_to_select)
+    private val mCommands = resources.getStringArray(R.array.commands)
+    private val mDefaultArgText = resources.getString(R.string.command_tap_to_select)
 
     // events stuff
     private val mChangeTypeSubject = PublishSubject.create<Pair<Command, Int>>()

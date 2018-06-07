@@ -16,6 +16,7 @@ import com.tbruyelle.rxpermissions2.RxPermissions
 import com.victorlapin.flasher.R
 import com.victorlapin.flasher.Screens
 import com.victorlapin.flasher.addTo
+import com.victorlapin.flasher.manager.ResourcesManager
 import com.victorlapin.flasher.model.database.entity.Command
 import com.victorlapin.flasher.presenter.HomeFragmentPresenter
 import com.victorlapin.flasher.ui.adapters.HomeAdapter
@@ -42,6 +43,8 @@ class HomeFragment : BaseFragment(), HomeFragmentView {
 
     private val mAdapter by inject<HomeAdapter>()
 
+    private val mResources by inject<ResourcesManager>()
+
     private val mRxPermissions by lazy {
         RxPermissions(activity!!)
     }
@@ -51,8 +54,8 @@ class HomeFragment : BaseFragment(), HomeFragmentView {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        mWipePartitions = resources.getStringArray(R.array.wipe_partitions).toList()
-        mBackupPartitions = resources.getStringArray(R.array.backup_partitions).toList()
+        mWipePartitions = mResources.getStringList(R.array.wipe_partitions)
+        mBackupPartitions = mResources.getStringList(R.array.backup_partitions)
 
         setupEvents()
         list.apply {
@@ -61,7 +64,7 @@ class HomeFragment : BaseFragment(), HomeFragmentView {
             setHasFixedSize(true)
             adapter = mAdapter
         }
-        toolbar_title.text = context!!.getString(R.string.title_home)
+        toolbar_title.text = mResources.getString(R.string.title_home)
 
         val swipeCallback = object : ItemTouchHelper.SimpleCallback(0,
                 ItemTouchHelper.START or ItemTouchHelper.END) {
