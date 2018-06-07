@@ -64,7 +64,7 @@ class HomeFragment : BaseFragment(), HomeFragmentView {
             setHasFixedSize(true)
             adapter = mAdapter
         }
-        toolbar_title.text = mResources.getString(R.string.title_home)
+        toolbar.setTitle(R.string.title_home)
 
         val swipeCallback = object : ItemTouchHelper.SimpleCallback(0,
                 ItemTouchHelper.START or ItemTouchHelper.END) {
