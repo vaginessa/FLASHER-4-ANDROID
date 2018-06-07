@@ -6,7 +6,7 @@ import com.arellomobile.mvp.viewstate.strategy.StateStrategyType
 import com.victorlapin.flasher.model.database.entity.Command
 
 interface HomeFragmentView : MvpView {
-    fun setData(commands: List<Command>)
+    fun setData(commands: List<Command>, isFirstRun: Boolean)
     @StateStrategyType(SkipStrategy::class)
     fun showWipeDialog(command: Command)
     @StateStrategyType(SkipStrategy::class)

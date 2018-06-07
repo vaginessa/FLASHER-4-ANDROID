@@ -15,18 +15,21 @@ class HomeFragmentPresenter constructor(
         private val mSettings: SettingsManager
 ) : MvpPresenter<HomeFragmentView>() {
     private var mDisposable: Disposable? = null
+    private var mFirstRun = true
 
     override fun attachView(view: HomeFragmentView?) {
         super.attachView(view)
         mDisposable = mCommandsInteractor.getCommands()
                 .subscribe {
-                    viewState.setData(it)
+                    viewState.setData(it, mFirstRun)
+                    mFirstRun = false
                 }
     }
 
     override fun detachView(view: HomeFragmentView?) {
         mDisposable?.dispose()
         mDisposable = null
+        mFirstRun = true
         super.detachView(view)
     }
 

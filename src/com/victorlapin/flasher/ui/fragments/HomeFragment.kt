@@ -98,10 +98,10 @@ class HomeFragment : BaseFragment(), HomeFragmentView {
                 .addTo(mEventsDisposable)
     }
 
-    override fun setData(commands: List<Command>) {
+    override fun setData(commands: List<Command>, isFirstRun: Boolean) {
         list.post {
             mAdapter.setData(commands)
-            if (commands.isNotEmpty()) {
+            if (!isFirstRun && commands.isNotEmpty()) {
                 list.scrollToPosition(commands.size - 1)
             }
         }
