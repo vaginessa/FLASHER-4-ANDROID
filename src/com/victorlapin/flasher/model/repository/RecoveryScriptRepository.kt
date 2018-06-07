@@ -2,7 +2,7 @@ package com.victorlapin.flasher.model.repository
 
 import android.os.Environment
 import com.topjohnwu.superuser.Shell
-import com.topjohnwu.superuser.io.SuFile
+import com.topjohnwu.superuser.io.SuFileOutputStream
 import com.victorlapin.flasher.R
 import com.victorlapin.flasher.manager.SettingsManager
 import com.victorlapin.flasher.model.EventArgs
@@ -51,8 +51,9 @@ class RecoveryScriptRepository constructor(
 
     fun deployScript(script: String): EventArgs = if (Shell.rootAccess()) {
         try {
-            val file = SuFile(SCRIPT_FILENAME)
-            file.writeText(script)
+            SuFileOutputStream(SCRIPT_FILENAME).use {
+                it.write(script.toByteArray())
+            }
             EventArgs(isSuccess = true)
         } catch (ex: Exception) {
             ex.printStackTrace()
