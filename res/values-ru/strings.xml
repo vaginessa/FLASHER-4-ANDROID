@@ -18,6 +18,7 @@
 
     <!-- Preferences strings -->
     <string name="pref_category_appearance">Внешний вид</string>
+    <string name="pref_category_misc">Прочее</string>
     <string name="pref_title_theme">Тема приложения</string>
     <string name="theme_light">Светлая</string>
     <string name="theme_dark">Темная</string>

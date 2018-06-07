@@ -18,6 +18,7 @@
 
     <!-- Preferences strings -->
     <string name="pref_category_appearance">Appearance</string>
+    <string name="pref_category_misc">Misc</string>
     <string name="pref_title_theme">App Theme</string>
     <string name="theme_light">Light</string>
     <string name="theme_dark">Dark</string>

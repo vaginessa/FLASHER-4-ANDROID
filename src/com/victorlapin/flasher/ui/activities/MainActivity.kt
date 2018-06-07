@@ -57,7 +57,11 @@ class MainActivity : BaseActivity(), MainActivityView,
     override fun onNavigationItemReselected(item: MenuItem) { }
 
     override val navigator = object : SupportAppNavigator(this, R.id.fragment_container) {
-        override fun createActivityIntent(context: Context?, screenKey: String?, data: Any?): Intent? = null
+        override fun createActivityIntent(context: Context?, screenKey: String?, data: Any?): Intent? =
+                when (screenKey) {
+                    Screens.ACTIVITY_ABOUT -> Intent(context, AboutActivity::class.java)
+                    else -> null
+                }
 
         override fun createFragment(screenKey: String?, data: Any?): Fragment? = when (screenKey) {
             Screens.FRAGMENT_HOME -> HomeFragment.newInstance()

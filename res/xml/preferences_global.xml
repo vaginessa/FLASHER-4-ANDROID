@@ -9,4 +9,12 @@
 
     </PreferenceCategory>
 
+    <PreferenceCategory android:title="@string/pref_category_misc">
+
+        <Preference
+            android:key="open_about"
+            android:title="@string/action_about" />
+
+    </PreferenceCategory>
+
 </PreferenceScreen>

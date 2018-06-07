@@ -8,6 +8,7 @@ class SettingsManager(context: Context) {
     companion object {
         const val KEY_THEME = "interface_theme"
         const val KEY_LAST_USED_PATH = "last_used_path"
+        const val KEY_ABOUT = "open_about"
     }
 
     private val mPrefs = PreferenceManager.getDefaultSharedPreferences(context)

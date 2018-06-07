@@ -7,6 +7,7 @@ import android.support.v7.preference.PreferenceFragmentCompat
 import com.victorlapin.flasher.R
 import com.victorlapin.flasher.manager.SettingsManager
 import com.victorlapin.flasher.ui.activities.BaseActivity
+import com.victorlapin.flasher.ui.activities.MainActivity
 import org.koin.android.ext.android.inject
 
 class SettingsGlobalFragment : PreferenceFragmentCompat() {
@@ -30,6 +31,12 @@ class SettingsGlobalFragment : PreferenceFragmentCompat() {
                     (activity as BaseActivity)
                             .updateTheme(Integer.valueOf(newValue as String))
                     true
+                }
+
+        findPreference(SettingsManager.KEY_ABOUT).onPreferenceClickListener =
+                Preference.OnPreferenceClickListener {
+                    (activity as MainActivity).presenter.openAbout()
+                    return@OnPreferenceClickListener true
                 }
     }
 
