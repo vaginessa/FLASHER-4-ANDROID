@@ -6,7 +6,9 @@ import android.arch.persistence.room.RoomDatabase
 import com.victorlapin.flasher.model.database.AppDatabase
 import com.victorlapin.flasher.model.database.dao.CommandDao
 import com.victorlapin.flasher.model.database.entity.Command
+import com.victorlapin.flasher.model.interactor.AboutInteractor
 import com.victorlapin.flasher.model.interactor.CommandsInteractor
+import com.victorlapin.flasher.model.repository.AboutRepository
 import com.victorlapin.flasher.model.repository.CommandsRepository
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
@@ -37,4 +39,6 @@ val modelModule = applicationContext {
 
     factory { CommandsRepository(get()) }
     factory { CommandsInteractor(get()) }
+    factory { AboutRepository(get(), get()) }
+    factory { AboutInteractor(get()) }
 }

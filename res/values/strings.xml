@@ -5,6 +5,7 @@
     <string name="command_args">Arguments</string>
     <string name="command_tap_to_select">Tap to select…</string>
     <string name="command_deleted">The command has been deleted</string>
+    <string name="not_found">Not found</string>
 
     <!-- Action strings -->
     <string name="action_home">Home</string>
@@ -28,4 +29,20 @@
 
     <!-- Permissions -->
     <string name="permission_denied_storage">Storage permission is required.</string>
+
+    <!-- About activity -->
+    <string name="about_versions">Versions</string>
+    <string name="about_the_team">The Team</string>
+    <string name="about_credits">Credits</string>
+    <string name="about_links">Links</string>
+    <string name="about_team_victor">Victor Lapin</string>
+    <string name="about_developer">Developer</string>
+    <string name="about_credits_bauke">Bauke Zwart</string>
+    <string name="about_credits_bauke_text">Original Tasker implementation</string>
+    <string name="about_credits_anton">Anton Kolomin</string>
+    <string name="about_credits_anton_text">Useful tips on the code</string>
+    <string name="about_credits_austin">Austin Andrews</string>
+    <string name="about_credits_austin_text">Material design icons</string>
+    <string name="about_links_source_code">Source code</string>
+    <string name="about_links_gitlab">View at Gitlab.com</string>
 </resources>

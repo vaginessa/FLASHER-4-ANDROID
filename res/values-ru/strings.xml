@@ -5,6 +5,7 @@
     <string name="command_args">Аргументы</string>
     <string name="command_tap_to_select">Нажмите чтобы выбрать…</string>
     <string name="command_deleted">Команда удалена</string>
+    <string name="not_found">Не найден</string>
 
     <!-- Action strings -->
     <string name="action_home">Главная</string>
@@ -28,4 +29,22 @@
 
     <!-- Permissions -->
     <string name="permission_denied_storage">Необходим доступ к памяти устройства.</string>
+
+    <!-- About activity -->
+    <string name="about_versions">Версии</string>
+    <string name="about_the_team">Команда</string>
+    <string name="about_credits">Благодарности</string>
+    <string name="about_links">Ссылки</string>
+    <string name="about_team_victor">Victor Lapin</string>
+    <string name="about_developer">Разработчик</string>
+    <string name="about_credits_bauke">Bauke Zwart</string>
+    <string name="about_credits_bauke_text">Изначальная реализация на Tasker</string>
+    <string name="about_credits_anton">Anton Kolomin</string>
+    <string name="about_credits_anton_text">Полезные подсказки по коду</string>
+    <string name="about_credits_austin">Austin Andrews</string>
+    <string name="about_credits_austin_text">Значки в стиле Material design</string>
+    <string name="about_links_source_code">Исходный код</string>
+    <string name="about_links_gitlab">Посмотреть на Gitlab.com</string>
+    <string name="about_links_oss">Лицензии на ПО с открытым исходным кодом</string>
+    <string name="about_links_oss_text">Сведения о лицензиях на ПО с открытым исходным кодом</string>
 </resources>
