@@ -1,6 +1,8 @@
 package com.victorlapin.flasher.model.repository
 
+import com.topjohnwu.superuser.Shell
 import com.topjohnwu.superuser.io.SuFile
+import com.victorlapin.flasher.R
 import com.victorlapin.flasher.model.EventArgs
 import com.victorlapin.flasher.model.database.entity.Command
 import io.reactivex.Single
@@ -40,15 +42,17 @@ class RecoveryScriptRepository constructor(
                 }
     }
 
-    fun deployScript(script: String): EventArgs {
+    fun deployScript(script: String): EventArgs = if (Shell.rootAccess()) {
         try {
             val file = SuFile(SCRIPT_FILENAME)
             file.writeText(script)
-            return EventArgs(isSuccess = true)
+            EventArgs(isSuccess = true)
         } catch (ex: Exception) {
             ex.printStackTrace()
-            return EventArgs(isSuccess = false, message = ex.toString())
+            EventArgs(isSuccess = false, message = ex.toString())
         }
+    } else {
+        EventArgs(isSuccess = false, messageId = R.string.permission_denied_su)
     }
 
     private fun toArray(set: String) =
