@@ -64,6 +64,11 @@ class AboutRepository(
         color = mColorGenerator.getColor(item.name)
         item.image = mBuilder.build("AA", color)
         result.add(item)
+        item = ListItem(mResources.getString(R.string.about_credits_jared))
+        item.description = mResources.getString(R.string.about_credits_jared_text)
+        color = mColorGenerator.getColor(item.name)
+        item.image = mBuilder.build("JR", color)
+        result.add(item)
 
         return result
     }
