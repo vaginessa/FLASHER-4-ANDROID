@@ -1,10 +1,12 @@
 package com.victorlapin.flasher.ui.fragments
 
 import android.os.Bundle
+import android.os.Environment
 import android.support.v7.preference.ListPreference
 import android.support.v7.preference.Preference
 import android.support.v7.preference.PreferenceFragmentCompat
 import com.victorlapin.flasher.R
+import com.victorlapin.flasher.manager.ResourcesManager
 import com.victorlapin.flasher.manager.SettingsManager
 import com.victorlapin.flasher.ui.activities.BaseActivity
 import com.victorlapin.flasher.ui.activities.MainActivity
@@ -12,6 +14,7 @@ import org.koin.android.ext.android.inject
 
 class SettingsGlobalFragment : PreferenceFragmentCompat() {
     private val mSettings by inject<SettingsManager>()
+    private val mResources by inject<ResourcesManager>()
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         addPreferencesFromResource(R.xml.preferences_global)
@@ -38,6 +41,10 @@ class SettingsGlobalFragment : PreferenceFragmentCompat() {
                     (activity as MainActivity).presenter.openAbout()
                     return@OnPreferenceClickListener true
                 }
+
+        findPreference(SettingsManager.KEY_SAVE_DEBUG_SCRIPT).summary =
+                mResources.getString(R.string.pref_summary_save_debug_script)
+                        .format(Environment.getExternalStorageDirectory().absolutePath)
     }
 
     companion object {

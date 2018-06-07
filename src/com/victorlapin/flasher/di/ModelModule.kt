@@ -43,6 +43,6 @@ val modelModule = applicationContext {
     factory { CommandsInteractor(get()) }
     factory { AboutRepository(get(), get()) }
     factory { AboutInteractor(get()) }
-    factory { RecoveryScriptRepository(get()) }
+    factory { RecoveryScriptRepository(get(), get()) }
     factory { RecoveryScriptInteractor(get()) }
 }

@@ -1,14 +1,18 @@
 package com.victorlapin.flasher.model.repository
 
+import android.os.Environment
 import com.topjohnwu.superuser.Shell
 import com.topjohnwu.superuser.io.SuFile
 import com.victorlapin.flasher.R
+import com.victorlapin.flasher.manager.SettingsManager
 import com.victorlapin.flasher.model.EventArgs
 import com.victorlapin.flasher.model.database.entity.Command
 import io.reactivex.Single
+import java.io.File
 
 class RecoveryScriptRepository constructor(
-        private val mCommandRepo: CommandsRepository
+        private val mCommandRepo: CommandsRepository,
+        private val mSettings: SettingsManager
 ) {
     fun buildScript(): Single<String> = Single.create { emitter ->
         mCommandRepo.getCommands()
@@ -38,6 +42,9 @@ class RecoveryScriptRepository constructor(
                             }
                         }
                     }
+                    if (mSettings.saveDebugScript) {
+                        saveDebugScript(result.toString())
+                    }
                     emitter.onSuccess(result.toString())
                 }
     }
@@ -62,6 +69,15 @@ class RecoveryScriptRepository constructor(
         mSuDeniedArgs
     }
 
+    private fun saveDebugScript(script: String) {
+        try {
+            val file = File(DEBUG_FILENAME)
+            file.writeText(script)
+        } catch (ignore: Exception) {
+            ignore.printStackTrace()
+        }
+    }
+
     private fun toArray(set: String) =
             set.split(",")
                     .map { it.trim().toLowerCase() }
@@ -72,5 +88,7 @@ class RecoveryScriptRepository constructor(
 
     companion object {
         private const val SCRIPT_FILENAME = "/cache/recovery/openrecoveryscript"
+        private val DEBUG_FILENAME = File(Environment.getExternalStorageDirectory(),
+                "openrecoveryscript").absolutePath
     }
 }

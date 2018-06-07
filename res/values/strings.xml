@@ -22,10 +22,13 @@
     <!-- Preferences strings -->
     <string name="pref_category_appearance">Appearance</string>
     <string name="pref_category_misc">Misc</string>
+    <string name="pref_category_debug">Debug</string>
     <string name="pref_title_theme">App Theme</string>
     <string name="theme_light">Light</string>
     <string name="theme_dark">Dark</string>
     <string name="theme_black">Black</string>
+    <string name="pref_title_save_debug_script">Save debug script</string>
+    <string name="pref_summary_save_debug_script">Will be saved to %s</string>
 
     <!-- Command names -->
     <string name="command_wipe">Wipe</string>

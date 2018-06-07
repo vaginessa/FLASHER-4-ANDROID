@@ -22,10 +22,13 @@
     <!-- Preferences strings -->
     <string name="pref_category_appearance">Внешний вид</string>
     <string name="pref_category_misc">Прочее</string>
+    <string name="pref_category_debug">Отладка</string>
     <string name="pref_title_theme">Тема приложения</string>
     <string name="theme_light">Светлая</string>
     <string name="theme_dark">Темная</string>
     <string name="theme_black">Черная</string>
+    <string name="pref_title_save_debug_script">Сохранять отладочный скрипт</string>
+    <string name="pref_summary_save_debug_script">Будет сохранен в %s</string>
 
     <!-- Command names -->
     <string name="command_wipe">Вайп</string>

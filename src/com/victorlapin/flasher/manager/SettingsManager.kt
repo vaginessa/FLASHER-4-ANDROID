@@ -9,6 +9,7 @@ class SettingsManager(context: Context) {
         const val KEY_THEME = "interface_theme"
         const val KEY_LAST_USED_PATH = "last_used_path"
         const val KEY_ABOUT = "open_about"
+        const val KEY_SAVE_DEBUG_SCRIPT = "save_debug_script"
     }
 
     private val mPrefs = PreferenceManager.getDefaultSharedPreferences(context)
@@ -22,4 +23,7 @@ class SettingsManager(context: Context) {
     var lastUsedPath: String?
         get() = mPrefs.getString(KEY_LAST_USED_PATH, null)
         set(path) = mPrefs.edit().putString(KEY_LAST_USED_PATH, path).apply()
+
+    val saveDebugScript: Boolean
+        get() = mPrefs.getBoolean(KEY_SAVE_DEBUG_SCRIPT, false)
 }
