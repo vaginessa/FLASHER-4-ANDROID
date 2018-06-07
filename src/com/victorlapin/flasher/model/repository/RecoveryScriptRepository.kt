@@ -55,6 +55,13 @@ class RecoveryScriptRepository constructor(
         EventArgs(isSuccess = false, messageId = R.string.permission_denied_su)
     }
 
+    fun rebootRecovery(): EventArgs = if (Shell.rootAccess()) {
+        Shell.Sync.su("svc power reboot recovery")
+        EventArgs(isSuccess = true)
+    } else {
+        EventArgs(isSuccess = false, messageId = R.string.permission_denied_su)
+    }
+
     private fun toArray(set: String) =
             set.split(",")
                     .map { it.trim().toLowerCase() }

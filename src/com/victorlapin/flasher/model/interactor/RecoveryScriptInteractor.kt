@@ -13,4 +13,6 @@ class RecoveryScriptInteractor constructor(
             .observeOn(AndroidSchedulers.mainThread())
 
     fun deployScript(script: String) = mRepo.deployScript(script)
+
+    fun rebootRecovery() = mRepo.rebootRecovery()
 }

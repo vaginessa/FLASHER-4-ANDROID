@@ -209,9 +209,8 @@ class HomeFragment : BaseFragment(), HomeFragmentView {
     }
 
     override fun showRebootSnackbar() {
-        //TODO: add reboot presenter action
         Snackbar.make(coordinator, R.string.reboot, Snackbar.LENGTH_LONG)
-                .setAction(R.string.action_reboot, {  })
+                .setAction(R.string.action_reboot, { presenter.reboot() })
                 .show()
     }
 
