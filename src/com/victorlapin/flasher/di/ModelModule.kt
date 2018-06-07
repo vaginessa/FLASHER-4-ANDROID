@@ -8,8 +8,10 @@ import com.victorlapin.flasher.model.database.dao.CommandDao
 import com.victorlapin.flasher.model.database.entity.Command
 import com.victorlapin.flasher.model.interactor.AboutInteractor
 import com.victorlapin.flasher.model.interactor.CommandsInteractor
+import com.victorlapin.flasher.model.interactor.RecoveryScriptInteractor
 import com.victorlapin.flasher.model.repository.AboutRepository
 import com.victorlapin.flasher.model.repository.CommandsRepository
+import com.victorlapin.flasher.model.repository.RecoveryScriptRepository
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 import org.koin.dsl.module.applicationContext
@@ -41,4 +43,6 @@ val modelModule = applicationContext {
     factory { CommandsInteractor(get()) }
     factory { AboutRepository(get(), get()) }
     factory { AboutInteractor(get()) }
+    factory { RecoveryScriptRepository(get()) }
+    factory { RecoveryScriptInteractor(get()) }
 }
