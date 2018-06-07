@@ -11,6 +11,7 @@
     <string name="action_home">Главная</string>
     <string name="action_settings">Настройки</string>
     <string name="action_undo">Отменить</string>
+    <string name="action_about">О приложении</string>
 
     <!-- Fragment titles -->
     <string name="title_home">Очередь команд</string>
