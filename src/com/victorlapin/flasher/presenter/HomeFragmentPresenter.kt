@@ -40,7 +40,12 @@ class HomeFragmentPresenter constructor(
         mCommandsInteractor.getCommand(id)
                 .subscribe {
                     mCommandsInteractor.deleteCommand(it)
+                    viewState.showDeletedSnackbar(it)
                 }
+    }
+
+    fun onUndoDelete(command: Command) {
+        mCommandsInteractor.insertCommand(command)
     }
 
     fun onArgumentsClicked(command: Command) = when (command.type) {

@@ -2,6 +2,7 @@ package com.victorlapin.flasher.ui.fragments
 
 import android.Manifest
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import android.support.v7.app.AlertDialog
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
@@ -173,6 +174,12 @@ class HomeFragment : BaseFragment(), HomeFragmentView {
                                 .show()
                     }
                 }
+    }
+
+    override fun showDeletedSnackbar(command: Command) {
+        Snackbar.make(coordinator, R.string.command_deleted, Snackbar.LENGTH_LONG)
+                .setAction(R.string.action_undo, { presenter.onUndoDelete(command) })
+                .show()
     }
 
     companion object {

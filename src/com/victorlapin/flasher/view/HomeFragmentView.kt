@@ -13,4 +13,5 @@ interface HomeFragmentView : MvpView {
     fun showBackupDialog(command: Command)
     @StateStrategyType(SkipStrategy::class)
     fun showFlashDialog(command: Command, startPath: String?)
+    fun showDeletedSnackbar(command: Command)
 }

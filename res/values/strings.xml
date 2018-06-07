@@ -4,10 +4,12 @@
     <string name="command_type">Command type</string>
     <string name="command_args">Arguments</string>
     <string name="command_tap_to_select">Tap to select…</string>
+    <string name="command_deleted">The command has been deleted</string>
 
     <!-- Action strings -->
     <string name="action_home">Home</string>
     <string name="action_settings">Settings</string>
+    <string name="action_undo">Undo</string>
 
     <!-- Fragment titles -->
     <string name="title_home">Command Queue</string>
