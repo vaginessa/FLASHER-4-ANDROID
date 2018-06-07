@@ -91,6 +91,7 @@ dependencies {
     implementation deps.bottom_ex
     implementation deps.dialogs.core
     implementation deps.rx_permissions
+    implementation deps.libsu
 
     debugImplementation deps.db_inspector
 }

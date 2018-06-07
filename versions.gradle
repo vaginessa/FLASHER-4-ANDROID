@@ -14,6 +14,7 @@ versions.db_inspector = "3.4.1"
 versions.bottom_ex = "1.2.4"
 versions.dialogs = "0.9.6.0"
 versions.rx_permissions = "0.9.5"
+versions.libsu = "1.1.1"
 
 versions.android_gradle_plugin = "3.1.2"
 
@@ -55,6 +56,7 @@ deps.text_drawable = "com.amulyakhare:com.amulyakhare.textdrawable:$versions.tex
 deps.db_inspector = "im.dino:dbinspector:${versions.db_inspector}@aar"
 deps.bottom_ex = "com.github.ittianyu:BottomNavigationViewEx:$versions.bottom_ex"
 deps.rx_permissions = "com.tbruyelle.rxpermissions2:rxpermissions:${versions.rx_permissions}@aar"
+deps.libsu = "com.github.topjohnwu:libsu:${versions.libsu}"
 
 deps.android_gradle_plugin = "com.android.tools.build:gradle:$versions.android_gradle_plugin"
 ext.deps = deps
