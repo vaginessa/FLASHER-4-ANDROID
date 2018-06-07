@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Flash</string>
+    <string name="app_name">Flasher</string>
     <string name="command_type">Command type</string>
     <string name="command_args">Arguments</string>
     <string name="command_tap_to_select">Tap to select…</string>
