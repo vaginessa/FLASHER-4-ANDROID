@@ -163,7 +163,7 @@ class HomeFragment : BaseFragment(), HomeFragmentView {
     }
 
     override fun showFlashDialog(command: Command, startPath: String?) {
-        mRxPermissions.request(Manifest.permission.READ_EXTERNAL_STORAGE)
+        mRxPermissions.request(Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 .subscribe { granted ->
                     if (granted) {
                         FileChooserDialog.Builder(context!!)
