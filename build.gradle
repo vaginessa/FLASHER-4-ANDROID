@@ -2,8 +2,8 @@ buildscript {
     apply from: 'versions.gradle'
     addRepos(repositories)
     dependencies {
-        classpath deps.android_gradle_plugin
-        classpath deps.kotlin.plugin
+        classpath "com.android.tools.build:gradle:$versions.android_gradle_plugin"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$versions.kotlin"
     }
 }
 
@@ -72,26 +72,26 @@ android {
 apply from: 'keystore.gradle'
 
 dependencies {
-    kapt deps.moxy.compiler
-    kapt deps.room.compiler
+    kapt "com.arello-mobile:moxy-compiler:$versions.moxy"
+    kapt "android.arch.persistence.room:compiler:$versions.room"
 
-    implementation deps.kotlin.stdlib
-    implementation deps.support.design
-    implementation deps.support.cardview
-    implementation deps.support.preferences
-    implementation deps.constraint_layout
-    implementation deps.moxy.runtime
-    implementation deps.rxjava2
-    implementation deps.rx_android
-    implementation deps.room.runtime
-    implementation deps.room.rxjava2
-    implementation deps.koin
-    implementation deps.cicerone
-    implementation deps.text_drawable
-    implementation deps.bottom_ex
-    implementation deps.dialogs.core
-    implementation deps.rx_permissions
-    implementation deps.libsu
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$versions.kotlin"
+    implementation "com.android.support:design:$versions.support"
+    implementation "com.android.support:cardview-v7:$versions.support"
+    implementation "com.android.support:preference-v14:$versions.support"
+    implementation "com.android.support.constraint:constraint-layout:$versions.constraint_layout"
+    implementation "com.arello-mobile:moxy-app-compat:$versions.moxy"
+    implementation "io.reactivex.rxjava2:rxjava:$versions.rxjava2"
+    implementation "io.reactivex.rxjava2:rxandroid:$versions.rx_android"
+    implementation "android.arch.persistence.room:runtime:$versions.room"
+    implementation "android.arch.persistence.room:rxjava2:$versions.room"
+    implementation "org.koin:koin-android:$versions.koin"
+    implementation "ru.terrakok.cicerone:cicerone:$versions.cicerone"
+    implementation "com.amulyakhare:com.amulyakhare.textdrawable:$versions.text_drawable"
+    implementation "com.github.ittianyu:BottomNavigationViewEx:$versions.bottom_ex"
+    implementation "com.afollestad.material-dialogs:core:$versions.dialogs"
+    implementation "com.tbruyelle.rxpermissions2:rxpermissions:${versions.rx_permissions}@aar"
+    implementation "com.github.topjohnwu:libsu:${versions.libsu}"
 
-    debugImplementation deps.db_inspector
+    debugImplementation "im.dino:dbinspector:${versions.db_inspector}@aar"
 }
