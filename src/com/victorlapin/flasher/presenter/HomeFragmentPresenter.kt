@@ -3,6 +3,7 @@ package com.victorlapin.flasher.presenter
 import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
 import com.victorlapin.flasher.manager.SettingsManager
+import com.victorlapin.flasher.model.CommandClickEventArgs
 import com.victorlapin.flasher.model.database.entity.Command
 import com.victorlapin.flasher.model.interactor.CommandsInteractor
 import com.victorlapin.flasher.model.interactor.RecoveryScriptInteractor
@@ -50,18 +51,21 @@ class HomeFragmentPresenter constructor(
         mCommandsInteractor.insertCommand(command)
     }
 
-    fun onArgumentsClicked(command: Command) = when (command.type) {
-        Command.TYPE_WIPE -> viewState.showWipeDialog(command)
-        Command.TYPE_BACKUP -> viewState.showBackupDialog(command)
-        Command.TYPE_FLASH_FILE -> {
-            val path = when {
-                (command.arg2 != null) -> command.arg2
-                (mSettings.lastUsedPath != null) -> mSettings.lastUsedPath
-                else -> null
+    fun onArgumentsClicked(args: CommandClickEventArgs) {
+        when (args.argsType) {
+            CommandClickEventArgs.ARG1 -> when (args.command.type) {
+                Command.TYPE_WIPE -> viewState.showWipeDialog(args.command)
+                Command.TYPE_BACKUP -> viewState.showBackupDialog(args.command)
+                Command.TYPE_FLASH_FILE -> {
+                    val path = when {
+                        (args.command.arg2 != null) -> args.command.arg2
+                        (mSettings.lastUsedPath != null) -> mSettings.lastUsedPath
+                        else -> null
+                    }
+                    viewState.showFlashFileDialog(args.command, path)
+                }
             }
-            viewState.showFlashFileDialog(command, path)
         }
-        else -> Unit
     }
 
     fun onCommandTypeChanged(pair: Pair<Command, Int>) {

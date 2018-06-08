@@ -8,6 +8,7 @@ import android.widget.ArrayAdapter
 import com.victorlapin.flasher.R
 import com.victorlapin.flasher.inflate
 import com.victorlapin.flasher.manager.ResourcesManager
+import com.victorlapin.flasher.model.CommandClickEventArgs
 import com.victorlapin.flasher.model.database.entity.Command
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.item_command.view.*
@@ -22,8 +23,8 @@ class HomeAdapter constructor(
     // events stuff
     private val mChangeTypeSubject = PublishSubject.create<Pair<Command, Int>>()
     val changeTypeEvent: PublishSubject<Pair<Command, Int>> = mChangeTypeSubject
-    private val mArgsClickSubject = PublishSubject.create<Command>()
-    val argsClickEvent: PublishSubject<Command> = mArgsClickSubject
+    private val mArgsClickSubject = PublishSubject.create<CommandClickEventArgs>()
+    val argsClickEvent: PublishSubject<CommandClickEventArgs> = mArgsClickSubject
 
     init {
         setHasStableIds(true)
@@ -72,7 +73,9 @@ class HomeAdapter constructor(
                     }
 
             itemView.lbl_arg1.text = if (command.arg1 != null) command.arg1 else mDefaultArgText
-            itemView.lbl_arg1.setOnClickListener { mArgsClickSubject.onNext(command) }
+            itemView.lbl_arg1.setOnClickListener {
+                mArgsClickSubject.onNext(CommandClickEventArgs(command, CommandClickEventArgs.ARG1))
+            }
         }
 
         fun unbind() {
