@@ -64,6 +64,18 @@ class HomeFragmentPresenter constructor(
                     }
                     viewState.showFlashFileDialog(args.command, path)
                 }
+                Command.TYPE_FLASH_MASK -> viewState.showEditMaskDialog(args.command)
+            }
+
+            CommandClickEventArgs.ARG2 -> when (args.command.type) {
+                Command.TYPE_FLASH_MASK -> {
+                    val path = when {
+                        (args.command.arg2 != null) -> args.command.arg2
+                        (mSettings.lastUsedPath != null) -> mSettings.lastUsedPath
+                        else -> null
+                    }
+                    viewState.showSelectFolderDialog(args.command, path)
+                }
             }
         }
     }
@@ -80,7 +92,7 @@ class HomeFragmentPresenter constructor(
     }
 
     fun onFileSelected(file: File) {
-        mSettings.lastUsedPath = file.parent
+        mSettings.lastUsedPath = if (file.isDirectory) file.absolutePath else file.parent
     }
 
     fun buildAndDeploy() {

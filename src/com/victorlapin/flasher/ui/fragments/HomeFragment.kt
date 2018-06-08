@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.folderselector.FileChooserDialog
+import com.afollestad.materialdialogs.folderselector.FolderChooserDialog
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.tbruyelle.rxpermissions2.RxPermissions
@@ -176,6 +177,43 @@ class HomeFragment : BaseFragment(), HomeFragmentView {
                                         command.arg2 = file.parent
                                         presenter.onCommandUpdated(command)
                                         presenter.onFileSelected(file)
+                                    }
+                                })
+                                .show(activity!!)
+                    } else {
+                        AlertDialog.Builder(context!!)
+                                .setTitle(R.string.app_name)
+                                .setMessage(R.string.permission_denied_storage)
+                                .setCancelable(true)
+                                .setPositiveButton(android.R.string.ok, null)
+                                .show()
+                    }
+                }
+    }
+
+    override fun showEditMaskDialog(command: Command) {
+        MaterialDialog.Builder(context!!)
+                .title(R.string.enter_mask)
+                .input("", command.arg1, true, { _, input ->
+                    command.arg1 = if (input.isEmpty()) null else input.toString()
+                    presenter.onCommandUpdated(command)
+                })
+                .negativeText(android.R.string.cancel)
+                .show()
+    }
+
+    override fun showSelectFolderDialog(command: Command, startPath: String?) {
+        mRxPermissions.request(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                .subscribe { granted ->
+                    if (granted) {
+                        FolderChooserDialog.Builder()
+                                .initialPath(startPath)
+                                .callback(object : FolderChooserDialog.FolderCallback {
+                                    override fun onFolderChooserDismissed(dialog: FolderChooserDialog) { }
+                                    override fun onFolderSelection(dialog: FolderChooserDialog, folder: File) {
+                                        command.arg2 = folder.absolutePath
+                                        presenter.onCommandUpdated(command)
+                                        presenter.onFileSelected(folder)
                                     }
                                 })
                                 .show(activity!!)

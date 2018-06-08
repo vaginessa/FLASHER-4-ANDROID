@@ -10,6 +10,7 @@ import com.victorlapin.flasher.inflate
 import com.victorlapin.flasher.manager.ResourcesManager
 import com.victorlapin.flasher.model.CommandClickEventArgs
 import com.victorlapin.flasher.model.database.entity.Command
+import com.victorlapin.flasher.visible
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.item_command.view.*
 
@@ -19,6 +20,8 @@ class HomeAdapter constructor(
     private val mItems: ArrayList<Command> = arrayListOf()
     private val mCommands = resources.getStringArray(R.array.commands)
     private val mDefaultArgText = resources.getString(R.string.command_tap_to_select)
+    private val mEnterMaskText = resources.getString(R.string.command_tap_to_enter_mask)
+    private val mSelectFolderText = resources.getString(R.string.command_tap_to_select_folder)
 
     // events stuff
     private val mChangeTypeSubject = PublishSubject.create<Pair<Command, Int>>()
@@ -55,6 +58,7 @@ class HomeAdapter constructor(
                 Command.TYPE_WIPE -> itemView.image.setImageResource(R.drawable.cellphone_erase)
                 Command.TYPE_BACKUP -> itemView.image.setImageResource(R.drawable.backup_restore)
                 Command.TYPE_FLASH_FILE -> itemView.image.setImageResource(R.drawable.flash)
+                Command.TYPE_FLASH_MASK -> itemView.image.setImageResource(R.drawable.regex)
             }
 
             val adapter = ArrayAdapter<String>(itemView.context,
@@ -72,15 +76,26 @@ class HomeAdapter constructor(
                         }
                     }
 
-            itemView.lbl_arg1.text = if (command.arg1 != null) command.arg1 else mDefaultArgText
+            if (command.type == Command.TYPE_FLASH_MASK) {
+                itemView.lbl_arg2.visible(true)
+                itemView.lbl_arg1.text = if (command.arg1 != null) command.arg1 else mEnterMaskText
+                itemView.lbl_arg2.text = if (command.arg2 != null) command.arg2 else mSelectFolderText
+            } else {
+                itemView.lbl_arg2.visible(false)
+                itemView.lbl_arg1.text = if (command.arg1 != null) command.arg1 else mDefaultArgText
+            }
             itemView.lbl_arg1.setOnClickListener {
                 mArgsClickSubject.onNext(CommandClickEventArgs(command, CommandClickEventArgs.ARG1))
+            }
+            itemView.lbl_arg2.setOnClickListener {
+                mArgsClickSubject.onNext(CommandClickEventArgs(command, CommandClickEventArgs.ARG2))
             }
         }
 
         fun unbind() {
             itemView.spinner_type.onItemSelectedListener = null
             itemView.lbl_arg1.setOnClickListener(null)
+            itemView.lbl_arg2.setOnClickListener(null)
         }
     }
 

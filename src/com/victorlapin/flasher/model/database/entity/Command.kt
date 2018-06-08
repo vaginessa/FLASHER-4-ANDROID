@@ -19,5 +19,6 @@ data class Command(
         const val TYPE_WIPE = 0
         const val TYPE_BACKUP = 1
         const val TYPE_FLASH_FILE = 2
+        const val TYPE_FLASH_MASK = 3
     }
 }
