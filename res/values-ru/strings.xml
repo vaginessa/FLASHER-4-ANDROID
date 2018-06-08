@@ -60,6 +60,9 @@
     <string name="about_credits_jared_text">Черновик билдера OpenRecoveryScript</string>
     <string name="about_credits_topjohnwu">John Wu</string>
     <string name="about_credits_topjohnwu_text">Проект с открытым исходным кодом libsu</string>
+    <string name="about_credits_aidan">Aidan Follestad</string>
+    <string name="about_credits_aidan_text">Проект с открытым исходным кодом material-dialogs</string>
+    <string name="about_credits_doug">Doug Hardester</string>
     <string name="about_links_source_code">Исходный код</string>
     <string name="about_links_gitlab">Посмотреть на Gitlab.com</string>
 </resources>

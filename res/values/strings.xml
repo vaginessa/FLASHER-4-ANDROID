@@ -60,6 +60,9 @@
     <string name="about_credits_jared_text">OpenRecoveryScript builder gist</string>
     <string name="about_credits_topjohnwu">John Wu</string>
     <string name="about_credits_topjohnwu_text">libsu open source project</string>
+    <string name="about_credits_aidan">Aidan Follestad</string>
+    <string name="about_credits_aidan_text">material-dialogs open source project</string>
+    <string name="about_credits_doug">Doug Hardester</string>
     <string name="about_links_source_code">Source code</string>
     <string name="about_links_gitlab">View at Gitlab.com</string>
 </resources>

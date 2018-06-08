@@ -64,6 +64,11 @@ class AboutRepository(
         color = mColorGenerator.getColor(item.name)
         item.image = mBuilder.build("AA", color)
         result.add(item)
+        item = ListItem(mResources.getString(R.string.about_credits_doug))
+        item.description = mResources.getString(R.string.about_credits_austin_text)
+        color = mColorGenerator.getColor(item.name)
+        item.image = mBuilder.build("DH", color)
+        result.add(item)
         item = ListItem(mResources.getString(R.string.about_credits_jared))
         item.description = mResources.getString(R.string.about_credits_jared_text)
         color = mColorGenerator.getColor(item.name)
@@ -73,6 +78,11 @@ class AboutRepository(
         item.description = mResources.getString(R.string.about_credits_topjohnwu_text)
         color = mColorGenerator.getColor(item.name)
         item.image = mBuilder.build("JW", color)
+        result.add(item)
+        item = ListItem(mResources.getString(R.string.about_credits_aidan))
+        item.description = mResources.getString(R.string.about_credits_aidan_text)
+        color = mColorGenerator.getColor(item.name)
+        item.image = mBuilder.build("AF", color)
         result.add(item)
 
         return result
