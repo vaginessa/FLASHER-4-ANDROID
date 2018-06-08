@@ -37,7 +37,7 @@ class RecoveryScriptRepository constructor(
                                     result.appendln("backup $partString")
                                 }
                             }
-                            Command.TYPE_FLASH -> it.arg1?.let {
+                            Command.TYPE_FLASH_FILE -> it.arg1?.let {
                                 result.appendln("install $it")
                             }
                         }

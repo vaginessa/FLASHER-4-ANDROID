@@ -162,7 +162,7 @@ class HomeFragment : BaseFragment(), HomeFragmentView {
                 .show()
     }
 
-    override fun showFlashDialog(command: Command, startPath: String?) {
+    override fun showFlashFileDialog(command: Command, startPath: String?) {
         mRxPermissions.request(Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 .subscribe { granted ->
                     if (granted) {

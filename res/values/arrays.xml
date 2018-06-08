@@ -3,7 +3,7 @@
     <string-array name="commands">
         <item>@string/command_wipe</item>
         <item>@string/command_backup</item>
-        <item>@string/command_flash</item>
+        <item>@string/command_flash_file</item>
     </string-array>
 
     <string-array name="wipe_partitions">

@@ -53,13 +53,13 @@ class HomeFragmentPresenter constructor(
     fun onArgumentsClicked(command: Command) = when (command.type) {
         Command.TYPE_WIPE -> viewState.showWipeDialog(command)
         Command.TYPE_BACKUP -> viewState.showBackupDialog(command)
-        Command.TYPE_FLASH -> {
+        Command.TYPE_FLASH_FILE -> {
             val path = when {
                 (command.arg2 != null) -> command.arg2
                 (mSettings.lastUsedPath != null) -> mSettings.lastUsedPath
                 else -> null
             }
-            viewState.showFlashDialog(command, path)
+            viewState.showFlashFileDialog(command, path)
         }
         else -> Unit
     }

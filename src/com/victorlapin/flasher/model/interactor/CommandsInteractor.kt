@@ -24,5 +24,5 @@ class CommandsInteractor constructor(
 
     fun deleteCommand(command: Command) = mRepo.deleteCommand(command)
 
-    fun addStubCommand() = insertCommand(Command(type = Command.TYPE_FLASH))
+    fun addStubCommand() = insertCommand(Command(type = Command.TYPE_FLASH_FILE))
 }

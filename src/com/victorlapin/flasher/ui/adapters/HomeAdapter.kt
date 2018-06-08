@@ -53,7 +53,7 @@ class HomeAdapter constructor(
             when (command.type) {
                 Command.TYPE_WIPE -> itemView.image.setImageResource(R.drawable.cellphone_erase)
                 Command.TYPE_BACKUP -> itemView.image.setImageResource(R.drawable.backup_restore)
-                Command.TYPE_FLASH -> itemView.image.setImageResource(R.drawable.flash)
+                Command.TYPE_FLASH_FILE -> itemView.image.setImageResource(R.drawable.flash)
             }
 
             val adapter = ArrayAdapter<String>(itemView.context,
