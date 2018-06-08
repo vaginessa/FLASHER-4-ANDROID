@@ -22,9 +22,16 @@ class SettingsGlobalFragment : PreferenceFragmentCompat() {
         addPreferencesFromResource(R.xml.preferences_global)
 
         val themePreference = findPreference(SettingsManager.KEY_THEME) as ListPreference
-        val entries = arrayOf(getString(R.string.theme_light), getString(R.string.theme_dark))
-        val values = arrayOf(Integer.toString(R.style.AppTheme_Light),
-                Integer.toString(R.style.AppTheme_Dark))
+        val entries = arrayOf(
+                getString(R.string.theme_light),
+                getString(R.string.theme_dark),
+                getString(R.string.theme_black)
+        )
+        val values = arrayOf(
+                Integer.toString(R.style.AppTheme_Light),
+                Integer.toString(R.style.AppTheme_Dark),
+                Integer.toString(R.style.AppTheme_Black)
+        )
 
         val value = mSettings.themeString
 
