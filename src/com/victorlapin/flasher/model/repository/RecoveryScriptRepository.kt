@@ -9,6 +9,7 @@ import com.victorlapin.flasher.model.EventArgs
 import com.victorlapin.flasher.model.database.entity.Command
 import io.reactivex.Single
 import java.io.File
+import java.util.*
 
 class RecoveryScriptRepository constructor(
         private val mCommandRepo: CommandsRepository,
@@ -39,6 +40,22 @@ class RecoveryScriptRepository constructor(
                             }
                             Command.TYPE_FLASH_FILE -> it.arg1?.let {
                                 result.appendln("install $it")
+                            }
+                            Command.TYPE_FLASH_MASK -> if (it.arg1 != null && it.arg2 != null) {
+                                val files = File(it.arg2).listFiles { file: File ->
+                                    file.name.contains(Regex.fromLiteral(it.arg1!!))
+                                }
+                                if (files.isNotEmpty()) {
+                                    Arrays.sort(files) { f1, f2 ->
+                                        val dateDiff = f2.lastModified() - f1.lastModified()
+                                        when {
+                                            (dateDiff < 0) -> -1
+                                            (dateDiff > 0) -> 1
+                                            else -> 0
+                                        }
+                                    }
+                                    result.appendln("install ${files[0].absolutePath}")
+                                }
                             }
                         }
                     }
