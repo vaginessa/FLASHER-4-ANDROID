@@ -1,0 +1,7 @@
+static def addRepos(RepositoryHandler handler) {
+    handler.google()
+    handler.jcenter()
+    handler.maven { url 'https://jitpack.io' }
+    handler.maven { url 'http://dl.bintray.com/amulyakhare/maven' }
+}
+ext.addRepos = this.&addRepos
