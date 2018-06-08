@@ -8,6 +8,7 @@ import android.support.v7.preference.PreferenceFragmentCompat
 import com.victorlapin.flasher.R
 import com.victorlapin.flasher.manager.ResourcesManager
 import com.victorlapin.flasher.manager.SettingsManager
+import com.victorlapin.flasher.model.interactor.RecoveryScriptInteractor
 import com.victorlapin.flasher.ui.activities.BaseActivity
 import com.victorlapin.flasher.ui.activities.MainActivity
 import org.koin.android.ext.android.inject
@@ -15,6 +16,7 @@ import org.koin.android.ext.android.inject
 class SettingsGlobalFragment : PreferenceFragmentCompat() {
     private val mSettings by inject<SettingsManager>()
     private val mResources by inject<ResourcesManager>()
+    private val mScriptInteractor by inject<RecoveryScriptInteractor>()
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         addPreferencesFromResource(R.xml.preferences_global)
@@ -45,6 +47,12 @@ class SettingsGlobalFragment : PreferenceFragmentCompat() {
         findPreference(SettingsManager.KEY_SAVE_DEBUG_SCRIPT).summary =
                 mResources.getString(R.string.pref_summary_save_debug_script)
                         .format(Environment.getExternalStorageDirectory().absolutePath)
+
+        findPreference(SettingsManager.KEY_DELETE_DEPLOYED_SCRIPT).onPreferenceClickListener =
+                Preference.OnPreferenceClickListener {
+                    mScriptInteractor.deleteScript()
+                    return@OnPreferenceClickListener true
+                }
     }
 
     companion object {

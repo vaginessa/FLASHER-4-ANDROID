@@ -16,6 +16,10 @@
             android:key="save_debug_script"
             android:title="@string/pref_title_save_debug_script" />
 
+        <Preference
+            android:key="delete_deployed_script"
+            android:title="@string/pref_title_delete_deployed_script" />
+
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/pref_category_misc">

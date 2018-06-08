@@ -15,4 +15,6 @@ class RecoveryScriptInteractor constructor(
     fun deployScript(script: String) = mRepo.deployScript(script)
 
     fun rebootRecovery() = mRepo.rebootRecovery()
+
+    fun deleteScript() = mRepo.deleteScript()
 }

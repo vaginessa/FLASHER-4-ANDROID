@@ -10,6 +10,7 @@ class SettingsManager(context: Context) {
         const val KEY_LAST_USED_PATH = "last_used_path"
         const val KEY_ABOUT = "open_about"
         const val KEY_SAVE_DEBUG_SCRIPT = "save_debug_script"
+        const val KEY_DELETE_DEPLOYED_SCRIPT = "delete_deployed_script"
     }
 
     private val mPrefs = PreferenceManager.getDefaultSharedPreferences(context)

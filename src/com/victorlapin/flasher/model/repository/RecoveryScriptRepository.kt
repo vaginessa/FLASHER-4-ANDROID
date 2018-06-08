@@ -2,6 +2,7 @@ package com.victorlapin.flasher.model.repository
 
 import android.os.Environment
 import com.topjohnwu.superuser.Shell
+import com.topjohnwu.superuser.io.SuFile
 import com.topjohnwu.superuser.io.SuFileOutputStream
 import com.victorlapin.flasher.R
 import com.victorlapin.flasher.manager.SettingsManager
@@ -93,6 +94,15 @@ class RecoveryScriptRepository constructor(
             file.writeText(script)
         } catch (ignore: Exception) {
             ignore.printStackTrace()
+        }
+    }
+
+    fun deleteScript() {
+        if (Shell.rootAccess()) {
+            val file = SuFile(SCRIPT_FILENAME)
+            if (file.exists()) {
+                file.delete()
+            }
         }
     }
 
