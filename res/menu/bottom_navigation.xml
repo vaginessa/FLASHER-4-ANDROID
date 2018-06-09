@@ -6,6 +6,7 @@
         android:title="@string/action_home" />
 
     <item android:id="@+id/action_placeholder2"
+        android:enabled="false"
         android:title="" />
 
     <item android:id="@+id/action_settings"
