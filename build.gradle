@@ -6,7 +6,7 @@ buildscript {
         version_rxjava2 = "2.1.14"
         version_rxandroid = "2.0.2"
         version_kotlin = "1.2.41"
-        version_moxy = "1.5.3"
+        version_moxy = "1.5.5"
         version_cicerone = "3.0.0"
         version_koin = "0.9.3"
         version_text_drawable = "1.0.1"
