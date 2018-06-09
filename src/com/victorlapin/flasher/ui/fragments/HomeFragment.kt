@@ -3,7 +3,6 @@ package com.victorlapin.flasher.ui.fragments
 import android.Manifest
 import android.os.Bundle
 import android.support.design.widget.Snackbar
-import android.support.v7.app.AlertDialog
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -181,11 +180,10 @@ class HomeFragment : BaseFragment(), HomeFragmentView {
                                 })
                                 .show(activity!!)
                     } else {
-                        AlertDialog.Builder(context!!)
-                                .setTitle(R.string.app_name)
-                                .setMessage(R.string.permission_denied_storage)
-                                .setCancelable(true)
-                                .setPositiveButton(android.R.string.ok, null)
+                        MaterialDialog.Builder(context!!)
+                                .title(R.string.app_name)
+                                .content(R.string.permission_denied_storage)
+                                .positiveText(android.R.string.ok)
                                 .show()
                     }
                 }
@@ -218,11 +216,10 @@ class HomeFragment : BaseFragment(), HomeFragmentView {
                                 })
                                 .show(activity!!)
                     } else {
-                        AlertDialog.Builder(context!!)
-                                .setTitle(R.string.app_name)
-                                .setMessage(R.string.permission_denied_storage)
-                                .setCancelable(true)
-                                .setPositiveButton(android.R.string.ok, null)
+                        MaterialDialog.Builder(context!!)
+                                .title(R.string.app_name)
+                                .content(R.string.permission_denied_storage)
+                                .positiveText(android.R.string.ok)
                                 .show()
                     }
                 }
