@@ -4,5 +4,6 @@ val allModules = listOf(
         appModule,
         modelModule,
         mainActivityModule,
-        aboutActivityModule
+        aboutActivityModule,
+        scriptTileServiceModule
 )

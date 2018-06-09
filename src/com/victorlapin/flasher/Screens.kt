@@ -9,4 +9,6 @@ object Screens {
     const val FRAGMENT_ABOUT = "fragment_about"
 
     const val EXTERNAL_ABOUT = "about"
+
+    const val SERVICE_SCRIPT = "tile_service_script"
 }
