@@ -16,7 +16,7 @@
     <string name="action_settings">Настройки</string>
     <string name="action_undo">Отменить</string>
     <string name="action_about">О приложении</string>
-    <string name="action_build">Собрать и установить</string>
+    <string name="action_build">Собрать скрипт</string>
     <string name="action_reboot">Перезагрузка</string>
 
     <!-- Fragment titles -->
