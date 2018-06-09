@@ -1,12 +1,12 @@
 package com.victorlapin.flasher.ui.services
 
+import android.content.Intent
 import android.service.quicksettings.TileService
-import android.support.v7.app.AlertDialog
 import android.widget.Toast
-import com.victorlapin.flasher.R
 import com.victorlapin.flasher.Screens
 import com.victorlapin.flasher.model.EventArgs
 import com.victorlapin.flasher.presenter.ScriptTileServicePresenter
+import com.victorlapin.flasher.ui.activities.RebootDialogActivity
 import com.victorlapin.flasher.view.ScriptTileServiceView
 import org.koin.android.ext.android.inject
 import org.koin.android.ext.android.releaseContext
@@ -38,13 +38,6 @@ class ScriptTileService : TileService(), ScriptTileServiceView {
         }
     }
 
-    override fun showRebootDialog() {
-        AlertDialog.Builder(baseContext)
-                .setTitle(R.string.app_name)
-                .setMessage(R.string.reboot)
-                .setCancelable(true)
-                .setPositiveButton(android.R.string.yes, { _, _ -> mPresenter.reboot() })
-                .setNegativeButton(android.R.string.no, null)
-                .show()
-    }
+    override fun showRebootDialog() =
+            startActivity(Intent(this, RebootDialogActivity::class.java))
 }

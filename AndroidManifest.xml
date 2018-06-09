@@ -25,6 +25,11 @@
             android:name=".ui.activities.AboutActivity"
             android:label="@string/action_about" />
 
+        <activity
+            android:name=".ui.activities.RebootDialogActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.Transparent" />
+
         <service
             android:name=".ui.services.ScriptTileService"
             android:icon="@drawable/creation_black"

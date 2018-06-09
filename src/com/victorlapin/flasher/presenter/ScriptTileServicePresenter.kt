@@ -25,11 +25,4 @@ class ScriptTileServicePresenter constructor(
                     it.printStackTrace()
                 })
     }
-
-    fun reboot() {
-        val result = mScriptInteractor.rebootRecovery()
-        if (!result.isSuccess) {
-            mView?.showInfoToast(result)
-        }
-    }
 }
