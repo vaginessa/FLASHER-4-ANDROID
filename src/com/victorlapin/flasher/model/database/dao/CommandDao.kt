@@ -28,4 +28,8 @@ interface CommandDao {
     @Transaction
     @Delete
     fun delete(command: Command)
+
+    @Transaction
+    @Query("delete from commands")
+    fun clear()
 }

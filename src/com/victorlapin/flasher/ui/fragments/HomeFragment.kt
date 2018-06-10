@@ -13,6 +13,7 @@ import com.afollestad.materialdialogs.folderselector.FolderChooserDialog
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.tbruyelle.rxpermissions2.RxPermissions
+import com.victorlapin.flasher.Const
 import com.victorlapin.flasher.R
 import com.victorlapin.flasher.Screens
 import com.victorlapin.flasher.addTo
@@ -71,6 +72,7 @@ class HomeFragment : BaseFragment(), HomeFragmentView {
             when (item.itemId) {
                 R.id.action_build -> { presenter.buildAndDeploy(); true }
                 R.id.action_export -> { presenter.onExportClicked(); true }
+                R.id.action_import -> { presenter.onImportClicked(); true }
                 else -> false
             }
         }
@@ -260,6 +262,30 @@ class HomeFragment : BaseFragment(), HomeFragmentView {
                                 })
                                 .negativeText(android.R.string.cancel)
                                 .show()
+                    } else {
+                        MaterialDialog.Builder(context!!)
+                                .title(R.string.app_name)
+                                .content(R.string.permission_denied_storage)
+                                .positiveText(android.R.string.ok)
+                                .show()
+                    }
+                }
+    }
+
+    override fun showImportDialog() {
+        mRxPermissions.request(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                .subscribe { granted ->
+                    if (granted) {
+                        FileChooserDialog.Builder(context!!)
+                                .initialPath(Const.APP_FOLDER)
+                                .extensionsFilter(".json")
+                                .callback(object : FileChooserDialog.FileCallback {
+                                    override fun onFileChooserDismissed(dialog: FileChooserDialog) { }
+                                    override fun onFileSelection(dialog: FileChooserDialog, file: File) {
+                                        presenter.importCommands(file.absolutePath)
+                                    }
+                                })
+                                .show(activity!!)
                     } else {
                         MaterialDialog.Builder(context!!)
                                 .title(R.string.app_name)

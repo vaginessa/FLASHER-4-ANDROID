@@ -21,6 +21,7 @@
     <string name="action_build">Build script</string>
     <string name="action_reboot">Reboot</string>
     <string name="action_export">Export</string>
+    <string name="action_import">Import</string>
 
     <!-- Fragment titles -->
     <string name="title_home">Command Queue</string>

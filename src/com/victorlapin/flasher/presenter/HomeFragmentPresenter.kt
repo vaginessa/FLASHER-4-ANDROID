@@ -124,4 +124,13 @@ class HomeFragmentPresenter constructor(
                     viewState.showInfoSnackbar(it)
                 }
     }
+
+    fun onImportClicked() = viewState.showImportDialog()
+
+    fun importCommands(fileName: String) {
+        mCommandsInteractor.importCommands(fileName)
+                .subscribe {
+                    viewState.showInfoSnackbar(it)
+                }
+    }
 }

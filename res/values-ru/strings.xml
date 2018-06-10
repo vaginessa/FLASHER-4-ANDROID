@@ -21,6 +21,7 @@
     <string name="action_build">Собрать скрипт</string>
     <string name="action_reboot">Перезагрузка</string>
     <string name="action_export">Экспорт</string>
+    <string name="action_import">Импорт</string>
 
     <!-- Fragment titles -->
     <string name="title_home">Очередь команд</string>

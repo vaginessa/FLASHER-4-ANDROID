@@ -1,6 +1,7 @@
 package com.victorlapin.flasher.model.repository
 
 import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.victorlapin.flasher.Const
 import com.victorlapin.flasher.R
 import com.victorlapin.flasher.model.EventArgs
@@ -51,6 +52,19 @@ class CommandsRepository constructor(
             File(folder, fileName).writeText(json)
             emitter.onSuccess(EventArgs(isSuccess = true, messageId = R.string.success))
             disposable?.dispose()
+        }
+    }
+
+    fun importCommands(fileName: String): Maybe<EventArgs> = Maybe.create { emitter ->
+        try {
+            val json = File(fileName).readText()
+            val commands = mGson.fromJson<List<Command>>(json, object : TypeToken<List<Command>>() {}.type)
+            mCommandDao.clear()
+            mCommandDao.insert(commands)
+            emitter.onSuccess(EventArgs(isSuccess = true, messageId = R.string.success))
+        } catch (ex: Exception) {
+            ex.printStackTrace()
+            emitter.onSuccess(EventArgs(isSuccess = false, message = ex.message))
         }
     }
 }

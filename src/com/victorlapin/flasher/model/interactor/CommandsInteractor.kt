@@ -30,4 +30,8 @@ class CommandsInteractor constructor(
     fun exportCommands(fileName: String): Maybe<EventArgs> = mRepo.exportCommands(fileName)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
+
+    fun importCommands(fileName: String): Maybe<EventArgs> = mRepo.importCommands(fileName)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
 }
