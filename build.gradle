@@ -15,6 +15,7 @@ buildscript {
         version_dialogs = "0.9.6.0"
         version_rxpermissions = "0.9.5"
         version_libsu = "1.1.1"
+        version_gson = "2.8.5"
     }
     apply from: 'repos.gradle'
     addRepos(repositories)
@@ -117,6 +118,7 @@ dependencies {
     implementation "com.afollestad.material-dialogs:core:$version_dialogs"
     implementation "com.tbruyelle.rxpermissions2:rxpermissions:${version_rxpermissions}@aar"
     implementation "com.github.topjohnwu:libsu:$version_libsu"
+    implementation "com.google.code.gson:gson:$version_gson"
 
     debugImplementation "im.dino:dbinspector:${version_db_inspector}@aar"
 }
