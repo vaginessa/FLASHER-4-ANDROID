@@ -33,6 +33,8 @@
     <string name="pref_title_save_debug_script">Сохранять отладочный скрипт</string>
     <string name="pref_summary_save_debug_script">Будет сохранен в %s</string>
     <string name="pref_title_delete_deployed_script">Удалить установленный скрипт</string>
+    <string name="pref_title_analyzer">Анализировать скрипт</string>
+    <string name="pref_summary_analyzer">Прогонять базовые проверки \"от дурака\" на созданных скриптах. ВЫКЛЮЧАЙТЕ НА СВОЙ РИСК!</string>
 
     <!-- Command names -->
     <string name="command_wipe">Вайп</string>

@@ -11,6 +11,7 @@ class SettingsManager(context: Context) {
         const val KEY_ABOUT = "open_about"
         const val KEY_SAVE_DEBUG_SCRIPT = "save_debug_script"
         const val KEY_DELETE_DEPLOYED_SCRIPT = "delete_deployed_script"
+        const val KEY_USE_ANALYZER = "use_analyzer"
     }
 
     private val mPrefs = PreferenceManager.getDefaultSharedPreferences(context)
@@ -27,4 +28,7 @@ class SettingsManager(context: Context) {
 
     val saveDebugScript: Boolean
         get() = mPrefs.getBoolean(KEY_SAVE_DEBUG_SCRIPT, false)
+
+    val useAnalyzer: Boolean
+        get() = mPrefs.getBoolean(KEY_USE_ANALYZER, true)
 }

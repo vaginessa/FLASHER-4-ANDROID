@@ -20,6 +20,12 @@
             android:key="delete_deployed_script"
             android:title="@string/pref_title_delete_deployed_script" />
 
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="use_analyzer"
+            android:summary="@string/pref_summary_analyzer"
+            android:title="@string/pref_title_analyzer" />
+
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/pref_category_misc">

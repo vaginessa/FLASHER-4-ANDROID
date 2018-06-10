@@ -33,6 +33,8 @@
     <string name="pref_title_save_debug_script">Save debug script</string>
     <string name="pref_summary_save_debug_script">Will be saved to %s</string>
     <string name="pref_title_delete_deployed_script">Delete deployed script</string>
+    <string name="pref_title_analyzer">Use script analyzer</string>
+    <string name="pref_summary_analyzer">Run very basic foolproof checks on a generated script. DISABLE AT YOUR OWN RISK!</string>
 
     <!-- Command names -->
     <string name="command_wipe">Wipe</string>

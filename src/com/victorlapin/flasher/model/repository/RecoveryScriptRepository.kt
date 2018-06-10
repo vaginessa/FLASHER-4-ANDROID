@@ -69,9 +69,11 @@ class RecoveryScriptRepository constructor(
     }
 
     fun deployScript(script: String): EventArgs {
-        val analyzeResult = analyzeScript(script)
-        if (analyzeResult != null) {
-            return analyzeResult
+        if (mSettings.useAnalyzer) {
+            val analyzeResult = analyzeScript(script)
+            if (analyzeResult != null) {
+                return analyzeResult
+            }
         }
 
         return if (Shell.rootAccess()) {
