@@ -44,6 +44,9 @@
     <string name="permission_denied_storage">Storage permission is required.</string>
     <string name="permission_denied_su">Superuser access denied. Are you rooted?</string>
 
+    <!-- Script analyzer -->
+    <string name="analyze_no_rom">System wipe and no ROM installation detected.</string>
+
     <!-- About activity -->
     <string name="about_versions">Versions</string>
     <string name="about_the_team">The Team</string>

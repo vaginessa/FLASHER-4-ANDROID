@@ -67,18 +67,25 @@ class RecoveryScriptRepository constructor(
                 }
     }
 
-    fun deployScript(script: String): EventArgs = if (Shell.rootAccess()) {
-        try {
-            SuFileOutputStream(SCRIPT_FILENAME).use {
-                it.write(script.toByteArray())
-            }
-            EventArgs(isSuccess = true)
-        } catch (ex: Exception) {
-            ex.printStackTrace()
-            EventArgs(isSuccess = false, message = ex.toString())
+    fun deployScript(script: String): EventArgs {
+        val analyzeResult = analyzeScript(script)
+        if (analyzeResult != null) {
+            return analyzeResult
         }
-    } else {
-        mSuDeniedArgs
+
+        return if (Shell.rootAccess()) {
+            try {
+                SuFileOutputStream(SCRIPT_FILENAME).use {
+                    it.write(script.toByteArray())
+                }
+                EventArgs(isSuccess = true)
+            } catch (ex: Exception) {
+                ex.printStackTrace()
+                EventArgs(isSuccess = false, message = ex.toString())
+            }
+        } else {
+            mSuDeniedArgs
+        }
     }
 
     fun rebootRecovery(): EventArgs = if (Shell.rootAccess()) {
@@ -104,6 +111,16 @@ class RecoveryScriptRepository constructor(
                 file.delete()
             }
         }
+    }
+
+    private fun analyzeScript(script: String): EventArgs? {
+        // check for possible no rom
+        val index1 = script.lastIndexOf("wipe system")
+        val index2 = script.lastIndexOf("install ")
+        if (index1 > index2) {
+            return EventArgs(isSuccess = false, messageId = R.string.analyze_no_rom)
+        }
+        return null
     }
 
     private fun toArray(set: String) =

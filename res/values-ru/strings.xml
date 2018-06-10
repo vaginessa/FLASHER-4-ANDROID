@@ -44,6 +44,9 @@
     <string name="permission_denied_storage">Необходим доступ к памяти устройства.</string>
     <string name="permission_denied_su">Доступ суперпользователя запрещен. Проблема с root правами?</string>
 
+    <!-- Script analyzer -->
+    <string name="analyze_no_rom">Обнаружен вайп системного раздела без установки ROM.</string>
+
     <!-- About activity -->
     <string name="about_versions">Версии</string>
     <string name="about_the_team">Команда</string>
