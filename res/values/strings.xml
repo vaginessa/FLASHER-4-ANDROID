@@ -6,9 +6,9 @@
     <string name="command_tap_to_select">Tap to select…</string>
     <string name="command_tap_to_enter_mask">Tap to enter mask…</string>
     <string name="command_tap_to_select_folder">Tap to select folder…</string>
-    <string name="command_deleted">The command has been deleted</string>
+    <string name="command_deleted">Command deleted</string>
     <string name="not_found">Not found</string>
-    <string name="reboot">Script has been successfully deployed. Reboot to recovery?</string>
+    <string name="reboot">Script deployed. Reboot to recovery?</string>
     <string name="enter_mask">Enter mask</string>
 
     <!-- Action strings -->
