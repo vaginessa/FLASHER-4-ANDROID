@@ -8,4 +8,10 @@
         android:title="@string/action_build"
         app:showAsAction="ifRoom" />
 
+    <item
+        android:id="@+id/action_export"
+        android:icon="@drawable/data_export"
+        android:title="@string/action_export"
+        app:showAsAction="never" />
+
 </menu>

@@ -24,4 +24,6 @@ interface HomeFragmentView : MvpView {
     fun showInfoSnackbar(args: EventArgs)
     @StateStrategyType(SkipStrategy::class)
     fun showRebootSnackbar()
+    @StateStrategyType(SkipStrategy::class)
+    fun showExportDialog()
 }

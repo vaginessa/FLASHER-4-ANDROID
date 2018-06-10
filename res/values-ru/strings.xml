@@ -10,6 +10,8 @@
     <string name="not_found">Не найден</string>
     <string name="reboot">Скрипт установлен. Перезагрузиться в рекавери?</string>
     <string name="enter_mask">Введите маску</string>
+    <string name="enter_file_name">Введите имя файла</string>
+    <string name="success">Успешно</string>
 
     <!-- Action strings -->
     <string name="action_home">Главная</string>
@@ -18,6 +20,7 @@
     <string name="action_about">О приложении</string>
     <string name="action_build">Собрать скрипт</string>
     <string name="action_reboot">Перезагрузка</string>
+    <string name="action_export">Экспорт</string>
 
     <!-- Fragment titles -->
     <string name="title_home">Очередь команд</string>

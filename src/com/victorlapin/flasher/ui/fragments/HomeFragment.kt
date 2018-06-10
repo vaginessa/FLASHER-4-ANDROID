@@ -69,10 +69,8 @@ class HomeFragment : BaseFragment(), HomeFragmentView {
         toolbar.inflateMenu(R.menu.fragment_home)
         toolbar.setOnMenuItemClickListener { item ->
             when (item.itemId) {
-                R.id.action_build -> {
-                    presenter.buildAndDeploy()
-                    true
-                }
+                R.id.action_build -> { presenter.buildAndDeploy(); true }
+                R.id.action_export -> { presenter.onExportClicked(); true }
                 else -> false
             }
         }
@@ -247,6 +245,29 @@ class HomeFragment : BaseFragment(), HomeFragmentView {
         Snackbar.make(coordinator, R.string.reboot, Snackbar.LENGTH_LONG)
                 .setAction(R.string.action_reboot, { presenter.reboot() })
                 .show()
+    }
+
+    override fun showExportDialog() {
+        mRxPermissions.request(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                .subscribe { granted ->
+                    if (granted) {
+                        MaterialDialog.Builder(context!!)
+                                .title(R.string.enter_file_name)
+                                .input(null, null, false, { _, input ->
+                                    val fileName = if (input.endsWith(".json", true))
+                                        input.toString() else "$input.json"
+                                    presenter.exportCommands(fileName)
+                                })
+                                .negativeText(android.R.string.cancel)
+                                .show()
+                    } else {
+                        MaterialDialog.Builder(context!!)
+                                .title(R.string.app_name)
+                                .content(R.string.permission_denied_storage)
+                                .positiveText(android.R.string.ok)
+                                .show()
+                    }
+                }
     }
 
     companion object {

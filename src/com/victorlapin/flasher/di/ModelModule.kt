@@ -3,6 +3,7 @@ package com.victorlapin.flasher.di
 import android.arch.persistence.db.SupportSQLiteDatabase
 import android.arch.persistence.room.Room
 import android.arch.persistence.room.RoomDatabase
+import com.google.gson.GsonBuilder
 import com.victorlapin.flasher.model.database.AppDatabase
 import com.victorlapin.flasher.model.database.dao.CommandDao
 import com.victorlapin.flasher.model.database.entity.Command
@@ -38,8 +39,14 @@ val modelModule = applicationContext {
                 .build()
     }
     bean { get<AppDatabase>().getCommandDao() }
+    bean {
+        GsonBuilder()
+                .serializeNulls()
+                .setPrettyPrinting()
+                .create()
+    }
 
-    factory { CommandsRepository(get()) }
+    factory { CommandsRepository(get(), get()) }
     factory { CommandsInteractor(get()) }
     factory { AboutRepository(get(), get()) }
     factory { AboutInteractor(get()) }

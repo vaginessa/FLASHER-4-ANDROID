@@ -1,5 +1,6 @@
 package com.victorlapin.flasher.model.interactor
 
+import com.victorlapin.flasher.model.EventArgs
 import com.victorlapin.flasher.model.database.entity.Command
 import com.victorlapin.flasher.model.repository.CommandsRepository
 import io.reactivex.Flowable
@@ -25,4 +26,8 @@ class CommandsInteractor constructor(
     fun deleteCommand(command: Command) = mRepo.deleteCommand(command)
 
     fun addStubCommand() = insertCommand(Command(type = Command.TYPE_FLASH_FILE))
+
+    fun exportCommands(fileName: String): Maybe<EventArgs> = mRepo.exportCommands(fileName)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
 }

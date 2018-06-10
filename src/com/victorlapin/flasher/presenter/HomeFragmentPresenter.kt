@@ -115,4 +115,13 @@ class HomeFragmentPresenter constructor(
             viewState.showInfoSnackbar(result)
         }
     }
+
+    fun onExportClicked() = viewState.showExportDialog()
+
+    fun exportCommands(fileName: String) {
+        mCommandsInteractor.exportCommands(fileName)
+                .subscribe {
+                    viewState.showInfoSnackbar(it)
+                }
+    }
 }
