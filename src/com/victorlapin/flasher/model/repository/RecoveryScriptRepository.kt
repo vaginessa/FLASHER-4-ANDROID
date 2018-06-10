@@ -1,6 +1,7 @@
 package com.victorlapin.flasher.model.repository
 
 import android.os.Environment
+import android.os.StatFs
 import com.topjohnwu.superuser.Shell
 import com.topjohnwu.superuser.io.SuFile
 import com.topjohnwu.superuser.io.SuFileOutputStream
@@ -120,6 +121,19 @@ class RecoveryScriptRepository constructor(
         if (index1 > index2) {
             return EventArgs(isSuccess = false, messageId = R.string.analyze_no_rom)
         }
+
+        // check for system space
+        val systemSpace = if (script.contains("wipe system"))
+            StatFs("/system").totalBytes else StatFs("/system").freeBytes
+        var zipSpace = 0L
+        script.split("\n")
+                .filter { it.startsWith("install ") }
+                .map { it -> it.replace("install ", "") }
+                .forEach { zipSpace += File(it).length() }
+        if (zipSpace > systemSpace) {
+            return EventArgs(isSuccess = false, messageId = R.string.analyze_system_space)
+        }
+
         return null
     }
 

@@ -46,6 +46,7 @@
 
     <!-- Script analyzer -->
     <string name="analyze_no_rom">System wipe and no ROM installation detected.</string>
+    <string name="analyze_system_space">Insufficient system space to flash selected files.</string>
 
     <!-- About activity -->
     <string name="about_versions">Versions</string>
