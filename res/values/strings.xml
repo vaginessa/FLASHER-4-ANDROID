@@ -74,6 +74,8 @@
     <string name="about_credits_aidan">Aidan Follestad</string>
     <string name="about_credits_aidan_text">material-dialogs open source project</string>
     <string name="about_credits_doug">Doug Hardester</string>
+    <string name="about_credits_dave">David Wilson</string>
+    <string name="about_credits_dave_text">Help with theme related stuff</string>
     <string name="about_links_source_code">Source code</string>
     <string name="about_links_gitlab">View at Gitlab.com</string>
 </resources>
