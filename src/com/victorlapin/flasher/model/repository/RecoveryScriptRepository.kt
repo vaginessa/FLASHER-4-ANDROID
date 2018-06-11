@@ -46,6 +46,7 @@ class RecoveryScriptRepository constructor(
                             Command.TYPE_FLASH_MASK -> if (it.arg1 != null && it.arg2 != null) {
                                 val files = File(it.arg2).listFiles { file: File ->
                                     file.name.contains(Regex.fromLiteral(it.arg1!!))
+                                            && file.extension.toLowerCase() == "zip"
                                 }
                                 if (files.isNotEmpty()) {
                                     Arrays.sort(files) { f1, f2 ->
