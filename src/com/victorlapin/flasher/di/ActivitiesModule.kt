@@ -1,10 +1,7 @@
 package com.victorlapin.flasher.di
 
 import com.victorlapin.flasher.Screens
-import com.victorlapin.flasher.presenter.AboutActivityPresenter
-import com.victorlapin.flasher.presenter.AboutFragmentPresenter
-import com.victorlapin.flasher.presenter.HomeFragmentPresenter
-import com.victorlapin.flasher.presenter.MainActivityPresenter
+import com.victorlapin.flasher.presenter.*
 import com.victorlapin.flasher.ui.adapters.AboutAdapter
 import com.victorlapin.flasher.ui.adapters.HomeAdapter
 import org.koin.dsl.module.applicationContext
@@ -28,5 +25,11 @@ val aboutActivityModule = applicationContext {
             factory { AboutFragmentPresenter(get(), get()) }
             factory { AboutAdapter(get()) }
         }
+    }
+}
+
+val rebootDialogActivityModule = applicationContext {
+    context(Screens.ACTIVITY_REBOOT_DIALOG) {
+        factory { RebootDialogActivityPresenter(get()) }
     }
 }

@@ -1,20 +1,35 @@
 package com.victorlapin.flasher.ui.activities
 
-import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.Theme
+import com.arellomobile.mvp.MvpAppCompatActivity
+import com.arellomobile.mvp.presenter.InjectPresenter
+import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.victorlapin.flasher.R
+import com.victorlapin.flasher.Screens
 import com.victorlapin.flasher.manager.SettingsManager
-import com.victorlapin.flasher.model.interactor.RecoveryScriptInteractor
+import com.victorlapin.flasher.presenter.RebootDialogActivityPresenter
+import com.victorlapin.flasher.view.RebootDialogActivityView
 import org.koin.android.ext.android.inject
+import org.koin.android.ext.android.releaseContext
 
-class RebootDialogActivity : AppCompatActivity() {
-    private val mScriptInteractor by inject<RecoveryScriptInteractor>()
+class RebootDialogActivity : MvpAppCompatActivity(), RebootDialogActivityView {
+    private val mPresenter by inject<RebootDialogActivityPresenter>()
+
+    @InjectPresenter
+    lateinit var presenter: RebootDialogActivityPresenter
+
+    @ProvidePresenter
+    fun providePresenter() = mPresenter
+
     private val mSettings by inject<SettingsManager>()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun onStop() {
+        super.onStop()
+        releaseContext(Screens.ACTIVITY_REBOOT_DIALOG)
+    }
+
+    override fun showRebootDialog() {
         val theme = when (mSettings.theme) {
             R.style.AppTheme_Light -> Theme.LIGHT
             else -> Theme.DARK
@@ -26,7 +41,7 @@ class RebootDialogActivity : AppCompatActivity() {
                 .content(R.string.reboot)
                 .positiveText(android.R.string.yes)
                 .positiveColorRes(R.color.accent)
-                .onPositive { _, _ -> mScriptInteractor.rebootRecovery() }
+                .onPositive { _, _ -> presenter.rebootRecovery() }
                 .negativeText(android.R.string.no)
                 .negativeColorRes(R.color.accent)
                 .cancelListener { finish() }
