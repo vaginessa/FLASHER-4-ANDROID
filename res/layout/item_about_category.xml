@@ -9,6 +9,6 @@
     android:layout_marginEnd="@dimen/margin_32"
     android:layout_marginStart="@dimen/margin_32"
     android:layout_marginTop="@dimen/margin_8"
-    android:textColor="@color/accent"
+    android:textColor="?android:colorAccent"
     android:textStyle="bold"
     tools:text="Category" />

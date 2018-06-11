@@ -40,10 +40,10 @@ class RebootDialogActivity : MvpAppCompatActivity(), RebootDialogActivityView {
                 .title(R.string.app_name)
                 .content(R.string.reboot)
                 .positiveText(android.R.string.yes)
-                .positiveColorRes(R.color.accent)
+                .positiveColorAttr(R.attr.colorAccent)
                 .onPositive { _, _ -> presenter.rebootRecovery() }
                 .negativeText(android.R.string.no)
-                .negativeColorRes(R.color.accent)
+                .negativeColorAttr(R.attr.colorAccent)
                 .cancelListener { finish() }
                 .show()
     }

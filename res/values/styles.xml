@@ -59,7 +59,7 @@
         <item name="elevation">@dimen/fab_elevation</item>
         <item name="pressedTranslationZ">@dimen/fab_elevation_pressed</item>
         <item name="rippleColor">@android:color/white</item>
-        <item name="backgroundTint">@color/accent</item>
+        <item name="backgroundTint">?android:colorAccent</item>
         <item name="android:tint">@android:color/white</item>
         <item name="fabSize">normal</item>
     </style>
@@ -69,7 +69,7 @@
     </style>
 
     <style name="Button">
-        <item name="android:backgroundTint">@color/accent</item>
+        <item name="android:backgroundTint">?android:colorAccent</item>
         <item name="android:textColor">@android:color/white</item>
     </style>
 
