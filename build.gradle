@@ -45,6 +45,7 @@ android {
         versionCode 4
         versionName "1.0.0-beta4"
         archivesBaseName = "Flasher"
+        resConfigs "en", "ru"
     }
 
     signingConfigs {
