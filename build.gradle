@@ -46,6 +46,12 @@ android {
         versionName "1.0.0-beta6"
         archivesBaseName = "Flasher"
         resConfigs "en", "ru"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = ["room.schemaLocation": "$projectDir/schemas".toString()]
+            }
+        }
     }
 
     signingConfigs {
@@ -84,6 +90,7 @@ android {
         main.res.srcDirs = ['res']
         main.java.srcDirs = ['src']
         main.manifest.srcFile 'AndroidManifest.xml'
+        androidTest.assets.srcDirs += files("$projectDir/schemas".toString())
     }
 
     packagingOptions {
@@ -122,4 +129,5 @@ dependencies {
     implementation "com.google.code.gson:gson:$version_gson"
 
     debugImplementation "im.dino:dbinspector:${version_db_inspector}@aar"
+    androidTestImplementation "android.arch.persistence.room:testing:$version_room"
 }

@@ -7,7 +7,7 @@ import com.victorlapin.flasher.model.database.entity.Command
 
 @Database(entities = [
     Command::class
-], version = 1, exportSchema = false)
+], version = 1, exportSchema = true)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun getCommandDao(): CommandDao
 }
