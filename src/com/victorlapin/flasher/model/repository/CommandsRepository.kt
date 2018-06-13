@@ -6,6 +6,7 @@ import com.victorlapin.flasher.Const
 import com.victorlapin.flasher.R
 import com.victorlapin.flasher.model.EventArgs
 import com.victorlapin.flasher.model.database.dao.CommandDao
+import com.victorlapin.flasher.model.database.entity.Chain
 import com.victorlapin.flasher.model.database.entity.Command
 import io.reactivex.Flowable
 import io.reactivex.Maybe
@@ -18,7 +19,7 @@ class CommandsRepository constructor(
         private val mCommandDao: CommandDao,
         private val mGson: Gson
 ) {
-    fun getCommands(): Flowable<List<Command>> = mCommandDao.getCommands()
+    fun getCommands(): Flowable<List<Command>> = mCommandDao.getCommands(Chain.DEFAULT_ID)
 
     fun getCommand(id: Long): Maybe<Command> = mCommandDao.getCommand(id)
 
@@ -59,7 +60,7 @@ class CommandsRepository constructor(
         try {
             val json = File(fileName).readText()
             val commands = mGson.fromJson<List<Command>>(json, object : TypeToken<List<Command>>() {}.type)
-            mCommandDao.clear()
+            mCommandDao.clear(Chain.DEFAULT_ID)
             mCommandDao.insert(commands)
             emitter.onSuccess(EventArgs(isSuccess = true, messageId = R.string.success))
         } catch (ex: Exception) {
