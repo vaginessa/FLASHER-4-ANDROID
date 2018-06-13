@@ -2,10 +2,15 @@ package com.victorlapin.flasher.model.database.entity
 
 import android.arch.persistence.room.ColumnInfo
 import android.arch.persistence.room.Entity
+import android.arch.persistence.room.ForeignKey
 import android.arch.persistence.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 
-@Entity(tableName = "commands")
+@Entity(tableName = "commands",
+        foreignKeys = [(ForeignKey(entity = Chain::class,
+                parentColumns = ["id"], childColumns = ["chain_id"],
+                onDelete = ForeignKey.NO_ACTION))])
+
 data class Command(
         @PrimaryKey(autoGenerate = true)
         @SerializedName("id")
@@ -18,7 +23,10 @@ data class Command(
         var arg1: String? = null,
         @ColumnInfo(name = "arg2")
         @SerializedName("arg2")
-        var arg2: String? = null
+        var arg2: String? = null,
+        @ColumnInfo(name = "chain_id")
+        @SerializedName("chain_id")
+        var chainId: Long = Chain.DEFAULT_ID
 ) {
     companion object {
         const val TYPE_WIPE = 0
