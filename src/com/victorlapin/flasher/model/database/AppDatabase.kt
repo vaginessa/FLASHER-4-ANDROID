@@ -6,6 +6,7 @@ import android.arch.persistence.room.RoomDatabase
 import android.arch.persistence.room.migration.Migration
 import com.victorlapin.flasher.model.database.dao.ChainDao
 import com.victorlapin.flasher.model.database.dao.CommandDao
+import com.victorlapin.flasher.model.database.dao.TestsDao
 import com.victorlapin.flasher.model.database.entity.Chain
 import com.victorlapin.flasher.model.database.entity.Command
 
@@ -16,6 +17,7 @@ import com.victorlapin.flasher.model.database.entity.Command
 abstract class AppDatabase : RoomDatabase() {
     abstract fun getCommandDao(): CommandDao
     abstract fun getChainDao(): ChainDao
+    abstract fun getTestsDao(): TestsDao
 
     companion object {
         val MIGRATION_1_2 = object : Migration(1, 2) {
