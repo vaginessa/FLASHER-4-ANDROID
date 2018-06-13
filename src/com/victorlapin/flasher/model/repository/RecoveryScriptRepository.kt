@@ -119,22 +119,24 @@ class RecoveryScriptRepository constructor(
 
     private fun analyzeScript(script: String): EventArgs? {
         // check for possible no rom
-        val index1 = script.lastIndexOf("wipe system")
-        val index2 = script.lastIndexOf("install ")
-        if (index1 > index2) {
+        val indexWipe = script.lastIndexOf("wipe system")
+        val indexFlash = script.lastIndexOf("install ")
+        if (indexWipe > indexFlash) {
             return EventArgs(isSuccess = false, messageId = R.string.analyze_no_rom)
         }
 
         // check for system space
-        val systemSpace = if (script.contains("wipe system"))
-            StatFs("/system").totalBytes else StatFs("/system").freeBytes
-        var zipSpace = 0L
-        script.split("\n")
-                .filter { it.startsWith("install ") }
-                .map { it -> it.replace("install ", "") }
-                .forEach { zipSpace += File(it).length() }
-        if (zipSpace > systemSpace) {
-            return EventArgs(isSuccess = false, messageId = R.string.analyze_system_space)
+        if (indexFlash >= 0) {
+            val systemSpace = if (script.contains("wipe system"))
+                StatFs("/system").totalBytes else StatFs("/system").freeBytes
+            var zipSpace = 0L
+            script.split("\n")
+                    .filter { it.startsWith("install ") }
+                    .map { it -> it.replace("install ", "") }
+                    .forEach { zipSpace += File(it).length() }
+            if (zipSpace > systemSpace) {
+                return EventArgs(isSuccess = false, messageId = R.string.analyze_system_space)
+            }
         }
 
         return null
