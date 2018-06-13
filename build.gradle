@@ -16,6 +16,8 @@ buildscript {
         version_rxpermissions = "0.9.5"
         version_libsu = "1.1.1"
         version_gson = "2.8.5"
+        version_junit = "4.12"
+        version_test_runner = "1.0.2"
     }
     apply from: 'repos.gradle'
     addRepos(repositories)
@@ -52,6 +54,7 @@ android {
                 arguments = ["room.schemaLocation": "$projectDir/schemas".toString()]
             }
         }
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
     signingConfigs {
@@ -90,6 +93,7 @@ android {
         main.res.srcDirs = ['res']
         main.java.srcDirs = ['src']
         main.manifest.srcFile 'AndroidManifest.xml'
+        androidTest.java.srcDirs = ['androidTest']
         androidTest.assets.srcDirs += files("$projectDir/schemas".toString())
     }
 
@@ -129,5 +133,10 @@ dependencies {
     implementation "com.google.code.gson:gson:$version_gson"
 
     debugImplementation "im.dino:dbinspector:${version_db_inspector}@aar"
+
+    testImplementation "junit:junit:$version_junit"
+
     androidTestImplementation "android.arch.persistence.room:testing:$version_room"
+    androidTestImplementation "com.android.support.test:runner:$version_test_runner"
+    androidTestImplementation "com.android.support.test:rules:$version_test_runner"
 }
