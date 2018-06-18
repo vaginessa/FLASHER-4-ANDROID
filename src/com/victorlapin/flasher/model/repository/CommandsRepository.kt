@@ -6,7 +6,6 @@ import com.victorlapin.flasher.Const
 import com.victorlapin.flasher.R
 import com.victorlapin.flasher.model.EventArgs
 import com.victorlapin.flasher.model.database.dao.CommandDao
-import com.victorlapin.flasher.model.database.entity.Chain
 import com.victorlapin.flasher.model.database.entity.Command
 import io.reactivex.Flowable
 import io.reactivex.Maybe
@@ -19,7 +18,7 @@ class CommandsRepository constructor(
         private val mCommandDao: CommandDao,
         private val mGson: Gson
 ) {
-    fun getCommands(): Flowable<List<Command>> = mCommandDao.getCommands(Chain.DEFAULT_ID)
+    fun getCommands(chainId: Long): Flowable<List<Command>> = mCommandDao.getCommands(chainId)
 
     fun getCommand(id: Long): Maybe<Command> = mCommandDao.getCommand(id)
 
@@ -44,9 +43,9 @@ class CommandsRepository constructor(
                 .subscribe { c -> mCommandDao.delete(c) }
     }
 
-    fun exportCommands(fileName: String): Maybe<EventArgs> = Maybe.create { emitter ->
+    fun exportCommands(fileName: String, chainId: Long): Maybe<EventArgs> = Maybe.create { emitter ->
         var disposable: Disposable? = null
-        disposable = getCommands().subscribe {
+        disposable = getCommands(chainId).subscribe {
             val json = mGson.toJson(it)
             val folder = File(Const.APP_FOLDER)
             folder.mkdirs()
@@ -56,11 +55,11 @@ class CommandsRepository constructor(
         }
     }
 
-    fun importCommands(fileName: String): Maybe<EventArgs> = Maybe.create { emitter ->
+    fun importCommands(fileName: String, chainId: Long): Maybe<EventArgs> = Maybe.create { emitter ->
         try {
             val json = File(fileName).readText()
             val commands = mGson.fromJson<List<Command>>(json, object : TypeToken<List<Command>>() {}.type)
-            mCommandDao.clear(Chain.DEFAULT_ID)
+            mCommandDao.clear(chainId)
             mCommandDao.insert(commands)
             emitter.onSuccess(EventArgs(isSuccess = true, messageId = R.string.success))
         } catch (ex: Exception) {
