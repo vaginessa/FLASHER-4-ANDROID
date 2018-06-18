@@ -11,6 +11,7 @@ import com.victorlapin.flasher.model.EventArgs
 import com.victorlapin.flasher.model.database.entity.Command
 import io.reactivex.Single
 import java.io.File
+import java.text.SimpleDateFormat
 import java.util.*
 
 class RecoveryScriptRepository constructor(
@@ -37,7 +38,12 @@ class RecoveryScriptRepository constructor(
                                     partString.append(it[0].toUpperCase())
                                 }
                                 if (partString.isNotEmpty()) {
-                                    result.appendln("backup $partString")
+                                    val dt = SimpleDateFormat("YYYY-MM-dd_HH-mm-ss",
+                                            Locale.getDefault()).format(Date())
+                                    val out = Shell.Sync.sh("getprop ro.build.id")
+                                    val buildId = if (out.isNotEmpty()) out[0] else ""
+                                    val backupName = if (buildId.isNotEmpty()) "${dt}_$buildId" else dt
+                                    result.appendln("backup $partString $backupName")
                                 }
                             }
                             Command.TYPE_FLASH_FILE -> it.arg1?.let {
