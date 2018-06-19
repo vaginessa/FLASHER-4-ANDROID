@@ -132,11 +132,11 @@ class HomeFragment : BaseFragment(), HomeFragmentView {
         MaterialDialog.Builder(context!!)
                 .title(R.string.command_wipe)
                 .items(mWipePartitions)
-                .itemsCallbackMultiChoice(indices, { _, _, items ->
+                .itemsCallbackMultiChoice(indices) { _, _, items ->
                     command.arg1 = flatten(items.toSet().toString())
                     presenter.onCommandUpdated(command)
                     return@itemsCallbackMultiChoice true
-                })
+                }
                 .positiveText(android.R.string.ok)
                 .negativeText(android.R.string.cancel)
                 .show()
@@ -152,11 +152,11 @@ class HomeFragment : BaseFragment(), HomeFragmentView {
         MaterialDialog.Builder(context!!)
                 .title(R.string.command_backup)
                 .items(mBackupPartitions)
-                .itemsCallbackMultiChoice(indices, { _, _, items ->
+                .itemsCallbackMultiChoice(indices) { _, _, items ->
                     command.arg1 = flatten(items.toSet().toString())
                     presenter.onCommandUpdated(command)
                     return@itemsCallbackMultiChoice true
-                })
+                }
                 .positiveText(android.R.string.ok)
                 .negativeText(android.R.string.cancel)
                 .show()
@@ -192,10 +192,10 @@ class HomeFragment : BaseFragment(), HomeFragmentView {
     override fun showEditMaskDialog(command: Command) {
         MaterialDialog.Builder(context!!)
                 .title(R.string.enter_mask)
-                .input("", command.arg1, true, { _, input ->
+                .input("", command.arg1, true) { _, input ->
                     command.arg1 = if (input.isEmpty()) null else input.toString()
                     presenter.onCommandUpdated(command)
-                })
+                }
                 .negativeText(android.R.string.cancel)
                 .show()
     }
@@ -227,7 +227,7 @@ class HomeFragment : BaseFragment(), HomeFragmentView {
 
     override fun showDeletedSnackbar(command: Command) {
         Snackbar.make(coordinator, R.string.command_deleted, Snackbar.LENGTH_LONG)
-                .setAction(R.string.action_undo, { presenter.onUndoDelete(command) })
+                .setAction(R.string.action_undo) { presenter.onUndoDelete(command) }
                 .show()
     }
 
@@ -245,7 +245,7 @@ class HomeFragment : BaseFragment(), HomeFragmentView {
 
     override fun showRebootSnackbar() {
         Snackbar.make(coordinator, R.string.reboot, Snackbar.LENGTH_LONG)
-                .setAction(R.string.action_reboot, { presenter.reboot() })
+                .setAction(R.string.action_reboot) { presenter.reboot() }
                 .show()
     }
 
@@ -255,11 +255,11 @@ class HomeFragment : BaseFragment(), HomeFragmentView {
                     if (granted) {
                         MaterialDialog.Builder(context!!)
                                 .title(R.string.enter_file_name)
-                                .input(null, null, false, { _, input ->
+                                .input(null, null, false) { _, input ->
                                     val fileName = if (input.endsWith(".json", true))
                                         input.toString() else "$input.json"
                                     presenter.exportCommands(fileName)
-                                })
+                                }
                                 .negativeText(android.R.string.cancel)
                                 .show()
                     } else {
