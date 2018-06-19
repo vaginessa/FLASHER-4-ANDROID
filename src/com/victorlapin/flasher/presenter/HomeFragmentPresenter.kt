@@ -4,6 +4,7 @@ import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
 import com.victorlapin.flasher.manager.SettingsManager
 import com.victorlapin.flasher.model.CommandClickEventArgs
+import com.victorlapin.flasher.model.database.entity.Chain
 import com.victorlapin.flasher.model.database.entity.Command
 import com.victorlapin.flasher.model.interactor.CommandsInteractor
 import com.victorlapin.flasher.model.interactor.RecoveryScriptInteractor
@@ -96,7 +97,7 @@ class HomeFragmentPresenter constructor(
     }
 
     fun buildAndDeploy() {
-        mScriptInteractor.buildScript()
+        mScriptInteractor.buildScript(Chain.DEFAULT_ID)
                 .subscribe({
                     val result = mScriptInteractor.deployScript(it)
                     if (result.isSuccess) {

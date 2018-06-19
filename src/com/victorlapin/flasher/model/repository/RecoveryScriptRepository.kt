@@ -18,8 +18,8 @@ class RecoveryScriptRepository constructor(
         private val mCommandRepo: CommandsRepository,
         private val mSettings: SettingsManager
 ) {
-    fun buildScript(): Single<String> = Single.create { emitter ->
-        mCommandRepo.getCommands()
+    fun buildScript(chainId: Long): Single<String> = Single.create { emitter ->
+        mCommandRepo.getCommands(chainId)
                 .subscribe {
                     val result = StringBuilder()
                     it.forEach {

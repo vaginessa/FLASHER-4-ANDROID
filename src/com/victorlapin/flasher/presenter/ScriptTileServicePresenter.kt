@@ -1,5 +1,6 @@
 package com.victorlapin.flasher.presenter
 
+import com.victorlapin.flasher.model.database.entity.Chain
 import com.victorlapin.flasher.model.interactor.RecoveryScriptInteractor
 import com.victorlapin.flasher.view.ScriptTileServiceView
 
@@ -13,7 +14,7 @@ class ScriptTileServicePresenter constructor(
     }
 
     fun buildAndDeploy() {
-        mScriptInteractor.buildScript()
+        mScriptInteractor.buildScript(Chain.DEFAULT_ID)
                 .subscribe({
                     val result = mScriptInteractor.deployScript(it)
                     if (result.isSuccess) {
