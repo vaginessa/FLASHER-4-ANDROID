@@ -25,7 +25,7 @@
     <string name="action_import">Import</string>
 
     <!-- Fragment titles -->
-    <string name="title_home">Command Queue</string>
+    <string name="title_home">Command Chain</string>
 
     <!-- Preferences strings -->
     <string name="pref_category_appearance">Appearance</string>
