@@ -79,7 +79,7 @@ class HomeFragment : BaseFragment(), HomeFragmentView {
         toolbar.inflateMenu(R.menu.fragment_home)
         toolbar.setOnMenuItemClickListener { item ->
             when (item.itemId) {
-                R.id.action_build -> { presenter.buildAndDeploy(); true }
+                R.id.action_build -> { presenter.buildAndDeploy(mChainId); true }
                 R.id.action_export -> { presenter.onExportClicked(); true }
                 R.id.action_import -> { presenter.onImportClicked(); true }
                 R.id.action_settings -> { presenter.onSettingsClicked(); true }

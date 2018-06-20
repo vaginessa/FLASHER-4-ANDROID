@@ -70,8 +70,8 @@ abstract class HomeFragmentPresenter constructor(
         mSettings.lastUsedPath = if (file.isDirectory) file.absolutePath else file.parent
     }
 
-    fun buildAndDeploy() {
-        mScriptInteractor.buildScript(Chain.DEFAULT_ID)
+    fun buildAndDeploy(chainId: Long) {
+        mScriptInteractor.buildScript(chainId)
                 .subscribe({
                     val result = mScriptInteractor.deployScript(it)
                     if (result.isSuccess) {
