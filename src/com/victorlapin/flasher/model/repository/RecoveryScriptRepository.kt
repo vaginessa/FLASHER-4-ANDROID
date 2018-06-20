@@ -124,6 +124,11 @@ class RecoveryScriptRepository constructor(
     }
 
     private fun analyzeScript(script: String): EventArgs? {
+        // check for emptiness
+        if (script.isBlank()) {
+            return EventArgs(isSuccess = false, messageId = R.string.analyze_empty_script)
+        }
+
         // check for possible no rom
         val indexWipe = script.lastIndexOf("wipe system")
         val indexFlash = script.lastIndexOf("install ")
