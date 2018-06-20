@@ -12,6 +12,7 @@ val mainActivityModule = applicationContext {
 
         context(Screens.FRAGMENT_HOME) {
             factory { DefaultHomePresenter(get(), get(), get()) }
+            factory { ScheduleHomePresenter(get(), get(), get()) }
             factory { HomeAdapter(get()) }
         }
     }
