@@ -40,7 +40,10 @@ class MainActivity : BaseActivity(), MainActivityView,
         bottom_bar.enableItemShiftingMode(false)
         bottom_bar.onNavigationItemSelectedListener = this
         bottom_bar.setOnNavigationItemReselectedListener(this)
-        fab.setOnClickListener { presenter.onFabClicked() }
+        fab.setOnClickListener {
+            val id = bottom_bar.menu.getItem(bottom_bar.currentItem).itemId
+            presenter.onFabClicked(id)
+        }
     }
 
     override fun onStop() {
