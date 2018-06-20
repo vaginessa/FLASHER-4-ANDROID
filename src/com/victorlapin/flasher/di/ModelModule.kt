@@ -12,6 +12,7 @@ import com.victorlapin.flasher.model.database.entity.Command
 import com.victorlapin.flasher.model.interactor.AboutInteractor
 import com.victorlapin.flasher.model.interactor.CommandsInteractor
 import com.victorlapin.flasher.model.interactor.RecoveryScriptInteractor
+import com.victorlapin.flasher.model.interactor.ScheduleInteractor
 import com.victorlapin.flasher.model.repository.AboutRepository
 import com.victorlapin.flasher.model.repository.CommandsRepository
 import com.victorlapin.flasher.model.repository.RecoveryScriptRepository
@@ -57,6 +58,7 @@ val modelModule = applicationContext {
 
     factory { CommandsRepository(get(), get()) }
     factory { CommandsInteractor(get()) }
+    factory { ScheduleInteractor(get()) }
     factory { AboutRepository(get(), get()) }
     factory { AboutInteractor(get()) }
     factory { RecoveryScriptRepository(get(), get()) }
