@@ -59,6 +59,7 @@ class CommandsRepository constructor(
         try {
             val json = File(fileName).readText()
             val commands = mGson.fromJson<List<Command>>(json, object : TypeToken<List<Command>>() {}.type)
+            commands.forEach { it.chainId = chainId }
             mCommandDao.clear(chainId)
             mCommandDao.insert(commands)
             emitter.onSuccess(EventArgs(isSuccess = true, messageId = R.string.success))
