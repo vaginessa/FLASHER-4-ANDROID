@@ -19,6 +19,8 @@ class MainActivityPresenter constructor(
 
     fun selectHome() = mRouter.newRootScreen(Screens.FRAGMENT_HOME)
 
+    fun selectSchedule() = mRouter.newRootScreen(Screens.FRAGMENT_SCHEDULE)
+
     fun selectSettings() = mRouter.newRootScreen(Screens.FRAGMENT_SETTINGS)
 
     fun onFabClicked() = mCommandsInteractor.addStubCommand()

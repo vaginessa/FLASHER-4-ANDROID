@@ -10,6 +10,7 @@ import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.victorlapin.flasher.R
 import com.victorlapin.flasher.Screens
+import com.victorlapin.flasher.model.database.entity.Chain
 import com.victorlapin.flasher.presenter.MainActivityPresenter
 import com.victorlapin.flasher.ui.fragments.HomeFragment
 import com.victorlapin.flasher.ui.fragments.SettingsGlobalFragment
@@ -50,6 +51,7 @@ class MainActivity : BaseActivity(), MainActivityView,
 
     override fun onNavigationItemSelected(item: MenuItem) = when (item.itemId) {
         R.id.action_home -> { presenter.selectHome(); true }
+        R.id.action_schedule -> { presenter.selectSchedule(); true }
         R.id.action_settings -> { presenter.selectSettings(); true }
         else -> false
     }
@@ -64,7 +66,8 @@ class MainActivity : BaseActivity(), MainActivityView,
                 }
 
         override fun createFragment(screenKey: String?, data: Any?): Fragment? = when (screenKey) {
-            Screens.FRAGMENT_HOME -> HomeFragment.newInstance()
+            Screens.FRAGMENT_HOME -> HomeFragment.newInstance(Chain.DEFAULT_ID)
+            Screens.FRAGMENT_SCHEDULE -> HomeFragment.newInstance(Chain.SCHEDULE_ID)
             Screens.FRAGMENT_SETTINGS -> SettingsGlobalFragment.newInstance()
             else -> null
         }

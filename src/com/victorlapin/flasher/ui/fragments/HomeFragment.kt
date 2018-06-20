@@ -19,9 +19,11 @@ import com.victorlapin.flasher.Screens
 import com.victorlapin.flasher.addTo
 import com.victorlapin.flasher.manager.ResourcesManager
 import com.victorlapin.flasher.model.EventArgs
+import com.victorlapin.flasher.model.database.entity.Chain
 import com.victorlapin.flasher.model.database.entity.Command
 import com.victorlapin.flasher.presenter.DefaultHomePresenter
 import com.victorlapin.flasher.presenter.HomeFragmentPresenter
+import com.victorlapin.flasher.presenter.ScheduleHomePresenter
 import com.victorlapin.flasher.ui.adapters.HomeAdapter
 import com.victorlapin.flasher.view.HomeFragmentView
 import io.reactivex.disposables.CompositeDisposable
@@ -35,12 +37,14 @@ class HomeFragment : BaseFragment(), HomeFragmentView {
     override val layoutRes = R.layout.fragment_home
 
     private val mDefaultPresenter by inject<DefaultHomePresenter>()
+    private val mSchedulePresenter by inject<ScheduleHomePresenter>()
 
     @InjectPresenter
     lateinit var presenter: HomeFragmentPresenter
 
     @ProvidePresenter
-    fun providePresenter(): HomeFragmentPresenter = mDefaultPresenter
+    fun providePresenter(): HomeFragmentPresenter =
+            if (mChainId == Chain.SCHEDULE_ID) mSchedulePresenter else mDefaultPresenter
 
     private val mEventsDisposable = CompositeDisposable()
 
@@ -54,6 +58,10 @@ class HomeFragment : BaseFragment(), HomeFragmentView {
 
     private lateinit var mWipePartitions: List<String>
     private lateinit var mBackupPartitions: List<String>
+
+    private val mChainId by lazy {
+        arguments!!.getLong(ARG_CHAIN_ID)
+    }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -298,12 +306,20 @@ class HomeFragment : BaseFragment(), HomeFragmentView {
     }
 
     companion object {
-        fun newInstance() = HomeFragment()
+        fun newInstance(chainId: Long): HomeFragment {
+            val fragment = HomeFragment()
+            val args = Bundle()
+            args.putLong(ARG_CHAIN_ID, chainId)
+            fragment.arguments = args
+            return fragment
+        }
 
         private fun flatten(set: String) = set.replace("\\[|]".toRegex(), "")
         private fun toArray(set: String) =
                 set.split(",")
                         .map { it.trim() }
                         .toTypedArray()
+
+        const val ARG_CHAIN_ID = "ARG_CHAIN_ID"
     }
 }

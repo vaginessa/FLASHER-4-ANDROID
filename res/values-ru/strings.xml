@@ -15,6 +15,7 @@
 
     <!-- Action strings -->
     <string name="action_home">Главная</string>
+    <string name="action_schedule">Расписание</string>
     <string name="action_settings">Настройки</string>
     <string name="action_undo">Отменить</string>
     <string name="action_about">О приложении</string>
