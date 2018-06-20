@@ -21,9 +21,5 @@ class MainActivityPresenter constructor(
 
     fun selectSchedule() = mRouter.newRootScreen(Screens.FRAGMENT_SCHEDULE)
 
-    fun selectSettings() = mRouter.newRootScreen(Screens.FRAGMENT_SETTINGS)
-
     fun onFabClicked() = mCommandsInteractor.addStubCommand()
-
-    fun openAbout() = mRouter.navigateTo(Screens.ACTIVITY_ABOUT)
 }

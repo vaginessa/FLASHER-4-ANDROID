@@ -82,6 +82,7 @@ class HomeFragment : BaseFragment(), HomeFragmentView {
                 R.id.action_build -> { presenter.buildAndDeploy(); true }
                 R.id.action_export -> { presenter.onExportClicked(); true }
                 R.id.action_import -> { presenter.onImportClicked(); true }
+                R.id.action_settings -> { presenter.onSettingsClicked(); true }
                 else -> false
             }
         }

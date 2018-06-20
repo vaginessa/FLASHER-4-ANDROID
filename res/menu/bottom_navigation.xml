@@ -5,20 +5,12 @@
         android:icon="@drawable/home"
         android:title="@string/action_home" />
 
-    <item android:id="@+id/action_schedule"
-        android:icon="@drawable/clock_outline"
-        android:title="@string/action_schedule" />
-
     <item android:id="@+id/action_placeholder1"
         android:enabled="false"
         android:title="" />
 
-    <item android:id="@+id/action_placeholder2"
-        android:enabled="false"
-        android:title="" />
-
-    <item android:id="@+id/action_settings"
-        android:icon="@drawable/settings"
-        android:title="@string/action_settings" />
+    <item android:id="@+id/action_schedule"
+        android:icon="@drawable/clock_outline"
+        android:title="@string/action_schedule" />
 
 </menu>

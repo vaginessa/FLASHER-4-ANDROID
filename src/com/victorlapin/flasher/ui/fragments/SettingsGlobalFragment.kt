@@ -10,7 +10,7 @@ import com.victorlapin.flasher.manager.ResourcesManager
 import com.victorlapin.flasher.manager.SettingsManager
 import com.victorlapin.flasher.model.interactor.RecoveryScriptInteractor
 import com.victorlapin.flasher.ui.activities.BaseActivity
-import com.victorlapin.flasher.ui.activities.MainActivity
+import com.victorlapin.flasher.ui.activities.SettingsActivity
 import org.koin.android.ext.android.inject
 
 class SettingsGlobalFragment : PreferenceFragmentCompat() {
@@ -47,7 +47,7 @@ class SettingsGlobalFragment : PreferenceFragmentCompat() {
 
         findPreference(SettingsManager.KEY_ABOUT).onPreferenceClickListener =
                 Preference.OnPreferenceClickListener {
-                    (activity as MainActivity).presenter.openAbout()
+                    (activity as SettingsActivity).presenter.openAbout()
                     return@OnPreferenceClickListener true
                 }
 

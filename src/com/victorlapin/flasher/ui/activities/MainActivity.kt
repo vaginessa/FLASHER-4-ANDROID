@@ -13,7 +13,6 @@ import com.victorlapin.flasher.Screens
 import com.victorlapin.flasher.model.database.entity.Chain
 import com.victorlapin.flasher.presenter.MainActivityPresenter
 import com.victorlapin.flasher.ui.fragments.HomeFragment
-import com.victorlapin.flasher.ui.fragments.SettingsGlobalFragment
 import com.victorlapin.flasher.view.MainActivityView
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.android.ext.android.inject
@@ -52,7 +51,6 @@ class MainActivity : BaseActivity(), MainActivityView,
     override fun onNavigationItemSelected(item: MenuItem) = when (item.itemId) {
         R.id.action_home -> { presenter.selectHome(); true }
         R.id.action_schedule -> { presenter.selectSchedule(); true }
-        R.id.action_settings -> { presenter.selectSettings(); true }
         else -> false
     }
 
@@ -61,14 +59,13 @@ class MainActivity : BaseActivity(), MainActivityView,
     override val navigator = object : SupportAppNavigator(this, R.id.fragment_container) {
         override fun createActivityIntent(context: Context?, screenKey: String?, data: Any?): Intent? =
                 when (screenKey) {
-                    Screens.ACTIVITY_ABOUT -> Intent(context, AboutActivity::class.java)
+                    Screens.ACTIVITY_SETTINGS-> Intent(context, SettingsActivity::class.java)
                     else -> null
                 }
 
         override fun createFragment(screenKey: String?, data: Any?): Fragment? = when (screenKey) {
             Screens.FRAGMENT_HOME -> HomeFragment.newInstance(Chain.DEFAULT_ID)
             Screens.FRAGMENT_SCHEDULE -> HomeFragment.newInstance(Chain.SCHEDULE_ID)
-            Screens.FRAGMENT_SETTINGS -> SettingsGlobalFragment.newInstance()
             else -> null
         }
     }
