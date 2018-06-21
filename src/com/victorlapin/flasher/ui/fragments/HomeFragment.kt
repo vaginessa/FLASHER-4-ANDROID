@@ -24,7 +24,6 @@ import com.victorlapin.flasher.model.database.entity.Chain
 import com.victorlapin.flasher.model.database.entity.Command
 import com.victorlapin.flasher.presenter.DefaultHomePresenter
 import com.victorlapin.flasher.presenter.HomeFragmentPresenter
-import com.victorlapin.flasher.presenter.ScheduleHomePresenter
 import com.victorlapin.flasher.ui.adapters.HomeAdapter
 import com.victorlapin.flasher.view.HomeFragmentView
 import io.reactivex.disposables.CompositeDisposable
@@ -38,14 +37,12 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
     override val layoutRes = R.layout.fragment_home
 
     private val mDefaultPresenter by inject<DefaultHomePresenter>()
-    private val mSchedulePresenter by inject<ScheduleHomePresenter>()
 
     @InjectPresenter
     lateinit var presenter: HomeFragmentPresenter
 
     @ProvidePresenter
-    fun providePresenter(): HomeFragmentPresenter =
-            if (mChainId == Chain.SCHEDULE_ID) mSchedulePresenter else mDefaultPresenter
+    open fun providePresenter(): HomeFragmentPresenter = mDefaultPresenter
 
     private val mEventsDisposable = CompositeDisposable()
 
