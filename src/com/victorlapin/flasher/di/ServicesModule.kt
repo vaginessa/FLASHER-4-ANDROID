@@ -6,6 +6,6 @@ import org.koin.dsl.module.applicationContext
 
 val scriptTileServiceModule = applicationContext {
     context(Screens.SERVICE_SCRIPT) {
-        factory { ScriptTileServicePresenter(get()) }
+        factory { ScriptTileServicePresenter(get(), get()) }
     }
 }

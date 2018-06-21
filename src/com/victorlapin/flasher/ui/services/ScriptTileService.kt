@@ -38,6 +38,9 @@ class ScriptTileService : TileService(), ScriptTileServiceView {
         }
     }
 
+    override fun showInfoToast(message: String) =
+            Toast.makeText(baseContext, message, Toast.LENGTH_LONG).show()
+
     override fun showRebootDialog() =
             startActivity(Intent(this, RebootDialogActivity::class.java))
 }

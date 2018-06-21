@@ -73,7 +73,10 @@ abstract class HomeFragmentPresenter constructor(
     fun buildAndDeploy(chainId: Long) {
         mScriptInteractor.buildScript(chainId)
                 .subscribe({
-                    val result = mScriptInteractor.deployScript(it)
+                    if (mSettings.showMaskToast && it.resolvedFiles.isNotBlank()) {
+                        viewState.showInfoToast(it.resolvedFiles)
+                    }
+                    val result = mScriptInteractor.deployScript(it.script)
                     if (result.isSuccess) {
                         viewState.showRebootSnackbar()
                     } else {

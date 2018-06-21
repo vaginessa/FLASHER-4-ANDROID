@@ -7,6 +7,7 @@ import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
+import android.widget.Toast
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.folderselector.FileChooserDialog
 import com.afollestad.materialdialogs.folderselector.FolderChooserDialog
@@ -304,6 +305,12 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
                                 .show()
                     }
                 }
+    }
+
+    override fun showInfoToast(message: String) {
+        list.post {
+            Toast.makeText(context!!, message, Toast.LENGTH_LONG).show()
+        }
     }
 
     companion object {

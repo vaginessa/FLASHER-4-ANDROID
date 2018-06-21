@@ -28,4 +28,6 @@ interface HomeFragmentView : MvpView {
     fun showExportDialog()
     @StateStrategyType(SkipStrategy::class)
     fun showImportDialog()
+    @StateStrategyType(SkipStrategy::class)
+    fun showInfoToast(message: String)
 }
