@@ -1,6 +1,7 @@
 package com.victorlapin.flasher.ui.fragments
 
 import android.os.Bundle
+import com.victorlapin.flasher.R
 import com.victorlapin.flasher.Screens
 import com.victorlapin.flasher.model.database.entity.Chain
 import com.victorlapin.flasher.presenter.HomeFragmentPresenter
@@ -9,6 +10,8 @@ import org.koin.android.ext.android.inject
 import org.koin.android.ext.android.releaseContext
 
 class ScheduleFragment : HomeFragment() {
+    override val layoutRes = R.layout.fragment_schedule
+
     private val mSchedulePresenter by inject<ScheduleHomePresenter>()
 
     override fun providePresenter(): HomeFragmentPresenter = mSchedulePresenter

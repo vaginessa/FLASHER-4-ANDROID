@@ -23,6 +23,7 @@
     <string name="action_reboot">Reboot</string>
     <string name="action_export">Export</string>
     <string name="action_import">Import</string>
+    <string name="action_enable_schedule">Enable schedule</string>
 
     <!-- Fragment titles -->
     <string name="title_home">Command Chain</string>

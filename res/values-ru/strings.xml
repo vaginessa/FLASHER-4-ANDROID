@@ -23,6 +23,7 @@
     <string name="action_reboot">Перезагрузка</string>
     <string name="action_export">Экспорт</string>
     <string name="action_import">Импорт</string>
+    <string name="action_enable_schedule">Включить расписание</string>
 
     <!-- Fragment titles -->
     <string name="title_home">Очередь команд</string>
