@@ -26,6 +26,12 @@
             android:summary="@string/pref_summary_analyzer"
             android:title="@string/pref_title_analyzer" />
 
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="show_mask_toast"
+            android:summary="@string/pref_summary_mask_toast"
+            android:title="@string/pref_title_mask_toast" />
+
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/pref_category_misc">

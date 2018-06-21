@@ -12,6 +12,7 @@ class SettingsManager(context: Context) {
         const val KEY_SAVE_DEBUG_SCRIPT = "save_debug_script"
         const val KEY_DELETE_DEPLOYED_SCRIPT = "delete_deployed_script"
         const val KEY_USE_ANALYZER = "use_analyzer"
+        const val KEY_SHOW_MASK_TOAST = "show_mask_toast"
     }
 
     private val mPrefs = PreferenceManager.getDefaultSharedPreferences(context)
@@ -31,4 +32,7 @@ class SettingsManager(context: Context) {
 
     val useAnalyzer: Boolean
         get() = mPrefs.getBoolean(KEY_USE_ANALYZER, true)
+
+    val showMaskToast: Boolean
+        get() = mPrefs.getBoolean(KEY_SHOW_MASK_TOAST, false)
 }
