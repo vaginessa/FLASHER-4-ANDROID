@@ -10,9 +10,9 @@ import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.victorlapin.flasher.R
 import com.victorlapin.flasher.Screens
-import com.victorlapin.flasher.model.database.entity.Chain
 import com.victorlapin.flasher.presenter.MainActivityPresenter
 import com.victorlapin.flasher.ui.fragments.HomeFragment
+import com.victorlapin.flasher.ui.fragments.ScheduleFragment
 import com.victorlapin.flasher.view.MainActivityView
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.android.ext.android.inject
@@ -67,8 +67,8 @@ class MainActivity : BaseActivity(), MainActivityView,
                 }
 
         override fun createFragment(screenKey: String?, data: Any?): Fragment? = when (screenKey) {
-            Screens.FRAGMENT_HOME -> HomeFragment.newInstance(Chain.DEFAULT_ID)
-            Screens.FRAGMENT_SCHEDULE -> HomeFragment.newInstance(Chain.SCHEDULE_ID)
+            Screens.FRAGMENT_HOME -> HomeFragment.newInstance()
+            Screens.FRAGMENT_SCHEDULE -> ScheduleFragment.newInstance()
             else -> null
         }
     }

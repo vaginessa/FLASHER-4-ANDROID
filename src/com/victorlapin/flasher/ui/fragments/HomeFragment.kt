@@ -33,7 +33,7 @@ import org.koin.android.ext.android.inject
 import org.koin.android.ext.android.releaseContext
 import java.io.File
 
-class HomeFragment : BaseFragment(), HomeFragmentView {
+open class HomeFragment : BaseFragment(), HomeFragmentView {
     override val layoutRes = R.layout.fragment_home
 
     private val mDefaultPresenter by inject<DefaultHomePresenter>()
@@ -307,10 +307,10 @@ class HomeFragment : BaseFragment(), HomeFragmentView {
     }
 
     companion object {
-        fun newInstance(chainId: Long): HomeFragment {
+        fun newInstance(): HomeFragment {
             val fragment = HomeFragment()
             val args = Bundle()
-            args.putLong(ARG_CHAIN_ID, chainId)
+            args.putLong(ARG_CHAIN_ID, Chain.DEFAULT_ID)
             fragment.arguments = args
             return fragment
         }
