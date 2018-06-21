@@ -72,7 +72,7 @@ class HomeAdapter constructor(
                     object : AdapterView.OnItemSelectedListener {
                         override fun onNothingSelected(parent: AdapterView<*>?) {}
                         override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
-                            val pair = Pair(command, position)
+                            val pair = Pair(command.clone(), position)
                             mChangeTypeSubject.onNext(pair)
                         }
                     }
@@ -86,10 +86,12 @@ class HomeAdapter constructor(
                 itemView.lbl_arg1.text = if (command.arg1 != null) command.arg1 else mDefaultArgText
             }
             itemView.lbl_arg1.setOnClickListener {
-                mArgsClickSubject.onNext(CommandClickEventArgs(command, CommandClickEventArgs.ARG1))
+                mArgsClickSubject.onNext(CommandClickEventArgs(command.clone(),
+                        CommandClickEventArgs.ARG1))
             }
             itemView.lbl_arg2.setOnClickListener {
-                mArgsClickSubject.onNext(CommandClickEventArgs(command, CommandClickEventArgs.ARG2))
+                mArgsClickSubject.onNext(CommandClickEventArgs(command.clone(),
+                        CommandClickEventArgs.ARG2))
             }
         }
 

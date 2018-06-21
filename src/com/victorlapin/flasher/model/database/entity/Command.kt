@@ -29,6 +29,13 @@ data class Command(
         @Exclude
         var chainId: Long = Chain.DEFAULT_ID
 ) {
+    fun clone() = Command(
+            id = this.id,
+            type = this.type,
+            arg1 = this.arg1,
+            arg2 = this.arg2,
+            chainId = this.chainId)
+
     companion object {
         const val TYPE_WIPE = 0
         const val TYPE_BACKUP = 1
