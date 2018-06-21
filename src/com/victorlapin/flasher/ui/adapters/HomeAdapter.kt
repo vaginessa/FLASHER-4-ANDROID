@@ -1,5 +1,6 @@
 package com.victorlapin.flasher.ui.adapters
 
+import android.support.v7.util.DiffUtil
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
@@ -100,9 +101,10 @@ class HomeAdapter constructor(
     }
 
     fun setData(commands: List<Command>) {
-        notifyItemRangeRemoved(0, mItems.size)
+        val callback = HomeAdapterDiffUtilCallback(mItems, commands)
+        val diffResult = DiffUtil.calculateDiff(callback)
         mItems.clear()
         mItems.addAll(commands)
-        notifyItemRangeInserted(0, mItems.size)
+        diffResult.dispatchUpdatesTo(this)
     }
 }
