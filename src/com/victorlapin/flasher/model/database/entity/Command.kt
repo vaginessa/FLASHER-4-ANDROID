@@ -5,6 +5,7 @@ import android.arch.persistence.room.Entity
 import android.arch.persistence.room.ForeignKey
 import android.arch.persistence.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
+import com.victorlapin.flasher.model.serialization.Exclude
 
 @Entity(tableName = "commands",
         foreignKeys = [(ForeignKey(entity = Chain::class,
@@ -13,7 +14,7 @@ import com.google.gson.annotations.SerializedName
 
 data class Command(
         @PrimaryKey(autoGenerate = true)
-        @SerializedName("id")
+        @Exclude
         val id: Long? = null,
         @ColumnInfo(name = "type")
         @SerializedName("type")
@@ -25,7 +26,7 @@ data class Command(
         @SerializedName("arg2")
         var arg2: String? = null,
         @ColumnInfo(name = "chain_id")
-        @SerializedName("chain_id")
+        @Exclude
         var chainId: Long = Chain.DEFAULT_ID
 ) {
     companion object {

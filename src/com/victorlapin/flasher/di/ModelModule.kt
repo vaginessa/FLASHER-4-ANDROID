@@ -16,6 +16,7 @@ import com.victorlapin.flasher.model.interactor.ScheduleInteractor
 import com.victorlapin.flasher.model.repository.AboutRepository
 import com.victorlapin.flasher.model.repository.CommandsRepository
 import com.victorlapin.flasher.model.repository.RecoveryScriptRepository
+import com.victorlapin.flasher.model.serialization.AnnotationExclusionStrategy
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 import org.koin.dsl.module.applicationContext
@@ -53,6 +54,7 @@ val modelModule = applicationContext {
         GsonBuilder()
                 .serializeNulls()
                 .setPrettyPrinting()
+                .setExclusionStrategies(AnnotationExclusionStrategy())
                 .create()
     }
 
