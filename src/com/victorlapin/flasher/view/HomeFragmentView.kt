@@ -30,4 +30,8 @@ interface HomeFragmentView : MvpView {
     fun showImportDialog()
     @StateStrategyType(SkipStrategy::class)
     fun showInfoToast(message: String)
+    @StateStrategyType(SkipStrategy::class)
+    fun showSelectTimeDialog(defHourOfDay: Int, defMinute: Int)
+    @StateStrategyType(SkipStrategy::class)
+    fun showSelectPeriodDialog(defPeriod: Int)
 }

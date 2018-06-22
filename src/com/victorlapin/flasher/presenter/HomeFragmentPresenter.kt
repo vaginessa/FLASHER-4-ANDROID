@@ -4,7 +4,6 @@ import com.arellomobile.mvp.MvpPresenter
 import com.victorlapin.flasher.Screens
 import com.victorlapin.flasher.manager.SettingsManager
 import com.victorlapin.flasher.model.CommandClickEventArgs
-import com.victorlapin.flasher.model.database.entity.Chain
 import com.victorlapin.flasher.model.database.entity.Command
 import com.victorlapin.flasher.model.interactor.RecoveryScriptInteractor
 import com.victorlapin.flasher.view.HomeFragmentView
@@ -15,7 +14,7 @@ import java.io.File
 abstract class HomeFragmentPresenter constructor(
         private val mRouter: Router,
         private val mScriptInteractor: RecoveryScriptInteractor,
-        private val mSettings: SettingsManager
+        protected val mSettings: SettingsManager
 ) : MvpPresenter<HomeFragmentView>() {
     protected var mDisposable: Disposable? = null
     protected var mFirstRun = true

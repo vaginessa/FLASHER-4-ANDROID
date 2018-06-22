@@ -310,6 +310,14 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
         }
     }
 
+    override fun showSelectTimeDialog(defHourOfDay: Int, defMinute: Int) {
+
+    }
+
+    override fun showSelectPeriodDialog(defPeriod: Int) {
+
+    }
+
     companion object {
         fun newInstance(): HomeFragment {
             val fragment = HomeFragment()

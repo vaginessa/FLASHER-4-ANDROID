@@ -12,6 +12,8 @@
     <string name="enter_mask">Enter mask</string>
     <string name="enter_file_name">Enter file name</string>
     <string name="success">Success</string>
+    <string name="schedule_time_title">Time</string>
+    <string name="schedule_period_title">Period</string>
 
     <!-- Action strings -->
     <string name="action_home">Home</string>
@@ -83,4 +85,12 @@
     <string name="about_credits_dave_text">Help with theme related stuff</string>
     <string name="about_links_source_code">Source code</string>
     <string name="about_links_gitlab">View at Gitlab.com</string>
+
+    <plurals name="schedule_period">
+        <item quantity="one">Every %1$d day</item>
+        <item quantity="other">Every %1$d days</item>
+    </plurals>
+    <string name="schedule_period_never">Never</string>
+    <string name="schedule_period_daily">Daily</string>
+    <string name="schedule_period_weekly">Weekly</string>
 </resources>

@@ -7,6 +7,7 @@ import com.victorlapin.flasher.model.interactor.RecoveryScriptInteractor
 import com.victorlapin.flasher.model.interactor.ScheduleInteractor
 import com.victorlapin.flasher.view.HomeFragmentView
 import ru.terrakok.cicerone.Router
+import java.util.*
 
 @InjectViewState
 class ScheduleHomePresenter constructor(
@@ -15,6 +16,8 @@ class ScheduleHomePresenter constructor(
         mRouter: Router,
         private val mInteractor: ScheduleInteractor
 ) : HomeFragmentPresenter(mRouter, mScriptInteractor, mSettings) {
+    private val mCalendar = Calendar.getInstance()
+
     override fun attachView(view: HomeFragmentView?) {
         super.attachView(view)
         mDisposable = mInteractor.getSchedule()
@@ -57,5 +60,48 @@ class ScheduleHomePresenter constructor(
                 .subscribe {
                     viewState.showInfoSnackbar(it)
                 }
+    }
+
+    fun onScheduleEnabledChange(isEnabled: Boolean) {
+        mSettings.useSchedule = isEnabled
+        if (isEnabled) {
+            setAlarm()
+        } else {
+            cancelAlarm()
+        }
+    }
+
+    fun selectTime() {
+        mCalendar.time = Date(mSettings.scheduleTime)
+        viewState.showSelectTimeDialog(
+                mCalendar.get(Calendar.HOUR_OF_DAY),
+                mCalendar.get(Calendar.MINUTE))
+    }
+
+    fun onTimeSelected(hourOfDay: Int, minute: Int) {
+        mCalendar.set(Calendar.HOUR_OF_DAY, hourOfDay)
+        mCalendar.set(Calendar.MINUTE, minute)
+        mSettings.scheduleTime = mCalendar.timeInMillis
+
+        if (mSettings.useSchedule) {
+            setAlarm()
+        }
+    }
+
+    fun selectPeriod() = viewState.showSelectPeriodDialog(mSettings.schedulePeriod)
+
+    fun onPeriodSelected(period: Int) {
+        mSettings.schedulePeriod = period
+        if (mSettings.useSchedule) {
+            setAlarm()
+        }
+    }
+
+    private fun setAlarm() {
+
+    }
+
+    private fun cancelAlarm() {
+
     }
 }
