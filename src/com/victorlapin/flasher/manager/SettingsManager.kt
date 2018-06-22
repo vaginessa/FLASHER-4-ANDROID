@@ -13,6 +13,9 @@ class SettingsManager(context: Context) {
         const val KEY_DELETE_DEPLOYED_SCRIPT = "delete_deployed_script"
         const val KEY_USE_ANALYZER = "use_analyzer"
         const val KEY_SHOW_MASK_TOAST = "show_mask_toast"
+        const val KEY_USE_SCHEDULE = "use_schedule"
+        const val KEY_SCHEDULE_TIME = "schedule_time"
+        const val KEY_SCHEDULE_PERIOD = "schedule_period"
     }
 
     private val mPrefs = PreferenceManager.getDefaultSharedPreferences(context)
@@ -35,4 +38,16 @@ class SettingsManager(context: Context) {
 
     val showMaskToast: Boolean
         get() = mPrefs.getBoolean(KEY_SHOW_MASK_TOAST, false)
+
+    var useSchedule: Boolean
+        get() = mPrefs.getBoolean(KEY_USE_SCHEDULE, false)
+        set(use) = mPrefs.edit().putBoolean(KEY_USE_SCHEDULE, use).apply()
+
+    var scheduleTime: Long
+        get() = mPrefs.getLong(KEY_SCHEDULE_TIME, 0)
+        set(time) = mPrefs.edit().putLong(KEY_SCHEDULE_TIME, time).apply()
+
+    var schedulePeriod: Int
+        get() = mPrefs.getInt(KEY_SCHEDULE_PERIOD, 0)
+        set(period) = mPrefs.edit().putInt(KEY_SCHEDULE_PERIOD, period).apply()
 }
