@@ -1,6 +1,7 @@
 package com.victorlapin.flasher.presenter
 
 import com.arellomobile.mvp.InjectViewState
+import com.victorlapin.flasher.addTo
 import com.victorlapin.flasher.manager.SettingsManager
 import com.victorlapin.flasher.model.database.entity.Command
 import com.victorlapin.flasher.model.interactor.CommandsInteractor
@@ -17,18 +18,12 @@ class DefaultHomePresenter constructor(
 ) : HomeFragmentPresenter(mRouter, mScriptInteractor, mSettings) {
     override fun attachView(view: HomeFragmentView?) {
         super.attachView(view)
-        mDisposable = mInteractor.getCommands()
+        mInteractor.getCommands()
                 .subscribe {
                     viewState.setData(it, mFirstRun)
                     mFirstRun = false
                 }
-    }
-
-    override fun detachView(view: HomeFragmentView?) {
-        mDisposable?.dispose()
-        mDisposable = null
-        mFirstRun = true
-        super.detachView(view)
+                .addTo(mDisposable)
     }
 
     override fun onCommandUpdated(command: Command) =
@@ -40,6 +35,7 @@ class DefaultHomePresenter constructor(
                     mInteractor.deleteCommand(it)
                     viewState.showDeletedSnackbar(it)
                 }
+                .addTo(mDisposable)
     }
 
     override fun onUndoDelete(command: Command) =
@@ -50,6 +46,7 @@ class DefaultHomePresenter constructor(
                 .subscribe {
                     viewState.showInfoSnackbar(it)
                 }
+                .addTo(mDisposable)
     }
 
     override fun importCommands(fileName: String) {
@@ -57,5 +54,6 @@ class DefaultHomePresenter constructor(
                 .subscribe {
                     viewState.showInfoSnackbar(it)
                 }
+                .addTo(mDisposable)
     }
 }

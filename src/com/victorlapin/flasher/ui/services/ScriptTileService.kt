@@ -22,6 +22,7 @@ class ScriptTileService : TileService(), ScriptTileServiceView {
     }
 
     override fun onStopListening() {
+        mPresenter.cleanup()
         releaseContext(Screens.SERVICE_SCRIPT)
         super.onStopListening()
     }

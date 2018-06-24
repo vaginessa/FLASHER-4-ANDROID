@@ -2,12 +2,13 @@ package com.victorlapin.flasher.presenter
 
 import com.arellomobile.mvp.MvpPresenter
 import com.victorlapin.flasher.Screens
+import com.victorlapin.flasher.addTo
 import com.victorlapin.flasher.manager.SettingsManager
 import com.victorlapin.flasher.model.CommandClickEventArgs
 import com.victorlapin.flasher.model.database.entity.Command
 import com.victorlapin.flasher.model.interactor.RecoveryScriptInteractor
 import com.victorlapin.flasher.view.HomeFragmentView
-import io.reactivex.disposables.Disposable
+import io.reactivex.disposables.CompositeDisposable
 import ru.terrakok.cicerone.Router
 import java.io.File
 
@@ -16,8 +17,14 @@ abstract class HomeFragmentPresenter constructor(
         private val mScriptInteractor: RecoveryScriptInteractor,
         protected val mSettings: SettingsManager
 ) : MvpPresenter<HomeFragmentView>() {
-    protected var mDisposable: Disposable? = null
+    protected val mDisposable = CompositeDisposable()
     protected var mFirstRun = true
+
+    override fun detachView(view: HomeFragmentView?) {
+        mDisposable.clear()
+        mFirstRun = true
+        super.detachView(view)
+    }
 
     abstract fun onCommandUpdated(command: Command)
 
@@ -84,6 +91,7 @@ abstract class HomeFragmentPresenter constructor(
                 }, {
                     it.printStackTrace()
                 })
+                .addTo(mDisposable)
     }
 
     fun reboot() {

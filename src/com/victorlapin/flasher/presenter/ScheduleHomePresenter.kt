@@ -1,6 +1,7 @@
 package com.victorlapin.flasher.presenter
 
 import com.arellomobile.mvp.InjectViewState
+import com.victorlapin.flasher.addTo
 import com.victorlapin.flasher.manager.SettingsManager
 import com.victorlapin.flasher.model.database.entity.Command
 import com.victorlapin.flasher.model.interactor.RecoveryScriptInteractor
@@ -20,18 +21,12 @@ class ScheduleHomePresenter constructor(
 
     override fun attachView(view: HomeFragmentView?) {
         super.attachView(view)
-        mDisposable = mInteractor.getSchedule()
+        mInteractor.getSchedule()
                 .subscribe {
                     viewState.setData(it, mFirstRun)
                     mFirstRun = false
                 }
-    }
-
-    override fun detachView(view: HomeFragmentView?) {
-        mDisposable?.dispose()
-        mDisposable = null
-        mFirstRun = true
-        super.detachView(view)
+                .addTo(mDisposable)
     }
 
     override fun onCommandUpdated(command: Command) =
@@ -43,6 +38,7 @@ class ScheduleHomePresenter constructor(
                     mInteractor.deleteCommand(it)
                     viewState.showDeletedSnackbar(it)
                 }
+                .addTo(mDisposable)
     }
 
     override fun onUndoDelete(command: Command) =
@@ -53,6 +49,7 @@ class ScheduleHomePresenter constructor(
                 .subscribe {
                     viewState.showInfoSnackbar(it)
                 }
+                .addTo(mDisposable)
     }
 
     override fun importCommands(fileName: String) {
@@ -60,6 +57,7 @@ class ScheduleHomePresenter constructor(
                 .subscribe {
                     viewState.showInfoSnackbar(it)
                 }
+                .addTo(mDisposable)
     }
 
     fun onScheduleEnabledChange(isEnabled: Boolean) {

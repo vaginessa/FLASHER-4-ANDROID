@@ -44,7 +44,7 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
     @ProvidePresenter
     open fun providePresenter(): HomeFragmentPresenter = mDefaultPresenter
 
-    private val mEventsDisposable = CompositeDisposable()
+    private val mDisposable = CompositeDisposable()
 
     private val mAdapter by inject<HomeAdapter>()
 
@@ -109,16 +109,16 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        mEventsDisposable.dispose()
+        mDisposable.dispose()
     }
 
     private fun setupEvents() {
         mAdapter.changeTypeEvent
                 .subscribe { presenter.onCommandTypeChanged(it) }
-                .addTo(mEventsDisposable)
+                .addTo(mDisposable)
         mAdapter.argsClickEvent
                 .subscribe { presenter.onArgumentsClicked(it) }
-                .addTo(mEventsDisposable)
+                .addTo(mDisposable)
     }
 
     override fun setData(commands: List<Command>, isFirstRun: Boolean) {
@@ -195,6 +195,7 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
                                 .show()
                     }
                 }
+                .addTo(mDisposable)
     }
 
     override fun showEditMaskDialog(command: Command) {
@@ -231,6 +232,7 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
                                 .show()
                     }
                 }
+                .addTo(mDisposable)
     }
 
     override fun showDeletedSnackbar(command: Command) {
@@ -278,6 +280,7 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
                                 .show()
                     }
                 }
+                .addTo(mDisposable)
     }
 
     override fun showImportDialog() {
@@ -302,6 +305,7 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
                                 .show()
                     }
                 }
+                .addTo(mDisposable)
     }
 
     override fun showInfoToast(message: String) {

@@ -1,5 +1,6 @@
 package com.victorlapin.flasher.model.repository
 
+import android.annotation.SuppressLint
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.victorlapin.flasher.Const
@@ -22,6 +23,7 @@ class CommandsRepository constructor(
 
     fun getCommand(id: Long): Maybe<Command> = mCommandDao.getCommand(id)
 
+    @SuppressLint("CheckResult")
     fun insertCommand(command: Command) {
         Single.just(command)
                 .subscribeOn(Schedulers.io())
@@ -29,6 +31,7 @@ class CommandsRepository constructor(
                 .subscribe { c -> mCommandDao.insert(c) }
     }
 
+    @SuppressLint("CheckResult")
     fun updateCommand(command: Command) {
         Single.just(command)
                 .subscribeOn(Schedulers.io())
@@ -36,6 +39,7 @@ class CommandsRepository constructor(
                 .subscribe { c -> mCommandDao.update(c) }
     }
 
+    @SuppressLint("CheckResult")
     fun deleteCommand(command: Command) {
         Single.just(command)
                 .subscribeOn(Schedulers.io())

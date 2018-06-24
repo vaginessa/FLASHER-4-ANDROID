@@ -4,19 +4,21 @@ import com.victorlapin.flasher.manager.SettingsManager
 import com.victorlapin.flasher.model.database.entity.Chain
 import com.victorlapin.flasher.model.interactor.RecoveryScriptInteractor
 import com.victorlapin.flasher.view.ScriptTileServiceView
+import io.reactivex.disposables.Disposable
 
 class ScriptTileServicePresenter constructor(
         private val mScriptInteractor: RecoveryScriptInteractor,
         private val mSettings: SettingsManager
 ) {
     private var mView: ScriptTileServiceView? = null
+    private var mDisposable: Disposable? = null
 
     fun setView(view: ScriptTileServiceView) {
         mView = view
     }
 
     fun buildAndDeploy() {
-        mScriptInteractor.buildScript(Chain.DEFAULT_ID)
+        mDisposable = mScriptInteractor.buildScript(Chain.DEFAULT_ID)
                 .subscribe({
                     if (mSettings.showMaskToast && it.resolvedFiles.isNotBlank()) {
                         mView?.showInfoToast(it.resolvedFiles)
@@ -31,4 +33,6 @@ class ScriptTileServicePresenter constructor(
                     it.printStackTrace()
                 })
     }
+
+    fun cleanup() = mDisposable?.dispose()
 }
