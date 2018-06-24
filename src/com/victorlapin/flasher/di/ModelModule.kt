@@ -9,11 +9,9 @@ import com.victorlapin.flasher.model.database.dao.ChainDao
 import com.victorlapin.flasher.model.database.dao.CommandDao
 import com.victorlapin.flasher.model.database.entity.Chain
 import com.victorlapin.flasher.model.database.entity.Command
-import com.victorlapin.flasher.model.interactor.AboutInteractor
-import com.victorlapin.flasher.model.interactor.CommandsInteractor
-import com.victorlapin.flasher.model.interactor.RecoveryScriptInteractor
-import com.victorlapin.flasher.model.interactor.ScheduleInteractor
+import com.victorlapin.flasher.model.interactor.*
 import com.victorlapin.flasher.model.repository.AboutRepository
+import com.victorlapin.flasher.model.repository.AlarmRepository
 import com.victorlapin.flasher.model.repository.CommandsRepository
 import com.victorlapin.flasher.model.repository.RecoveryScriptRepository
 import com.victorlapin.flasher.model.serialization.AnnotationExclusionStrategy
@@ -65,4 +63,6 @@ val modelModule = applicationContext {
     factory { AboutInteractor(get()) }
     factory { RecoveryScriptRepository(get(), get()) }
     factory { RecoveryScriptInteractor(get()) }
+    factory { AlarmRepository(get(), get()) }
+    factory { AlarmInteractor(get()) }
 }
