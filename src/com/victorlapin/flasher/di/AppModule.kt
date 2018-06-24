@@ -1,6 +1,7 @@
 package com.victorlapin.flasher.di
 
 import com.victorlapin.flasher.manager.ResourcesManager
+import com.victorlapin.flasher.manager.ServicesManager
 import com.victorlapin.flasher.manager.SettingsManager
 import org.koin.dsl.module.applicationContext
 import ru.terrakok.cicerone.Cicerone
@@ -13,4 +14,5 @@ val appModule = applicationContext {
 
     bean { SettingsManager(get()) }
     bean { ResourcesManager(get()) }
+    bean { ServicesManager(get()) }
 }
