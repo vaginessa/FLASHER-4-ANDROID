@@ -4,6 +4,7 @@ import com.arellomobile.mvp.InjectViewState
 import com.victorlapin.flasher.addTo
 import com.victorlapin.flasher.manager.SettingsManager
 import com.victorlapin.flasher.model.database.entity.Command
+import com.victorlapin.flasher.model.interactor.AlarmInteractor
 import com.victorlapin.flasher.model.interactor.RecoveryScriptInteractor
 import com.victorlapin.flasher.model.interactor.ScheduleInteractor
 import com.victorlapin.flasher.view.HomeFragmentView
@@ -15,7 +16,8 @@ class ScheduleHomePresenter constructor(
         mScriptInteractor: RecoveryScriptInteractor,
         mSettings: SettingsManager,
         mRouter: Router,
-        private val mInteractor: ScheduleInteractor
+        private val mInteractor: ScheduleInteractor,
+        private val mAlarmInteractor: AlarmInteractor
 ) : HomeFragmentPresenter(mRouter, mScriptInteractor, mSettings) {
     private val mCalendar = Calendar.getInstance()
 
@@ -63,9 +65,15 @@ class ScheduleHomePresenter constructor(
     fun onScheduleEnabledChange(isEnabled: Boolean) {
         mSettings.useSchedule = isEnabled
         if (isEnabled) {
-            setAlarm()
+            mAlarmInteractor.setAlarm()
+                    .doOnError { viewState.showInfoToast(it.localizedMessage) }
+                    .subscribe()
+                    .addTo(mDisposable)
         } else {
-            cancelAlarm()
+            mAlarmInteractor.cancelAlarm()
+                    .doOnError { viewState.showInfoToast(it.localizedMessage) }
+                    .subscribe()
+                    .addTo(mDisposable)
         }
     }
 
@@ -82,7 +90,10 @@ class ScheduleHomePresenter constructor(
         mSettings.scheduleTime = mCalendar.timeInMillis
 
         if (mSettings.useSchedule) {
-            setAlarm()
+            mAlarmInteractor.setAlarm()
+                    .doOnError { viewState.showInfoToast(it.localizedMessage) }
+                    .subscribe()
+                    .addTo(mDisposable)
         }
     }
 
@@ -91,15 +102,10 @@ class ScheduleHomePresenter constructor(
     fun onPeriodSelected(period: Int) {
         mSettings.schedulePeriod = period
         if (mSettings.useSchedule) {
-            setAlarm()
+            mAlarmInteractor.setAlarm()
+                    .doOnError { viewState.showInfoToast(it.localizedMessage) }
+                    .subscribe()
+                    .addTo(mDisposable)
         }
-    }
-
-    private fun setAlarm() {
-
-    }
-
-    private fun cancelAlarm() {
-
     }
 }
