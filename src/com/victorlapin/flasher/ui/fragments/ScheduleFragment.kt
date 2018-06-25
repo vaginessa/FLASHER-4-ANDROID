@@ -32,11 +32,6 @@ class ScheduleFragment : HomeFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        chk_enable.isChecked = mSettings.useSchedule
-        chk_enable.setOnCheckedChangeListener { _, isChecked ->
-            (presenter as ScheduleHomePresenter).onScheduleEnabledChange(isChecked)
-        }
-
         val lastRun = mSettings.alarmLastRun
         lbl_last_run.text = getString(R.string.alarm_last_run,
                 if (lastRun > 0) mDateTimeFormatter.format(Date(lastRun)) else
@@ -56,6 +51,18 @@ class ScheduleFragment : HomeFragment() {
             else -> resources.getQuantityString(R.plurals.schedule_period, period, period)
         }
         lbl_period.setOnClickListener { (presenter as ScheduleHomePresenter).selectPeriod() }
+
+        if (time > 0) {
+            chk_enable.isEnabled = true
+            chk_enable.isChecked = mSettings.useSchedule
+        } else {
+            mSettings.useSchedule = false
+            chk_enable.isEnabled = false
+            chk_enable.isChecked = false
+        }
+        chk_enable.setOnCheckedChangeListener { _, isChecked ->
+            (presenter as ScheduleHomePresenter).onScheduleEnabledChange(isChecked)
+        }
     }
 
     override fun onStop() {
@@ -67,6 +74,7 @@ class ScheduleFragment : HomeFragment() {
         val callback = TimePickerDialog.OnTimeSetListener { _, hourOfDay, minute ->
             (presenter as ScheduleHomePresenter).onTimeSelected(hourOfDay, minute)
             lbl_time.text = mTimeFormatter.format(Date(mSettings.scheduleTime))
+            chk_enable.isEnabled = true
         }
         TimePickerDialog(context!!,
                 callback,
