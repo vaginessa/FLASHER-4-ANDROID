@@ -7,5 +7,6 @@ val allModules = listOf(
         settingsActivityModule,
         aboutActivityModule,
         rebootDialogActivityModule,
-        scriptTileServiceModule
+        scriptTileServiceModule,
+        alarmReceiverModule
 )

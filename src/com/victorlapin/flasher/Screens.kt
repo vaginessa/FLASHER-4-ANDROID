@@ -14,4 +14,6 @@ object Screens {
     const val EXTERNAL_ABOUT = "about"
 
     const val SERVICE_SCRIPT = "tile_service_script"
+
+    const val RECEIVER_ALARM = "receiver_alarm"
 }
