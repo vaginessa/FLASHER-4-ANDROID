@@ -17,6 +17,12 @@
             android:summary="@string/pref_summary_analyzer"
             android:title="@string/pref_title_analyzer" />
 
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="show_notification_on_boot"
+            android:summary="@string/pref_summary_show_notification_on_boot"
+            android:title="@string/pref_title_show_notification_on_boot" />
+
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/pref_category_debug">
