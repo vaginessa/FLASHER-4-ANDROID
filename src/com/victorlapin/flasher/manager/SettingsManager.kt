@@ -16,6 +16,7 @@ class SettingsManager(context: Context) {
         const val KEY_USE_SCHEDULE = "use_schedule"
         const val KEY_SCHEDULE_TIME = "schedule_time"
         const val KEY_SCHEDULE_PERIOD = "schedule_period"
+        const val KEY_ALARM_LAST_RUN = "alarm_last_run"
     }
 
     private val mPrefs = PreferenceManager.getDefaultSharedPreferences(context)
@@ -50,4 +51,8 @@ class SettingsManager(context: Context) {
     var schedulePeriod: Int
         get() = mPrefs.getInt(KEY_SCHEDULE_PERIOD, 0)
         set(period) = mPrefs.edit().putInt(KEY_SCHEDULE_PERIOD, period).apply()
+
+    var alarmLastRun: Long
+        get() = mPrefs.getLong(KEY_ALARM_LAST_RUN, 0)
+        set(time) = mPrefs.edit().putLong(KEY_ALARM_LAST_RUN, time).apply()
 }

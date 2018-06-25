@@ -6,6 +6,6 @@ import org.koin.dsl.module.applicationContext
 
 val alarmReceiverModule = applicationContext {
     context(Screens.RECEIVER_ALARM) {
-        factory { AlarmReceiverPresenter(get()) }
+        factory { AlarmReceiverPresenter(get(), get()) }
     }
 }
