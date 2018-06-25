@@ -29,6 +29,7 @@ class AlarmRepository(
                 mServices.alarmManager.setWindow(AlarmManager.RTC_WAKEUP, time,
                         TimeUnit.HOURS.toMillis(1), mServices.alarmIntent)
             }
+            mServices.enableBootReceiver()
         }
         emitter.onSuccess(Any())
     }
@@ -36,6 +37,7 @@ class AlarmRepository(
     fun cancelAlarm(): Single<Any> = Single.create { emitter ->
         Log.i("Alarm", "Canceled")
         mServices.alarmManager.cancel(mServices.alarmIntent)
+        mServices.disableBootReceiver()
         emitter.onSuccess(Any())
     }
 }
