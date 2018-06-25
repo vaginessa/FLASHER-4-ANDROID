@@ -14,6 +14,7 @@
     <string name="success">Success</string>
     <string name="schedule_time_title">Time</string>
     <string name="schedule_period_title">Period</string>
+    <string name="alarm_last_run">Last run: %s</string>
 
     <!-- Action strings -->
     <string name="action_home">Home</string>

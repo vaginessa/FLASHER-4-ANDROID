@@ -25,6 +25,8 @@ class ScheduleFragment : HomeFragment() {
     override fun providePresenter(): HomeFragmentPresenter = mSchedulePresenter
 
     private val mSettings by inject<SettingsManager>()
+    private val mDateTimeFormatter = SimpleDateFormat
+            .getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT)
     private val mTimeFormatter = SimpleDateFormat.getTimeInstance(DateFormat.SHORT)
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -34,6 +36,11 @@ class ScheduleFragment : HomeFragment() {
         chk_enable.setOnCheckedChangeListener { _, isChecked ->
             (presenter as ScheduleHomePresenter).onScheduleEnabledChange(isChecked)
         }
+
+        val lastRun = mSettings.alarmLastRun
+        lbl_last_run.text = getString(R.string.alarm_last_run,
+                if (lastRun > 0) mDateTimeFormatter.format(Date(lastRun)) else
+                    getString(R.string.schedule_period_never).toLowerCase())
 
         val time = mSettings.scheduleTime
         if (time > 0) {

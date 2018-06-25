@@ -14,6 +14,7 @@
     <string name="success">Успешно</string>
     <string name="schedule_time_title">Время</string>
     <string name="schedule_period_title">Повтор</string>
+    <string name="alarm_last_run">Последний запуск: %s</string>
 
     <!-- Action strings -->
     <string name="action_home">Главная</string>

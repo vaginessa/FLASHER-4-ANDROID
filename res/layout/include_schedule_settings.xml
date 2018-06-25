@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="@dimen/margin_24">
@@ -9,15 +10,29 @@
         android:id="@+id/chk_enable"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/margin_2"
+        android:paddingEnd="@dimen/margin_8"
         android:paddingStart="@dimen/margin_16"
         android:paddingTop="@dimen/margin_16"
-        android:paddingEnd="@dimen/margin_8"
-        android:paddingBottom="@dimen/margin_16"
         android:text="@string/action_enable_schedule"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/lbl_last_run"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/margin_16"
+        android:paddingEnd="@dimen/margin_16"
+        android:paddingStart="@dimen/margin_16"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        android:textColor="?android:attr/textColorTertiary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/chk_enable"
+        tools:text="@string/alarm_last_run" />
 
     <GridLayout
         android:layout_width="0dp"
@@ -26,33 +41,33 @@
         android:rowCount="2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/chk_enable">
+        app:layout_constraintTop_toBottomOf="@id/lbl_last_run">
 
         <TextView
             android:id="@+id/lbl_time_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_row="0"
             android:layout_column="0"
+            android:layout_row="0"
+            android:paddingBottom="@dimen/margin_8"
+            android:paddingEnd="@dimen/margin_16"
             android:paddingStart="@dimen/margin_16"
             android:paddingTop="@dimen/margin_8"
-            android:paddingEnd="@dimen/margin_16"
-            android:paddingBottom="@dimen/margin_8"
             android:text="@string/schedule_time_title"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             android:textColor="?android:attr/textColorTertiary" />
 
         <TextView
             android:id="@+id/lbl_time"
-            android:layout_column="1"
-            android:layout_row="0"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_column="1"
+            android:layout_row="0"
             android:foregroundGravity="center_vertical"
+            android:paddingBottom="@dimen/margin_8"
+            android:paddingEnd="@dimen/margin_16"
             android:paddingStart="@dimen/margin_16"
             android:paddingTop="@dimen/margin_8"
-            android:paddingEnd="@dimen/margin_16"
-            android:paddingBottom="@dimen/margin_8"
             android:text="@string/command_tap_to_select"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             android:textColor="?android:attr/textColorTertiary" />
@@ -61,27 +76,27 @@
             android:id="@+id/lbl_period_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_row="1"
             android:layout_column="0"
+            android:layout_row="1"
+            android:paddingBottom="@dimen/margin_8"
+            android:paddingEnd="@dimen/margin_16"
             android:paddingStart="@dimen/margin_16"
             android:paddingTop="@dimen/margin_8"
-            android:paddingEnd="@dimen/margin_16"
-            android:paddingBottom="@dimen/margin_8"
             android:text="@string/schedule_period_title"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             android:textColor="?android:attr/textColorTertiary" />
 
         <TextView
             android:id="@+id/lbl_period"
-            android:layout_column="1"
-            android:layout_row="1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_column="1"
+            android:layout_row="1"
             android:foregroundGravity="center_vertical"
+            android:paddingBottom="@dimen/margin_8"
+            android:paddingEnd="@dimen/margin_16"
             android:paddingStart="@dimen/margin_16"
             android:paddingTop="@dimen/margin_8"
-            android:paddingEnd="@dimen/margin_16"
-            android:paddingBottom="@dimen/margin_8"
             android:text="@string/command_tap_to_select"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             android:textColor="?android:attr/textColorTertiary" />
