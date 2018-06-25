@@ -17,6 +17,7 @@ class AlarmReceiverPresenter(
                 .subscribe({
                     val result = mScriptInteractor.deployScript(it.script)
                     if (result.isSuccess) {
+                        mSettings.bootNotificationFlag = true
                         mScriptInteractor.rebootRecovery()
                     }
                 }, {
