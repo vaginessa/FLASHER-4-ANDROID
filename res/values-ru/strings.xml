@@ -97,4 +97,6 @@
     <string name="schedule_period_never">Никогда</string>
     <string name="schedule_period_daily">Каждый день</string>
     <string name="schedule_period_weekly">Каждую неделю</string>
+
+    <string name="channel_default_title">По умолчанию</string>
 </resources>

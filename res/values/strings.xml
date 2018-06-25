@@ -96,4 +96,7 @@
     <string name="schedule_period_never">Never</string>
     <string name="schedule_period_daily">Daily</string>
     <string name="schedule_period_weekly">Weekly</string>
+
+    <string name="channel_default_id" translatable="false">default</string>
+    <string name="channel_default_title">Default</string>
 </resources>

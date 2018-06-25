@@ -1,13 +1,14 @@
 package com.victorlapin.flasher.manager
 
 import android.app.AlarmManager
+import android.app.NotificationManager
 import android.app.PendingIntent
+import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
-import com.victorlapin.flasher.ui.receivers.AlarmReceiver
 import android.content.pm.PackageManager
-import android.content.ComponentName
 import com.victorlapin.flasher.ui.receivers.AlarmBootReceiver
+import com.victorlapin.flasher.ui.receivers.AlarmReceiver
 
 class ServicesManager(
         private val mContext: Context
@@ -36,6 +37,10 @@ class ServicesManager(
         pm.setComponentEnabledSetting(receiver,
                 PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
                 PackageManager.DONT_KILL_APP)
+    }
+
+    val notificationManager by lazy {
+        mContext.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
     }
 
     companion object {
