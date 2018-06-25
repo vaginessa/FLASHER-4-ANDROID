@@ -7,8 +7,13 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.support.v4.app.NotificationCompat
+import com.victorlapin.flasher.R
 import com.victorlapin.flasher.ui.receivers.AlarmBootReceiver
 import com.victorlapin.flasher.ui.receivers.AlarmReceiver
+import java.text.DateFormat
+import java.text.SimpleDateFormat
+import java.util.*
 
 class ServicesManager(
         private val mContext: Context
@@ -43,7 +48,20 @@ class ServicesManager(
         mContext.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
     }
 
+    fun showBootNotification(alarmLastRun: Long) {
+        val formatter = SimpleDateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT)
+        val notification = NotificationCompat.Builder(mContext,
+                mContext.getString(R.string.channel_default_id))
+                .setShowWhen(false)
+                .setSmallIcon(R.drawable.android_head)
+                .setContentText(mContext.getString(R.string.alarm_last_run_notification,
+                        formatter.format(Date(alarmLastRun))))
+                .build()
+        notificationManager.notify(BOOT_NOTIFICATION_ID, notification)
+    }
+
     companion object {
         private const val ALARM_REQUEST_CODE = 100
+        private const val BOOT_NOTIFICATION_ID = 199
     }
 }

@@ -11,6 +11,6 @@ val alarmReceiverModule = applicationContext {
     }
 
     context(Screens.RECEIVER_BOOT_ALARM) {
-        factory { AlarmBootReceiverPresenter(get(), get()) }
+        factory { AlarmBootReceiverPresenter(get(), get(), get()) }
     }
 }
