@@ -3,13 +3,13 @@ package com.victorlapin.flasher.presenter
 import com.arellomobile.mvp.InjectViewState
 import com.victorlapin.flasher.addTo
 import com.victorlapin.flasher.manager.SettingsManager
+import com.victorlapin.flasher.model.DateBuilder
 import com.victorlapin.flasher.model.database.entity.Command
 import com.victorlapin.flasher.model.interactor.AlarmInteractor
 import com.victorlapin.flasher.model.interactor.RecoveryScriptInteractor
 import com.victorlapin.flasher.model.interactor.ScheduleInteractor
 import com.victorlapin.flasher.view.HomeFragmentView
 import ru.terrakok.cicerone.Router
-import java.util.*
 
 @InjectViewState
 class ScheduleHomePresenter constructor(
@@ -19,8 +19,6 @@ class ScheduleHomePresenter constructor(
         private val mInteractor: ScheduleInteractor,
         private val mAlarmInteractor: AlarmInteractor
 ) : HomeFragmentPresenter(mRouter, mScriptInteractor, mSettings) {
-    private val mCalendar = Calendar.getInstance()
-
     override fun attachView(view: HomeFragmentView?) {
         super.attachView(view)
         mInteractor.getSchedule()
@@ -78,20 +76,15 @@ class ScheduleHomePresenter constructor(
     }
 
     fun selectTime() {
-        mCalendar.time = Date(mSettings.scheduleTime)
+        val dateBuilder = DateBuilder(mSettings.scheduleTime)
         viewState.showSelectTimeDialog(
-                mCalendar.get(Calendar.HOUR_OF_DAY),
-                mCalendar.get(Calendar.MINUTE))
+                dateBuilder.hourOfDay,
+                dateBuilder.minute)
     }
 
     fun onTimeSelected(hourOfDay: Int, minute: Int) {
-        mCalendar.timeInMillis = System.currentTimeMillis()
-        mCalendar.set(Calendar.HOUR_OF_DAY, hourOfDay)
-        mCalendar.set(Calendar.MINUTE, minute)
-        if (mCalendar.timeInMillis < System.currentTimeMillis()) {
-            mCalendar.add(Calendar.DAY_OF_YEAR, 1)
-        }
-        mSettings.scheduleTime = mCalendar.timeInMillis
+        val dateBuilder = DateBuilder(hourOfDay, minute)
+        mSettings.scheduleTime = dateBuilder.nextAlarmTime
 
         if (mSettings.useSchedule) {
             mAlarmInteractor.setAlarm()
