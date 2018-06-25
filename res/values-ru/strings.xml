@@ -46,6 +46,7 @@
     <string name="pref_summary_analyzer">Прогонять базовые проверки \"от дурака\" на созданных скриптах. ВЫКЛЮЧАЙТЕ НА СВОЙ РИСК!</string>
     <string name="pref_title_mask_toast">Показывать имена файлов</string>
     <string name="pref_summary_mask_toast">Показывать всплывающее уведомление с файлами, найденными по маскам</string>
+    <string name="pref_title_clear_schedule">Сбросить настройки расписания</string>
 
     <!-- Command names -->
     <string name="command_wipe">Вайп</string>

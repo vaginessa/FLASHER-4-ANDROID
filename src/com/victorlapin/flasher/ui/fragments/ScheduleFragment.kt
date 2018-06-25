@@ -29,8 +29,8 @@ class ScheduleFragment : HomeFragment() {
             .getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT)
     private val mTimeFormatter = SimpleDateFormat.getTimeInstance(DateFormat.SHORT)
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onResume() {
+        super.onResume()
 
         val lastRun = mSettings.alarmLastRun
         lbl_last_run.text = getString(R.string.alarm_last_run,
@@ -40,6 +40,8 @@ class ScheduleFragment : HomeFragment() {
         val time = mSettings.scheduleTime
         if (time > 0) {
             lbl_time.text = mTimeFormatter.format(Date(time))
+        } else {
+            lbl_time.text = getString(R.string.command_tap_to_select)
         }
         lbl_time.setOnClickListener { (presenter as ScheduleHomePresenter).selectTime() }
 

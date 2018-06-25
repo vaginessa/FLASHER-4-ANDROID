@@ -60,6 +60,17 @@ class SettingsGlobalFragment : PreferenceFragmentCompat() {
                     mScriptInteractor.deleteScript()
                     return@OnPreferenceClickListener true
                 }
+
+        findPreference(SettingsManager.KEY_CLEAR_SCHEDULE).onPreferenceClickListener =
+                Preference.OnPreferenceClickListener {
+                    mSettings.apply {
+                        useSchedule = false
+                        scheduleTime = 0
+                        schedulePeriod = 0
+                        alarmLastRun = 0
+                    }
+                    return@OnPreferenceClickListener true
+                }
     }
 
     companion object {

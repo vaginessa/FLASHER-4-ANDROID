@@ -17,6 +17,7 @@ class SettingsManager(context: Context) {
         const val KEY_SCHEDULE_TIME = "schedule_time"
         const val KEY_SCHEDULE_PERIOD = "schedule_period"
         const val KEY_ALARM_LAST_RUN = "alarm_last_run"
+        const val KEY_CLEAR_SCHEDULE = "clear_schedule_settings"
     }
 
     private val mPrefs = PreferenceManager.getDefaultSharedPreferences(context)

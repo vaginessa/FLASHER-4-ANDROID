@@ -32,6 +32,10 @@
             android:summary="@string/pref_summary_mask_toast"
             android:title="@string/pref_title_mask_toast" />
 
+        <Preference
+            android:key="clear_schedule_settings"
+            android:title="@string/pref_title_clear_schedule" />
+
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/pref_category_misc">
