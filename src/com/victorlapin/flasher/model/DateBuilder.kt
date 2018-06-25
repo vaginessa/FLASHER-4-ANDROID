@@ -5,6 +5,7 @@ import java.util.*
 class DateBuilder constructor() {
     private val mCalendar = Calendar.getInstance()
     private var mIsDateSet: Boolean = false
+    private var mPeriod = 1
 
     constructor(defaultDate: Long) : this() {
         mCalendar.timeInMillis = defaultDate
@@ -26,7 +27,7 @@ class DateBuilder constructor() {
                 minute = m
             }
             if (mCalendar.timeInMillis < System.currentTimeMillis()) {
-                mCalendar.add(Calendar.DAY_OF_YEAR, 1)
+                mCalendar.add(Calendar.DAY_OF_YEAR, period)
             }
             return mCalendar.timeInMillis
         }
@@ -38,4 +39,10 @@ class DateBuilder constructor() {
     var minute
         get() = mCalendar.get(Calendar.MINUTE)
         set(minute) = mCalendar.set(Calendar.MINUTE, minute)
+
+    var period
+        get() = mPeriod
+        set(period) {
+            mPeriod = period
+        }
 }

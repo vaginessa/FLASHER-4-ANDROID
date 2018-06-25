@@ -10,12 +10,29 @@ class AlarmBootReceiverPresenter(
 ) {
     fun resetAlarm() {
         val time = mSettings.scheduleTime
+        val period = mSettings.schedulePeriod
         if (time > 0) {
             val dateBuilder = DateBuilder(time)
-            mSettings.scheduleTime = dateBuilder.nextAlarmTime
-            mAlarmInteractor.setAlarm()
-                    .doOnError { it.printStackTrace() }
-                    .subscribe()
+            when {
+                (time > System.currentTimeMillis()) -> {
+                    mAlarmInteractor.setAlarm()
+                            .doOnError { it.printStackTrace() }
+                            .subscribe()
+                }
+                (period > 0) -> {
+                    dateBuilder.period = period
+                    mSettings.scheduleTime = dateBuilder.nextAlarmTime
+                    mAlarmInteractor.setAlarm()
+                            .doOnError { it.printStackTrace() }
+                            .subscribe()
+                }
+                else -> {
+                    mSettings.useSchedule = false
+                    mAlarmInteractor.cancelAlarm()
+                            .doOnError { it.printStackTrace() }
+                            .subscribe()
+                }
+            }
         }
     }
 }
