@@ -18,6 +18,8 @@ class SettingsManager(context: Context) {
         const val KEY_SCHEDULE_PERIOD = "schedule_period"
         const val KEY_ALARM_LAST_RUN = "alarm_last_run"
         const val KEY_CLEAR_SCHEDULE = "clear_schedule_settings"
+        const val KEY_SHOW_NOTIFICATION_ON_BOOT = "show_notification_on_boot"
+        const val KEY_BOOT_NOTIFICATION_FLAG = "boot_notification_flag"
     }
 
     private val mPrefs = PreferenceManager.getDefaultSharedPreferences(context)
@@ -56,4 +58,11 @@ class SettingsManager(context: Context) {
     var alarmLastRun: Long
         get() = mPrefs.getLong(KEY_ALARM_LAST_RUN, 0)
         set(time) = mPrefs.edit().putLong(KEY_ALARM_LAST_RUN, time).apply()
+
+    val showNotificationOnBoot: Boolean
+        get() = mPrefs.getBoolean(KEY_SHOW_NOTIFICATION_ON_BOOT, false)
+
+    var bootNotificationFlag: Boolean
+        get() = mPrefs.getBoolean(KEY_BOOT_NOTIFICATION_FLAG, false)
+        set(flag) = mPrefs.edit().putBoolean(KEY_BOOT_NOTIFICATION_FLAG, flag).apply()
 }
