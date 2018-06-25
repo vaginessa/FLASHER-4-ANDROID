@@ -85,8 +85,12 @@ class ScheduleHomePresenter constructor(
     }
 
     fun onTimeSelected(hourOfDay: Int, minute: Int) {
+        mCalendar.timeInMillis = System.currentTimeMillis()
         mCalendar.set(Calendar.HOUR_OF_DAY, hourOfDay)
         mCalendar.set(Calendar.MINUTE, minute)
+        if (mCalendar.timeInMillis < System.currentTimeMillis()) {
+            mCalendar.add(Calendar.DAY_OF_YEAR, 1)
+        }
         mSettings.scheduleTime = mCalendar.timeInMillis
 
         if (mSettings.useSchedule) {
