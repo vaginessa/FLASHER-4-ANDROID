@@ -11,6 +11,7 @@ import com.victorlapin.flasher.model.BuildScriptResult
 import com.victorlapin.flasher.model.EventArgs
 import com.victorlapin.flasher.model.database.entity.Command
 import io.reactivex.Single
+import io.reactivex.disposables.Disposable
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
@@ -20,7 +21,8 @@ class RecoveryScriptRepository constructor(
         private val mSettings: SettingsManager
 ) {
     fun buildScript(chainId: Long): Single<BuildScriptResult> = Single.create { emitter ->
-        mCommandRepo.getCommands(chainId)
+        var disposable: Disposable? = null
+        disposable = mCommandRepo.getCommands(chainId)
                 .subscribe {
                     val scriptBuilder = StringBuilder()
                     val resolvedFilesBuilder = StringBuilder()
@@ -81,6 +83,7 @@ class RecoveryScriptRepository constructor(
                         saveDebugScript(result.script)
                     }
                     emitter.onSuccess(result)
+                    disposable?.dispose()
                 }
     }
 
