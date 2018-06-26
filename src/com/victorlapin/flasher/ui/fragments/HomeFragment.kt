@@ -322,6 +322,10 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
 
     }
 
+    override fun showNextRun(nextRun: Long) {
+
+    }
+
     companion object {
         fun newInstance(): HomeFragment {
             val fragment = HomeFragment()

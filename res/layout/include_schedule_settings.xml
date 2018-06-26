@@ -24,7 +24,6 @@
         android:id="@+id/lbl_last_run"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:paddingBottom="@dimen/margin_16"
         android:paddingEnd="@dimen/margin_16"
         android:paddingStart="@dimen/margin_16"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
@@ -34,6 +33,21 @@
         app:layout_constraintTop_toBottomOf="@id/chk_enable"
         tools:text="@string/alarm_last_run" />
 
+    <TextView
+        android:id="@+id/lbl_next_run"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/margin_2"
+        android:paddingBottom="@dimen/margin_16"
+        android:paddingEnd="@dimen/margin_16"
+        android:paddingStart="@dimen/margin_16"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        android:textColor="?android:attr/textColorTertiary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/lbl_last_run"
+        tools:text="@string/alarm_next_run" />
+
     <GridLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -41,7 +55,7 @@
         android:rowCount="2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/lbl_last_run">
+        app:layout_constraintTop_toBottomOf="@id/lbl_next_run">
 
         <TextView
             android:id="@+id/lbl_time_title"

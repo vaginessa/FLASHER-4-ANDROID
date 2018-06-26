@@ -105,4 +105,10 @@ class ScheduleHomePresenter constructor(
                     .addTo(mDisposable)
         }
     }
+
+    fun updateNextRun() {
+        val dateBuilder = DateBuilder(mSettings.scheduleTime)
+        dateBuilder.period = mSettings.schedulePeriod
+        viewState.showNextRun(dateBuilder.nextAlarmTime)
+    }
 }

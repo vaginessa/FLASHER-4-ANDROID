@@ -1,6 +1,7 @@
 package com.victorlapin.flasher.view
 
 import com.arellomobile.mvp.MvpView
+import com.arellomobile.mvp.viewstate.strategy.AddToEndSingleStrategy
 import com.arellomobile.mvp.viewstate.strategy.SkipStrategy
 import com.arellomobile.mvp.viewstate.strategy.StateStrategyType
 import com.victorlapin.flasher.model.EventArgs
@@ -34,4 +35,6 @@ interface HomeFragmentView : MvpView {
     fun showSelectTimeDialog(defHourOfDay: Int, defMinute: Int)
     @StateStrategyType(SkipStrategy::class)
     fun showSelectPeriodDialog(defPeriod: Int)
+    @StateStrategyType(AddToEndSingleStrategy::class)
+    fun showNextRun(nextRun: Long)
 }

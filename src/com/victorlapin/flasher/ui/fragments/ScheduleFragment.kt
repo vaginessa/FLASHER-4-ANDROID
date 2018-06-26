@@ -64,7 +64,10 @@ class ScheduleFragment : HomeFragment() {
         }
         chk_enable.setOnCheckedChangeListener { _, isChecked ->
             (presenter as ScheduleHomePresenter).onScheduleEnabledChange(isChecked)
+            updateNextRun()
         }
+
+        updateNextRun()
     }
 
     override fun onStop() {
@@ -77,6 +80,7 @@ class ScheduleFragment : HomeFragment() {
             (presenter as ScheduleHomePresenter).onTimeSelected(hourOfDay, minute)
             lbl_time.text = mTimeFormatter.format(Date(mSettings.scheduleTime))
             chk_enable.isEnabled = true
+            updateNextRun()
         }
         TimePickerDialog(context!!,
                 callback,
@@ -99,9 +103,21 @@ class ScheduleFragment : HomeFragment() {
                         7 -> getString(R.string.schedule_period_weekly)
                         else -> resources.getQuantityString(R.plurals.schedule_period, period, period)
                     }
+                    updateNextRun()
                 }
                 .negativeText(android.R.string.cancel)
                 .show()
+    }
+
+    private fun updateNextRun() = (presenter as ScheduleHomePresenter).updateNextRun()
+
+    override fun showNextRun(nextRun: Long) {
+        val displayText = when {
+            (!chk_enable.isChecked) ||
+            (nextRun < System.currentTimeMillis()) -> getString(R.string.schedule_period_never).toLowerCase()
+            else -> mDateTimeFormatter.format(Date(nextRun))
+        }
+        lbl_next_run.text = getString(R.string.alarm_next_run, displayText)
     }
 
     companion object {
