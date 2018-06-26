@@ -40,6 +40,9 @@ class RecoveryScriptRepository constructor(
                                     partString.append(it[0].toUpperCase())
                                 }
                                 if (partString.isNotEmpty()) {
+                                    if (mSettings.compressBackups) {
+                                        partString.append("O")
+                                    }
                                     val dt = SimpleDateFormat("YYYY-MM-dd_HH-mm-ss",
                                             Locale.getDefault()).format(Date())
                                     val out = Shell.Sync.sh("getprop ro.build.id")

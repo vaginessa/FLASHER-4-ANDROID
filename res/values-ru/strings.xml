@@ -52,6 +52,7 @@
     <string name="pref_title_clear_schedule">Сбросить настройки расписания</string>
     <string name="pref_title_show_notification_on_boot">Показывать уведомление при загрузке</string>
     <string name="pref_summary_show_notification_on_boot">Показывать уведомление после запланированного запуска и загрузки обратно в систему</string>
+    <string name="pref_title_compress_backups">Сжимать резервные копии</string>
 
     <!-- Command names -->
     <string name="command_wipe">Вайп</string>

@@ -23,6 +23,11 @@
             android:summary="@string/pref_summary_show_notification_on_boot"
             android:title="@string/pref_title_show_notification_on_boot" />
 
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="compress_backups"
+            android:title="@string/pref_title_compress_backups" />
+
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/pref_category_debug">
