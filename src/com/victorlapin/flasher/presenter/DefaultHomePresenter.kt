@@ -7,15 +7,13 @@ import com.victorlapin.flasher.model.database.entity.Command
 import com.victorlapin.flasher.model.interactor.CommandsInteractor
 import com.victorlapin.flasher.model.interactor.RecoveryScriptInteractor
 import com.victorlapin.flasher.view.HomeFragmentView
-import ru.terrakok.cicerone.Router
 
 @InjectViewState
 class DefaultHomePresenter constructor(
         mScriptInteractor: RecoveryScriptInteractor,
         mSettings: SettingsManager,
-        mRouter: Router,
         private val mInteractor: CommandsInteractor
-) : HomeFragmentPresenter(mRouter, mScriptInteractor, mSettings) {
+) : HomeFragmentPresenter(mScriptInteractor, mSettings) {
     override fun attachView(view: HomeFragmentView?) {
         super.attachView(view)
         mInteractor.getCommands()

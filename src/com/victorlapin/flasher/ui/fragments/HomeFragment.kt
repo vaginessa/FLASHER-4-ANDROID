@@ -7,6 +7,9 @@ import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.widget.Toast
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.folderselector.FileChooserDialog
@@ -61,6 +64,10 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
         arguments!!.getLong(ARG_CHAIN_ID)
     }
 
+    init {
+        this.setHasOptionsMenu(true)
+    }
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         mWipePartitions = mResources.getStringList(R.array.wipe_partitions)
@@ -73,17 +80,7 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
             setHasFixedSize(true)
             adapter = mAdapter
         }
-        toolbar.setTitle(R.string.title_home)
-        toolbar.inflateMenu(R.menu.fragment_home)
-        toolbar.setOnMenuItemClickListener { item ->
-            when (item.itemId) {
-                R.id.action_build -> { presenter.buildAndDeploy(mChainId); true }
-                R.id.action_export -> { presenter.onExportClicked(); true }
-                R.id.action_import -> { presenter.onImportClicked(); true }
-                R.id.action_settings -> { presenter.onSettingsClicked(); true }
-                else -> false
-            }
-        }
+        toolbar.setTitle(R.string.action_home)
 
         val swipeCallback = object : ItemTouchHelper.SimpleCallback(0,
                 ItemTouchHelper.START or ItemTouchHelper.END) {
@@ -110,6 +107,16 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
     override fun onDestroyView() {
         super.onDestroyView()
         mDisposable.dispose()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) =
+            inflater.inflate(R.menu.fragment_home, menu)
+
+    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
+        R.id.action_build -> { presenter.buildAndDeploy(mChainId); true }
+        R.id.action_export -> { presenter.onExportClicked(); true }
+        R.id.action_import -> { presenter.onImportClicked(); true }
+        else -> false
     }
 
     private fun setupEvents() {

@@ -9,16 +9,14 @@ import com.victorlapin.flasher.model.interactor.AlarmInteractor
 import com.victorlapin.flasher.model.interactor.RecoveryScriptInteractor
 import com.victorlapin.flasher.model.interactor.ScheduleInteractor
 import com.victorlapin.flasher.view.HomeFragmentView
-import ru.terrakok.cicerone.Router
 
 @InjectViewState
 class ScheduleHomePresenter constructor(
         mScriptInteractor: RecoveryScriptInteractor,
         mSettings: SettingsManager,
-        mRouter: Router,
         private val mInteractor: ScheduleInteractor,
         private val mAlarmInteractor: AlarmInteractor
-) : HomeFragmentPresenter(mRouter, mScriptInteractor, mSettings) {
+) : HomeFragmentPresenter(mScriptInteractor, mSettings) {
     override fun attachView(view: HomeFragmentView?) {
         super.attachView(view)
         mInteractor.getSchedule()

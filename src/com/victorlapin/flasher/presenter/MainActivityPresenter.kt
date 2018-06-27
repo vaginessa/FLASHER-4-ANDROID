@@ -30,4 +30,6 @@ class MainActivityPresenter constructor(
             R.id.action_schedule -> mScheduleInteractor.addStubCommand()
         }
     }
+
+    fun selectSettings() = mRouter.navigateTo(Screens.ACTIVITY_SETTINGS)
 }

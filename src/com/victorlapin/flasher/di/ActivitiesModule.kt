@@ -12,12 +12,12 @@ val activitiesModule = module {
     }
 
     module(Screens.FRAGMENT_HOME) {
-        factory { DefaultHomePresenter(get(), get(), get(), get()) }
+        factory { DefaultHomePresenter(get(), get(), get()) }
         factory { HomeAdapter(get()) }
     }
 
     module(Screens.FRAGMENT_SCHEDULE) {
-        factory { ScheduleHomePresenter(get(), get(), get(), get(), get()) }
+        factory { ScheduleHomePresenter(get(), get(), get(), get()) }
     }
 
     module(Screens.ACTIVITY_SETTINGS) {

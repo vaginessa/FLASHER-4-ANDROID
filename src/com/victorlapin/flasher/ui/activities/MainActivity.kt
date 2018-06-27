@@ -3,8 +3,8 @@ package com.victorlapin.flasher.ui.activities
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
+import android.view.Menu
 import android.view.MenuItem
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
@@ -19,10 +19,7 @@ import org.koin.android.ext.android.inject
 import org.koin.android.ext.android.release
 import ru.terrakok.cicerone.android.SupportAppNavigator
 
-class MainActivity : BaseActivity(), MainActivityView,
-        BottomNavigationView.OnNavigationItemSelectedListener,
-        BottomNavigationView.OnNavigationItemReselectedListener {
-
+class MainActivity : BaseActivity(), MainActivityView {
     override val layoutRes = R.layout.activity_main
 
     private val mPresenter by inject<MainActivityPresenter>()
@@ -35,10 +32,10 @@ class MainActivity : BaseActivity(), MainActivityView,
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        bottom_bar.setOnNavigationItemSelectedListener(this)
-        bottom_bar.setOnNavigationItemReselectedListener(this)
+        setSupportActionBar(bottom_app_bar)
         fab.setOnClickListener {
-            presenter.onFabClicked(bottom_bar.selectedItemId)
+            //TODO: add nav stuff here
+            presenter.onFabClicked(R.id.action_home)
         }
     }
 
@@ -47,13 +44,15 @@ class MainActivity : BaseActivity(), MainActivityView,
         release(Screens.ACTIVITY_MAIN)
     }
 
-    override fun onNavigationItemSelected(item: MenuItem) = when (item.itemId) {
-        R.id.action_home -> { presenter.selectHome(); true }
-        R.id.action_schedule -> { presenter.selectSchedule(); true }
-        else -> false
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.activity_main, menu)
+        return true
     }
 
-    override fun onNavigationItemReselected(item: MenuItem) { }
+    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
+        R.id.action_settings -> { presenter.selectSettings(); true }
+        else -> false
+    }
 
     override val navigator = object : SupportAppNavigator(this, R.id.fragment_container) {
         override fun createActivityIntent(context: Context?, screenKey: String?, data: Any?): Intent? =

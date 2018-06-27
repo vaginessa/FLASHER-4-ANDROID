@@ -1,7 +1,6 @@
 package com.victorlapin.flasher.presenter
 
 import com.arellomobile.mvp.MvpPresenter
-import com.victorlapin.flasher.Screens
 import com.victorlapin.flasher.addTo
 import com.victorlapin.flasher.manager.SettingsManager
 import com.victorlapin.flasher.model.CommandClickEventArgs
@@ -9,11 +8,9 @@ import com.victorlapin.flasher.model.database.entity.Command
 import com.victorlapin.flasher.model.interactor.RecoveryScriptInteractor
 import com.victorlapin.flasher.view.HomeFragmentView
 import io.reactivex.disposables.CompositeDisposable
-import ru.terrakok.cicerone.Router
 import java.io.File
 
 abstract class HomeFragmentPresenter constructor(
-        private val mRouter: Router,
         private val mScriptInteractor: RecoveryScriptInteractor,
         protected val mSettings: SettingsManager
 ) : MvpPresenter<HomeFragmentView>() {
@@ -108,6 +105,4 @@ abstract class HomeFragmentPresenter constructor(
     fun onImportClicked() = viewState.showImportDialog()
 
     abstract fun importCommands(fileName: String)
-
-    fun onSettingsClicked() = mRouter.navigateTo(Screens.ACTIVITY_SETTINGS)
 }

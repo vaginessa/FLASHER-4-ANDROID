@@ -19,6 +19,8 @@
 
     <dimen name="fab_elevation">@dimen/margin_8</dimen>
     <dimen name="fab_elevation_pressed">12dp</dimen>
+    <dimen name="fab_corner_radius">28dp</dimen>
+    <dimen name="fab_size">56dp</dimen>
     <dimen name="bottom_navigation_elevation">@dimen/margin_0</dimen>
     <dimen name="card_image_size">24dp</dimen>
     <dimen name="about_image_size">48dp</dimen>

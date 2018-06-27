@@ -11,6 +11,7 @@ import com.victorlapin.flasher.model.database.entity.Chain
 import com.victorlapin.flasher.presenter.HomeFragmentPresenter
 import com.victorlapin.flasher.presenter.ScheduleHomePresenter
 import kotlinx.android.synthetic.main.include_schedule_settings.*
+import kotlinx.android.synthetic.main.include_toolbar.*
 import org.koin.android.ext.android.inject
 import org.koin.android.ext.android.release
 import java.text.DateFormat
@@ -28,6 +29,11 @@ class ScheduleFragment : HomeFragment() {
     private val mDateTimeFormatter = SimpleDateFormat
             .getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT)
     private val mTimeFormatter = SimpleDateFormat.getTimeInstance(DateFormat.SHORT)
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        toolbar.setTitle(R.string.action_schedule)
+    }
 
     override fun onResume() {
         super.onResume()
