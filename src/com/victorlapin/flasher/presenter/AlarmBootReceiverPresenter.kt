@@ -14,30 +14,16 @@ class AlarmBootReceiverPresenter(
     private var mDisposable: Disposable? = null
 
     fun resetAlarm() {
-        val time = mSettings.scheduleTime
-        val interval = mSettings.scheduleInterval
-        if (time > 0) {
-            val dateBuilder = DateBuilder(time)
-            when {
-                (time > System.currentTimeMillis()) -> {
-                    mDisposable = mAlarmInteractor.setAlarm()
-                            .doOnError { it.printStackTrace() }
-                            .subscribe()
-                }
-                (interval > 0) -> {
-                    dateBuilder.interval = interval
-                    mSettings.scheduleTime = dateBuilder.nextAlarmTime
-                    mDisposable = mAlarmInteractor.setAlarm()
-                            .doOnError { it.printStackTrace() }
-                            .subscribe()
-                }
-                else -> {
-                    mSettings.useSchedule = false
-                    mDisposable = mAlarmInteractor.cancelAlarm()
-                            .doOnError { it.printStackTrace() }
-                            .subscribe()
-                }
-            }
+        val dateBuilder = DateBuilder(mSettings.scheduleTime)
+        dateBuilder.interval = mSettings.scheduleInterval
+        mDisposable = if (dateBuilder.hasNextAlarm()) {
+            mAlarmInteractor.setAlarm()
+                    .doOnError { it.printStackTrace() }
+                    .subscribe()
+        } else {
+            mAlarmInteractor.cancelAlarm()
+                    .doOnError { it.printStackTrace() }
+                    .subscribe()
         }
     }
 

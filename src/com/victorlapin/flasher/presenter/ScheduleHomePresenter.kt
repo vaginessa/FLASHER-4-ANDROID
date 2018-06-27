@@ -109,6 +109,6 @@ class ScheduleHomePresenter constructor(
     fun updateNextRun() {
         val dateBuilder = DateBuilder(mSettings.scheduleTime)
         dateBuilder.interval = mSettings.scheduleInterval
-        viewState.showNextRun(dateBuilder.nextAlarmTime)
+        viewState.showNextRun(dateBuilder.hasNextAlarm(), dateBuilder.nextAlarmTime)
     }
 }

@@ -111,10 +111,10 @@ class ScheduleFragment : HomeFragment() {
 
     private fun updateNextRun() = (presenter as ScheduleHomePresenter).updateNextRun()
 
-    override fun showNextRun(nextRun: Long) {
+    override fun showNextRun(hasNext: Boolean, nextRun: Long) {
         val displayText = when {
             (!chk_enable.isChecked) ||
-            (nextRun < System.currentTimeMillis()) -> getString(R.string.schedule_interval_never).toLowerCase()
+            (!hasNext) -> getString(R.string.schedule_interval_never).toLowerCase()
             else -> mDateTimeFormatter.format(Date(nextRun))
         }
         lbl_next_run.text = getString(R.string.alarm_next_run, displayText)

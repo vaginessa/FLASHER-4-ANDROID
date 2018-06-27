@@ -322,7 +322,7 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
 
     }
 
-    override fun showNextRun(nextRun: Long) {
+    override fun showNextRun(hasNext: Boolean, nextRun: Long) {
 
     }
 

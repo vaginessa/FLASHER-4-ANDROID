@@ -4,30 +4,27 @@ import java.util.*
 
 class DateBuilder constructor() {
     private val mCalendar = Calendar.getInstance()
-    private var mIsDateSet: Boolean = false
-    private var mInterval = 1
+    private var mInterval = 0
 
     constructor(defaultDate: Long) : this() {
         mCalendar.timeInMillis = defaultDate
-        mIsDateSet = true
     }
 
     constructor(hourOfDay: Int, minute: Int) : this() {
+        mCalendar.timeInMillis = System.currentTimeMillis()
         this.hourOfDay = hourOfDay
         this.minute = minute
+        if (mCalendar.timeInMillis <= System.currentTimeMillis()) {
+            mCalendar.add(Calendar.DAY_OF_YEAR, 1)
+        }
     }
 
     val nextAlarmTime: Long
         get() {
-            if (!mIsDateSet) {
-                val h = hourOfDay
-                val m = minute
-                mCalendar.timeInMillis = System.currentTimeMillis()
-                hourOfDay = h
-                minute = m
-            }
-            if (mCalendar.timeInMillis < System.currentTimeMillis()) {
-                mCalendar.add(Calendar.DAY_OF_YEAR, interval)
+            if (interval > 0) {
+                while (mCalendar.timeInMillis < System.currentTimeMillis()) {
+                    mCalendar.add(Calendar.DAY_OF_YEAR, interval)
+                }
             }
             return mCalendar.timeInMillis
         }
@@ -45,4 +42,6 @@ class DateBuilder constructor() {
         set(interval) {
             mInterval = interval
         }
+
+    fun hasNextAlarm() = nextAlarmTime > System.currentTimeMillis()
 }

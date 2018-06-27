@@ -36,5 +36,5 @@ interface HomeFragmentView : MvpView {
     @StateStrategyType(SkipStrategy::class)
     fun showSelectIntervalDialog(defInterval: Int)
     @StateStrategyType(AddToEndSingleStrategy::class)
-    fun showNextRun(nextRun: Long)
+    fun showNextRun(hasNext: Boolean, nextRun: Long)
 }

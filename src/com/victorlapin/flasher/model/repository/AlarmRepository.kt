@@ -4,6 +4,7 @@ import android.app.AlarmManager
 import android.util.Log
 import com.victorlapin.flasher.manager.ServicesManager
 import com.victorlapin.flasher.manager.SettingsManager
+import com.victorlapin.flasher.model.DateBuilder
 import io.reactivex.Single
 import java.text.DateFormat
 import java.text.SimpleDateFormat
@@ -15,16 +16,17 @@ class AlarmRepository(
         private val mServices: ServicesManager
 ) {
     fun setAlarm(): Single<Any> = Single.create { emitter ->
-        val time = mSettings.scheduleTime
-        val intervalDays = mSettings.scheduleInterval
+        val dateBuilder = DateBuilder(mSettings.scheduleTime)
+        dateBuilder.interval = mSettings.scheduleInterval
 
-        if (time > 0) {
+        if (dateBuilder.hasNextAlarm()) {
+            val time = dateBuilder.nextAlarmTime
             Log.i("Alarm",
                     "Next run: ${SimpleDateFormat.getDateTimeInstance(DateFormat.MEDIUM,
                             DateFormat.SHORT).format(Date(time))}")
-            if (intervalDays > 0) {
+            if (dateBuilder.interval > 0) {
                 mServices.alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, time,
-                        TimeUnit.DAYS.toMillis(intervalDays.toLong()), mServices.alarmIntent)
+                        TimeUnit.DAYS.toMillis(dateBuilder.interval.toLong()), mServices.alarmIntent)
             } else {
                 mServices.alarmManager.setWindow(AlarmManager.RTC_WAKEUP, time,
                         TimeUnit.HOURS.toMillis(1), mServices.alarmIntent)
