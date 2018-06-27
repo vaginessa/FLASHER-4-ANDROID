@@ -72,7 +72,7 @@ class SettingsGlobalFragment : PreferenceFragmentCompat() {
                                 .doOnSuccess {
                                     useSchedule = false
                                     scheduleTime = 0
-                                    schedulePeriod = 0
+                                    scheduleInterval = 0
                                     alarmLastRun = 0
                                     disposable?.dispose()
                                 }

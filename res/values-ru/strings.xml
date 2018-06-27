@@ -13,7 +13,7 @@
     <string name="enter_file_name">Введите имя файла</string>
     <string name="success">Успешно</string>
     <string name="schedule_time_title">Время</string>
-    <string name="schedule_period_title">Повтор</string>
+    <string name="schedule_interval_title">Интервал (в днях)</string>
     <string name="alarm_last_run">Последний запуск: %s</string>
     <string name="alarm_next_run">Следующий запуск: %s</string>
     <string name="alarm_last_run_notification">Запуск по расписанию был выполнен в %s</string>
@@ -94,14 +94,14 @@
     <string name="about_links_source_code">Исходный код</string>
     <string name="about_links_gitlab">Посмотреть на Gitlab.com</string>
 
-    <plurals name="schedule_period">
+    <plurals name="schedule_interval">
         <item quantity="one">Каждый %1$d день</item>
         <item quantity="few">Каждые %1$d дня</item>
         <item quantity="many">Каждые %1$d дней</item>
     </plurals>
-    <string name="schedule_period_never">Никогда</string>
-    <string name="schedule_period_daily">Каждый день</string>
-    <string name="schedule_period_weekly">Каждую неделю</string>
+    <string name="schedule_interval_never">Никогда</string>
+    <string name="schedule_interval_daily">Каждый день</string>
+    <string name="schedule_interval_weekly">Каждую неделю</string>
 
     <string name="channel_default_title">По умолчанию</string>
 </resources>

@@ -16,15 +16,15 @@ class AlarmRepository(
 ) {
     fun setAlarm(): Single<Any> = Single.create { emitter ->
         val time = mSettings.scheduleTime
-        val periodDays = mSettings.schedulePeriod
+        val intervalDays = mSettings.scheduleInterval
 
         if (time > 0) {
             Log.i("Alarm",
                     "Next run: ${SimpleDateFormat.getDateTimeInstance(DateFormat.MEDIUM,
                             DateFormat.SHORT).format(Date(time))}")
-            if (periodDays > 0) {
+            if (intervalDays > 0) {
                 mServices.alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, time,
-                        TimeUnit.DAYS.toMillis(periodDays.toLong()), mServices.alarmIntent)
+                        TimeUnit.DAYS.toMillis(intervalDays.toLong()), mServices.alarmIntent)
             } else {
                 mServices.alarmManager.setWindow(AlarmManager.RTC_WAKEUP, time,
                         TimeUnit.HOURS.toMillis(1), mServices.alarmIntent)

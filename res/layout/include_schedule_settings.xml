@@ -24,6 +24,7 @@
         android:id="@+id/lbl_last_run"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:paddingTop="@dimen/margin_4"
         android:paddingEnd="@dimen/margin_16"
         android:paddingStart="@dimen/margin_16"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
@@ -37,7 +38,7 @@
         android:id="@+id/lbl_next_run"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:paddingTop="@dimen/margin_2"
+        android:paddingTop="@dimen/margin_4"
         android:paddingBottom="@dimen/margin_16"
         android:paddingEnd="@dimen/margin_16"
         android:paddingStart="@dimen/margin_16"
@@ -87,7 +88,7 @@
             android:textColor="?android:attr/textColorTertiary" />
 
         <TextView
-            android:id="@+id/lbl_period_title"
+            android:id="@+id/lbl_interval_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_column="0"
@@ -96,12 +97,12 @@
             android:paddingEnd="@dimen/margin_16"
             android:paddingStart="@dimen/margin_16"
             android:paddingTop="@dimen/margin_8"
-            android:text="@string/schedule_period_title"
+            android:text="@string/schedule_interval_title"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             android:textColor="?android:attr/textColorTertiary" />
 
         <TextView
-            android:id="@+id/lbl_period"
+            android:id="@+id/lbl_interval"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_column="1"
@@ -111,7 +112,7 @@
             android:paddingEnd="@dimen/margin_16"
             android:paddingStart="@dimen/margin_16"
             android:paddingTop="@dimen/margin_8"
-            android:text="@string/command_tap_to_select"
+            android:text="@string/schedule_interval_never"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             android:textColor="?android:attr/textColorTertiary" />
 

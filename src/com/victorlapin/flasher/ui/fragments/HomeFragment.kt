@@ -318,7 +318,7 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
 
     }
 
-    override fun showSelectPeriodDialog(defPeriod: Int) {
+    override fun showSelectIntervalDialog(defInterval: Int) {
 
     }
 

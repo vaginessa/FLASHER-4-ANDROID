@@ -35,7 +35,7 @@ class ScheduleFragment : HomeFragment() {
         val lastRun = mSettings.alarmLastRun
         lbl_last_run.text = getString(R.string.alarm_last_run,
                 if (lastRun > 0) mDateTimeFormatter.format(Date(lastRun)) else
-                    getString(R.string.schedule_period_never).toLowerCase())
+                    getString(R.string.schedule_interval_never).toLowerCase())
 
         val time = mSettings.scheduleTime
         if (time > 0) {
@@ -45,14 +45,14 @@ class ScheduleFragment : HomeFragment() {
         }
         lbl_time.setOnClickListener { (presenter as ScheduleHomePresenter).selectTime() }
 
-        val period = mSettings.schedulePeriod
-        lbl_period.text = when (period) {
-            0 -> getString(R.string.schedule_period_never)
-            1 -> getString(R.string.schedule_period_daily)
-            7 -> getString(R.string.schedule_period_weekly)
-            else -> resources.getQuantityString(R.plurals.schedule_period, period, period)
+        val interval = mSettings.scheduleInterval
+        lbl_interval.text = when (interval) {
+            0 -> getString(R.string.schedule_interval_never)
+            1 -> getString(R.string.schedule_interval_daily)
+            7 -> getString(R.string.schedule_interval_weekly)
+            else -> resources.getQuantityString(R.plurals.schedule_interval, interval, interval)
         }
-        lbl_period.setOnClickListener { (presenter as ScheduleHomePresenter).selectPeriod() }
+        lbl_interval.setOnClickListener { (presenter as ScheduleHomePresenter).selectInterval() }
 
         if (time > 0) {
             chk_enable.isEnabled = true
@@ -90,18 +90,18 @@ class ScheduleFragment : HomeFragment() {
                 .show()
     }
 
-    override fun showSelectPeriodDialog(defPeriod: Int) {
+    override fun showSelectIntervalDialog(defInterval: Int) {
         MaterialDialog.Builder(context!!)
-                .title(R.string.schedule_period_title)
+                .title(R.string.schedule_interval_title)
                 .inputType(InputType.TYPE_CLASS_NUMBER)
-                .input(null, defPeriod.toString(), true) { _, input ->
-                    val period = if (input.isBlank()) 0 else input.toString().toInt()
-                    (presenter as ScheduleHomePresenter).onPeriodSelected(period)
-                    lbl_period.text = when (period) {
-                        0 -> getString(R.string.schedule_period_never)
-                        1 -> getString(R.string.schedule_period_daily)
-                        7 -> getString(R.string.schedule_period_weekly)
-                        else -> resources.getQuantityString(R.plurals.schedule_period, period, period)
+                .input(null, defInterval.toString(), true) { _, input ->
+                    val interval = if (input.isBlank()) 0 else input.toString().toInt()
+                    (presenter as ScheduleHomePresenter).onIntervalSelected(interval)
+                    lbl_interval.text = when (interval) {
+                        0 -> getString(R.string.schedule_interval_never)
+                        1 -> getString(R.string.schedule_interval_daily)
+                        7 -> getString(R.string.schedule_interval_weekly)
+                        else -> resources.getQuantityString(R.plurals.schedule_interval, interval, interval)
                     }
                     updateNextRun()
                 }
@@ -114,7 +114,7 @@ class ScheduleFragment : HomeFragment() {
     override fun showNextRun(nextRun: Long) {
         val displayText = when {
             (!chk_enable.isChecked) ||
-            (nextRun < System.currentTimeMillis()) -> getString(R.string.schedule_period_never).toLowerCase()
+            (nextRun < System.currentTimeMillis()) -> getString(R.string.schedule_interval_never).toLowerCase()
             else -> mDateTimeFormatter.format(Date(nextRun))
         }
         lbl_next_run.text = getString(R.string.alarm_next_run, displayText)

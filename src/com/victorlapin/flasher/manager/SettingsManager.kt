@@ -15,7 +15,7 @@ class SettingsManager(context: Context) {
         const val KEY_SHOW_MASK_TOAST = "show_mask_toast"
         const val KEY_USE_SCHEDULE = "use_schedule"
         const val KEY_SCHEDULE_TIME = "schedule_time"
-        const val KEY_SCHEDULE_PERIOD = "schedule_period"
+        const val KEY_SCHEDULE_INTERVAL = "schedule_interval"
         const val KEY_ALARM_LAST_RUN = "alarm_last_run"
         const val KEY_CLEAR_SCHEDULE = "clear_schedule_settings"
         const val KEY_SHOW_NOTIFICATION_ON_BOOT = "show_notification_on_boot"
@@ -52,9 +52,9 @@ class SettingsManager(context: Context) {
         get() = mPrefs.getLong(KEY_SCHEDULE_TIME, 0)
         set(time) = mPrefs.edit().putLong(KEY_SCHEDULE_TIME, time).apply()
 
-    var schedulePeriod: Int
-        get() = mPrefs.getInt(KEY_SCHEDULE_PERIOD, 0)
-        set(period) = mPrefs.edit().putInt(KEY_SCHEDULE_PERIOD, period).apply()
+    var scheduleInterval: Int
+        get() = mPrefs.getInt(KEY_SCHEDULE_INTERVAL, 0)
+        set(interval) = mPrefs.edit().putInt(KEY_SCHEDULE_INTERVAL, interval).apply()
 
     var alarmLastRun: Long
         get() = mPrefs.getLong(KEY_ALARM_LAST_RUN, 0)

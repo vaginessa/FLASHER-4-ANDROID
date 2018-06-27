@@ -94,10 +94,10 @@ class ScheduleHomePresenter constructor(
         }
     }
 
-    fun selectPeriod() = viewState.showSelectPeriodDialog(mSettings.schedulePeriod)
+    fun selectInterval() = viewState.showSelectIntervalDialog(mSettings.scheduleInterval)
 
-    fun onPeriodSelected(period: Int) {
-        mSettings.schedulePeriod = period
+    fun onIntervalSelected(interval: Int) {
+        mSettings.scheduleInterval = interval
         if (mSettings.useSchedule) {
             mAlarmInteractor.setAlarm()
                     .doOnError { viewState.showInfoToast(it.localizedMessage) }
@@ -108,7 +108,7 @@ class ScheduleHomePresenter constructor(
 
     fun updateNextRun() {
         val dateBuilder = DateBuilder(mSettings.scheduleTime)
-        dateBuilder.period = mSettings.schedulePeriod
+        dateBuilder.interval = mSettings.scheduleInterval
         viewState.showNextRun(dateBuilder.nextAlarmTime)
     }
 }
