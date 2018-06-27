@@ -5,10 +5,6 @@
         android:icon="@drawable/home"
         android:title="@string/action_home" />
 
-    <item android:id="@+id/action_placeholder1"
-        android:enabled="false"
-        android:title="" />
-
     <item android:id="@+id/action_schedule"
         android:icon="@drawable/clock_outline"
         android:title="@string/action_schedule" />

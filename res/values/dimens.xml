@@ -24,4 +24,6 @@
     <dimen name="bottom_navigation_elevation">@dimen/margin_0</dimen>
     <dimen name="card_image_size">24dp</dimen>
     <dimen name="about_image_size">48dp</dimen>
+    <dimen name="bottom_sheet_corner_radius">@dimen/margin_16</dimen>
+    <dimen name="bottom_sheet_top_padding">@dimen/margin_8</dimen>
 </resources>
