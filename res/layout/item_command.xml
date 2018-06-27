@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/card"
     android:layout_width="match_parent"
@@ -8,7 +8,6 @@
     android:layout_marginEnd="@dimen/card_margin"
     android:layout_marginStart="@dimen/card_margin"
     android:layout_marginTop="@dimen/card_margin_top"
-    android:background="?attr/selectableItemBackground"
     android:descendantFocusability="blocksDescendants"
     app:cardCornerRadius="@dimen/card_corner_radius">
 
@@ -102,4 +101,4 @@
 
     </android.support.constraint.ConstraintLayout>
 
-</android.support.v7.widget.CardView>
+</android.support.design.card.MaterialCardView>

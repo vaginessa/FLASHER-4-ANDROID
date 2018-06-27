@@ -7,7 +7,7 @@
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:windowLightStatusBar">true</item>
         <item name="android:windowBackground">@android:color/white</item>
-        <item name="cardViewStyle">@style/CardView.Light</item>
+        <item name="materialCardViewStyle">@style/CardView.Light</item>
         <!--Preferences-->
         <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
         <item name="android:activatedBackgroundIndicator">?android:attr/selectableItemBackground</item>
@@ -21,7 +21,7 @@
         <item name="colorAccent">@*android:color/accent_device_default_dark</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:windowLightStatusBar">false</item>
-        <item name="cardViewStyle">@style/CardView.Dark</item>
+        <item name="materialCardViewStyle">@style/CardView.Dark</item>
         <!--Preferences-->
         <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
         <item name="android:activatedBackgroundIndicator">?android:attr/selectableItemBackground</item>
@@ -36,7 +36,7 @@
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:windowLightStatusBar">false</item>
         <item name="android:windowBackground">@android:color/black</item>
-        <item name="cardViewStyle">@style/CardView.Black</item>
+        <item name="materialCardViewStyle">@style/CardView.Black</item>
         <!--Preferences-->
         <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
         <item name="android:activatedBackgroundIndicator">?android:attr/selectableItemBackground</item>
