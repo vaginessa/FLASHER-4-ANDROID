@@ -12,7 +12,7 @@ import com.victorlapin.flasher.presenter.AboutActivityPresenter
 import com.victorlapin.flasher.ui.fragments.AboutFragment
 import com.victorlapin.flasher.view.AboutActivityView
 import org.koin.android.ext.android.inject
-import org.koin.android.ext.android.releaseContext
+import org.koin.android.ext.android.release
 import ru.terrakok.cicerone.android.SupportAppNavigator
 
 class AboutActivity: BaseActivity(), AboutActivityView {
@@ -34,7 +34,7 @@ class AboutActivity: BaseActivity(), AboutActivityView {
 
     override fun onStop() {
         super.onStop()
-        releaseContext(Screens.ACTIVITY_ABOUT)
+        release(Screens.ACTIVITY_ABOUT)
     }
 
     override fun onSupportNavigateUp(): Boolean { onBackPressed(); return true }

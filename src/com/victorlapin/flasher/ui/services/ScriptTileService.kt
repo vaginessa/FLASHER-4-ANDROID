@@ -9,7 +9,7 @@ import com.victorlapin.flasher.presenter.ScriptTileServicePresenter
 import com.victorlapin.flasher.ui.activities.RebootDialogActivity
 import com.victorlapin.flasher.view.ScriptTileServiceView
 import org.koin.android.ext.android.inject
-import org.koin.android.ext.android.releaseContext
+import org.koin.android.ext.android.release
 
 class ScriptTileService : TileService(), ScriptTileServiceView {
     private val mPresenter by inject<ScriptTileServicePresenter>()
@@ -23,7 +23,7 @@ class ScriptTileService : TileService(), ScriptTileServiceView {
 
     override fun onStopListening() {
         mPresenter.cleanup()
-        releaseContext(Screens.SERVICE_SCRIPT)
+        release(Screens.SERVICE_SCRIPT)
         super.onStopListening()
     }
 

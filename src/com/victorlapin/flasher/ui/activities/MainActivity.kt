@@ -16,7 +16,7 @@ import com.victorlapin.flasher.ui.fragments.ScheduleFragment
 import com.victorlapin.flasher.view.MainActivityView
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.android.ext.android.inject
-import org.koin.android.ext.android.releaseContext
+import org.koin.android.ext.android.release
 import ru.terrakok.cicerone.android.SupportAppNavigator
 
 class MainActivity : BaseActivity(), MainActivityView,
@@ -48,7 +48,7 @@ class MainActivity : BaseActivity(), MainActivityView,
 
     override fun onStop() {
         super.onStop()
-        releaseContext(Screens.ACTIVITY_MAIN)
+        release(Screens.ACTIVITY_MAIN)
     }
 
     override fun onNavigationItemSelected(item: MenuItem) = when (item.itemId) {

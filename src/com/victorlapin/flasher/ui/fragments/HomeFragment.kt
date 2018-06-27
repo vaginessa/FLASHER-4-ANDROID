@@ -30,7 +30,7 @@ import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.include_toolbar.*
 import org.koin.android.ext.android.inject
-import org.koin.android.ext.android.releaseContext
+import org.koin.android.ext.android.release
 import java.io.File
 
 open class HomeFragment : BaseFragment(), HomeFragmentView {
@@ -104,7 +104,7 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
 
     override fun onStop() {
         super.onStop()
-        releaseContext(Screens.FRAGMENT_HOME)
+        release(Screens.FRAGMENT_HOME)
     }
 
     override fun onDestroyView() {

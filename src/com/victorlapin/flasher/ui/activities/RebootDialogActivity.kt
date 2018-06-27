@@ -11,7 +11,7 @@ import com.victorlapin.flasher.manager.SettingsManager
 import com.victorlapin.flasher.presenter.RebootDialogActivityPresenter
 import com.victorlapin.flasher.view.RebootDialogActivityView
 import org.koin.android.ext.android.inject
-import org.koin.android.ext.android.releaseContext
+import org.koin.android.ext.android.release
 
 class RebootDialogActivity : MvpAppCompatActivity(), RebootDialogActivityView {
     private val mPresenter by inject<RebootDialogActivityPresenter>()
@@ -26,7 +26,7 @@ class RebootDialogActivity : MvpAppCompatActivity(), RebootDialogActivityView {
 
     override fun onStop() {
         super.onStop()
-        releaseContext(Screens.ACTIVITY_REBOOT_DIALOG)
+        release(Screens.ACTIVITY_REBOOT_DIALOG)
     }
 
     override fun showRebootDialog() {

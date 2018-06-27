@@ -2,10 +2,10 @@ package com.victorlapin.flasher.di
 
 import com.victorlapin.flasher.Screens
 import com.victorlapin.flasher.presenter.ScriptTileServicePresenter
-import org.koin.dsl.module.applicationContext
+import org.koin.dsl.module.module
 
-val scriptTileServiceModule = applicationContext {
-    context(Screens.SERVICE_SCRIPT) {
+val servicesModule = module {
+    module(Screens.SERVICE_SCRIPT) {
         factory { ScriptTileServicePresenter(get(), get()) }
     }
 }

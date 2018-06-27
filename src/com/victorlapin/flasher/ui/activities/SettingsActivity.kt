@@ -12,7 +12,7 @@ import com.victorlapin.flasher.presenter.SettingsActivityPresenter
 import com.victorlapin.flasher.ui.fragments.SettingsGlobalFragment
 import com.victorlapin.flasher.view.SettingsActivityView
 import org.koin.android.ext.android.inject
-import org.koin.android.ext.android.releaseContext
+import org.koin.android.ext.android.release
 import ru.terrakok.cicerone.android.SupportAppNavigator
 
 class SettingsActivity : BaseActivity(), SettingsActivityView {
@@ -33,7 +33,7 @@ class SettingsActivity : BaseActivity(), SettingsActivityView {
 
     override fun onStop() {
         super.onStop()
-        releaseContext(Screens.ACTIVITY_SETTINGS)
+        release(Screens.ACTIVITY_SETTINGS)
     }
 
     override fun onSupportNavigateUp(): Boolean {

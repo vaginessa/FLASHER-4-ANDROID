@@ -12,7 +12,7 @@ import com.victorlapin.flasher.presenter.HomeFragmentPresenter
 import com.victorlapin.flasher.presenter.ScheduleHomePresenter
 import kotlinx.android.synthetic.main.include_schedule_settings.*
 import org.koin.android.ext.android.inject
-import org.koin.android.ext.android.releaseContext
+import org.koin.android.ext.android.release
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
@@ -72,7 +72,7 @@ class ScheduleFragment : HomeFragment() {
 
     override fun onStop() {
         super.onStop()
-        releaseContext(Screens.FRAGMENT_SCHEDULE)
+        release(Screens.FRAGMENT_SCHEDULE)
     }
 
     override fun showSelectTimeDialog(defHourOfDay: Int, defMinute: Int) {

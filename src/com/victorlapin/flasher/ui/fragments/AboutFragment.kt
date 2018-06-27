@@ -15,7 +15,7 @@ import com.victorlapin.flasher.view.AboutFragmentView
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.fragment_list.*
 import org.koin.android.ext.android.inject
-import org.koin.android.ext.android.releaseContext
+import org.koin.android.ext.android.release
 
 class AboutFragment : BaseFragment(), AboutFragmentView {
     override val layoutRes = R.layout.fragment_list
@@ -46,7 +46,7 @@ class AboutFragment : BaseFragment(), AboutFragmentView {
 
     override fun onStop() {
         super.onStop()
-        releaseContext(Screens.FRAGMENT_ABOUT)
+        release(Screens.FRAGMENT_ABOUT)
     }
 
     override fun onDestroyView() {

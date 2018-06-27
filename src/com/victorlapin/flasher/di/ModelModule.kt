@@ -17,10 +17,10 @@ import com.victorlapin.flasher.model.repository.RecoveryScriptRepository
 import com.victorlapin.flasher.model.serialization.AnnotationExclusionStrategy
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
-import org.koin.dsl.module.applicationContext
+import org.koin.dsl.module.module
 
-val modelModule = applicationContext {
-    bean {
+val modelModule = module {
+    single {
         Room.databaseBuilder(get(), AppDatabase::class.java, "flasher.db")
                 .addCallback(object : RoomDatabase.Callback() {
                     override fun onCreate(db: SupportSQLiteDatabase) {
@@ -46,9 +46,9 @@ val modelModule = applicationContext {
                 .addMigrations(AppDatabase.MIGRATION_1_2)
                 .build()
     }
-    bean { get<AppDatabase>().getCommandDao() }
-    bean { get<AppDatabase>().getChainDao() }
-    bean {
+    single { get<AppDatabase>().getCommandDao() }
+    single { get<AppDatabase>().getChainDao() }
+    single {
         GsonBuilder()
                 .serializeNulls()
                 .setPrettyPrinting()
