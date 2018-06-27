@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="AppTheme.Light" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="AppTheme.Light" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="colorPrimary">@android:color/transparent</item>
         <item name="colorPrimaryDark">@android:color/transparent</item>
         <item name="colorAccent">@*android:color/accent_device_default_light</item>
@@ -15,7 +15,7 @@
         <item name="md_dark_theme">false</item>
     </style>
 
-    <style name="AppTheme.Dark" parent="Theme.AppCompat.NoActionBar">
+    <style name="AppTheme.Dark" parent="Theme.MaterialComponents.NoActionBar">
         <item name="colorPrimary">@android:color/transparent</item>
         <item name="colorPrimaryDark">@android:color/transparent</item>
         <item name="colorAccent">@*android:color/accent_device_default_dark</item>
@@ -29,7 +29,7 @@
         <item name="md_dark_theme">true</item>
     </style>
 
-    <style name="AppTheme.Black" parent="Theme.AppCompat.NoActionBar">
+    <style name="AppTheme.Black" parent="Theme.MaterialComponents.NoActionBar">
         <item name="colorPrimary">@android:color/transparent</item>
         <item name="colorPrimaryDark">@android:color/transparent</item>
         <item name="colorAccent">@*android:color/accent_device_default_dark</item>
@@ -45,7 +45,7 @@
         <!--<item name="md_background_color">@android:color/black</item>-->
     </style>
 
-    <style name="AppTheme.Transparent" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="AppTheme.Transparent" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:colorBackgroundCacheHint">@null</item>
