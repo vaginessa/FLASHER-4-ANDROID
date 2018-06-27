@@ -8,15 +8,18 @@ import android.support.v7.preference.PreferenceFragmentCompat
 import com.victorlapin.flasher.R
 import com.victorlapin.flasher.manager.ResourcesManager
 import com.victorlapin.flasher.manager.SettingsManager
+import com.victorlapin.flasher.model.interactor.AlarmInteractor
 import com.victorlapin.flasher.model.interactor.RecoveryScriptInteractor
 import com.victorlapin.flasher.ui.activities.BaseActivity
 import com.victorlapin.flasher.ui.activities.SettingsActivity
+import io.reactivex.disposables.Disposable
 import org.koin.android.ext.android.inject
 
 class SettingsGlobalFragment : PreferenceFragmentCompat() {
     private val mSettings by inject<SettingsManager>()
     private val mResources by inject<ResourcesManager>()
     private val mScriptInteractor by inject<RecoveryScriptInteractor>()
+    private val mAlarmInteractor by inject<AlarmInteractor>()
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         addPreferencesFromResource(R.xml.preferences_global)
@@ -64,10 +67,16 @@ class SettingsGlobalFragment : PreferenceFragmentCompat() {
         findPreference(SettingsManager.KEY_CLEAR_SCHEDULE).onPreferenceClickListener =
                 Preference.OnPreferenceClickListener {
                     mSettings.apply {
-                        useSchedule = false
-                        scheduleTime = 0
-                        schedulePeriod = 0
-                        alarmLastRun = 0
+                        var disposable: Disposable? = null
+                        disposable = mAlarmInteractor.cancelAlarm()
+                                .doOnSuccess {
+                                    useSchedule = false
+                                    scheduleTime = 0
+                                    schedulePeriod = 0
+                                    alarmLastRun = 0
+                                    disposable?.dispose()
+                                }
+                                .subscribe()
                     }
                     return@OnPreferenceClickListener true
                 }
