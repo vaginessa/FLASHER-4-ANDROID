@@ -11,6 +11,7 @@ import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.victorlapin.flasher.R
 import com.victorlapin.flasher.Screens
 import com.victorlapin.flasher.presenter.MainActivityPresenter
+import com.victorlapin.flasher.ui.fragments.BottomNavigationDrawerFragment
 import com.victorlapin.flasher.ui.fragments.HomeFragment
 import com.victorlapin.flasher.ui.fragments.ScheduleFragment
 import com.victorlapin.flasher.view.MainActivityView
@@ -33,10 +34,7 @@ class MainActivity : BaseActivity(), MainActivityView {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setSupportActionBar(bottom_app_bar)
-        fab.setOnClickListener {
-            //TODO: add nav stuff here
-            presenter.onFabClicked(R.id.action_home)
-        }
+        fab.setOnClickListener { presenter.onFabClicked() }
     }
 
     override fun onStop() {
@@ -50,8 +48,15 @@ class MainActivity : BaseActivity(), MainActivityView {
     }
 
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
+        android.R.id.home -> { presenter.selectNavigation(); true }
         R.id.action_settings -> { presenter.selectSettings(); true }
         else -> false
+    }
+
+    override fun showNavigationFragment(selectedId: Int) {
+        val navFragment = BottomNavigationDrawerFragment.newInstance(selectedId)
+        navFragment.show(supportFragmentManager,
+                BottomNavigationDrawerFragment::class.java.simpleName)
     }
 
     override val navigator = object : SupportAppNavigator(this, R.id.fragment_container) {
