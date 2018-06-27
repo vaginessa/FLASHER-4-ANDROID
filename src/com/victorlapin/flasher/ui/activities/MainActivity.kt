@@ -35,14 +35,10 @@ class MainActivity : BaseActivity(), MainActivityView,
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        bottom_bar.enableAnimation(false)
-        bottom_bar.enableShiftingMode(false)
-        bottom_bar.enableItemShiftingMode(false)
-        bottom_bar.onNavigationItemSelectedListener = this
+        bottom_bar.setOnNavigationItemSelectedListener(this)
         bottom_bar.setOnNavigationItemReselectedListener(this)
         fab.setOnClickListener {
-            val id = bottom_bar.menu.getItem(bottom_bar.currentItem).itemId
-            presenter.onFabClicked(id)
+            presenter.onFabClicked(bottom_bar.selectedItemId)
         }
     }
 
