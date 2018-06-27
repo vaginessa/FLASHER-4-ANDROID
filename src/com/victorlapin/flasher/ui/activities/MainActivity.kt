@@ -15,6 +15,7 @@ import com.victorlapin.flasher.ui.fragments.BottomNavigationDrawerFragment
 import com.victorlapin.flasher.ui.fragments.HomeFragment
 import com.victorlapin.flasher.ui.fragments.ScheduleFragment
 import com.victorlapin.flasher.view.MainActivityView
+import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.android.ext.android.inject
 import org.koin.android.ext.android.release
@@ -54,7 +55,13 @@ class MainActivity : BaseActivity(), MainActivityView {
     }
 
     override fun showNavigationFragment(selectedId: Int) {
+        var disposable: Disposable? = null
         val navFragment = BottomNavigationDrawerFragment.newInstance(selectedId)
+        disposable = navFragment.clickEvent
+                .subscribe {
+                    presenter.onNavigationClicked(it)
+                    disposable?.dispose()
+                }
         navFragment.show(supportFragmentManager,
                 BottomNavigationDrawerFragment::class.java.simpleName)
     }
