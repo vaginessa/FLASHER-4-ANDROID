@@ -17,10 +17,7 @@ import com.afollestad.materialdialogs.folderselector.FolderChooserDialog
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.tbruyelle.rxpermissions2.RxPermissions
-import com.victorlapin.flasher.Const
-import com.victorlapin.flasher.R
-import com.victorlapin.flasher.Screens
-import com.victorlapin.flasher.addTo
+import com.victorlapin.flasher.*
 import com.victorlapin.flasher.manager.ResourcesManager
 import com.victorlapin.flasher.model.EventArgs
 import com.victorlapin.flasher.model.database.entity.Chain
@@ -245,24 +242,29 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
     override fun showDeletedSnackbar(command: Command) {
         Snackbar.make(coordinator, R.string.command_deleted, Snackbar.LENGTH_LONG)
                 .setAction(R.string.action_undo) { presenter.onUndoDelete(command) }
+                .adjustLayout()
                 .show()
     }
 
     override fun showInfoSnackbar(args: EventArgs) {
         args.message?.let {
             Snackbar.make(coordinator, it.replace("\n", "").trim(),
-                    Snackbar.LENGTH_LONG).show()
+                    Snackbar.LENGTH_LONG)
+                    .adjustLayout()
+                    .show()
             return
         }
         args.messageId?.let {
-            Snackbar.make(coordinator, mResources.getString(it),
-                    Snackbar.LENGTH_LONG).show()
+            Snackbar.make(coordinator, mResources.getString(it), Snackbar.LENGTH_LONG)
+                    .adjustLayout()
+                    .show()
         }
     }
 
     override fun showRebootSnackbar() {
         Snackbar.make(coordinator, R.string.reboot, Snackbar.LENGTH_INDEFINITE)
                 .setAction(R.string.action_reboot) { presenter.reboot() }
+                .adjustLayout()
                 .show()
     }
 
