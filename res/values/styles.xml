@@ -71,11 +71,6 @@
         <item name="cardBackgroundColor">@android:color/black</item>
     </style>
 
-    <style name="Button">
-        <item name="android:backgroundTint">?android:colorAccent</item>
-        <item name="android:textColor">@android:color/white</item>
-    </style>
-
     <style name="BottomSheet" parent="@style/Widget.Design.BottomSheet.Modal">
         <item name="android:background">@drawable/bg_bottom_sheet_dialog_fragment</item>
     </style>

@@ -31,9 +31,6 @@
     <string name="action_enable_schedule">Enable schedule</string>
     <string name="action_add">Add command</string>
 
-    <!-- Fragment titles -->
-    <string name="title_home">Command Chain</string>
-
     <!-- Preferences strings -->
     <string name="pref_category_appearance">Appearance</string>
     <string name="pref_category_misc">Misc</string>
