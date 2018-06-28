@@ -1,7 +1,7 @@
 buildscript {
     ext {
         version_room = "1.1.1"
-        version_support = "27.1.1"
+        version_support = "28.0.0-alpha3"
         version_kotlin = "1.2.50"
         version_moxy = "1.5.5"
         version_test_runner = "1.0.2"
@@ -24,13 +24,13 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
 android {
-    compileSdkVersion 27
+    compileSdkVersion 28
     buildToolsVersion "28.0.0"
 
     defaultConfig {
         applicationId "com.victorlapin.flasher"
         minSdkVersion 24
-        targetSdkVersion 27
+        targetSdkVersion 28
         versionCode 11
         versionName "1.0.0-beta11"
         archivesBaseName = "Flasher"
@@ -102,7 +102,6 @@ dependencies {
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$version_kotlin"
     implementation "com.android.support:design:$version_support"
-    implementation "com.android.support:cardview-v7:$version_support"
     implementation "com.android.support:preference-v14:$version_support"
     implementation "com.android.support.constraint:constraint-layout:1.1.2"
     implementation "com.arello-mobile:moxy-app-compat:$version_moxy"
@@ -113,7 +112,6 @@ dependencies {
     implementation "org.koin:koin-android:1.0.0-beta-1"
     implementation "ru.terrakok.cicerone:cicerone:3.0.0"
     implementation "com.amulyakhare:com.amulyakhare.textdrawable:1.0.1"
-    implementation "com.github.ittianyu:BottomNavigationViewEx:1.2.4"
     implementation "com.afollestad.material-dialogs:core:0.9.6.0"
     implementation "com.tbruyelle.rxpermissions2:rxpermissions:0.9.5@aar"
     implementation "com.github.topjohnwu:libsu:1.1.1"

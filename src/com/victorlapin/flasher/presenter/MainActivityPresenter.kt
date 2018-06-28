@@ -15,19 +15,35 @@ class MainActivityPresenter constructor(
         private val mCommandsInteractor: CommandsInteractor,
         private val mScheduleInteractor: ScheduleInteractor
 ): MvpPresenter<MainActivityView>() {
+    private var mCurrentFragmentId: Int = R.id.action_home
+
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
         selectHome()
     }
 
-    fun selectHome() = mRouter.newRootScreen(Screens.FRAGMENT_HOME)
+    private fun selectHome() = mRouter.newRootScreen(Screens.FRAGMENT_HOME)
 
-    fun selectSchedule() = mRouter.newRootScreen(Screens.FRAGMENT_SCHEDULE)
+    private fun selectSchedule() = mRouter.newRootScreen(Screens.FRAGMENT_SCHEDULE)
 
-    fun onFabClicked(currentFragmentId: Int) {
-        when (currentFragmentId) {
+    fun onFabClicked() {
+        when (mCurrentFragmentId) {
             R.id.action_home -> mCommandsInteractor.addStubCommand()
             R.id.action_schedule -> mScheduleInteractor.addStubCommand()
+        }
+    }
+
+    fun selectSettings() = mRouter.navigateTo(Screens.ACTIVITY_SETTINGS)
+
+    fun selectNavigation() = viewState.showNavigationFragment(mCurrentFragmentId)
+
+    fun onNavigationClicked(selectedId: Int) {
+        if (selectedId != mCurrentFragmentId) {
+            mCurrentFragmentId = selectedId
+            when (mCurrentFragmentId) {
+                R.id.action_home -> selectHome()
+                R.id.action_schedule -> selectSchedule()
+            }
         }
     }
 }

@@ -7,6 +7,9 @@ import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.widget.Toast
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.folderselector.FileChooserDialog
@@ -14,10 +17,7 @@ import com.afollestad.materialdialogs.folderselector.FolderChooserDialog
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.tbruyelle.rxpermissions2.RxPermissions
-import com.victorlapin.flasher.Const
-import com.victorlapin.flasher.R
-import com.victorlapin.flasher.Screens
-import com.victorlapin.flasher.addTo
+import com.victorlapin.flasher.*
 import com.victorlapin.flasher.manager.ResourcesManager
 import com.victorlapin.flasher.model.EventArgs
 import com.victorlapin.flasher.model.database.entity.Chain
@@ -61,6 +61,10 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
         arguments!!.getLong(ARG_CHAIN_ID)
     }
 
+    init {
+        this.setHasOptionsMenu(true)
+    }
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         mWipePartitions = mResources.getStringList(R.array.wipe_partitions)
@@ -73,17 +77,7 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
             setHasFixedSize(true)
             adapter = mAdapter
         }
-        toolbar.setTitle(R.string.title_home)
-        toolbar.inflateMenu(R.menu.fragment_home)
-        toolbar.setOnMenuItemClickListener { item ->
-            when (item.itemId) {
-                R.id.action_build -> { presenter.buildAndDeploy(mChainId); true }
-                R.id.action_export -> { presenter.onExportClicked(); true }
-                R.id.action_import -> { presenter.onImportClicked(); true }
-                R.id.action_settings -> { presenter.onSettingsClicked(); true }
-                else -> false
-            }
-        }
+        toolbar.setTitle(R.string.action_home)
 
         val swipeCallback = object : ItemTouchHelper.SimpleCallback(0,
                 ItemTouchHelper.START or ItemTouchHelper.END) {
@@ -91,8 +85,8 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
 
             override fun isItemViewSwipeEnabled(): Boolean = true
 
-            override fun onMove(recyclerView: RecyclerView?, viewHolder: RecyclerView.ViewHolder?,
-                                target: RecyclerView.ViewHolder?): Boolean = false
+            override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder,
+                                target: RecyclerView.ViewHolder): Boolean = false
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val id = (viewHolder as HomeAdapter.ViewHolder).itemId
@@ -110,6 +104,16 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
     override fun onDestroyView() {
         super.onDestroyView()
         mDisposable.dispose()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) =
+            inflater.inflate(R.menu.fragment_home, menu)
+
+    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
+        R.id.action_build -> { presenter.buildAndDeploy(mChainId); true }
+        R.id.action_export -> { presenter.onExportClicked(); true }
+        R.id.action_import -> { presenter.onImportClicked(); true }
+        else -> false
     }
 
     private fun setupEvents() {
@@ -238,24 +242,29 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
     override fun showDeletedSnackbar(command: Command) {
         Snackbar.make(coordinator, R.string.command_deleted, Snackbar.LENGTH_LONG)
                 .setAction(R.string.action_undo) { presenter.onUndoDelete(command) }
+                .adjustLayout()
                 .show()
     }
 
     override fun showInfoSnackbar(args: EventArgs) {
         args.message?.let {
             Snackbar.make(coordinator, it.replace("\n", "").trim(),
-                    Snackbar.LENGTH_LONG).show()
+                    Snackbar.LENGTH_LONG)
+                    .adjustLayout()
+                    .show()
             return
         }
         args.messageId?.let {
-            Snackbar.make(coordinator, mResources.getString(it),
-                    Snackbar.LENGTH_LONG).show()
+            Snackbar.make(coordinator, mResources.getString(it), Snackbar.LENGTH_LONG)
+                    .adjustLayout()
+                    .show()
         }
     }
 
     override fun showRebootSnackbar() {
         Snackbar.make(coordinator, R.string.reboot, Snackbar.LENGTH_INDEFINITE)
                 .setAction(R.string.action_reboot) { presenter.reboot() }
+                .adjustLayout()
                 .show()
     }
 

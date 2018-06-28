@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="AppTheme.Light" parent="Base.AppTheme.Light">
+        <item name="android:windowLightNavigationBar">true</item>
+        <item name="android:navigationBarColor">?android:attr/colorBackground</item>
+    </style>
+
+    <style name="AppTheme.Dark" parent="Base.AppTheme.Dark">
+        <item name="android:windowLightNavigationBar">false</item>
+    </style>
+
+    <style name="AppTheme.Black" parent="Base.AppTheme.Black">
+        <item name="android:windowLightNavigationBar">false</item>
+    </style>
+
+    <style name="BottomSheetDialog.Light" parent="Base.BottomSheetDialog.Light">
+        <item name="android:windowLightNavigationBar">true</item>
+    </style>
+
+    <style name="BottomSheetDialog.Dark" parent="Base.BottomSheetDialog.Dark">
+        <item name="android:windowLightNavigationBar">false</item>
+    </style>
+</resources>

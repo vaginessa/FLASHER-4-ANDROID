@@ -1,51 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="AppTheme.Light" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="Base.AppTheme.Light" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="colorPrimary">@android:color/transparent</item>
         <item name="colorPrimaryDark">@android:color/transparent</item>
         <item name="colorAccent">@*android:color/accent_device_default_light</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:windowLightStatusBar">true</item>
         <item name="android:windowBackground">@android:color/white</item>
-        <item name="cardViewStyle">@style/CardView.Light</item>
+        <item name="materialCardViewStyle">@style/CardView.Light</item>
         <!--Preferences-->
         <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
         <item name="android:activatedBackgroundIndicator">?android:attr/selectableItemBackground</item>
         <!--Dialogs-->
         <item name="md_dark_theme">false</item>
+        <!-- Overlays -->
+        <item name="navigation_color_selected">@*android:color/accent_device_default_light</item>
     </style>
 
-    <style name="AppTheme.Dark" parent="Theme.AppCompat.NoActionBar">
+    <style name="Base.AppTheme.Dark" parent="Theme.MaterialComponents.NoActionBar">
         <item name="colorPrimary">@android:color/transparent</item>
         <item name="colorPrimaryDark">@android:color/transparent</item>
         <item name="colorAccent">@*android:color/accent_device_default_dark</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:windowLightStatusBar">false</item>
-        <item name="cardViewStyle">@style/CardView.Dark</item>
+        <item name="materialCardViewStyle">@style/CardView.Dark</item>
         <!--Preferences-->
         <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
         <item name="android:activatedBackgroundIndicator">?android:attr/selectableItemBackground</item>
         <!--Dialogs-->
         <item name="md_dark_theme">true</item>
+        <!-- Overlays -->
+        <item name="navigation_color_selected">@*android:color/accent_device_default_dark</item>
     </style>
 
-    <style name="AppTheme.Black" parent="Theme.AppCompat.NoActionBar">
+    <style name="Base.AppTheme.Black" parent="Theme.MaterialComponents.NoActionBar">
         <item name="colorPrimary">@android:color/transparent</item>
         <item name="colorPrimaryDark">@android:color/transparent</item>
         <item name="colorAccent">@*android:color/accent_device_default_dark</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:windowLightStatusBar">false</item>
         <item name="android:windowBackground">@android:color/black</item>
-        <item name="cardViewStyle">@style/CardView.Black</item>
+        <item name="materialCardViewStyle">@style/CardView.Black</item>
         <!--Preferences-->
         <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
         <item name="android:activatedBackgroundIndicator">?android:attr/selectableItemBackground</item>
         <!--Dialogs-->
         <item name="md_dark_theme">true</item>
         <!--<item name="md_background_color">@android:color/black</item>-->
+        <!-- Overlays -->
+        <item name="navigation_color_selected">@*android:color/accent_device_default_dark</item>
     </style>
 
-    <style name="AppTheme.Transparent" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="AppTheme.Light" parent="Base.AppTheme.Light" />
+
+    <style name="AppTheme.Dark" parent="Base.AppTheme.Dark" />
+
+    <style name="AppTheme.Black" parent="Base.AppTheme.Black" />
+
+    <style name="AppTheme.Transparent" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:colorBackgroundCacheHint">@null</item>
@@ -53,17 +65,6 @@
         <item name="android:windowAnimationStyle">@android:style/Animation</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:navigationBarColor">@android:color/transparent</item>
-    </style>
-
-    <style name="Fab">
-        <item name="android:layout_marginBottom">@dimen/margin_16</item>
-        <item name="borderWidth">0dp</item>
-        <item name="elevation">@dimen/fab_elevation</item>
-        <item name="pressedTranslationZ">@dimen/fab_elevation_pressed</item>
-        <item name="rippleColor">@android:color/white</item>
-        <item name="backgroundTint">?android:colorAccent</item>
-        <item name="android:tint">@android:color/white</item>
-        <item name="fabSize">normal</item>
     </style>
 
     <style name="CardView.Black">
@@ -74,5 +75,27 @@
         <item name="android:backgroundTint">?android:colorAccent</item>
         <item name="android:textColor">@android:color/white</item>
     </style>
+
+    <style name="BottomSheet" parent="@style/Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@drawable/bg_bottom_sheet_dialog_fragment</item>
+    </style>
+
+    <style name="Base.BottomSheetDialog.Light" parent="@style/Theme.Design.Light.BottomSheetDialog">
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowIsFloating">false</item>
+        <item name="bottomSheetStyle">@style/BottomSheet</item>
+        <item name="android:navigationBarColor">?android:attr/colorBackground</item>
+    </style>
+
+    <style name="Base.BottomSheetDialog.Dark" parent="@style/Theme.Design.BottomSheetDialog">
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowIsFloating">false</item>
+        <item name="bottomSheetStyle">@style/BottomSheet</item>
+        <item name="android:navigationBarColor">?android:attr/colorBackground</item>
+    </style>
+
+    <style name="BottomSheetDialog.Light" parent="Base.BottomSheetDialog.Light" />
+
+    <style name="BottomSheetDialog.Dark" parent="Base.BottomSheetDialog.Dark" />
 
 </resources>
