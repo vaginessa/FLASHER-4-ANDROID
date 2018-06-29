@@ -10,12 +10,13 @@ import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.victorlapin.flasher.R
 import com.victorlapin.flasher.Screens
+import com.victorlapin.flasher.addTo
 import com.victorlapin.flasher.presenter.MainActivityPresenter
 import com.victorlapin.flasher.ui.fragments.BottomNavigationDrawerFragment
 import com.victorlapin.flasher.ui.fragments.HomeFragment
 import com.victorlapin.flasher.ui.fragments.ScheduleFragment
 import com.victorlapin.flasher.view.MainActivityView
-import io.reactivex.disposables.Disposable
+import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.android.ext.android.inject
 import org.koin.android.ext.android.release
@@ -31,6 +32,8 @@ class MainActivity : BaseActivity(), MainActivityView {
 
     @ProvidePresenter
     fun providePresenter() = mPresenter
+
+    private val mEventsDisposable = CompositeDisposable()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,13 +58,17 @@ class MainActivity : BaseActivity(), MainActivityView {
     }
 
     override fun showNavigationFragment(selectedId: Int) {
-        var disposable: Disposable? = null
         val navFragment = BottomNavigationDrawerFragment.newInstance(selectedId)
-        disposable = navFragment.clickEvent
+        navFragment.clickEvent
                 .subscribe {
                     presenter.onNavigationClicked(it)
-                    disposable?.dispose()
                 }
+                .addTo(mEventsDisposable)
+        navFragment.dismissEvent
+                .subscribe {
+                    mEventsDisposable.clear()
+                }
+                .addTo(mEventsDisposable)
         navFragment.show(supportFragmentManager,
                 BottomNavigationDrawerFragment::class.java.simpleName)
     }
