@@ -18,7 +18,8 @@ import java.util.*
 
 class RecoveryScriptRepository constructor(
         private val mCommandRepo: CommandsRepository,
-        private val mSettings: SettingsManager
+        private val mSettings: SettingsManager,
+        private val mBackupsRepository: BackupsRepository
 ) {
     fun buildScript(chainId: Long): Single<BuildScriptResult> = Single.create { emitter ->
         var disposable: Disposable? = null
@@ -96,8 +97,11 @@ class RecoveryScriptRepository constructor(
             }
         }
 
-        return if (Shell.rootAccess()) {
-            try {
+        if (Shell.rootAccess()) {
+            if (script.contains("backup ")) {
+                mBackupsRepository.deleteObsoleteBackups()
+            }
+            return try {
                 SuFileOutputStream(SCRIPT_FILENAME).use {
                     it.write(script.toByteArray())
                 }
@@ -107,7 +111,7 @@ class RecoveryScriptRepository constructor(
                 EventArgs(isSuccess = false, message = ex.toString())
             }
         } else {
-            mSuDeniedArgs
+            return mSuDeniedArgs
         }
     }
 

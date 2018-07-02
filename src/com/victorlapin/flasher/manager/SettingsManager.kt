@@ -21,6 +21,8 @@ class SettingsManager(context: Context) {
         const val KEY_SHOW_NOTIFICATION_ON_BOOT = "show_notification_on_boot"
         const val KEY_BOOT_NOTIFICATION_FLAG = "boot_notification_flag"
         const val KEY_COMPRESS_BACKUPS = "compress_backups"
+        const val KEY_DELETE_OLD_BACKUPS = "delete_old_backups"
+        const val KEY_BACKUPS_TO_KEEP = "backups_to_keep"
     }
 
     private val mPrefs = PreferenceManager.getDefaultSharedPreferences(context)
@@ -69,4 +71,10 @@ class SettingsManager(context: Context) {
 
     val compressBackups: Boolean
         get() = mPrefs.getBoolean(KEY_COMPRESS_BACKUPS, false)
+
+    val deleteObsoleteBackups: Boolean
+        get() = mPrefs.getBoolean(KEY_DELETE_OLD_BACKUPS, false)
+
+    val backupsToKeep: Int
+        get() = mPrefs.getString(KEY_BACKUPS_TO_KEEP, "2").toInt()
 }

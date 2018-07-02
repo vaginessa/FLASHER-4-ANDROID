@@ -10,10 +10,7 @@ import com.victorlapin.flasher.model.database.dao.CommandDao
 import com.victorlapin.flasher.model.database.entity.Chain
 import com.victorlapin.flasher.model.database.entity.Command
 import com.victorlapin.flasher.model.interactor.*
-import com.victorlapin.flasher.model.repository.AboutRepository
-import com.victorlapin.flasher.model.repository.AlarmRepository
-import com.victorlapin.flasher.model.repository.CommandsRepository
-import com.victorlapin.flasher.model.repository.RecoveryScriptRepository
+import com.victorlapin.flasher.model.repository.*
 import com.victorlapin.flasher.model.serialization.AnnotationExclusionStrategy
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
@@ -61,8 +58,9 @@ val modelModule = module {
     factory { ScheduleInteractor(get()) }
     factory { AboutRepository(get(), get()) }
     factory { AboutInteractor(get()) }
-    factory { RecoveryScriptRepository(get(), get()) }
+    factory { RecoveryScriptRepository(get(), get(), get()) }
     factory { RecoveryScriptInteractor(get()) }
     factory { AlarmRepository(get(), get()) }
     factory { AlarmInteractor(get()) }
+    factory { BackupsRepository(get()) }
 }
