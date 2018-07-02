@@ -49,7 +49,8 @@ class RecoveryScriptRepository constructor(
                                             Locale.getDefault()).format(Date())
                                     val out = Shell.Sync.sh("getprop ro.build.id")
                                     val buildId = if (out.isNotEmpty()) out[0] else ""
-                                    val backupName = if (buildId.isNotEmpty()) "${dt}_$buildId" else dt
+                                    val backupName = if (buildId.isNotEmpty())
+                                        "${dt}_${buildId}_Flasher" else "${dt}_Flasher"
                                     scriptBuilder.appendln("backup $partString $backupName")
                                 }
                             }
