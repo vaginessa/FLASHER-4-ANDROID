@@ -28,6 +28,17 @@
             android:key="compress_backups"
             android:title="@string/pref_title_compress_backups" />
 
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="delete_old_backups"
+            android:title="@string/pref_title_delete_old_backups" />
+
+        <EditTextPreference
+            android:defaultValue="2"
+            android:dependency="delete_old_backups"
+            android:key="backups_to_keep"
+            android:title="@string/pref_title_backups_to_keep" />
+
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/pref_category_debug">

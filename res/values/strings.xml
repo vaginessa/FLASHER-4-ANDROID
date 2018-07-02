@@ -51,6 +51,8 @@
     <string name="pref_title_show_notification_on_boot">Show notification on boot</string>
     <string name="pref_summary_show_notification_on_boot">Show notification after a scheduled run was performed and booted back to system</string>
     <string name="pref_title_compress_backups">Compress backups</string>
+    <string name="pref_title_delete_old_backups">Delete old backups</string>
+    <string name="pref_title_backups_to_keep">Backups to keep</string>
 
     <!-- Command names -->
     <string name="command_wipe">Wipe</string>

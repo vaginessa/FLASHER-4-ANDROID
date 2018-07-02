@@ -2,6 +2,7 @@ package com.victorlapin.flasher.ui.fragments
 
 import android.os.Bundle
 import android.os.Environment
+import android.support.v7.preference.EditTextPreference
 import android.support.v7.preference.ListPreference
 import android.support.v7.preference.Preference
 import android.support.v7.preference.PreferenceFragmentCompat
@@ -79,6 +80,20 @@ class SettingsGlobalFragment : PreferenceFragmentCompat() {
                                 .subscribe()
                     }
                     return@OnPreferenceClickListener true
+                }
+
+        val backupsToKeepPreference = findPreference(SettingsManager.KEY_BACKUPS_TO_KEEP)
+                as EditTextPreference
+        backupsToKeepPreference.summary = mSettings.backupsToKeep.toString()
+        backupsToKeepPreference.onPreferenceChangeListener =
+                Preference.OnPreferenceChangeListener { it, newValue ->
+                    try {
+                        val i = newValue.toString().toInt()
+                        it.summary = i.toString()
+                        return@OnPreferenceChangeListener true
+                    } catch (ignore: Exception) {
+                        return@OnPreferenceChangeListener false
+                    }
                 }
     }
 

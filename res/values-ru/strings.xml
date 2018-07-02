@@ -51,6 +51,8 @@
     <string name="pref_title_show_notification_on_boot">Показывать уведомление при загрузке</string>
     <string name="pref_summary_show_notification_on_boot">Показывать уведомление после запланированного запуска и загрузки обратно в систему</string>
     <string name="pref_title_compress_backups">Сжимать резервные копии</string>
+    <string name="pref_title_delete_old_backups">Удалять старые резервные копии</string>
+    <string name="pref_title_backups_to_keep">Сохранять резервных копий</string>
 
     <!-- Command names -->
     <string name="command_wipe">Вайп</string>
