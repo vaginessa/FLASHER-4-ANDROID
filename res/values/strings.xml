@@ -13,7 +13,7 @@
     <string name="enter_file_name">Enter file name</string>
     <string name="success">Success</string>
     <string name="schedule_time_title">Time</string>
-    <string name="schedule_interval_title">Interval (days)</string>
+    <string name="schedule_interval_title">Repeat every (days)</string>
     <string name="alarm_last_run">Last run: %s</string>
     <string name="alarm_next_run">Next run: %s</string>
     <string name="alarm_last_run_notification">Scheduled run was performed at %s</string>
@@ -95,12 +95,10 @@
     <string name="about_links_gitlab">View at Gitlab.com</string>
 
     <plurals name="schedule_interval">
-        <item quantity="one">Every %1$d day</item>
-        <item quantity="other">Every %1$d days</item>
+        <item quantity="one">%1$d day</item>
+        <item quantity="other">%1$d days</item>
     </plurals>
     <string name="schedule_interval_never">Never</string>
-    <string name="schedule_interval_daily">Daily</string>
-    <string name="schedule_interval_weekly">Weekly</string>
 
     <string name="channel_default_id" translatable="false">default</string>
     <string name="channel_default_title">Default</string>

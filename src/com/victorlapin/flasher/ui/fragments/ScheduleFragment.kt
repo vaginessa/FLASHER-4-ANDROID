@@ -52,12 +52,8 @@ class ScheduleFragment : HomeFragment() {
         lbl_time.setOnClickListener { (presenter as ScheduleHomePresenter).selectTime() }
 
         val interval = mSettings.scheduleInterval
-        lbl_interval.text = when (interval) {
-            0 -> getString(R.string.schedule_interval_never)
-            1 -> getString(R.string.schedule_interval_daily)
-            7 -> getString(R.string.schedule_interval_weekly)
-            else -> resources.getQuantityString(R.plurals.schedule_interval, interval, interval)
-        }
+        lbl_interval.text = if (interval == 0) getString(R.string.schedule_interval_never) else
+            resources.getQuantityString(R.plurals.schedule_interval, interval, interval)
         lbl_interval.setOnClickListener { (presenter as ScheduleHomePresenter).selectInterval() }
 
         if (time > 0) {
@@ -103,12 +99,8 @@ class ScheduleFragment : HomeFragment() {
                 .input(null, defInterval.toString(), true) { _, input ->
                     val interval = if (input.isBlank()) 0 else input.toString().toInt()
                     (presenter as ScheduleHomePresenter).onIntervalSelected(interval)
-                    lbl_interval.text = when (interval) {
-                        0 -> getString(R.string.schedule_interval_never)
-                        1 -> getString(R.string.schedule_interval_daily)
-                        7 -> getString(R.string.schedule_interval_weekly)
-                        else -> resources.getQuantityString(R.plurals.schedule_interval, interval, interval)
-                    }
+                    lbl_interval.text = if (interval == 0) getString(R.string.schedule_interval_never) else
+                        resources.getQuantityString(R.plurals.schedule_interval, interval, interval)
                     updateNextRun()
                 }
                 .negativeText(android.R.string.cancel)
