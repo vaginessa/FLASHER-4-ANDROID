@@ -74,22 +74,22 @@
     <string name="about_the_team">The Team</string>
     <string name="about_credits">Credits</string>
     <string name="about_links">Links</string>
-    <string name="about_team_victor">Victor Lapin</string>
+    <string name="about_team_victor" translatable="false">Victor Lapin</string>
     <string name="about_developer">Developer</string>
-    <string name="about_credits_bauke">Bauke Zwart</string>
+    <string name="about_credits_bauke" translatable="false">Bauke Zwart</string>
     <string name="about_credits_bauke_text">Original Tasker implementation and testing</string>
-    <string name="about_credits_anton">Anton Kolomin</string>
+    <string name="about_credits_anton" translatable="false">Anton Kolomin</string>
     <string name="about_credits_anton_text">Useful tips on the code</string>
-    <string name="about_credits_austin">Austin Andrews</string>
+    <string name="about_credits_austin" translatable="false">Austin Andrews</string>
     <string name="about_credits_austin_text">Material design icons</string>
-    <string name="about_credits_jared">Jared Rummler</string>
+    <string name="about_credits_jared" translatable="false">Jared Rummler</string>
     <string name="about_credits_jared_text">OpenRecoveryScript builder gist</string>
-    <string name="about_credits_topjohnwu">John Wu</string>
+    <string name="about_credits_topjohnwu" translatable="false">John Wu</string>
     <string name="about_credits_topjohnwu_text">libsu open source project</string>
-    <string name="about_credits_aidan">Aidan Follestad</string>
+    <string name="about_credits_aidan" translatable="false">Aidan Follestad</string>
     <string name="about_credits_aidan_text">material-dialogs open source project</string>
-    <string name="about_credits_doug">Doug Hardester</string>
-    <string name="about_credits_dave">David Wilson</string>
+    <string name="about_credits_doug" translatable="false">Doug Hardester</string>
+    <string name="about_credits_dave" translatable="false">David Wilson</string>
     <string name="about_credits_dave_text">Help with theme related stuff</string>
     <string name="about_credits_roger" translatable="false">Roger Truttmann</string>
     <string name="about_credits_roger_text">App icon</string>
