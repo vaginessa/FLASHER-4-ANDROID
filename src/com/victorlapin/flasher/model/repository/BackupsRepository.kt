@@ -31,7 +31,7 @@ class BackupsRepository(
                                 }
                             }
                             backups.drop(backupsToKeep - 1)
-                            backups.forEach { it.delete() }
+                            backups.forEach { it.deleteRecursively() }
                         }
                     }
                 }
