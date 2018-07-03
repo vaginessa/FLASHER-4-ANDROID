@@ -10,7 +10,8 @@ class BackupsRepository(
 ) {
     fun deleteObsoleteBackups() {
         if (mSettings.deleteObsoleteBackups) {
-            val backupsToKeep = mSettings.backupsToKeep
+            var backupsToKeep = mSettings.backupsToKeep
+            if (backupsToKeep <= 0) backupsToKeep = 1
             val twrpFolder = File(Const.TWRP_FOLDER)
             if (twrpFolder.exists()) {
                 val backupsFolder = File(twrpFolder, "BACKUPS")
