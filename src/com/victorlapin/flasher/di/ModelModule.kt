@@ -32,6 +32,8 @@ val modelModule = module {
                             data.add(Command(type = Command.TYPE_BACKUP, arg1 = "Boot, Cache, System, Data"))
                             data.add(Command(type = Command.TYPE_WIPE, arg1 = "Cache, Dalvik-cache, System"))
                             data.add(Command(type = Command.TYPE_FLASH_FILE))
+                            data.add(Command(type = Command.TYPE_BACKUP, arg1 = "Boot, Cache, System, Data",
+                                    chainId = Chain.SCHEDULE_ID))
                             get<CommandDao>().insert(data)
                             emitter.onSuccess(Any())
                         }
