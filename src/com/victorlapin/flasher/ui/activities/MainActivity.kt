@@ -3,7 +3,10 @@ package com.victorlapin.flasher.ui.activities
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.support.transition.Fade
+import android.support.transition.TransitionManager
 import android.support.v4.app.Fragment
+import android.support.v4.view.animation.FastOutLinearInInterpolator
 import android.view.Menu
 import android.view.MenuItem
 import com.arellomobile.mvp.presenter.InjectPresenter
@@ -77,6 +80,8 @@ class MainActivity : BaseActivity(), MainActivityView {
 
     fun toggleProgress(isVisible: Boolean) {
         fab.post {
+            val transition = Fade().setInterpolator(FastOutLinearInInterpolator())
+            TransitionManager.beginDelayedTransition(root, transition)
             progress_bar_layout.visible(isVisible)
             fab.visible(!isVisible)
         }
