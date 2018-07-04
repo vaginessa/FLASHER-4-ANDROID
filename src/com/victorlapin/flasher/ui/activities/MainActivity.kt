@@ -16,8 +16,10 @@ import com.victorlapin.flasher.ui.fragments.BottomNavigationDrawerFragment
 import com.victorlapin.flasher.ui.fragments.HomeFragment
 import com.victorlapin.flasher.ui.fragments.ScheduleFragment
 import com.victorlapin.flasher.view.MainActivityView
+import com.victorlapin.flasher.visible
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.include_progress.*
 import org.koin.android.ext.android.inject
 import org.koin.android.ext.android.release
 import ru.terrakok.cicerone.android.SupportAppNavigator
@@ -71,6 +73,13 @@ class MainActivity : BaseActivity(), MainActivityView {
                 .addTo(mEventsDisposable)
         navFragment.show(supportFragmentManager,
                 BottomNavigationDrawerFragment::class.java.simpleName)
+    }
+
+    fun toggleProgress(isVisible: Boolean) {
+        fab.post {
+            progress_bar_layout.visible(isVisible)
+            fab.visible(!isVisible)
+        }
     }
 
     override val navigator = object : SupportAppNavigator(this, R.id.fragment_container) {

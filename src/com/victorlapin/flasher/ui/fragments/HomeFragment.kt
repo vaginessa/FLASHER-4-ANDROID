@@ -24,6 +24,7 @@ import com.victorlapin.flasher.model.database.entity.Chain
 import com.victorlapin.flasher.model.database.entity.Command
 import com.victorlapin.flasher.presenter.DefaultHomePresenter
 import com.victorlapin.flasher.presenter.HomeFragmentPresenter
+import com.victorlapin.flasher.ui.activities.MainActivity
 import com.victorlapin.flasher.ui.adapters.HomeAdapter
 import com.victorlapin.flasher.view.HomeFragmentView
 import io.reactivex.disposables.CompositeDisposable
@@ -334,6 +335,9 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
     override fun showNextRun(hasNext: Boolean, nextRun: Long) {
 
     }
+
+    override fun toggleProgress(isVisible: Boolean) =
+            (activity!! as MainActivity).toggleProgress(isVisible)
 
     companion object {
         fun newInstance(): HomeFragment {

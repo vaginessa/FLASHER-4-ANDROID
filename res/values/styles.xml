@@ -15,6 +15,7 @@
         <item name="md_dark_theme">false</item>
         <!-- Overlays -->
         <item name="navigation_color_selected">@*android:color/accent_device_default_light</item>
+        <item name="progress_background_color">@color/white_transparent</item>
     </style>
 
     <style name="Base.AppTheme.Dark" parent="Theme.MaterialComponents.NoActionBar">
@@ -31,6 +32,7 @@
         <item name="md_dark_theme">true</item>
         <!-- Overlays -->
         <item name="navigation_color_selected">@*android:color/accent_device_default_dark</item>
+        <item name="progress_background_color">@color/dark_transparent</item>
     </style>
 
     <style name="Base.AppTheme.Black" parent="Theme.MaterialComponents.NoActionBar">
@@ -49,6 +51,7 @@
         <!--<item name="md_background_color">@android:color/black</item>-->
         <!-- Overlays -->
         <item name="navigation_color_selected">@*android:color/accent_device_default_dark</item>
+        <item name="progress_background_color">@color/black_transparent</item>
     </style>
 
     <style name="AppTheme.Light" parent="Base.AppTheme.Light" />

@@ -37,4 +37,5 @@
         app:layout_anchorGravity="center_horizontal|top"
         app:textAllCaps="false" />
 
+    <include layout="@layout/include_progress" />
 </android.support.design.widget.CoordinatorLayout>

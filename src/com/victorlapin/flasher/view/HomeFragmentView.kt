@@ -37,4 +37,5 @@ interface HomeFragmentView : MvpView {
     fun showSelectIntervalDialog(defInterval: Int)
     @StateStrategyType(AddToEndSingleStrategy::class)
     fun showNextRun(hasNext: Boolean, nextRun: Long)
+    fun toggleProgress(isVisible: Boolean)
 }

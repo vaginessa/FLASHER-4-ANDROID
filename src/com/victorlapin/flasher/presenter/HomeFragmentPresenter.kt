@@ -74,12 +74,14 @@ abstract class HomeFragmentPresenter constructor(
     }
 
     fun buildAndDeploy(chainId: Long) {
+        viewState.toggleProgress(true)
         mScriptInteractor.buildScript(chainId)
                 .subscribe({
                     if (mSettings.showMaskToast && it.resolvedFiles.isNotBlank()) {
                         viewState.showInfoToast(it.resolvedFiles)
                     }
                     val result = mScriptInteractor.deployScript(it.script)
+                    viewState.toggleProgress(false)
                     if (result.isSuccess) {
                         viewState.showRebootSnackbar()
                     } else {
@@ -92,8 +94,10 @@ abstract class HomeFragmentPresenter constructor(
     }
 
     fun reboot() {
+        viewState.toggleProgress(true)
         val result = mScriptInteractor.rebootRecovery()
         if (!result.isSuccess) {
+            viewState.toggleProgress(false)
             viewState.showInfoSnackbar(result)
         }
     }
