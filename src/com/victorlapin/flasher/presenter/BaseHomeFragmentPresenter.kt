@@ -1,5 +1,6 @@
 package com.victorlapin.flasher.presenter
 
+import android.util.Log
 import com.arellomobile.mvp.MvpPresenter
 import com.victorlapin.flasher.addTo
 import com.victorlapin.flasher.manager.SettingsManager
@@ -9,8 +10,9 @@ import com.victorlapin.flasher.model.interactor.BaseCommandsInteractor
 import com.victorlapin.flasher.model.interactor.RecoveryScriptInteractor
 import com.victorlapin.flasher.view.HomeFragmentView
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.disposables.Disposable
+import io.reactivex.subjects.PublishSubject
 import java.io.File
+import java.util.concurrent.TimeUnit
 
 abstract class BaseHomeFragmentPresenter constructor(
         private val mScriptInteractor: RecoveryScriptInteractor,
@@ -19,6 +21,7 @@ abstract class BaseHomeFragmentPresenter constructor(
 ) : MvpPresenter<HomeFragmentView>() {
     protected val mDisposable = CompositeDisposable()
     private var mFirstRun = true
+    private var mReorderSubject = PublishSubject.create<List<Command>>()
 
     override fun attachView(view: HomeFragmentView?) {
         super.attachView(view)
@@ -27,6 +30,14 @@ abstract class BaseHomeFragmentPresenter constructor(
                     viewState.setData(it, mFirstRun)
                     mFirstRun = false
                 }
+                .addTo(mDisposable)
+        mReorderSubject
+                .debounce(1, TimeUnit.SECONDS)
+                .distinctUntilChanged()
+                .switchMap { commands ->
+                    mInteractor.changeOrder(commands)
+                }
+                .subscribe { Log.i("REORDER", "Done") }
                 .addTo(mDisposable)
     }
 
@@ -144,19 +155,5 @@ abstract class BaseHomeFragmentPresenter constructor(
                 .addTo(mDisposable)
     }
 
-    fun onCommandsDragged(fromId: Long, toId: Long) {
-        var disposable: Disposable? = null
-        disposable = mInteractor.getMovedCommands(fromId, toId)
-                .subscribe({
-                    val fromCommand = if (fromId < toId) it[0] else it[1]
-                    val toCommand = if (toId < fromId) it[0] else it[1]
-                    fromCommand.id = toId
-                    toCommand.id = fromId
-
-                    mInteractor.updateCommands(it)
-                    disposable?.dispose()
-                }, {
-                    it.printStackTrace()
-                })
-    }
+    fun onOrderChanged(commands: List<Command>) = mReorderSubject.onNext(commands)
 }

@@ -10,6 +10,7 @@ import com.victorlapin.flasher.model.database.dao.CommandDao
 import com.victorlapin.flasher.model.database.entity.Command
 import io.reactivex.Flowable
 import io.reactivex.Maybe
+import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
@@ -23,9 +24,6 @@ class CommandsRepository constructor(
 
     fun getCommand(id: Long): Maybe<Command> = mCommandDao.getCommand(id)
 
-    fun getMovedCommands(fromId: Long, toId: Long): Single<List<Command>> =
-            mCommandDao.getMovedCommands(fromId, toId)
-
     @SuppressLint("CheckResult")
     fun insertCommand(command: Command) {
         Single.just(command)
@@ -34,17 +32,17 @@ class CommandsRepository constructor(
                 .subscribe { c -> mCommandDao.insert(c) }
     }
 
+    fun changeOrder(orderedCommands: List<Command>, chainId: Long): Observable<Any> =
+            Observable.create<Any> { emitter ->
+                mCommandDao.clear(chainId)
+                mCommandDao.insert(orderedCommands)
+                emitter.onNext(Any())
+                emitter.onComplete()
+            }
+
     @SuppressLint("CheckResult")
     fun updateCommand(command: Command) {
         Single.just(command)
-                .subscribeOn(Schedulers.io())
-                .observeOn(Schedulers.io())
-                .subscribe { c -> mCommandDao.update(c) }
-    }
-
-    @SuppressLint("CheckResult")
-    fun updateCommands(commands: List<Command>) {
-        Single.just(commands)
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())
                 .subscribe { c -> mCommandDao.update(c) }

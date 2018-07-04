@@ -87,12 +87,16 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
 
             override fun isItemViewSwipeEnabled(): Boolean = true
 
-            override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder,
+            override fun onMove(recyclerView: RecyclerView, dragged: RecyclerView.ViewHolder,
                                 target: RecyclerView.ViewHolder): Boolean {
-                mAdapter.notifyItemMoved(viewHolder.adapterPosition, target.adapterPosition)
-                val fromId = (viewHolder as HomeAdapter.ViewHolder).itemId
-                val toId = (target as HomeAdapter.ViewHolder).itemId
-                presenter.onCommandsDragged(fromId, toId)
+                list.post {
+                    mAdapter.moveItems(dragged.adapterPosition, target.adapterPosition)
+                }
+                list.post {
+                    val newItems = mAdapter.getItems()
+                    newItems.forEach { it.id = null }
+                    presenter.onOrderChanged(newItems)
+                }
                 return true
             }
 

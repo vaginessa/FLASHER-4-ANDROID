@@ -6,6 +6,7 @@ import com.victorlapin.flasher.model.database.entity.Command
 import com.victorlapin.flasher.model.repository.CommandsRepository
 import io.reactivex.Flowable
 import io.reactivex.Maybe
+import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
@@ -28,6 +29,11 @@ class ScheduleInteractor constructor(
 
     override fun importCommands(fileName: String): Maybe<EventArgs> =
             mRepo.importCommands(fileName, Chain.SCHEDULE_ID)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+
+    override fun changeOrder(orderedCommands: List<Command>): Observable<Any> =
+            mRepo.changeOrder(orderedCommands, Chain.SCHEDULE_ID)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
 }
