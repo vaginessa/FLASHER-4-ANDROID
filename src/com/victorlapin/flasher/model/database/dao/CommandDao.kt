@@ -4,6 +4,7 @@ import android.arch.persistence.room.*
 import com.victorlapin.flasher.model.database.entity.Command
 import io.reactivex.Flowable
 import io.reactivex.Maybe
+import io.reactivex.Single
 
 @Dao
 interface CommandDao {
@@ -12,6 +13,9 @@ interface CommandDao {
 
     @Query("select * from commands where id = :id")
     fun getCommand(id: Long): Maybe<Command>
+
+    @Query("select * from commands where id = :fromId or id = :toId order by id")
+    fun getMovedCommands(fromId: Long, toId: Long): Single<List<Command>>
 
     @Transaction
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -24,6 +28,10 @@ interface CommandDao {
     @Transaction
     @Update(onConflict = OnConflictStrategy.REPLACE)
     fun update(command: Command)
+
+    @Transaction
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun update(commands: List<Command>)
 
     @Transaction
     @Delete

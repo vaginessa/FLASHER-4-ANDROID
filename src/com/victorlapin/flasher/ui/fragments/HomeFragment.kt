@@ -80,14 +80,21 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
         }
         toolbar.setTitle(R.string.action_home)
 
-        val swipeCallback = object : ItemTouchHelper.SimpleCallback(0,
+        val swipeCallback = object : ItemTouchHelper.SimpleCallback(
+                ItemTouchHelper.UP or ItemTouchHelper.DOWN,
                 ItemTouchHelper.START or ItemTouchHelper.END) {
-            override fun isLongPressDragEnabled(): Boolean = false
+            override fun isLongPressDragEnabled(): Boolean = true
 
             override fun isItemViewSwipeEnabled(): Boolean = true
 
             override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder,
-                                target: RecyclerView.ViewHolder): Boolean = false
+                                target: RecyclerView.ViewHolder): Boolean {
+                mAdapter.notifyItemMoved(viewHolder.adapterPosition, target.adapterPosition)
+                val fromId = (viewHolder as HomeAdapter.ViewHolder).itemId
+                val toId = (target as HomeAdapter.ViewHolder).itemId
+                presenter.onCommandsDragged(fromId, toId)
+                return true
+            }
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val id = (viewHolder as HomeAdapter.ViewHolder).itemId

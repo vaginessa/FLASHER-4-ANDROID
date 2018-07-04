@@ -15,7 +15,7 @@ import com.victorlapin.flasher.model.serialization.Exclude
 data class Command(
         @PrimaryKey(autoGenerate = true)
         @Exclude
-        val id: Long? = null,
+        var id: Long? = null,
         @ColumnInfo(name = "type")
         @SerializedName("type")
         var type: Int,

@@ -29,6 +29,8 @@ abstract class HomeFragmentPresenter constructor(
 
     abstract fun onUndoDelete(command: Command)
 
+    abstract fun onCommandsDragged(fromId: Long, toId: Long)
+
     fun onArgumentsClicked(args: CommandClickEventArgs) {
         when (args.argsType) {
             CommandClickEventArgs.ARG1 -> when (args.command.type) {

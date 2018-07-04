@@ -23,6 +23,9 @@ class CommandsRepository constructor(
 
     fun getCommand(id: Long): Maybe<Command> = mCommandDao.getCommand(id)
 
+    fun getMovedCommands(fromId: Long, toId: Long): Single<List<Command>> =
+            mCommandDao.getMovedCommands(fromId, toId)
+
     @SuppressLint("CheckResult")
     fun insertCommand(command: Command) {
         Single.just(command)
@@ -34,6 +37,14 @@ class CommandsRepository constructor(
     @SuppressLint("CheckResult")
     fun updateCommand(command: Command) {
         Single.just(command)
+                .subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.io())
+                .subscribe { c -> mCommandDao.update(c) }
+    }
+
+    @SuppressLint("CheckResult")
+    fun updateCommands(commands: List<Command>) {
+        Single.just(commands)
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())
                 .subscribe { c -> mCommandDao.update(c) }

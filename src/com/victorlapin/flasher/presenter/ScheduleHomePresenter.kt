@@ -9,6 +9,7 @@ import com.victorlapin.flasher.model.interactor.AlarmInteractor
 import com.victorlapin.flasher.model.interactor.RecoveryScriptInteractor
 import com.victorlapin.flasher.model.interactor.ScheduleInteractor
 import com.victorlapin.flasher.view.HomeFragmentView
+import io.reactivex.disposables.Disposable
 
 @InjectViewState
 class ScheduleHomePresenter constructor(
@@ -108,5 +109,21 @@ class ScheduleHomePresenter constructor(
         val dateBuilder = DateBuilder(mSettings.scheduleTime)
         dateBuilder.interval = mSettings.scheduleInterval
         viewState.showNextRun(dateBuilder.hasNextAlarm(), dateBuilder.nextAlarmTime)
+    }
+
+    override fun onCommandsDragged(fromId: Long, toId: Long) {
+        var disposable: Disposable? = null
+        disposable = mInteractor.getMovedCommands(fromId, toId)
+                .subscribe({
+                    val fromCommand = if (fromId < toId) it[0] else it[1]
+                    val toCommand = if (toId < fromId) it[0] else it[1]
+                    fromCommand.id = toId
+                    toCommand.id = fromId
+
+                    mInteractor.updateCommands(it)
+                    disposable?.dispose()
+                }, {
+                    it.printStackTrace()
+                })
     }
 }

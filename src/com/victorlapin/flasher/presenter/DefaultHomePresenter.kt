@@ -7,6 +7,7 @@ import com.victorlapin.flasher.model.database.entity.Command
 import com.victorlapin.flasher.model.interactor.CommandsInteractor
 import com.victorlapin.flasher.model.interactor.RecoveryScriptInteractor
 import com.victorlapin.flasher.view.HomeFragmentView
+import io.reactivex.disposables.Disposable
 
 @InjectViewState
 class DefaultHomePresenter constructor(
@@ -53,5 +54,21 @@ class DefaultHomePresenter constructor(
                     viewState.showInfoSnackbar(it)
                 }
                 .addTo(mDisposable)
+    }
+
+    override fun onCommandsDragged(fromId: Long, toId: Long) {
+        var disposable: Disposable? = null
+        disposable = mInteractor.getMovedCommands(fromId, toId)
+                .subscribe({
+                    val fromCommand = if (fromId < toId) it[0] else it[1]
+                    val toCommand = if (toId < fromId) it[0] else it[1]
+                    fromCommand.id = toId
+                    toCommand.id = fromId
+
+                    mInteractor.updateCommands(it)
+                    disposable?.dispose()
+                }, {
+                    it.printStackTrace()
+                })
     }
 }
