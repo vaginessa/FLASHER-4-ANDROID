@@ -30,8 +30,8 @@ class BackupsRepository(
                                     else -> 0
                                 }
                             }
-                            backups.drop(backupsToKeep - 1)
-                            backups.forEach { it.deleteRecursively() }
+                            val backupsToDelete = backups.drop(backupsToKeep - 1)
+                            backupsToDelete.forEach { it.deleteRecursively() }
                         }
                     }
                 }
