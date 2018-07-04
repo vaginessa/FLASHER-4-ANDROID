@@ -10,7 +10,7 @@ import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
-class CommandsInteractor constructor(
+class HomeInteractor constructor(
         private val mRepo: CommandsRepository
 ) {
     fun getCommands(): Flowable<List<Command>> = mRepo.getCommands(Chain.DEFAULT_ID)

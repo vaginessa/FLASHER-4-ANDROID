@@ -4,7 +4,7 @@ import com.arellomobile.mvp.InjectViewState
 import com.victorlapin.flasher.addTo
 import com.victorlapin.flasher.manager.SettingsManager
 import com.victorlapin.flasher.model.database.entity.Command
-import com.victorlapin.flasher.model.interactor.CommandsInteractor
+import com.victorlapin.flasher.model.interactor.HomeInteractor
 import com.victorlapin.flasher.model.interactor.RecoveryScriptInteractor
 import com.victorlapin.flasher.view.HomeFragmentView
 import io.reactivex.disposables.Disposable
@@ -13,7 +13,7 @@ import io.reactivex.disposables.Disposable
 class DefaultHomePresenter constructor(
         mScriptInteractor: RecoveryScriptInteractor,
         mSettings: SettingsManager,
-        private val mInteractor: CommandsInteractor
+        private val mInteractor: HomeInteractor
 ) : HomeFragmentPresenter(mScriptInteractor, mSettings) {
     override fun attachView(view: HomeFragmentView?) {
         super.attachView(view)
