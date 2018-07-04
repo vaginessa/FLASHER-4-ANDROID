@@ -20,7 +20,7 @@ class ScheduleHomePresenter constructor(
 ) : HomeFragmentPresenter(mScriptInteractor, mSettings) {
     override fun attachView(view: HomeFragmentView?) {
         super.attachView(view)
-        mInteractor.getSchedule()
+        mInteractor.getCommands()
                 .subscribe {
                     viewState.setData(it, mFirstRun)
                     mFirstRun = false
@@ -44,7 +44,7 @@ class ScheduleHomePresenter constructor(
             mInteractor.insertCommand(command)
 
     override fun exportCommands(fileName: String) {
-        mInteractor.exportSchedule(fileName)
+        mInteractor.exportCommands(fileName)
                 .subscribe {
                     viewState.showInfoSnackbar(it)
                 }
@@ -52,7 +52,7 @@ class ScheduleHomePresenter constructor(
     }
 
     override fun importCommands(fileName: String) {
-        mInteractor.importSchedule(fileName)
+        mInteractor.importCommands(fileName)
                 .subscribe {
                     viewState.showInfoSnackbar(it)
                 }
