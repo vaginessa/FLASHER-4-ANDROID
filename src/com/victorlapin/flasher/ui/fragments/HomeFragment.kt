@@ -23,7 +23,7 @@ import com.victorlapin.flasher.model.EventArgs
 import com.victorlapin.flasher.model.database.entity.Chain
 import com.victorlapin.flasher.model.database.entity.Command
 import com.victorlapin.flasher.presenter.DefaultHomePresenter
-import com.victorlapin.flasher.presenter.HomeFragmentPresenter
+import com.victorlapin.flasher.presenter.BaseHomeFragmentPresenter
 import com.victorlapin.flasher.ui.activities.MainActivity
 import com.victorlapin.flasher.ui.adapters.HomeAdapter
 import com.victorlapin.flasher.view.HomeFragmentView
@@ -40,10 +40,10 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
     private val mDefaultPresenter by inject<DefaultHomePresenter>()
 
     @InjectPresenter
-    lateinit var presenter: HomeFragmentPresenter
+    lateinit var presenter: BaseHomeFragmentPresenter
 
     @ProvidePresenter
-    open fun providePresenter(): HomeFragmentPresenter = mDefaultPresenter
+    open fun providePresenter(): BaseHomeFragmentPresenter = mDefaultPresenter
 
     private val mDisposable = CompositeDisposable()
 

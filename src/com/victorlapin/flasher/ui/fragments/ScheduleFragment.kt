@@ -8,7 +8,7 @@ import com.victorlapin.flasher.R
 import com.victorlapin.flasher.Screens
 import com.victorlapin.flasher.manager.SettingsManager
 import com.victorlapin.flasher.model.database.entity.Chain
-import com.victorlapin.flasher.presenter.HomeFragmentPresenter
+import com.victorlapin.flasher.presenter.BaseHomeFragmentPresenter
 import com.victorlapin.flasher.presenter.ScheduleHomePresenter
 import kotlinx.android.synthetic.main.include_schedule_settings.*
 import kotlinx.android.synthetic.main.include_toolbar.*
@@ -23,7 +23,7 @@ class ScheduleFragment : HomeFragment() {
 
     private val mSchedulePresenter by inject<ScheduleHomePresenter>()
 
-    override fun providePresenter(): HomeFragmentPresenter = mSchedulePresenter
+    override fun providePresenter(): BaseHomeFragmentPresenter = mSchedulePresenter
 
     private val mSettings by inject<SettingsManager>()
     private val mDateTimeFormatter = SimpleDateFormat

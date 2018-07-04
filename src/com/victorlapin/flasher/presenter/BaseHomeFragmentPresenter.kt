@@ -5,17 +5,30 @@ import com.victorlapin.flasher.addTo
 import com.victorlapin.flasher.manager.SettingsManager
 import com.victorlapin.flasher.model.CommandClickEventArgs
 import com.victorlapin.flasher.model.database.entity.Command
+import com.victorlapin.flasher.model.interactor.BaseCommandsInteractor
 import com.victorlapin.flasher.model.interactor.RecoveryScriptInteractor
 import com.victorlapin.flasher.view.HomeFragmentView
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.disposables.Disposable
 import java.io.File
 
-abstract class HomeFragmentPresenter constructor(
+abstract class BaseHomeFragmentPresenter constructor(
         private val mScriptInteractor: RecoveryScriptInteractor,
-        protected val mSettings: SettingsManager
+        protected val mSettings: SettingsManager,
+        private val mInteractor: BaseCommandsInteractor
 ) : MvpPresenter<HomeFragmentView>() {
     protected val mDisposable = CompositeDisposable()
-    protected var mFirstRun = true
+    private var mFirstRun = true
+
+    override fun attachView(view: HomeFragmentView?) {
+        super.attachView(view)
+        mInteractor.getCommands()
+                .subscribe {
+                    viewState.setData(it, mFirstRun)
+                    mFirstRun = false
+                }
+                .addTo(mDisposable)
+    }
 
     override fun detachView(view: HomeFragmentView?) {
         mDisposable.clear()
@@ -23,13 +36,20 @@ abstract class HomeFragmentPresenter constructor(
         super.detachView(view)
     }
 
-    abstract fun onCommandUpdated(command: Command)
+    fun onCommandUpdated(command: Command) =
+            mInteractor.updateCommand(command)
 
-    abstract fun onCommandSwiped(id: Long)
+    fun onCommandSwiped(id: Long) {
+        mInteractor.getCommand(id)
+                .subscribe {
+                    mInteractor.deleteCommand(it)
+                    viewState.showDeletedSnackbar(it)
+                }
+                .addTo(mDisposable)
+    }
 
-    abstract fun onUndoDelete(command: Command)
-
-    abstract fun onCommandsDragged(fromId: Long, toId: Long)
+    fun onUndoDelete(command: Command) =
+            mInteractor.insertCommand(command)
 
     fun onArgumentsClicked(args: CommandClickEventArgs) {
         when (args.argsType) {
@@ -106,9 +126,37 @@ abstract class HomeFragmentPresenter constructor(
 
     fun onExportClicked() = viewState.showExportDialog()
 
-    abstract fun exportCommands(fileName: String)
+    fun exportCommands(fileName: String) {
+        mInteractor.exportCommands(fileName)
+                .subscribe {
+                    viewState.showInfoSnackbar(it)
+                }
+                .addTo(mDisposable)
+    }
 
     fun onImportClicked() = viewState.showImportDialog()
 
-    abstract fun importCommands(fileName: String)
+    fun importCommands(fileName: String) {
+        mInteractor.importCommands(fileName)
+                .subscribe {
+                    viewState.showInfoSnackbar(it)
+                }
+                .addTo(mDisposable)
+    }
+
+    fun onCommandsDragged(fromId: Long, toId: Long) {
+        var disposable: Disposable? = null
+        disposable = mInteractor.getMovedCommands(fromId, toId)
+                .subscribe({
+                    val fromCommand = if (fromId < toId) it[0] else it[1]
+                    val toCommand = if (toId < fromId) it[0] else it[1]
+                    fromCommand.id = toId
+                    toCommand.id = fromId
+
+                    mInteractor.updateCommands(it)
+                    disposable?.dispose()
+                }, {
+                    it.printStackTrace()
+                })
+    }
 }
