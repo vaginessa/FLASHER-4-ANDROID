@@ -29,11 +29,11 @@ val modelModule = module {
                             get<ChainDao>().insert(chains)
 
                             val data = ArrayList<Command>()
-                            data.add(Command(type = Command.TYPE_BACKUP, arg1 = "Boot, Cache, System, Data"))
-                            data.add(Command(type = Command.TYPE_WIPE, arg1 = "Cache, Dalvik-cache, System"))
-                            data.add(Command(type = Command.TYPE_FLASH_FILE))
+                            data.add(Command(type = Command.TYPE_BACKUP, arg1 = "Boot, Cache, System, Data", orderNumber = 1))
+                            data.add(Command(type = Command.TYPE_WIPE, arg1 = "Cache, Dalvik-cache, System", orderNumber = 2))
+                            data.add(Command(type = Command.TYPE_FLASH_FILE, orderNumber = 3))
                             data.add(Command(type = Command.TYPE_BACKUP, arg1 = "Boot, Cache, System, Data",
-                                    chainId = Chain.SCHEDULE_ID))
+                                    chainId = Chain.SCHEDULE_ID, orderNumber = 0))
                             get<CommandDao>().insert(data)
                             emitter.onSuccess(Any())
                         }
@@ -42,7 +42,7 @@ val modelModule = module {
                                 .subscribe()
                     }
                 })
-                .addMigrations(AppDatabase.MIGRATION_1_2)
+                .addMigrations(AppDatabase.MIGRATION_1_2, AppDatabase.MIGRATION_2_3)
                 .build()
     }
     single { get<AppDatabase>().getCommandDao() }

@@ -27,14 +27,18 @@ data class Command(
         var arg2: String? = null,
         @ColumnInfo(name = "chain_id")
         @Exclude
-        var chainId: Long = Chain.DEFAULT_ID
+        var chainId: Long = Chain.DEFAULT_ID,
+        @ColumnInfo(name = "order_number")
+        @Exclude
+        var orderNumber: Int = 0
 ) {
     fun clone() = Command(
             id = this.id,
             type = this.type,
             arg1 = this.arg1,
             arg2 = this.arg2,
-            chainId = this.chainId)
+            chainId = this.chainId,
+            orderNumber = this.orderNumber)
 
     companion object {
         const val TYPE_WIPE = 0
