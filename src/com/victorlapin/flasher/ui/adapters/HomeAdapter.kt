@@ -122,14 +122,8 @@ class HomeAdapter constructor(
         notifyItemMoved(fromPosition, toPosition)
     }
 
-    fun onMoveFinished(fromId: Long, toId: Long) {
-        val fromCommand = mItems.first { it.id == fromId }
-        val toCommand = mItems.first { it.id == toId }
-        val fromPosition = mItems.indexOf(fromCommand)
-        val toPosition = mItems.indexOf(toCommand)
-        fromCommand.id = toId
-        toCommand.id = fromId
-        notifyItemChanged(fromPosition)
-        notifyItemChanged(toPosition)
+    fun onMoveFinished() {
+        var i = 0
+        mItems.forEach { it.orderNumber = ++i }
     }
 }

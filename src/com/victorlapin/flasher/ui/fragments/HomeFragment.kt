@@ -123,7 +123,7 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
             private fun onDrop() {
                 if (mFromId != -1L && mToId != -1L && mFromId != mToId) {
                     list.post {
-                        mAdapter.onMoveFinished(mFromId, mToId)
+                        mAdapter.onMoveFinished()
                         val newItems = mAdapter.getItems()
                         presenter.onOrderChanged(newItems)
                         mFromId = -1L
