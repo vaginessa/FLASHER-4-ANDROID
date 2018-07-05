@@ -7,7 +7,7 @@ import io.reactivex.Maybe
 
 @Dao
 interface CommandDao {
-    @Query("select * from commands where chain_id = :chainId order by id")
+    @Query("select * from commands where chain_id = :chainId order by order_number")
     fun getCommands(chainId: Long): Flowable<List<Command>>
 
     @Query("select * from commands where id = :id")
@@ -36,4 +36,7 @@ interface CommandDao {
     @Transaction
     @Query("delete from commands where chain_id = :chainId")
     fun clear(chainId: Long)
+
+    @Query("select ifnull(max(order_number),0) + 1 from commands where chain_id = :chainId")
+    fun getNextOrderNumber(chainId: Long): Int
 }

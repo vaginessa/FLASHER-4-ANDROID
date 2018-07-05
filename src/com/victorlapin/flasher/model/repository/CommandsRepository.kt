@@ -29,7 +29,10 @@ class CommandsRepository constructor(
         Single.just(command)
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())
-                .subscribe { c -> mCommandDao.insert(c) }
+                .subscribe { c ->
+                    c.orderNumber = mCommandDao.getNextOrderNumber(c.chainId)
+                    mCommandDao.insert(c)
+                }
     }
 
     fun changeOrder(orderedCommands: List<Command>): Observable<Any> =
@@ -71,7 +74,11 @@ class CommandsRepository constructor(
         try {
             val json = File(fileName).readText()
             val commands = mGson.fromJson<List<Command>>(json, object : TypeToken<List<Command>>() {}.type)
-            commands.forEach { it.chainId = chainId }
+            var i = 0
+            commands.forEach {
+                it.chainId = chainId
+                it.orderNumber = ++i
+            }
             mCommandDao.clear(chainId)
             mCommandDao.insert(commands)
             emitter.onSuccess(EventArgs(isSuccess = true, messageId = R.string.success))
