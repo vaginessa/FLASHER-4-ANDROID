@@ -14,6 +14,7 @@ import com.victorlapin.flasher.model.database.entity.Command
 import com.victorlapin.flasher.visible
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.item_command.view.*
+import java.util.*
 
 class HomeAdapter constructor(
         resources: ResourcesManager
@@ -29,6 +30,12 @@ class HomeAdapter constructor(
     val changeTypeEvent: PublishSubject<Pair<Command, Int>> = mChangeTypeSubject
     private val mArgsClickSubject = PublishSubject.create<CommandClickEventArgs>()
     val argsClickEvent: PublishSubject<CommandClickEventArgs> = mArgsClickSubject
+
+    fun getItems(): List<Command> {
+        val result = arrayListOf<Command>()
+        mItems.forEach { result.add(it.clone()) }
+        return result
+    }
 
     init {
         setHasStableIds(true)
@@ -108,5 +115,15 @@ class HomeAdapter constructor(
         mItems.clear()
         mItems.addAll(commands)
         diffResult.dispatchUpdatesTo(this)
+    }
+
+    fun moveItems(fromPosition: Int, toPosition: Int) {
+        Collections.swap(mItems, fromPosition, if (toPosition == -1) 0 else toPosition)
+        notifyItemMoved(fromPosition, toPosition)
+    }
+
+    fun onMoveFinished() {
+        var i = 0
+        mItems.forEach { it.orderNumber = ++i }
     }
 }

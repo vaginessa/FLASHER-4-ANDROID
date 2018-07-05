@@ -23,7 +23,7 @@ import com.victorlapin.flasher.model.EventArgs
 import com.victorlapin.flasher.model.database.entity.Chain
 import com.victorlapin.flasher.model.database.entity.Command
 import com.victorlapin.flasher.presenter.DefaultHomePresenter
-import com.victorlapin.flasher.presenter.HomeFragmentPresenter
+import com.victorlapin.flasher.presenter.BaseHomeFragmentPresenter
 import com.victorlapin.flasher.ui.activities.MainActivity
 import com.victorlapin.flasher.ui.adapters.HomeAdapter
 import com.victorlapin.flasher.view.HomeFragmentView
@@ -40,10 +40,10 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
     private val mDefaultPresenter by inject<DefaultHomePresenter>()
 
     @InjectPresenter
-    lateinit var presenter: HomeFragmentPresenter
+    lateinit var presenter: BaseHomeFragmentPresenter
 
     @ProvidePresenter
-    open fun providePresenter(): HomeFragmentPresenter = mDefaultPresenter
+    open fun providePresenter(): BaseHomeFragmentPresenter = mDefaultPresenter
 
     private val mDisposable = CompositeDisposable()
 
@@ -80,18 +80,56 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
         }
         toolbar.setTitle(R.string.action_home)
 
-        val swipeCallback = object : ItemTouchHelper.SimpleCallback(0,
+        val swipeCallback = object : ItemTouchHelper.SimpleCallback(
+                ItemTouchHelper.UP or ItemTouchHelper.DOWN,
                 ItemTouchHelper.START or ItemTouchHelper.END) {
-            override fun isLongPressDragEnabled(): Boolean = false
+            private var mIsDragging: Boolean = false
+            private var mFromId: Long = -1L
+            private var mToId: Long = -1L
+
+            override fun isLongPressDragEnabled(): Boolean = true
 
             override fun isItemViewSwipeEnabled(): Boolean = true
 
-            override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder,
-                                target: RecyclerView.ViewHolder): Boolean = false
+            override fun onMove(recyclerView: RecyclerView, dragged: RecyclerView.ViewHolder,
+                                target: RecyclerView.ViewHolder): Boolean {
+                if (mFromId == -1L) {
+                    mFromId = (dragged as HomeAdapter.ViewHolder).itemId
+                }
+                mToId = (target as HomeAdapter.ViewHolder).itemId
+                if (mFromId != -1L && mToId != -1L) {
+                    list.post {
+                        mAdapter.moveItems(dragged.adapterPosition, target.adapterPosition)
+                    }
+                }
+                return true
+            }
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val id = (viewHolder as HomeAdapter.ViewHolder).itemId
                 presenter.onCommandSwiped(id)
+            }
+
+            override fun onSelectedChanged(viewHolder: RecyclerView.ViewHolder?, actionState: Int) {
+                super.onSelectedChanged(viewHolder, actionState)
+                if (actionState == ItemTouchHelper.ACTION_STATE_DRAG) {
+                    mIsDragging = true
+                } else if (actionState == ItemTouchHelper.ACTION_STATE_IDLE && mIsDragging) {
+                    onDrop()
+                    mIsDragging = false
+                }
+            }
+
+            private fun onDrop() {
+                if (mFromId != -1L && mToId != -1L && mFromId != mToId) {
+                    list.post {
+                        mAdapter.onMoveFinished()
+                        val newItems = mAdapter.getItems()
+                        presenter.onOrderChanged(newItems)
+                        mFromId = -1L
+                        mToId = -1L
+                    }
+                }
             }
         }
         ItemTouchHelper(swipeCallback).attachToRecyclerView(list)
@@ -126,10 +164,10 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
                 .addTo(mDisposable)
     }
 
-    override fun setData(commands: List<Command>, isFirstRun: Boolean) {
+    override fun setData(commands: List<Command>, shouldScroll: Boolean) {
         list.post {
             mAdapter.setData(commands)
-            if (!isFirstRun && commands.isNotEmpty()) {
+            if (shouldScroll && commands.isNotEmpty()) {
                 list.scrollToPosition(commands.size - 1)
             }
         }
