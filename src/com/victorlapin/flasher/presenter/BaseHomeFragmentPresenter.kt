@@ -1,6 +1,5 @@
 package com.victorlapin.flasher.presenter
 
-import android.util.Log
 import com.arellomobile.mvp.MvpPresenter
 import com.victorlapin.flasher.addTo
 import com.victorlapin.flasher.manager.SettingsManager
@@ -12,7 +11,6 @@ import com.victorlapin.flasher.view.HomeFragmentView
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.subjects.PublishSubject
 import java.io.File
-import java.util.concurrent.TimeUnit
 
 abstract class BaseHomeFragmentPresenter constructor(
         private val mScriptInteractor: RecoveryScriptInteractor,
@@ -32,12 +30,10 @@ abstract class BaseHomeFragmentPresenter constructor(
                 }
                 .addTo(mDisposable)
         mReorderSubject
-                .debounce(1, TimeUnit.SECONDS)
-                .distinctUntilChanged()
                 .switchMap { commands ->
                     mInteractor.changeOrder(commands)
                 }
-                .subscribe { Log.i("REORDER", "Done") }
+                .subscribe { }
                 .addTo(mDisposable)
     }
 
