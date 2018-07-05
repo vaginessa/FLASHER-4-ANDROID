@@ -24,11 +24,14 @@ abstract class BaseCommandsInteractor constructor(
 
     fun deleteCommand(command: Command) = mRepo.deleteCommand(command)
 
+    fun changeOrder(orderedCommands: List<Command>): Observable<Any> =
+            mRepo.changeOrder(orderedCommands)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+
     abstract fun addStubCommand()
 
     abstract fun exportCommands(fileName: String): Maybe<EventArgs>
 
     abstract fun importCommands(fileName: String): Maybe<EventArgs>
-
-    abstract fun changeOrder(orderedCommands: List<Command>): Observable<Any>
 }

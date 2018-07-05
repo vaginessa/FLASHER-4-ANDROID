@@ -89,12 +89,17 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
 
             override fun onMove(recyclerView: RecyclerView, dragged: RecyclerView.ViewHolder,
                                 target: RecyclerView.ViewHolder): Boolean {
+                val fromId = (dragged as HomeAdapter.ViewHolder).itemId
+                val toId = (target as HomeAdapter.ViewHolder).itemId
                 list.post {
                     mAdapter.moveItems(dragged.adapterPosition, target.adapterPosition)
                 }
                 list.post {
                     val newItems = mAdapter.getItems()
-                    newItems.forEach { it.id = null }
+                    val fromCommand = newItems.first { it.id == fromId }
+                    val toCommand = newItems.first { it.id == toId }
+                    fromCommand.id = toId
+                    toCommand.id = fromId
                     presenter.onOrderChanged(newItems)
                 }
                 return true

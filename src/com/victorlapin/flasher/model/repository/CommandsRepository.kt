@@ -32,10 +32,9 @@ class CommandsRepository constructor(
                 .subscribe { c -> mCommandDao.insert(c) }
     }
 
-    fun changeOrder(orderedCommands: List<Command>, chainId: Long): Observable<Any> =
+    fun changeOrder(orderedCommands: List<Command>): Observable<Any> =
             Observable.create<Any> { emitter ->
-                mCommandDao.clear(chainId)
-                mCommandDao.insert(orderedCommands)
+                mCommandDao.update(orderedCommands)
                 emitter.onNext(Any())
                 emitter.onComplete()
             }
