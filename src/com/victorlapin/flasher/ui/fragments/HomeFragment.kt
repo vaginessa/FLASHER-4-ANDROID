@@ -126,7 +126,7 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
                                      dX: Float, dY: Float, actionState: Int, isCurrentlyActive: Boolean) {
                 super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
                 if (isCurrentlyActive) {
-                    if (mIsDragging) {
+                    if (actionState == ItemTouchHelper.ACTION_STATE_DRAG) {
                         viewHolder.itemView.card.translationZ = 16F
                     }
                 } else {
