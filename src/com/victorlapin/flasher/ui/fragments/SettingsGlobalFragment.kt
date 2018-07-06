@@ -88,7 +88,8 @@ class SettingsGlobalFragment : PreferenceFragmentCompat() {
         backupsToKeepPreference.onPreferenceChangeListener =
                 Preference.OnPreferenceChangeListener { it, newValue ->
                     try {
-                        val i = newValue.toString().toInt()
+                        val i = newValue.toString().trim().toInt()
+                        mSettings.backupsToKeep = i
                         it.summary = i.toString()
                         return@OnPreferenceChangeListener true
                     } catch (ignore: Exception) {

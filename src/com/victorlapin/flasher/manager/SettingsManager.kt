@@ -75,6 +75,7 @@ class SettingsManager(context: Context) {
     val deleteObsoleteBackups: Boolean
         get() = mPrefs.getBoolean(KEY_DELETE_OLD_BACKUPS, false)
 
-    val backupsToKeep: Int
+    var backupsToKeep: Int
         get() = mPrefs.getString(KEY_BACKUPS_TO_KEEP, "2").toInt()
+        set(keep) = mPrefs.edit().putString(KEY_BACKUPS_TO_KEEP, keep.toString()).apply()
 }
