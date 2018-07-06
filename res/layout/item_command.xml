@@ -8,9 +8,7 @@
     android:layout_marginEnd="@dimen/card_margin"
     android:layout_marginStart="@dimen/card_margin"
     android:layout_marginTop="@dimen/card_margin_top"
-    android:clickable="true"
-    android:focusable="true"
-    android:stateListAnimator="@animator/lift_on_touch"
+    android:descendantFocusability="blocksDescendants"
     app:cardCornerRadius="@dimen/card_corner_radius">
 
     <android.support.constraint.ConstraintLayout
