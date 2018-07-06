@@ -127,14 +127,10 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
                 super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
                 if (isCurrentlyActive) {
                     if (mIsDragging) {
-                        viewHolder.itemView.card.animate()
-                                .translationZ(16F)
-                                .start()
+                        viewHolder.itemView.card.translationZ = 16F
                     }
                 } else {
-                    viewHolder.itemView.card.animate()
-                            .translationZ(0F)
-                            .start()
+                    viewHolder.itemView.card.translationZ = 0F
                 }
             }
 
