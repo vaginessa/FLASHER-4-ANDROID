@@ -19,7 +19,7 @@ import java.util.*
 class HomeAdapter constructor(
         resources: ResourcesManager
 ) : RecyclerView.Adapter<HomeAdapter.ViewHolder>() {
-    private val mItems: ArrayList<Command> = arrayListOf()
+    private var mItems: ArrayList<Command> = arrayListOf()
     private val mCommands = resources.getStringArray(R.array.commands)
     private val mDefaultArgText = resources.getString(R.string.command_tap_to_select)
     private val mEnterMaskText = resources.getString(R.string.command_tap_to_enter_mask)
@@ -120,8 +120,7 @@ class HomeAdapter constructor(
     fun moveItems(fromPosition: Int, toPosition: Int) {
         val buffer = getItems()
         Collections.swap(buffer, fromPosition, if (toPosition == -1) 0 else toPosition)
-        mItems.clear()
-        mItems.addAll(buffer)
+        mItems = buffer
         notifyItemMoved(fromPosition, toPosition)
     }
 
