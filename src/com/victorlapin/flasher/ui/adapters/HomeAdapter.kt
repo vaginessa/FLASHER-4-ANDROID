@@ -121,7 +121,7 @@ class HomeAdapter constructor(
         val buffer = getItems()
         Collections.swap(buffer, fromPosition, if (toPosition == -1) 0 else toPosition)
         mItems = buffer
-        notifyItemMoved(fromPosition, toPosition)
+        notifyItemMoved(fromPosition, if (toPosition == -1) 0 else toPosition)
     }
 
     fun onMoveFinished() {
