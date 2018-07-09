@@ -31,7 +31,7 @@ class HomeAdapter constructor(
     private val mArgsClickSubject = PublishSubject.create<CommandClickEventArgs>()
     val argsClickEvent: PublishSubject<CommandClickEventArgs> = mArgsClickSubject
 
-    fun getItems(): List<Command> {
+    fun getItems(): ArrayList<Command> {
         val result = arrayListOf<Command>()
         mItems.forEach { result.add(it.clone()) }
         return result
@@ -118,7 +118,10 @@ class HomeAdapter constructor(
     }
 
     fun moveItems(fromPosition: Int, toPosition: Int) {
-        Collections.swap(mItems, fromPosition, if (toPosition == -1) 0 else toPosition)
+        val buffer = getItems()
+        Collections.swap(buffer, fromPosition, if (toPosition == -1) 0 else toPosition)
+        mItems.clear()
+        mItems.addAll(buffer)
         notifyItemMoved(fromPosition, toPosition)
     }
 
