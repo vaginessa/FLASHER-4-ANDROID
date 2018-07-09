@@ -5,7 +5,6 @@ import android.graphics.Canvas
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.widget.DefaultItemAnimator
-import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.Menu
@@ -27,6 +26,7 @@ import com.victorlapin.flasher.presenter.DefaultHomePresenter
 import com.victorlapin.flasher.presenter.BaseHomeFragmentPresenter
 import com.victorlapin.flasher.ui.activities.MainActivity
 import com.victorlapin.flasher.ui.adapters.HomeAdapter
+import com.victorlapin.flasher.ui.adapters.LinearLayoutManagerWrapper
 import com.victorlapin.flasher.view.HomeFragmentView
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.fragment_home.*
@@ -75,7 +75,7 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
 
         setupEvents()
         list.apply {
-            layoutManager = LinearLayoutManager(context)
+            layoutManager = LinearLayoutManagerWrapper(context)
             itemAnimator = DefaultItemAnimator()
             setHasFixedSize(true)
             adapter = mAdapter
