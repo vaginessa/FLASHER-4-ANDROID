@@ -90,7 +90,7 @@ class ScheduleFragment : HomeFragment() {
                 callback,
                 defHourOfDay,
                 defMinute,
-                true)
+                android.text.format.DateFormat.is24HourFormat(context))
                 .show()
     }
 
