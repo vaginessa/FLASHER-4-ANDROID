@@ -85,9 +85,6 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
         val swipeCallback = object : ItemTouchHelper.SimpleCallback(
                 ItemTouchHelper.UP or ItemTouchHelper.DOWN,
                 ItemTouchHelper.START or ItemTouchHelper.END) {
-            private var mIsDragging: Boolean = false
-            private var mFromId: Long = -1L
-            private var mToId: Long = -1L
 
             override fun isLongPressDragEnabled(): Boolean = true
 
@@ -95,15 +92,7 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
 
             override fun onMove(recyclerView: RecyclerView, dragged: RecyclerView.ViewHolder,
                                 target: RecyclerView.ViewHolder): Boolean {
-                if (mFromId == -1L) {
-                    mFromId = (dragged as HomeAdapter.ViewHolder).itemId
-                }
-                mToId = (target as HomeAdapter.ViewHolder).itemId
-                if (mFromId != -1L && mToId != -1L) {
-                    list.post {
-                        mAdapter.moveItems(dragged.adapterPosition, target.adapterPosition)
-                    }
-                }
+                mAdapter.moveItems(dragged.adapterPosition, target.adapterPosition)
                 return true
             }
 
@@ -113,37 +102,19 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
             }
 
             override fun onSelectedChanged(viewHolder: RecyclerView.ViewHolder?, actionState: Int) {
-                super.onSelectedChanged(viewHolder, actionState)
                 if (actionState == ItemTouchHelper.ACTION_STATE_DRAG) {
-                    mIsDragging = true
-                } else if (actionState == ItemTouchHelper.ACTION_STATE_IDLE && mIsDragging) {
-                    onDrop()
-                    mIsDragging = false
+                    (viewHolder as HomeAdapter.ViewHolder).onSelected()
                 }
+                super.onSelectedChanged(viewHolder, actionState)
             }
 
-            override fun onChildDraw(c: Canvas, recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder,
-                                     dX: Float, dY: Float, actionState: Int, isCurrentlyActive: Boolean) {
-                super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
-                if (isCurrentlyActive) {
-                    if (actionState == ItemTouchHelper.ACTION_STATE_DRAG) {
-                        viewHolder.itemView.card.translationZ = 16F
-                    }
-                } else {
-                    viewHolder.itemView.card.translationZ = 0F
-                }
-            }
+            override fun clearView(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder) {
+                super.clearView(recyclerView, viewHolder)
 
-            private fun onDrop() {
-                if (mFromId != -1L && mToId != -1L && mFromId != mToId) {
-                    list.post {
-                        mAdapter.onMoveFinished()
-                        val newItems = mAdapter.getItems()
-                        presenter.onOrderChanged(newItems)
-                        mFromId = -1L
-                        mToId = -1L
-                    }
-                }
+                (viewHolder as HomeAdapter.ViewHolder).onCleared()
+                mAdapter.onMoveFinished()
+                val newItems = mAdapter.getItems()
+                presenter.onOrderChanged(newItems)
             }
         }
         ItemTouchHelper(swipeCallback).attachToRecyclerView(list)
