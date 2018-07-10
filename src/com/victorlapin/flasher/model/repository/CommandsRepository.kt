@@ -30,7 +30,9 @@ class CommandsRepository constructor(
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())
                 .subscribe { c ->
-                    c.orderNumber = mCommandDao.getNextOrderNumber(c.chainId)
+                    if (c.orderNumber == 0) {
+                        c.orderNumber = mCommandDao.getNextOrderNumber(c.chainId)
+                    }
                     mCommandDao.insert(c)
                 }
     }
