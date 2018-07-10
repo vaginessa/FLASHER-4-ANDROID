@@ -81,6 +81,7 @@
             android:paddingTop="@dimen/margin_16"
             android:text="@string/command_tap_to_select"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="?android:colorAccent"
             app:layout_constraintEnd_toStartOf="@id/image"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/lbl_args" />
@@ -95,6 +96,7 @@
             android:paddingTop="@dimen/margin_16"
             android:text="@string/command_tap_to_select"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="?android:colorAccent"
             app:layout_constraintEnd_toStartOf="@id/image"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/lbl_arg1" />

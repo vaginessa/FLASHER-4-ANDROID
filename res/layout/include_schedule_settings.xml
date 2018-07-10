@@ -74,7 +74,7 @@
         android:paddingBottom="@dimen/margin_8"
         android:text="@string/command_tap_to_select"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:textColor="?android:attr/textColorTertiary"
+        android:textColor="?android:colorAccent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/lbl_time_title"
         app:layout_constraintTop_toBottomOf="@id/lbl_next_run" />
@@ -104,7 +104,7 @@
         android:paddingBottom="@dimen/margin_8"
         android:text="@string/schedule_interval_never"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:textColor="?android:attr/textColorTertiary"
+        android:textColor="?android:colorAccent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/lbl_interval_title"
         app:layout_constraintTop_toBottomOf="@id/lbl_time" />
