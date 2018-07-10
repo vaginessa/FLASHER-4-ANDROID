@@ -8,6 +8,7 @@
         <item name="android:windowLightStatusBar">true</item>
         <item name="android:windowBackground">@android:color/white</item>
         <item name="materialCardViewStyle">@style/CardView.Light</item>
+        <item name="android:timePickerDialogTheme">@style/TimePickerDialog.Light</item>
         <!--Preferences-->
         <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
         <item name="android:activatedBackgroundIndicator">?android:attr/selectableItemBackground</item>
@@ -25,6 +26,7 @@
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:windowLightStatusBar">false</item>
         <item name="materialCardViewStyle">@style/CardView.Dark</item>
+        <item name="android:timePickerDialogTheme">@style/TimePickerDialog.Dark</item>
         <!--Preferences-->
         <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
         <item name="android:activatedBackgroundIndicator">?android:attr/selectableItemBackground</item>
@@ -43,6 +45,7 @@
         <item name="android:windowLightStatusBar">false</item>
         <item name="android:windowBackground">@android:color/black</item>
         <item name="materialCardViewStyle">@style/CardView.Black</item>
+        <item name="android:timePickerDialogTheme">@style/TimePickerDialog.Dark</item>
         <!--Preferences-->
         <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
         <item name="android:activatedBackgroundIndicator">?android:attr/selectableItemBackground</item>
@@ -95,5 +98,27 @@
     <style name="BottomSheetDialog.Light" parent="Base.BottomSheetDialog.Light" />
 
     <style name="BottomSheetDialog.Dark" parent="Base.BottomSheetDialog.Dark" />
+
+    <style name="TimePickerDialog.Light" parent="@style/Theme.MaterialComponents.Light.Dialog.Alert">
+        <item name="android:windowBackground">?android:attr/colorBackground</item>
+        <item name="colorAccent">@*android:color/accent_device_default_light</item>
+        <item name="android:buttonBarPositiveButtonStyle">
+            @style/Widget.MaterialComponents.Button.TextButton.Dialog
+        </item>
+        <item name="android:buttonBarNegativeButtonStyle">
+            @style/Widget.MaterialComponents.Button.TextButton.Dialog
+        </item>
+    </style>
+
+    <style name="TimePickerDialog.Dark" parent="@style/Theme.MaterialComponents.Dialog.Alert">
+        <item name="android:windowBackground">?android:attr/colorBackground</item>
+        <item name="colorAccent">@*android:color/accent_device_default_dark</item>
+        <item name="android:buttonBarPositiveButtonStyle">
+            @style/Widget.MaterialComponents.Button.TextButton.Dialog
+        </item>
+        <item name="android:buttonBarNegativeButtonStyle">
+            @style/Widget.MaterialComponents.Button.TextButton.Dialog
+        </item>
+    </style>
 
 </resources>
