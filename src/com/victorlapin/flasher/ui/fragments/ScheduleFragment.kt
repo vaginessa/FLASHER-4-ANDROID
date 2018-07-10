@@ -6,6 +6,7 @@ import android.text.InputType
 import com.afollestad.materialdialogs.MaterialDialog
 import com.victorlapin.flasher.R
 import com.victorlapin.flasher.Screens
+import com.victorlapin.flasher.manager.ResourcesManager
 import com.victorlapin.flasher.manager.SettingsManager
 import com.victorlapin.flasher.model.database.entity.Chain
 import com.victorlapin.flasher.presenter.BaseHomeFragmentPresenter
@@ -26,6 +27,7 @@ class ScheduleFragment : HomeFragment() {
     override fun providePresenter(): BaseHomeFragmentPresenter = mSchedulePresenter
 
     private val mSettings by inject<SettingsManager>()
+    private val mResources by inject<ResourcesManager>()
     private val mDateTimeFormatter = SimpleDateFormat
             .getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT)
     private val mTimeFormatter = SimpleDateFormat.getTimeInstance(DateFormat.SHORT)
@@ -39,21 +41,21 @@ class ScheduleFragment : HomeFragment() {
         super.onResume()
 
         val lastRun = mSettings.alarmLastRun
-        lbl_last_run.text = getString(R.string.alarm_last_run,
-                if (lastRun > 0) mDateTimeFormatter.format(Date(lastRun)) else
-                    getString(R.string.schedule_interval_never).toLowerCase())
+        lbl_last_run.text = mResources.getString(R.string.alarm_last_run)
+                .format(if (lastRun > 0) mDateTimeFormatter.format(Date(lastRun)) else
+                    mResources.getString(R.string.schedule_interval_never).toLowerCase())
 
         val time = mSettings.scheduleTime
         if (time > 0) {
             lbl_time.text = mTimeFormatter.format(Date(time))
         } else {
-            lbl_time.text = getString(R.string.command_tap_to_select)
+            lbl_time.text = mResources.getString(R.string.command_tap_to_select)
         }
         lbl_time.setOnClickListener { (presenter as ScheduleHomePresenter).selectTime() }
 
         val interval = mSettings.scheduleInterval
-        lbl_interval.text = if (interval == 0) getString(R.string.schedule_interval_never) else
-            resources.getQuantityString(R.plurals.schedule_interval, interval, interval)
+        lbl_interval.text = if (interval == 0) mResources.getString(R.string.schedule_interval_never) else
+            mResources.getQuantityString(R.plurals.schedule_interval, interval, interval)
         lbl_interval.setOnClickListener { (presenter as ScheduleHomePresenter).selectInterval() }
 
         if (time > 0) {
@@ -99,8 +101,9 @@ class ScheduleFragment : HomeFragment() {
                 .input(null, defInterval.toString(), true) { _, input ->
                     val interval = if (input.isBlank()) 0 else input.toString().toInt()
                     (presenter as ScheduleHomePresenter).onIntervalSelected(interval)
-                    lbl_interval.text = if (interval == 0) getString(R.string.schedule_interval_never) else
-                        resources.getQuantityString(R.plurals.schedule_interval, interval, interval)
+                    lbl_interval.text = if (interval == 0)
+                        mResources.getString(R.string.schedule_interval_never) else
+                        mResources.getQuantityString(R.plurals.schedule_interval, interval, interval)
                     updateNextRun()
                 }
                 .negativeText(android.R.string.cancel)
@@ -112,10 +115,10 @@ class ScheduleFragment : HomeFragment() {
     override fun showNextRun(hasNext: Boolean, nextRun: Long) {
         val displayText = when {
             (!chk_enable.isChecked) ||
-            (!hasNext) -> getString(R.string.schedule_interval_never).toLowerCase()
+                    (!hasNext) -> mResources.getString(R.string.schedule_interval_never).toLowerCase()
             else -> mDateTimeFormatter.format(Date(nextRun))
         }
-        lbl_next_run.text = getString(R.string.alarm_next_run, displayText)
+        lbl_next_run.text = mResources.getString(R.string.alarm_next_run).format(displayText)
     }
 
     companion object {
