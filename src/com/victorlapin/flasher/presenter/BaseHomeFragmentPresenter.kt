@@ -18,20 +18,17 @@ abstract class BaseHomeFragmentPresenter constructor(
         private val mInteractor: BaseCommandsInteractor
 ) : MvpPresenter<HomeFragmentView>() {
     protected val mDisposable = CompositeDisposable()
-    private var mShouldScroll = false
     private var mReorderSubject = PublishSubject.create<List<Command>>()
 
     override fun attachView(view: HomeFragmentView?) {
         super.attachView(view)
         mInteractor.getCommands()
                 .subscribe {
-                    viewState.setData(it, mShouldScroll)
-                    mShouldScroll = true
+                    viewState.setData(it)
                 }
                 .addTo(mDisposable)
         mReorderSubject
                 .switchMap { commands ->
-                    mShouldScroll = false
                     mInteractor.changeOrder(commands)
                 }
                 .subscribe { }
@@ -40,7 +37,6 @@ abstract class BaseHomeFragmentPresenter constructor(
 
     override fun detachView(view: HomeFragmentView?) {
         mDisposable.clear()
-        mShouldScroll = false
         super.detachView(view)
     }
 
