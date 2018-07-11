@@ -1,7 +1,6 @@
 package com.victorlapin.flasher.ui.fragments
 
 import android.Manifest
-import android.graphics.Canvas
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.widget.DefaultItemAnimator
@@ -31,7 +30,6 @@ import com.victorlapin.flasher.view.HomeFragmentView
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.include_toolbar.*
-import kotlinx.android.synthetic.main.item_command.view.*
 import org.koin.android.ext.android.inject
 import org.koin.android.ext.android.release
 import java.io.File
@@ -146,6 +144,9 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
                 .addTo(mDisposable)
         mAdapter.argsClickEvent
                 .subscribe { presenter.onArgumentsClicked(it) }
+                .addTo(mDisposable)
+        mAdapter.itemInsertEvent
+                .subscribe { list.smoothScrollToPosition(it) }
                 .addTo(mDisposable)
     }
 

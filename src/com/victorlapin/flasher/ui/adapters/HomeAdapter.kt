@@ -1,6 +1,7 @@
 package com.victorlapin.flasher.ui.adapters
 
 import android.support.v7.util.DiffUtil
+import android.support.v7.util.ListUpdateCallback
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
@@ -30,6 +31,27 @@ class HomeAdapter constructor(
     val changeTypeEvent: PublishSubject<Pair<Command, Int>> = mChangeTypeSubject
     private val mArgsClickSubject = PublishSubject.create<CommandClickEventArgs>()
     val argsClickEvent: PublishSubject<CommandClickEventArgs> = mArgsClickSubject
+    private val mItemInsertSubject = PublishSubject.create<Int>()
+    val itemInsertEvent: PublishSubject<Int> = mItemInsertSubject
+
+    private val mCallback = object : ListUpdateCallback {
+        override fun onChanged(position: Int, count: Int, payload: Any?) {
+            notifyItemRangeChanged(position, count, payload)
+        }
+
+        override fun onMoved(fromPosition: Int, toPosition: Int) {
+            notifyItemMoved(fromPosition, toPosition)
+        }
+
+        override fun onInserted(position: Int, count: Int) {
+            notifyItemRangeInserted(position, count)
+            mItemInsertSubject.onNext(position)
+        }
+
+        override fun onRemoved(position: Int, count: Int) {
+            notifyItemRangeRemoved(position, count)
+        }
+    }
 
     fun getItems(): ArrayList<Command> {
         val result = arrayListOf<Command>()
@@ -126,7 +148,7 @@ class HomeAdapter constructor(
         val diffResult = DiffUtil.calculateDiff(callback)
         mItems.clear()
         mItems.addAll(commands)
-        diffResult.dispatchUpdatesTo(this)
+        diffResult.dispatchUpdatesTo(mCallback)
     }
 
     fun moveItems(fromPosition: Int, toPosition: Int) {
