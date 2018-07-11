@@ -1,10 +1,10 @@
 package com.victorlapin.flasher.model.repository
 
-import android.os.Environment
 import android.os.StatFs
 import com.topjohnwu.superuser.Shell
 import com.topjohnwu.superuser.io.SuFile
 import com.topjohnwu.superuser.io.SuFileOutputStream
+import com.victorlapin.flasher.Const
 import com.victorlapin.flasher.R
 import com.victorlapin.flasher.manager.SettingsManager
 import com.victorlapin.flasher.model.BuildScriptResult
@@ -102,7 +102,7 @@ class RecoveryScriptRepository constructor(
                 mBackupsRepository.deleteObsoleteBackups()
             }
             return try {
-                SuFileOutputStream(SCRIPT_FILENAME).use {
+                SuFileOutputStream(Const.SCRIPT_FILENAME).use {
                     it.write(script.toByteArray())
                 }
                 EventArgs(isSuccess = true)
@@ -124,7 +124,7 @@ class RecoveryScriptRepository constructor(
 
     private fun saveDebugScript(script: String) {
         try {
-            val file = File(DEBUG_FILENAME)
+            val file = File(Const.DEBUG_FILENAME)
             file.writeText(script)
         } catch (ignore: Exception) {
             ignore.printStackTrace()
@@ -133,7 +133,7 @@ class RecoveryScriptRepository constructor(
 
     fun deleteScript() {
         if (Shell.rootAccess()) {
-            val file = SuFile(SCRIPT_FILENAME)
+            val file = SuFile(Const.SCRIPT_FILENAME)
             if (file.exists()) {
                 file.delete()
             }
@@ -177,10 +177,4 @@ class RecoveryScriptRepository constructor(
 
     private val mSuDeniedArgs =
             EventArgs(isSuccess = false, messageId = R.string.permission_denied_su)
-
-    companion object {
-        private const val SCRIPT_FILENAME = "/cache/recovery/openrecoveryscript"
-        private val DEBUG_FILENAME = File(Environment.getExternalStorageDirectory(),
-                "openrecoveryscript").absolutePath
-    }
 }

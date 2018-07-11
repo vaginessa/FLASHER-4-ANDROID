@@ -9,4 +9,8 @@ object Const {
 
     val TWRP_FOLDER: String = File(Environment.getExternalStorageDirectory(),
             "TWRP").absolutePath
+
+    const val SCRIPT_FILENAME: String = "/cache/recovery/openrecoveryscript"
+
+    val DEBUG_FILENAME: String = File(APP_FOLDER, "openrecoveryscript").absolutePath
 }

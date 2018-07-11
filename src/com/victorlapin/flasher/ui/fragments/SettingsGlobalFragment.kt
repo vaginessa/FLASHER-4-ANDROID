@@ -1,11 +1,11 @@
 package com.victorlapin.flasher.ui.fragments
 
 import android.os.Bundle
-import android.os.Environment
 import android.support.v7.preference.EditTextPreference
 import android.support.v7.preference.ListPreference
 import android.support.v7.preference.Preference
 import android.support.v7.preference.PreferenceFragmentCompat
+import com.victorlapin.flasher.Const
 import com.victorlapin.flasher.R
 import com.victorlapin.flasher.manager.ResourcesManager
 import com.victorlapin.flasher.manager.SettingsManager
@@ -57,7 +57,7 @@ class SettingsGlobalFragment : PreferenceFragmentCompat() {
 
         findPreference(SettingsManager.KEY_SAVE_DEBUG_SCRIPT).summary =
                 mResources.getString(R.string.pref_summary_save_debug_script)
-                        .format(Environment.getExternalStorageDirectory().absolutePath)
+                        .format(Const.DEBUG_FILENAME)
 
         findPreference(SettingsManager.KEY_DELETE_DEPLOYED_SCRIPT).onPreferenceClickListener =
                 Preference.OnPreferenceClickListener {
