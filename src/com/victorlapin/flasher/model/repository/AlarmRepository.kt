@@ -1,11 +1,11 @@
 package com.victorlapin.flasher.model.repository
 
 import android.app.AlarmManager
-import android.util.Log
 import com.victorlapin.flasher.manager.ServicesManager
 import com.victorlapin.flasher.manager.SettingsManager
 import com.victorlapin.flasher.model.DateBuilder
 import io.reactivex.Single
+import timber.log.Timber
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
@@ -21,8 +21,8 @@ class AlarmRepository(
 
         if (dateBuilder.hasNextAlarm()) {
             val time = dateBuilder.nextAlarmTime
-            Log.i("Alarm",
-                    "Next run: ${SimpleDateFormat.getDateTimeInstance(DateFormat.MEDIUM,
+            Timber.tag("Alarm")
+                    .i("Next run: ${SimpleDateFormat.getDateTimeInstance(DateFormat.MEDIUM,
                             DateFormat.SHORT).format(Date(time))}")
             if (dateBuilder.interval > 0) {
                 mServices.alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, time,
@@ -37,7 +37,7 @@ class AlarmRepository(
     }
 
     fun cancelAlarm(): Single<Any> = Single.create { emitter ->
-        Log.i("Alarm", "Canceled")
+        Timber.tag("Alarm").i("Canceled")
         mServices.alarmManager.cancel(mServices.alarmIntent)
         mServices.disableBootReceiver()
         emitter.onSuccess(Any())
