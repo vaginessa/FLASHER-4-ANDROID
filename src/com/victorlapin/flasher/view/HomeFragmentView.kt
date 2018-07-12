@@ -38,4 +38,6 @@ interface HomeFragmentView : MvpView {
     @StateStrategyType(AddToEndSingleStrategy::class)
     fun showNextRun(hasNext: Boolean, nextRun: Long)
     fun toggleProgress(isVisible: Boolean)
+    @StateStrategyType(SkipStrategy::class)
+    fun showNavigationFragment(selectedId: Int)
 }

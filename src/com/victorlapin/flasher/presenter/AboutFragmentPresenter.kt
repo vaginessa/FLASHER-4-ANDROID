@@ -24,4 +24,6 @@ class AboutFragmentPresenter(
 
     fun onItemClick(args: AboutClickEventArgs) =
             mRouter.navigateTo(args.screenKey, args.data)
+
+    fun onBackPressed() = mRouter.exit()
 }

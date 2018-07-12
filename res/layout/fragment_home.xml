@@ -15,8 +15,36 @@
         android:layout_height="match_parent"
         android:clipToPadding="false"
         android:fitsSystemWindows="true"
-        android:paddingEnd="@dimen/activity_generic_horizontal_margin"
         android:paddingStart="@dimen/activity_generic_horizontal_margin"
+        android:paddingEnd="@dimen/activity_generic_horizontal_margin"
+        android:paddingBottom="?attr/actionBarSize"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
+    <android.support.design.bottomappbar.BottomAppBar
+        android:id="@+id/bottom_app_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        app:backgroundTint="?android:attr/windowBackground"
+        app:navigationIcon="@drawable/menu" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/margin_2"
+        android:background="@drawable/shadow"
+        app:layout_anchor="@id/bottom_app_bar" />
+
+    <android.support.design.button.MaterialButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/fab_size"
+        android:text="@string/action_add"
+        app:cornerRadius="@dimen/fab_corner_radius"
+        app:icon="@drawable/plus"
+        app:iconTint="@android:color/white"
+        app:layout_anchor="@id/bottom_app_bar"
+        app:layout_anchorGravity="center_horizontal|top"
+        app:textAllCaps="false" />
+
+    <include layout="@layout/include_progress" />
 </android.support.design.widget.CoordinatorLayout>

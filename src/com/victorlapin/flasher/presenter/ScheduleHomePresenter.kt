@@ -1,20 +1,25 @@
 package com.victorlapin.flasher.presenter
 
 import com.arellomobile.mvp.InjectViewState
+import com.victorlapin.flasher.R
 import com.victorlapin.flasher.addTo
 import com.victorlapin.flasher.manager.SettingsManager
 import com.victorlapin.flasher.model.DateBuilder
 import com.victorlapin.flasher.model.interactor.AlarmInteractor
 import com.victorlapin.flasher.model.interactor.RecoveryScriptInteractor
 import com.victorlapin.flasher.model.interactor.ScheduleInteractor
+import ru.terrakok.cicerone.Router
 
 @InjectViewState
 class ScheduleHomePresenter constructor(
-        mScriptInteractor: RecoveryScriptInteractor,
-        mSettings: SettingsManager,
-        mInteractor: ScheduleInteractor,
+        router: Router,
+        scriptInteractor: RecoveryScriptInteractor,
+        settings: SettingsManager,
+        interactor: ScheduleInteractor,
         private val mAlarmInteractor: AlarmInteractor
-) : BaseHomeFragmentPresenter(mScriptInteractor, mSettings, mInteractor) {
+) : BaseHomeFragmentPresenter(router, scriptInteractor, settings, interactor) {
+    override val mCurrentFragmentId = R.id.action_schedule
+
     fun onScheduleEnabledChange(isEnabled: Boolean) {
         mSettings.useSchedule = isEnabled
         if (isEnabled) {

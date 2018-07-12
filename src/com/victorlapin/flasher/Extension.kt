@@ -30,7 +30,7 @@ fun Snackbar.adjustLayout(): Snackbar {
     val view = this.view as Snackbar.SnackbarLayout
     view.elevation = context.dpToPixels(2f).toFloat()
     val params = view.layoutParams as CoordinatorLayout.LayoutParams
-    params.bottomMargin += context.dpToPixels(36f)
+    params.bottomMargin += context.dpToPixels(92f) // 56dp bottom bar + 36dp
     params.leftMargin += context.dpToPixels(8f)
     params.rightMargin += context.dpToPixels(8f)
     view.layoutParams = params

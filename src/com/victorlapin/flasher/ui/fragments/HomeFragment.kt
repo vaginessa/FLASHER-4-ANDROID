@@ -3,12 +3,12 @@ package com.victorlapin.flasher.ui.fragments
 import android.Manifest
 import android.os.Bundle
 import android.support.design.widget.Snackbar
+import android.support.transition.Fade
+import android.support.transition.TransitionManager
+import android.support.v4.view.animation.FastOutLinearInInterpolator
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
 import android.widget.Toast
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.folderselector.FileChooserDialog
@@ -21,14 +21,14 @@ import com.victorlapin.flasher.manager.ResourcesManager
 import com.victorlapin.flasher.model.EventArgs
 import com.victorlapin.flasher.model.database.entity.Chain
 import com.victorlapin.flasher.model.database.entity.Command
-import com.victorlapin.flasher.presenter.DefaultHomePresenter
 import com.victorlapin.flasher.presenter.BaseHomeFragmentPresenter
-import com.victorlapin.flasher.ui.activities.MainActivity
+import com.victorlapin.flasher.presenter.DefaultHomePresenter
 import com.victorlapin.flasher.ui.adapters.HomeAdapter
 import com.victorlapin.flasher.ui.adapters.LinearLayoutManagerWrapper
 import com.victorlapin.flasher.view.HomeFragmentView
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.fragment_home.*
+import kotlinx.android.synthetic.main.include_progress.*
 import kotlinx.android.synthetic.main.include_toolbar.*
 import org.koin.android.ext.android.inject
 import org.koin.android.ext.android.release
@@ -46,6 +46,7 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
     open fun providePresenter(): BaseHomeFragmentPresenter = mDefaultPresenter
 
     private val mDisposable = CompositeDisposable()
+    private val mNavEventsDisposable = CompositeDisposable()
 
     private val mAdapter by inject<HomeAdapter>()
 
@@ -62,10 +63,6 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
         arguments!!.getLong(ARG_CHAIN_ID)
     }
 
-    init {
-        this.setHasOptionsMenu(true)
-    }
-
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         mWipePartitions = mResources.getStringList(R.array.wipe_partitions)
@@ -79,6 +76,19 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
             adapter = mAdapter
         }
         toolbar.setTitle(R.string.action_home)
+        fab.setOnClickListener { presenter.onFabClicked() }
+
+        bottom_app_bar.inflateMenu(R.menu.fragment_home)
+        bottom_app_bar.setNavigationOnClickListener { presenter.selectNavigation() }
+        bottom_app_bar.setOnMenuItemClickListener {
+            when (it.itemId) {
+                R.id.action_build -> { presenter.buildAndDeploy(mChainId); true }
+                R.id.action_export -> { presenter.onExportClicked(); true }
+                R.id.action_import -> { presenter.onImportClicked(); true }
+                R.id.action_settings -> { presenter.selectSettings(); true }
+                else -> false
+            }
+        }
 
         val swipeCallback = object : ItemTouchHelper.SimpleCallback(
                 ItemTouchHelper.UP or ItemTouchHelper.DOWN,
@@ -126,16 +136,6 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
     override fun onDestroyView() {
         super.onDestroyView()
         mDisposable.dispose()
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) =
-            inflater.inflate(R.menu.fragment_home, menu)
-
-    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
-        R.id.action_build -> { presenter.buildAndDeploy(mChainId); true }
-        R.id.action_export -> { presenter.onExportClicked(); true }
-        R.id.action_import -> { presenter.onImportClicked(); true }
-        else -> false
     }
 
     private fun setupEvents() {
@@ -357,8 +357,30 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
 
     }
 
-    override fun toggleProgress(isVisible: Boolean) =
-            (activity!! as MainActivity).toggleProgress(isVisible)
+    override fun toggleProgress(isVisible: Boolean) {
+        fab.post {
+            val transition = Fade().setInterpolator(FastOutLinearInInterpolator())
+            TransitionManager.beginDelayedTransition(coordinator, transition)
+            progress_bar_layout.visible(isVisible)
+            fab.visible(!isVisible)
+        }
+    }
+
+    override fun showNavigationFragment(selectedId: Int) {
+        val navFragment = BottomNavigationDrawerFragment.newInstance(selectedId)
+        navFragment.clickEvent
+                .subscribe {
+                    presenter.onNavigationClicked(it)
+                }
+                .addTo(mNavEventsDisposable)
+        navFragment.dismissEvent
+                .subscribe {
+                    mNavEventsDisposable.clear()
+                }
+                .addTo(mNavEventsDisposable)
+        navFragment.show(activity!!.supportFragmentManager,
+                BottomNavigationDrawerFragment::class.java.simpleName)
+    }
 
     companion object {
         fun newInstance(): HomeFragment {
