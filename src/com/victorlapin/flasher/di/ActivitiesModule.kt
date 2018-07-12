@@ -8,16 +8,16 @@ import org.koin.dsl.module.module
 
 val activitiesModule = module {
     module(Screens.ACTIVITY_MAIN) {
-        factory { MainActivityPresenter(get(), get(), get()) }
+        factory { MainActivityPresenter(get()) }
     }
 
     module(Screens.FRAGMENT_HOME) {
-        factory { DefaultHomePresenter(get(), get(), get()) }
+        factory { DefaultHomePresenter(get(), get(), get(), get()) }
         factory { HomeAdapter(get()) }
     }
 
     module(Screens.FRAGMENT_SCHEDULE) {
-        factory { ScheduleHomePresenter(get(), get(), get(), get()) }
+        factory { ScheduleHomePresenter(get(), get(), get(), get(), get()) }
     }
 
     module(Screens.ACTIVITY_SETTINGS) {

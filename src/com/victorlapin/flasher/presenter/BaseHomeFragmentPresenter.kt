@@ -1,6 +1,8 @@
 package com.victorlapin.flasher.presenter
 
 import com.arellomobile.mvp.MvpPresenter
+import com.victorlapin.flasher.R
+import com.victorlapin.flasher.Screens
 import com.victorlapin.flasher.addTo
 import com.victorlapin.flasher.manager.SettingsManager
 import com.victorlapin.flasher.model.CommandClickEventArgs
@@ -10,15 +12,18 @@ import com.victorlapin.flasher.model.interactor.RecoveryScriptInteractor
 import com.victorlapin.flasher.view.HomeFragmentView
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.subjects.PublishSubject
+import ru.terrakok.cicerone.Router
 import java.io.File
 
 abstract class BaseHomeFragmentPresenter constructor(
+        private val mRouter: Router,
         private val mScriptInteractor: RecoveryScriptInteractor,
         protected val mSettings: SettingsManager,
         private val mInteractor: BaseCommandsInteractor
 ) : MvpPresenter<HomeFragmentView>() {
     protected val mDisposable = CompositeDisposable()
     private var mReorderSubject = PublishSubject.create<List<Command>>()
+    protected abstract val mCurrentFragmentId: Int
 
     override fun attachView(view: HomeFragmentView?) {
         super.attachView(view)
@@ -149,4 +154,23 @@ abstract class BaseHomeFragmentPresenter constructor(
     }
 
     fun onOrderChanged(commands: List<Command>) = mReorderSubject.onNext(commands)
+
+    private fun selectHome() = mRouter.newRootScreen(Screens.FRAGMENT_HOME)
+
+    private fun selectSchedule() = mRouter.newRootScreen(Screens.FRAGMENT_SCHEDULE)
+
+    fun onFabClicked() = mInteractor.addStubCommand()
+
+    fun selectSettings() = mRouter.navigateTo(Screens.FRAGMENT_SETTINGS)
+
+    fun selectNavigation() = viewState.showNavigationFragment(mCurrentFragmentId)
+
+    fun onNavigationClicked(selectedId: Int) {
+        if (selectedId != mCurrentFragmentId) {
+            when (selectedId) {
+                R.id.action_home -> selectHome()
+                R.id.action_schedule -> selectSchedule()
+            }
+        }
+    }
 }
