@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.support.v4.app.Fragment
+import android.support.v4.app.FragmentTransaction
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.victorlapin.flasher.R
@@ -17,6 +18,7 @@ import com.victorlapin.flasher.view.MainActivityView
 import org.koin.android.ext.android.inject
 import org.koin.android.ext.android.release
 import ru.terrakok.cicerone.android.SupportAppNavigator
+import ru.terrakok.cicerone.commands.Command
 
 class MainActivity : BaseActivity(), MainActivityView {
     override val layoutRes = R.layout.activity_generic_no_toolbar
@@ -52,6 +54,20 @@ class MainActivity : BaseActivity(), MainActivityView {
             Screens.FRAGMENT_SETTINGS -> SettingsGlobalFragment.newInstance()
             Screens.FRAGMENT_ABOUT -> AboutFragment.newInstance()
             else -> null
+        }
+
+        override fun setupFragmentTransactionAnimation(command: Command?,
+                                                       currentFragment: Fragment?,
+                                                       nextFragment: Fragment?,
+                                                       fragmentTransaction: FragmentTransaction?) {
+            nextFragment?.let {
+                fragmentTransaction?.let {
+                    if (nextFragment is SettingsGlobalFragment || nextFragment is AboutFragment) {
+                        it.setCustomAnimations(R.animator.slide_up, R.animator.fade_out,
+                                R.animator.fade_in, R.animator.slide_down)
+                    }
+                }
+            }
         }
     }
 }
