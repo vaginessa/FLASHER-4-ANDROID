@@ -21,8 +21,7 @@ class AlarmRepository(
 
         if (dateBuilder.hasNextAlarm()) {
             val time = dateBuilder.nextAlarmTime
-            Timber.tag("Alarm")
-                    .i("Next run: ${SimpleDateFormat.getDateTimeInstance(DateFormat.MEDIUM,
+            Timber.i("Next run: ${SimpleDateFormat.getDateTimeInstance(DateFormat.MEDIUM,
                             DateFormat.SHORT).format(Date(time))}")
             if (dateBuilder.interval > 0) {
                 mServices.alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, time,
@@ -37,7 +36,7 @@ class AlarmRepository(
     }
 
     fun cancelAlarm(): Single<Any> = Single.create { emitter ->
-        Timber.tag("Alarm").i("Canceled")
+        Timber.i("Canceled")
         mServices.alarmManager.cancel(mServices.alarmIntent)
         mServices.disableBootReceiver()
         emitter.onSuccess(Any())

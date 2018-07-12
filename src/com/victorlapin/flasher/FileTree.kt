@@ -7,7 +7,7 @@ import java.io.FileOutputStream
 import java.text.SimpleDateFormat
 import java.util.*
 
-class FileTree : Timber.Tree() {
+class FileTree : Timber.DebugTree() {
     override fun log(priority: Int, tag: String?, message: String, t: Throwable?) {
         val logFile = File(Const.LOG_FILENAME)
         if (!logFile.exists()) {
