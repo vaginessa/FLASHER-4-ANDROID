@@ -53,6 +53,7 @@
     <string name="pref_title_compress_backups">Compress backups</string>
     <string name="pref_title_delete_old_backups">Delete old backups</string>
     <string name="pref_title_backups_to_keep">Backups to keep</string>
+    <string name="pref_title_enable_file_log">Write logs to file</string>
 
     <!-- Command names -->
     <string name="command_wipe">Wipe</string>

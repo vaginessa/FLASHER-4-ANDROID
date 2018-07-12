@@ -79,6 +79,7 @@ class SettingsManager(context: Context) {
     val backupsToKeep: Int
         get() = mPrefs.getString(KEY_BACKUPS_TO_KEEP, "2").toInt()
 
-    val enableFileLog: Boolean
+    var enableFileLog: Boolean
         get() = mPrefs.getBoolean(KEY_ENABLE_FILE_LOG, false)
+        set(value) = mPrefs.edit().putBoolean(KEY_ENABLE_FILE_LOG, value).apply()
 }

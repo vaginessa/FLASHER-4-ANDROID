@@ -53,6 +53,7 @@
     <string name="pref_title_compress_backups">Сжимать резервные копии</string>
     <string name="pref_title_delete_old_backups">Удалять старые резервные копии</string>
     <string name="pref_title_backups_to_keep">Сохранять резервных копий</string>
+    <string name="pref_title_enable_file_log">Писать логи в файл</string>
 
     <!-- Command names -->
     <string name="command_wipe">Вайп</string>
