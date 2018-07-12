@@ -32,6 +32,7 @@ import kotlinx.android.synthetic.main.include_progress.*
 import kotlinx.android.synthetic.main.include_toolbar.*
 import org.koin.android.ext.android.inject
 import org.koin.android.ext.android.release
+import timber.log.Timber
 import java.io.File
 
 open class HomeFragment : BaseFragment(), HomeFragmentView {
@@ -272,14 +273,18 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
 
     override fun showInfoSnackbar(args: EventArgs) {
         args.message?.let {
-            Snackbar.make(coordinator, it.replace("\n", "").trim(),
+            val message = it.replace("\n", "").trim()
+            Timber.i(message)
+            Snackbar.make(coordinator, message,
                     Snackbar.LENGTH_LONG)
                     .adjustLayout()
                     .show()
             return
         }
         args.messageId?.let {
-            Snackbar.make(coordinator, mResources.getString(it), Snackbar.LENGTH_LONG)
+            val message = mResources.getString(it)
+            Timber.i(message)
+            Snackbar.make(coordinator, message, Snackbar.LENGTH_LONG)
                     .adjustLayout()
                     .show()
         }
@@ -342,6 +347,7 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
     }
 
     override fun showInfoToast(message: String) {
+        Timber.i(message)
         list.post {
             Toast.makeText(context!!, message, Toast.LENGTH_LONG).show()
         }

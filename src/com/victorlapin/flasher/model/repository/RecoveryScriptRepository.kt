@@ -12,6 +12,7 @@ import com.victorlapin.flasher.model.EventArgs
 import com.victorlapin.flasher.model.database.entity.Command
 import io.reactivex.Single
 import io.reactivex.disposables.Disposable
+import timber.log.Timber
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
@@ -25,6 +26,7 @@ class RecoveryScriptRepository constructor(
         var disposable: Disposable? = null
         disposable = mCommandRepo.getCommands(chainId)
                 .subscribe {
+                    Timber.i("Script building started")
                     val scriptBuilder = StringBuilder()
                     val resolvedFilesBuilder = StringBuilder()
                     it.forEach {
@@ -84,6 +86,10 @@ class RecoveryScriptRepository constructor(
                     if (mSettings.saveDebugScript) {
                         saveDebugScript(result.script)
                     }
+                    Timber.d("Generated script:\n${result.script}")
+                    if (result.resolvedFiles.isNotBlank()) {
+                        Timber.d("Resolved files:\n${result.resolvedFiles}")
+                    }
                     emitter.onSuccess(result)
                     disposable?.dispose()
                 }
@@ -105,6 +111,7 @@ class RecoveryScriptRepository constructor(
                 SuFileOutputStream(Const.SCRIPT_FILENAME).use {
                     it.write(script.toByteArray())
                 }
+                Timber.i("Script deployed")
                 EventArgs(isSuccess = true)
             } catch (ex: Exception) {
                 ex.printStackTrace()
@@ -117,6 +124,7 @@ class RecoveryScriptRepository constructor(
 
     fun rebootRecovery(): EventArgs = if (Shell.rootAccess()) {
         Shell.Sync.su("svc power reboot recovery")
+        Timber.i("Reboot")
         EventArgs(isSuccess = true)
     } else {
         mSuDeniedArgs
@@ -136,6 +144,7 @@ class RecoveryScriptRepository constructor(
             val file = SuFile(Const.SCRIPT_FILENAME)
             if (file.exists()) {
                 file.delete()
+                Timber.i("${Const.SCRIPT_FILENAME} deleted")
             }
         }
     }

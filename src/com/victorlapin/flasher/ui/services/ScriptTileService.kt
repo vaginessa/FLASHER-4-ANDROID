@@ -10,6 +10,7 @@ import com.victorlapin.flasher.ui.activities.RebootDialogActivity
 import com.victorlapin.flasher.view.ScriptTileServiceView
 import org.koin.android.ext.android.inject
 import org.koin.android.ext.android.release
+import timber.log.Timber
 
 class ScriptTileService : TileService(), ScriptTileServiceView {
     private val mPresenter by inject<ScriptTileServicePresenter>()
@@ -29,18 +30,24 @@ class ScriptTileService : TileService(), ScriptTileServiceView {
 
     override fun showInfoToast(args: EventArgs) {
         args.message?.let {
-            Toast.makeText(baseContext, it.replace("\n", "").trim(),
+            val message = it.replace("\n", "").trim()
+            Timber.i(message)
+            Toast.makeText(baseContext, message,
                     Toast.LENGTH_LONG).show()
             return
         }
         args.messageId?.let {
-            Toast.makeText(baseContext, getString(it),
+            val message = getString(it)
+            Timber.i(message)
+            Toast.makeText(baseContext, message,
                     Toast.LENGTH_LONG).show()
         }
     }
 
-    override fun showInfoToast(message: String) =
-            Toast.makeText(baseContext, message, Toast.LENGTH_LONG).show()
+    override fun showInfoToast(message: String) {
+        Timber.i(message)
+        Toast.makeText(baseContext, message, Toast.LENGTH_LONG).show()
+    }
 
     override fun showRebootDialog() =
             startActivity(Intent(this, RebootDialogActivity::class.java))
