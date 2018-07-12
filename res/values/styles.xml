@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="Base.AppTheme.Light" parent="Theme.MaterialComponents.Light.NoActionBar">
+    <style name="Base.Light" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="colorPrimary">@android:color/transparent</item>
         <item name="colorPrimaryDark">@android:color/transparent</item>
         <item name="colorAccent">@*android:color/accent_device_default_light</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:windowLightStatusBar">true</item>
-        <item name="android:windowBackground">@android:color/white</item>
-        <item name="materialCardViewStyle">@style/CardView.Light</item>
         <item name="android:timePickerDialogTheme">@style/TimePickerDialog.Light</item>
         <!--Preferences-->
         <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
@@ -16,44 +14,41 @@
         <item name="md_dark_theme">false</item>
         <!-- Overlays -->
         <item name="navigation_color_selected">@*android:color/accent_device_default_light</item>
+    </style>
+
+    <style name="Base.Dark" parent="Theme.MaterialComponents.NoActionBar">
+        <item name="colorPrimary">@android:color/transparent</item>
+        <item name="colorPrimaryDark">@android:color/transparent</item>
+        <item name="colorAccent">@*android:color/accent_device_default_dark</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:timePickerDialogTheme">@style/TimePickerDialog.Dark</item>
+        <!--Preferences-->
+        <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
+        <item name="android:activatedBackgroundIndicator">?android:attr/selectableItemBackground</item>
+        <!--Dialogs-->
+        <item name="md_dark_theme">true</item>
+        <!-- Overlays -->
+        <item name="navigation_color_selected">@*android:color/accent_device_default_dark</item>
+    </style>
+
+    <style name="Base.AppTheme.Light" parent="Base.Light">
+        <item name="android:windowBackground">@android:color/white</item>
+        <item name="materialCardViewStyle">@style/CardView.Light</item>
+        <!-- Overlays -->
         <item name="progress_background_color">@color/white_transparent</item>
     </style>
 
-    <style name="Base.AppTheme.Dark" parent="Theme.MaterialComponents.NoActionBar">
-        <item name="colorPrimary">@android:color/transparent</item>
-        <item name="colorPrimaryDark">@android:color/transparent</item>
-        <item name="colorAccent">@*android:color/accent_device_default_dark</item>
-        <item name="android:statusBarColor">@android:color/transparent</item>
-        <item name="android:windowLightStatusBar">false</item>
+    <style name="Base.AppTheme.Dark" parent="Base.Dark">
         <item name="materialCardViewStyle">@style/CardView.Dark</item>
-        <item name="android:timePickerDialogTheme">@style/TimePickerDialog.Dark</item>
-        <!--Preferences-->
-        <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
-        <item name="android:activatedBackgroundIndicator">?android:attr/selectableItemBackground</item>
-        <!--Dialogs-->
-        <item name="md_dark_theme">true</item>
         <!-- Overlays -->
-        <item name="navigation_color_selected">@*android:color/accent_device_default_dark</item>
         <item name="progress_background_color">@color/dark_transparent</item>
     </style>
 
-    <style name="Base.AppTheme.Black" parent="Theme.MaterialComponents.NoActionBar">
-        <item name="colorPrimary">@android:color/transparent</item>
-        <item name="colorPrimaryDark">@android:color/transparent</item>
-        <item name="colorAccent">@*android:color/accent_device_default_dark</item>
-        <item name="android:statusBarColor">@android:color/transparent</item>
-        <item name="android:windowLightStatusBar">false</item>
+    <style name="Base.AppTheme.Black" parent="Base.Dark">
         <item name="android:windowBackground">@android:color/black</item>
         <item name="materialCardViewStyle">@style/CardView.Black</item>
-        <item name="android:timePickerDialogTheme">@style/TimePickerDialog.Dark</item>
-        <!--Preferences-->
-        <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
-        <item name="android:activatedBackgroundIndicator">?android:attr/selectableItemBackground</item>
-        <!--Dialogs-->
-        <item name="md_dark_theme">true</item>
-        <!--<item name="md_background_color">@android:color/black</item>-->
         <!-- Overlays -->
-        <item name="navigation_color_selected">@*android:color/accent_device_default_dark</item>
         <item name="progress_background_color">@color/black_transparent</item>
     </style>
 
