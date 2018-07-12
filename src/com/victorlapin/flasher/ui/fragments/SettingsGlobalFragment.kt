@@ -12,7 +12,7 @@ import com.victorlapin.flasher.manager.SettingsManager
 import com.victorlapin.flasher.model.interactor.AlarmInteractor
 import com.victorlapin.flasher.model.interactor.RecoveryScriptInteractor
 import com.victorlapin.flasher.ui.activities.BaseActivity
-import com.victorlapin.flasher.ui.activities.SettingsActivity
+import com.victorlapin.flasher.ui.activities.MainActivity
 import io.reactivex.disposables.Disposable
 import org.koin.android.ext.android.inject
 
@@ -51,7 +51,7 @@ class SettingsGlobalFragment : PreferenceFragmentCompat() {
 
         findPreference(SettingsManager.KEY_ABOUT).onPreferenceClickListener =
                 Preference.OnPreferenceClickListener {
-                    (activity as SettingsActivity).presenter.openAbout()
+                    (activity as MainActivity).presenter.selectAbout()
                     return@OnPreferenceClickListener true
                 }
 

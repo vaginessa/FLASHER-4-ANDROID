@@ -16,4 +16,6 @@ class MainActivityPresenter constructor(
     }
 
     private fun selectHome() = mRouter.newRootScreen(Screens.FRAGMENT_HOME)
+
+    fun selectAbout() = mRouter.navigateTo(Screens.FRAGMENT_ABOUT)
 }

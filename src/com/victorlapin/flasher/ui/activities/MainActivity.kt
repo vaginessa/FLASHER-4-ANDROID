@@ -8,8 +8,10 @@ import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.victorlapin.flasher.R
 import com.victorlapin.flasher.Screens
 import com.victorlapin.flasher.presenter.MainActivityPresenter
+import com.victorlapin.flasher.ui.fragments.AboutFragment
 import com.victorlapin.flasher.ui.fragments.HomeFragment
 import com.victorlapin.flasher.ui.fragments.ScheduleFragment
+import com.victorlapin.flasher.ui.fragments.SettingsGlobalFragment
 import com.victorlapin.flasher.view.MainActivityView
 import org.koin.android.ext.android.inject
 import org.koin.android.ext.android.release
@@ -37,6 +39,8 @@ class MainActivity : BaseActivity(), MainActivityView {
         override fun createFragment(screenKey: String?, data: Any?): Fragment? = when (screenKey) {
             Screens.FRAGMENT_HOME -> HomeFragment.newInstance()
             Screens.FRAGMENT_SCHEDULE -> ScheduleFragment.newInstance()
+            Screens.FRAGMENT_SETTINGS -> SettingsGlobalFragment.newInstance()
+            Screens.FRAGMENT_ABOUT -> AboutFragment.newInstance()
             else -> null
         }
     }

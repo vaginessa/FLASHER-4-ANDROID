@@ -20,10 +20,6 @@ val activitiesModule = module {
         factory { ScheduleHomePresenter(get(), get(), get(), get(), get()) }
     }
 
-    module(Screens.ACTIVITY_SETTINGS) {
-        factory { SettingsActivityPresenter(get()) }
-    }
-
     module(Screens.ACTIVITY_ABOUT) {
         factory { AboutActivityPresenter(get()) }
     }
