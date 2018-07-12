@@ -23,6 +23,7 @@ class SettingsManager(context: Context) {
         const val KEY_COMPRESS_BACKUPS = "compress_backups"
         const val KEY_DELETE_OLD_BACKUPS = "delete_old_backups"
         const val KEY_BACKUPS_TO_KEEP = "backups_to_keep"
+        const val KEY_ENABLE_FILE_LOG = "enable_file_log"
     }
 
     private val mPrefs = PreferenceManager.getDefaultSharedPreferences(context)
@@ -77,4 +78,7 @@ class SettingsManager(context: Context) {
 
     val backupsToKeep: Int
         get() = mPrefs.getString(KEY_BACKUPS_TO_KEEP, "2").toInt()
+
+    val enableFileLog: Boolean
+        get() = mPrefs.getBoolean(KEY_ENABLE_FILE_LOG, false)
 }
