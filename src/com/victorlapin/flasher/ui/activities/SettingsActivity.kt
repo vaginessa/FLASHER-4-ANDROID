@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.view.MenuItem
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.victorlapin.flasher.R
@@ -11,6 +12,7 @@ import com.victorlapin.flasher.Screens
 import com.victorlapin.flasher.presenter.SettingsActivityPresenter
 import com.victorlapin.flasher.ui.fragments.SettingsGlobalFragment
 import com.victorlapin.flasher.view.SettingsActivityView
+import kotlinx.android.synthetic.main.include_toolbar.*
 import org.koin.android.ext.android.inject
 import org.koin.android.ext.android.release
 import ru.terrakok.cicerone.android.SupportAppNavigator
@@ -28,7 +30,8 @@ class SettingsActivity : BaseActivity(), SettingsActivityView {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        toolbar.setNavigationIcon(R.drawable.close)
+        supportActionBar?.setDisplayShowHomeEnabled(true)
     }
 
     override fun onStop() {
@@ -36,9 +39,9 @@ class SettingsActivity : BaseActivity(), SettingsActivityView {
         release(Screens.ACTIVITY_SETTINGS)
     }
 
-    override fun onSupportNavigateUp(): Boolean {
-        onBackPressed()
-        return true
+    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
+        android.R.id.home -> { onBackPressed(); true }
+        else -> false
     }
 
     override fun onBackPressed() = presenter.onBackPressed()
