@@ -14,6 +14,7 @@ import com.victorlapin.flasher.ui.adapters.AboutAdapter
 import com.victorlapin.flasher.view.AboutFragmentView
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.fragment_list.*
+import kotlinx.android.synthetic.main.include_toolbar.*
 import org.koin.android.ext.android.inject
 import org.koin.android.ext.android.release
 
@@ -34,6 +35,10 @@ class AboutFragment : BaseFragment(), AboutFragmentView {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+
+        toolbar.setTitle(R.string.action_about)
+        toolbar.setNavigationIcon(R.drawable.close)
+        toolbar.setNavigationOnClickListener { presenter.onBackPressed() }
 
         setupEvents()
         list.apply {

@@ -2,6 +2,7 @@ package com.victorlapin.flasher.ui.activities
 
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.support.v4.app.Fragment
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
@@ -34,7 +35,16 @@ class MainActivity : BaseActivity(), MainActivityView {
     }
 
     override val navigator = object : SupportAppNavigator(this, R.id.fragment_container) {
-        override fun createActivityIntent(context: Context?, screenKey: String?, data: Any?): Intent? = null
+        override fun createActivityIntent(context: Context?, screenKey: String?, data: Any?): Intent? =
+                when (screenKey) {
+                    Screens.EXTERNAL_ABOUT -> {
+                        data?.let {
+                            return Intent(Intent.ACTION_VIEW, Uri.parse(data.toString()))
+                        }
+                        null
+                    }
+                    else -> null
+                }
 
         override fun createFragment(screenKey: String?, data: Any?): Fragment? = when (screenKey) {
             Screens.FRAGMENT_HOME -> HomeFragment.newInstance()
