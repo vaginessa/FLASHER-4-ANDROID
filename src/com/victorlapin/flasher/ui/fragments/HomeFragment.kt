@@ -54,7 +54,7 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
     private val mResources by inject<ResourcesManager>()
 
     private val mRxPermissions by lazy {
-        RxPermissions(activity!!)
+        RxPermissions(this)
     }
 
     private lateinit var mWipePartitions: List<String>

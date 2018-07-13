@@ -28,7 +28,7 @@ class SettingsGlobalFragment : PreferenceFragmentCompat() {
     private val mAlarmInteractor by inject<AlarmInteractor>()
 
     private val mRxPermissions by lazy {
-        RxPermissions(activity!!)
+        RxPermissions(this)
     }
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
