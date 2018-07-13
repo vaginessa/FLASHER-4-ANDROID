@@ -14,7 +14,6 @@ import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
-import timber.log.Timber
 import java.io.File
 
 class CommandsRepository constructor(
@@ -62,7 +61,6 @@ class CommandsRepository constructor(
     }
 
     fun exportCommands(fileName: String, chainId: Long): Maybe<EventArgs> = Maybe.create { emitter ->
-        Timber.i("Exporting command chain to $fileName")
         var disposable: Disposable? = null
         disposable = getCommands(chainId).subscribe {
             val json = mGson.toJson(it)
@@ -76,7 +74,6 @@ class CommandsRepository constructor(
 
     fun importCommands(fileName: String, chainId: Long): Maybe<EventArgs> = Maybe.create { emitter ->
         try {
-            Timber.i("Importing command chain from $fileName")
             val json = File(fileName).readText()
             val commands = mGson.fromJson<List<Command>>(json, object : TypeToken<List<Command>>() {}.type)
             var i = 0

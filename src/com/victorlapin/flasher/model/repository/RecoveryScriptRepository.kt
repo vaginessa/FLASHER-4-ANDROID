@@ -96,6 +96,7 @@ class RecoveryScriptRepository constructor(
         if (mSettings.useAnalyzer) {
             val analyzeResult = analyzeScript(script)
             if (analyzeResult != null) {
+                Timber.i("Analyzer checks failed, script won't be deployed")
                 return analyzeResult
             }
         }
@@ -116,10 +117,11 @@ class RecoveryScriptRepository constructor(
                 Timber.i("Script deployed")
                 EventArgs(isSuccess = true)
             } catch (ex: Exception) {
-                ex.printStackTrace()
+                Timber.w(ex)
                 EventArgs(isSuccess = false, message = ex.toString())
             }
         } else {
+            Timber.w("Superuser access denied")
             return mSuDeniedArgs
         }
     }
@@ -129,6 +131,7 @@ class RecoveryScriptRepository constructor(
         Timber.i("Reboot")
         EventArgs(isSuccess = true)
     } else {
+        Timber.w("Superuser access denied")
         mSuDeniedArgs
     }
 
@@ -145,6 +148,7 @@ class RecoveryScriptRepository constructor(
     private fun analyzeScript(script: String): EventArgs? {
         // check for emptiness
         if (script.isBlank()) {
+            Timber.w("Empty script")
             return EventArgs(isSuccess = false, messageId = R.string.analyze_empty_script)
         }
 
@@ -152,6 +156,7 @@ class RecoveryScriptRepository constructor(
         val indexWipe = script.lastIndexOf("wipe system")
         val indexFlash = script.lastIndexOf("install ")
         if (indexWipe > indexFlash) {
+            Timber.w("System wipe and no ROM installation detected")
             return EventArgs(isSuccess = false, messageId = R.string.analyze_no_rom)
         }
 
@@ -165,6 +170,7 @@ class RecoveryScriptRepository constructor(
                     .map { it -> it.replace("install ", "") }
                     .forEach { zipSpace += File(it).length() }
             if (zipSpace > systemSpace) {
+                Timber.w("Insufficient system space")
                 return EventArgs(isSuccess = false, messageId = R.string.analyze_system_space)
             }
         }

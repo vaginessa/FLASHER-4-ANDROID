@@ -9,6 +9,7 @@ import com.victorlapin.flasher.model.interactor.AlarmInteractor
 import com.victorlapin.flasher.model.interactor.RecoveryScriptInteractor
 import com.victorlapin.flasher.model.interactor.ScheduleInteractor
 import ru.terrakok.cicerone.Router
+import timber.log.Timber
 
 @InjectViewState
 class ScheduleHomePresenter constructor(
@@ -24,12 +25,18 @@ class ScheduleHomePresenter constructor(
         mSettings.useSchedule = isEnabled
         if (isEnabled) {
             mAlarmInteractor.setAlarm()
-                    .doOnError { viewState.showInfoToast(it.localizedMessage) }
+                    .doOnError {
+                        Timber.e(it)
+                        viewState.showInfoToast(it.localizedMessage)
+                    }
                     .subscribe()
                     .addTo(mDisposable)
         } else {
             mAlarmInteractor.cancelAlarm()
-                    .doOnError { viewState.showInfoToast(it.localizedMessage) }
+                    .doOnError {
+                        Timber.e(it)
+                        viewState.showInfoToast(it.localizedMessage)
+                    }
                     .subscribe()
                     .addTo(mDisposable)
         }
@@ -48,7 +55,10 @@ class ScheduleHomePresenter constructor(
 
         if (mSettings.useSchedule) {
             mAlarmInteractor.setAlarm()
-                    .doOnError { viewState.showInfoToast(it.localizedMessage) }
+                    .doOnError {
+                        Timber.e(it)
+                        viewState.showInfoToast(it.localizedMessage)
+                    }
                     .subscribe()
                     .addTo(mDisposable)
         }
@@ -60,7 +70,10 @@ class ScheduleHomePresenter constructor(
         mSettings.scheduleInterval = interval
         if (mSettings.useSchedule) {
             mAlarmInteractor.setAlarm()
-                    .doOnError { viewState.showInfoToast(it.localizedMessage) }
+                    .doOnError {
+                        Timber.e(it)
+                        viewState.showInfoToast(it.localizedMessage)
+                    }
                     .subscribe()
                     .addTo(mDisposable)
         }
