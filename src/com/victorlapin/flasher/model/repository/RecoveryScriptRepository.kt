@@ -108,6 +108,11 @@ class RecoveryScriptRepository constructor(
                 mBackupsRepository.deleteObsoleteBackups()
             }
             return try {
+                SuFile(Const.SCRIPT_FILENAME).parentFile
+                        .listFiles { _, name -> name.endsWith(".log", true) }
+                        .forEach { it.delete() }
+                Timber.i("Cleaned up recovery logs")
+
                 SuFileOutputStream(Const.SCRIPT_FILENAME).use {
                     it.write(script.toByteArray())
                 }
