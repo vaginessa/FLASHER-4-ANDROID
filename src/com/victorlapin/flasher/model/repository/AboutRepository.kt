@@ -46,6 +46,11 @@ class AboutRepository(
         item.url = "https://gitlab.com/victorlapin/flasher"
         item.image = mResources.getDrawable(R.drawable.git)
         result.add(item)
+        item = ListItem(mResources.getString(R.string.about_links_donate))
+        item.description = mResources.getString(R.string.about_links_paypal)
+        item.url = "https://www.paypal.me/VictorLapin/2"
+        item.image = mResources.getDrawable(R.drawable.paypal)
+        result.add(item)
 
         // show credits
         result.add(ListItem(name = ITEM_CREDITS))

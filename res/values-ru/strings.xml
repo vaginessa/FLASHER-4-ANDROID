@@ -87,6 +87,8 @@
     <string name="about_credits_bill_text">Тестирование</string>
     <string name="about_links_source_code">Исходный код</string>
     <string name="about_links_gitlab">Посмотреть на Gitlab.com</string>
+    <string name="about_links_donate">Купите мне кофе</string>
+    <string name="about_links_paypal">Пожертвовать через PayPal</string>
 
     <plurals name="schedule_interval">
         <item quantity="one">%1$d день</item>
