@@ -45,7 +45,7 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
     @ProvidePresenter
     open fun providePresenter(): BaseHomeFragmentPresenter = mDefaultPresenter
 
-    private val mDisposable = CompositeDisposable()
+    private var mDisposable: CompositeDisposable? = null
     private val mNavEventsDisposable = CompositeDisposable()
 
     private val mAdapter by inject<HomeAdapter>()
@@ -65,6 +65,7 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        mDisposable = CompositeDisposable()
         mWipePartitions = mResources.getStringList(R.array.wipe_partitions)
         mBackupPartitions = mResources.getStringList(R.array.backup_partitions)
 
@@ -135,19 +136,20 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        mDisposable.dispose()
+        mDisposable?.clear()
+        mDisposable = null
     }
 
     private fun setupEvents() {
         mAdapter.changeTypeEvent
                 .subscribe { presenter.onCommandTypeChanged(it) }
-                .addTo(mDisposable)
+                .addTo(mDisposable!!)
         mAdapter.argsClickEvent
                 .subscribe { presenter.onArgumentsClicked(it) }
-                .addTo(mDisposable)
+                .addTo(mDisposable!!)
         mAdapter.itemInsertEvent
                 .subscribe { list.smoothScrollToPosition(it) }
-                .addTo(mDisposable)
+                .addTo(mDisposable!!)
     }
 
     override fun setData(commands: List<Command>) {
@@ -221,7 +223,7 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
                                 .show()
                     }
                 }
-                .addTo(mDisposable)
+                .addTo(mDisposable!!)
     }
 
     override fun showEditMaskDialog(command: Command) {
@@ -258,7 +260,7 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
                                 .show()
                     }
                 }
-                .addTo(mDisposable)
+                .addTo(mDisposable!!)
     }
 
     override fun showDeletedSnackbar(command: Command) {
@@ -311,7 +313,7 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
                                 .show()
                     }
                 }
-                .addTo(mDisposable)
+                .addTo(mDisposable!!)
     }
 
     override fun showImportDialog() {
@@ -336,7 +338,7 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
                                 .show()
                     }
                 }
-                .addTo(mDisposable)
+                .addTo(mDisposable!!)
     }
 
     override fun showInfoToast(message: String) {
