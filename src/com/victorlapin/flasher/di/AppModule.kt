@@ -1,5 +1,6 @@
 package com.victorlapin.flasher.di
 
+import com.victorlapin.flasher.manager.LogManager
 import com.victorlapin.flasher.manager.ResourcesManager
 import com.victorlapin.flasher.manager.ServicesManager
 import com.victorlapin.flasher.manager.SettingsManager
@@ -15,4 +16,5 @@ val appModule = module {
     single { SettingsManager(get()) }
     single { ResourcesManager(get()) }
     single { ServicesManager(get()) }
+    single { LogManager(get()) }
 }

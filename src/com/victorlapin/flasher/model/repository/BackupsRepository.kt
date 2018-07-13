@@ -2,6 +2,7 @@ package com.victorlapin.flasher.model.repository
 
 import com.victorlapin.flasher.Const
 import com.victorlapin.flasher.manager.SettingsManager
+import timber.log.Timber
 import java.io.File
 import java.util.*
 
@@ -31,7 +32,11 @@ class BackupsRepository(
                                 }
                             }
                             val backupsToDelete = backups.drop(backupsToKeep - 1)
-                            backupsToDelete.forEach { it.deleteRecursively() }
+                            backupsToDelete.forEach {
+                                Timber.i("Deleting backup: ${it.name}")
+                                it.deleteRecursively()
+                                Timber.i("Successful")
+                            }
                         }
                     }
                 }

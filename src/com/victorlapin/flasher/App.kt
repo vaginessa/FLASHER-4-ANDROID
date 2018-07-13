@@ -5,6 +5,7 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.os.Build
 import com.victorlapin.flasher.di.allModules
+import com.victorlapin.flasher.manager.LogManager
 import com.victorlapin.flasher.manager.ServicesManager
 import org.koin.android.ext.android.inject
 import org.koin.android.ext.android.startKoin
@@ -13,12 +14,14 @@ import org.koin.log.EmptyLogger
 
 class App : Application() {
     private val mServices by inject<ServicesManager>()
+    private val mLogs by inject<LogManager>()
 
     override fun onCreate() {
         super.onCreate()
         val logger = if (BuildConfig.DEBUG) AndroidLogger() else EmptyLogger()
         startKoin(context = this, modules = allModules, logger = logger)
         createNotificationChannels()
+        mLogs.onStartup()
     }
 
     private fun createNotificationChannels() {
