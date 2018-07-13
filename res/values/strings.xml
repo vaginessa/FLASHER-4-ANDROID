@@ -40,8 +40,6 @@
     <string name="theme_light">Light</string>
     <string name="theme_dark">Dark</string>
     <string name="theme_black">Black</string>
-    <string name="pref_title_save_debug_script">Save debug script</string>
-    <string name="pref_summary_save_debug_script">Will be saved to %s</string>
     <string name="pref_title_delete_deployed_script">Delete deployed script</string>
     <string name="pref_title_analyzer">Use script analyzer</string>
     <string name="pref_summary_analyzer">Run very basic foolproof checks on a generated script. DISABLE AT YOUR OWN RISK!</string>
@@ -53,7 +51,8 @@
     <string name="pref_title_compress_backups">Compress backups</string>
     <string name="pref_title_delete_old_backups">Delete old backups</string>
     <string name="pref_title_backups_to_keep">Backups to keep</string>
-    <string name="pref_title_enable_file_log">Write logs to file</string>
+    <string name="pref_title_enable_file_log">Write debug log to file</string>
+    <string name="pref_summary_enable_file_log">Will be saved to %s</string>
 
     <!-- Command names -->
     <string name="command_wipe">Wipe</string>

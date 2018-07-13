@@ -83,9 +83,6 @@ class RecoveryScriptRepository constructor(
                     val result = BuildScriptResult(
                             script = scriptBuilder.toString(),
                             resolvedFiles = resolvedFilesBuilder.toString())
-                    if (mSettings.saveDebugScript) {
-                        saveDebugScript(result.script)
-                    }
                     Timber.d("Generated script:\n${result.script}")
                     if (result.resolvedFiles.isNotBlank()) {
                         Timber.d("Resolved files:\n${result.resolvedFiles}")
@@ -133,15 +130,6 @@ class RecoveryScriptRepository constructor(
         EventArgs(isSuccess = true)
     } else {
         mSuDeniedArgs
-    }
-
-    private fun saveDebugScript(script: String) {
-        try {
-            val file = File(Const.DEBUG_FILENAME)
-            file.writeText(script)
-        } catch (ignore: Exception) {
-            ignore.printStackTrace()
-        }
     }
 
     fun deleteScript() {

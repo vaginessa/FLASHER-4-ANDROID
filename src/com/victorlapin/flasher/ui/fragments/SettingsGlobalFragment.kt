@@ -64,10 +64,6 @@ class SettingsGlobalFragment : PreferenceFragmentCompat() {
                     return@OnPreferenceClickListener true
                 }
 
-        findPreference(SettingsManager.KEY_SAVE_DEBUG_SCRIPT).summary =
-                mResources.getString(R.string.pref_summary_save_debug_script)
-                        .format(Const.DEBUG_FILENAME)
-
         findPreference(SettingsManager.KEY_DELETE_DEPLOYED_SCRIPT).onPreferenceClickListener =
                 Preference.OnPreferenceClickListener {
                     mScriptInteractor.deleteScript()
@@ -106,7 +102,7 @@ class SettingsGlobalFragment : PreferenceFragmentCompat() {
                 }
 
         val logPreference = findPreference(SettingsManager.KEY_ENABLE_FILE_LOG)
-        logPreference.summary = mResources.getString(R.string.pref_summary_save_debug_script)
+        logPreference.summary = mResources.getString(R.string.pref_summary_enable_file_log)
                 .format(Const.LOG_FILENAME)
         logPreference.onPreferenceChangeListener =
                 Preference.OnPreferenceChangeListener { it, newValue ->

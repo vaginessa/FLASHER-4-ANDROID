@@ -48,8 +48,8 @@
 
         <SwitchPreference
             android:defaultValue="false"
-            android:key="save_debug_script"
-            android:title="@string/pref_title_save_debug_script" />
+            android:key="enable_file_log"
+            android:title="@string/pref_title_enable_file_log" />
 
         <Preference
             android:key="delete_deployed_script"
@@ -64,11 +64,6 @@
         <Preference
             android:key="clear_schedule_settings"
             android:title="@string/pref_title_clear_schedule" />
-
-        <SwitchPreference
-            android:defaultValue="false"
-            android:key="enable_file_log"
-            android:title="@string/pref_title_enable_file_log" />
 
     </PreferenceCategory>
 

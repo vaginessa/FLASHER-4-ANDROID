@@ -12,7 +12,5 @@ object Const {
 
     const val SCRIPT_FILENAME: String = "/cache/recovery/openrecoveryscript"
 
-    val DEBUG_FILENAME: String = File(APP_FOLDER, "openrecoveryscript").absolutePath
-
     val LOG_FILENAME: String = File(APP_FOLDER, "app.log").absolutePath
 }

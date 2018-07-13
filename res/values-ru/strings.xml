@@ -40,8 +40,6 @@
     <string name="theme_light">Светлая</string>
     <string name="theme_dark">Темная</string>
     <string name="theme_black">Черная</string>
-    <string name="pref_title_save_debug_script">Сохранять отладочный скрипт</string>
-    <string name="pref_summary_save_debug_script">Будет сохранено в %s</string>
     <string name="pref_title_delete_deployed_script">Удалить установленный скрипт</string>
     <string name="pref_title_analyzer">Анализировать скрипт</string>
     <string name="pref_summary_analyzer">Прогонять базовые проверки \"от дурака\" на созданных скриптах. ВЫКЛЮЧАЙТЕ НА СВОЙ РИСК!</string>
@@ -53,7 +51,8 @@
     <string name="pref_title_compress_backups">Сжимать резервные копии</string>
     <string name="pref_title_delete_old_backups">Удалять старые резервные копии</string>
     <string name="pref_title_backups_to_keep">Сохранять резервных копий</string>
-    <string name="pref_title_enable_file_log">Писать логи в файл</string>
+    <string name="pref_title_enable_file_log">Писать отладочный лог в файл</string>
+    <string name="pref_summary_enable_file_log">Будет сохранено в %s</string>
 
     <!-- Command names -->
     <string name="command_wipe">Вайп</string>
