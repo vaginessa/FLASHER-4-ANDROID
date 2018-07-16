@@ -127,7 +127,7 @@ class RecoveryScriptRepository constructor(
     }
 
     fun rebootRecovery(): EventArgs = if (Shell.rootAccess()) {
-        Shell.Sync.su("svc power reboot recovery")
+        Shell.Sync.su("reboot recovery")
         Timber.i("Reboot")
         EventArgs(isSuccess = true)
     } else {
