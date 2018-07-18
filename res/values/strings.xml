@@ -94,6 +94,7 @@
     <string name="about_credits_roger" translatable="false">Roger Truttmann</string>
     <string name="about_credits_roger_text">App icon</string>
     <string name="about_credits_bill" translatable="false">Bill Blandford</string>
+    <string name="about_credits_george" translatable="false">George G.</string>
     <string name="about_credits_bill_text">Testing</string>
     <string name="about_links_source_code">Source code</string>
     <string name="about_links_gitlab">View at Gitlab.com</string>
