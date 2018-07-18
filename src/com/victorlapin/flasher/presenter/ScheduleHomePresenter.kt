@@ -52,22 +52,23 @@ class ScheduleHomePresenter constructor(
     fun onTimeSelected(hourOfDay: Int, minute: Int) {
         val dateBuilder = DateBuilder(hourOfDay, minute)
         mSettings.scheduleTime = dateBuilder.nextAlarmTime
-
-        if (mSettings.useSchedule) {
-            mAlarmInteractor.setAlarm()
-                    .doOnError {
-                        Timber.e(it)
-                        viewState.showInfoToast(it.localizedMessage)
-                    }
-                    .subscribe()
-                    .addTo(mDisposable)
-        }
+        updateWork()
     }
 
     fun selectInterval() = viewState.showSelectIntervalDialog(mSettings.scheduleInterval)
 
     fun onIntervalSelected(interval: Int) {
         mSettings.scheduleInterval = interval
+        updateWork()
+    }
+
+    fun updateNextRun() {
+        val dateBuilder = DateBuilder(mSettings.scheduleTime)
+        dateBuilder.interval = mSettings.scheduleInterval
+        viewState.showNextRun(dateBuilder.hasNextAlarm(), dateBuilder.nextAlarmTime)
+    }
+
+    private fun updateWork() {
         if (mSettings.useSchedule) {
             mAlarmInteractor.setAlarm()
                     .doOnError {
@@ -77,11 +78,5 @@ class ScheduleHomePresenter constructor(
                     .subscribe()
                     .addTo(mDisposable)
         }
-    }
-
-    fun updateNextRun() {
-        val dateBuilder = DateBuilder(mSettings.scheduleTime)
-        dateBuilder.interval = mSettings.scheduleInterval
-        viewState.showNextRun(dateBuilder.hasNextAlarm(), dateBuilder.nextAlarmTime)
     }
 }
