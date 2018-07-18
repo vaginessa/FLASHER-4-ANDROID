@@ -102,9 +102,6 @@ class RecoveryScriptRepository constructor(
         }
 
         if (Shell.rootAccess()) {
-            if (script.contains("backup ")) {
-                mBackupsRepository.deleteObsoleteBackups()
-            }
             return try {
                 SuFile(Const.SCRIPT_FILENAME).parentFile
                         .listFiles { _, name -> name.endsWith(".log", true) }
@@ -115,6 +112,9 @@ class RecoveryScriptRepository constructor(
                     it.write(script.toByteArray())
                 }
                 Timber.i("Script deployed")
+                if (script.contains("backup ")) {
+                    mBackupsRepository.deleteObsoleteBackups()
+                }
                 EventArgs(isSuccess = true)
             } catch (ex: Exception) {
                 Timber.w(ex)
