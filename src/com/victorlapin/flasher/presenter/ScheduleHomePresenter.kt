@@ -84,4 +84,9 @@ class ScheduleHomePresenter constructor(
         mSettings.scheduleOnlyCharging = isChecked
         updateWork()
     }
+
+    fun onOnlyIdleChanged(isChecked: Boolean) {
+        mSettings.scheduleOnlyIdle = isChecked
+        updateWork()
+    }
 }

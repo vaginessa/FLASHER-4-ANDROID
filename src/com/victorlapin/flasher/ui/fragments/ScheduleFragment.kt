@@ -76,6 +76,11 @@ class ScheduleFragment : HomeFragment() {
             (presenter as ScheduleHomePresenter).onOnlyChargingChanged(isChecked)
         }
 
+        chk_idle.isChecked = mSettings.scheduleOnlyIdle
+        chk_idle.setOnCheckedChangeListener { _, isChecked ->
+            (presenter as ScheduleHomePresenter).onOnlyIdleChanged(isChecked)
+        }
+
         updateNextRun()
     }
 

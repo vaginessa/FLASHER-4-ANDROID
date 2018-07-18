@@ -46,6 +46,7 @@ class ScheduleWorker : Worker(), KoinComponent {
             val dateDiff = nextRun - System.currentTimeMillis()
             val constraints = Constraints.Builder()
                     .setRequiresCharging(settings.scheduleOnlyCharging)
+                    .setRequiresDeviceIdle(settings.scheduleOnlyIdle)
                     .build()
 
             return OneTimeWorkRequest.Builder(ScheduleWorker::class.java)

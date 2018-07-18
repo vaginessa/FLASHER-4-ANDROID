@@ -18,6 +18,7 @@
     <string name="schedule_next_run">Next run: %s</string>
     <string name="schedule_last_run_notification">Scheduled run was performed at %s</string>
     <string name="schedule_only_charging">Only when charging</string>
+    <string name="schedule_only_idle">Only when device is idle</string>
 
     <!-- Action strings -->
     <string name="action_home">Home</string>
