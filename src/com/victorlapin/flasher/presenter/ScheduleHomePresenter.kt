@@ -89,4 +89,9 @@ class ScheduleHomePresenter constructor(
         mSettings.scheduleOnlyIdle = isChecked
         updateWork()
     }
+
+    fun onOnlyHighBatteryChanged(isChecked: Boolean) {
+        mSettings.scheduleOnlyHighBattery = isChecked
+        updateWork()
+    }
 }

@@ -19,6 +19,7 @@
     <string name="schedule_last_run_notification">Scheduled run was performed at %s</string>
     <string name="schedule_only_charging">Only when charging</string>
     <string name="schedule_only_idle">Only when device is idle</string>
+    <string name="schedule_only_high_battery">Only when device has enough battery left</string>
 
     <!-- Action strings -->
     <string name="action_home">Home</string>

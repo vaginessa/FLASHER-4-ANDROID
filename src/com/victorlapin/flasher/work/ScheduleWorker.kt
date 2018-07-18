@@ -47,6 +47,7 @@ class ScheduleWorker : Worker(), KoinComponent {
             val constraints = Constraints.Builder()
                     .setRequiresCharging(settings.scheduleOnlyCharging)
                     .setRequiresDeviceIdle(settings.scheduleOnlyIdle)
+                    .setRequiresBatteryNotLow(settings.scheduleOnlyHighBattery)
                     .build()
 
             return OneTimeWorkRequest.Builder(ScheduleWorker::class.java)

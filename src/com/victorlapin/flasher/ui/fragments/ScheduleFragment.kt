@@ -81,6 +81,11 @@ class ScheduleFragment : HomeFragment() {
             (presenter as ScheduleHomePresenter).onOnlyIdleChanged(isChecked)
         }
 
+        chk_battery.isChecked = mSettings.scheduleOnlyHighBattery
+        chk_battery.setOnCheckedChangeListener { _, isChecked ->
+            (presenter as ScheduleHomePresenter).onOnlyHighBatteryChanged(isChecked)
+        }
+
         updateNextRun()
     }
 

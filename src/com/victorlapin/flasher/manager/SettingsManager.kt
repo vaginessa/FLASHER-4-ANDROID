@@ -25,6 +25,7 @@ class SettingsManager(context: Context) {
         const val KEY_ENABLE_FILE_LOG = "enable_file_log"
         const val KEY_SCHEDULE_ONLY_CHARGING = "schedule_only_charging"
         const val KEY_SCHEDULE_ONLY_IDLE = "schedule_only_idle"
+        const val KEY_SCHEDULE_ONLY_HIGH_BATTERY = "schedule_only_high_battery"
     }
 
     private val mPrefs = PreferenceManager.getDefaultSharedPreferences(context)
@@ -88,4 +89,8 @@ class SettingsManager(context: Context) {
     var scheduleOnlyIdle: Boolean
         get() = mPrefs.getBoolean(KEY_SCHEDULE_ONLY_IDLE, false)
         set(value) = mPrefs.edit().putBoolean(KEY_SCHEDULE_ONLY_IDLE, value).apply()
+
+    var scheduleOnlyHighBattery: Boolean
+        get() = mPrefs.getBoolean(KEY_SCHEDULE_ONLY_HIGH_BATTERY, false)
+        set(value) = mPrefs.edit().putBoolean(KEY_SCHEDULE_ONLY_HIGH_BATTERY, value).apply()
 }
