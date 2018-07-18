@@ -1,0 +1,52 @@
+package com.victorlapin.flasher.work
+
+import androidx.work.OneTimeWorkRequest
+import androidx.work.Worker
+import com.victorlapin.flasher.manager.SettingsManager
+import com.victorlapin.flasher.model.database.entity.Chain
+import com.victorlapin.flasher.model.interactor.RecoveryScriptInteractor
+import org.koin.standalone.KoinComponent
+import org.koin.standalone.inject
+import timber.log.Timber
+import java.util.concurrent.TimeUnit
+
+class ScheduleWorker : Worker(), KoinComponent {
+    private val mSettings by inject<SettingsManager>()
+    private val mScriptInteractor by inject<RecoveryScriptInteractor>()
+
+    override fun doWork(): Result {
+        Timber.i("Schedule worker started")
+        mSettings.alarmLastRun = System.currentTimeMillis()
+        return try {
+            val scriptResult = mScriptInteractor
+                    .buildScript(Chain.SCHEDULE_ID)
+                    .blockingGet()
+            val result = mScriptInteractor.deployScript(scriptResult.script)
+            if (result.isSuccess) {
+                mSettings.bootNotificationFlag = true
+                mScriptInteractor.rebootRecovery()
+            }
+            Timber.i("Schedule worker finished")
+            Result.SUCCESS
+        } catch (t: Throwable) {
+            Timber.e(t)
+            Result.RETRY
+        }
+    }
+
+    override fun onStopped(cancelled: Boolean) {
+        Timber.w("Schedule worker stopped")
+    }
+
+    companion object {
+        const val JOB_TAG = "ScheduleWorker"
+
+        fun buildRequest(nextRun: Long): OneTimeWorkRequest {
+            val dateDiff = nextRun - System.currentTimeMillis()
+
+            return OneTimeWorkRequest.Builder(ScheduleWorker::class.java)
+                    .setInitialDelay(dateDiff, TimeUnit.MILLISECONDS)
+                    .build()
+        }
+    }
+}
