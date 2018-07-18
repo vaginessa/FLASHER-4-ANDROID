@@ -3,6 +3,7 @@ package com.victorlapin.flasher.work
 import androidx.work.Constraints
 import androidx.work.OneTimeWorkRequest
 import androidx.work.Worker
+import com.victorlapin.flasher.manager.ServicesManager
 import com.victorlapin.flasher.manager.SettingsManager
 import com.victorlapin.flasher.model.database.entity.Chain
 import com.victorlapin.flasher.model.interactor.RecoveryScriptInteractor
@@ -14,6 +15,7 @@ import java.util.concurrent.TimeUnit
 class ScheduleWorker : Worker(), KoinComponent {
     private val mSettings by inject<SettingsManager>()
     private val mScriptInteractor by inject<RecoveryScriptInteractor>()
+    private val mServices by inject<ServicesManager>()
 
     override fun doWork(): Result {
         Timber.i("Schedule worker started")
@@ -26,11 +28,15 @@ class ScheduleWorker : Worker(), KoinComponent {
             if (result.isSuccess) {
                 mSettings.bootNotificationFlag = true
                 mScriptInteractor.rebootRecovery()
+            } else {
+                mSettings.useSchedule = false
+                mServices.showInfoNotification(result)
             }
             Timber.i("Schedule worker finished")
             Result.SUCCESS
         } catch (t: Throwable) {
             Timber.e(t)
+            mServices.showInfoNotification(t.message)
             Result.RETRY
         }
     }

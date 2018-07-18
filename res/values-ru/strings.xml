@@ -20,6 +20,7 @@
     <string name="schedule_only_charging">Только при зарядке</string>
     <string name="schedule_only_idle">Только при бездействии</string>
     <string name="schedule_only_high_battery">Только при достаточном уровне батареи</string>
+    <string name="schedule_error_notification">Ошибка во время запуска по расписанию: %s</string>
 
     <!-- Action strings -->
     <string name="action_home">Главная</string>
