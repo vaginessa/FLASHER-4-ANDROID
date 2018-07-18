@@ -23,6 +23,7 @@ class SettingsManager(context: Context) {
         const val KEY_DELETE_OLD_BACKUPS = "delete_old_backups"
         const val KEY_BACKUPS_TO_KEEP = "backups_to_keep"
         const val KEY_ENABLE_FILE_LOG = "enable_file_log"
+        const val KEY_SCHEDULE_ONLY_CHARGING = "schedule_only_charging"
     }
 
     private val mPrefs = PreferenceManager.getDefaultSharedPreferences(context)
@@ -78,4 +79,8 @@ class SettingsManager(context: Context) {
     var enableFileLog: Boolean
         get() = mPrefs.getBoolean(KEY_ENABLE_FILE_LOG, false)
         set(value) = mPrefs.edit().putBoolean(KEY_ENABLE_FILE_LOG, value).apply()
+
+    var scheduleOnlyCharging: Boolean
+        get() = mPrefs.getBoolean(KEY_SCHEDULE_ONLY_CHARGING, false)
+        set(value) = mPrefs.edit().putBoolean(KEY_SCHEDULE_ONLY_CHARGING, value).apply()
 }

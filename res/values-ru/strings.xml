@@ -17,6 +17,7 @@
     <string name="schedule_last_run">Последний запуск: %s</string>
     <string name="schedule_next_run">Следующий запуск: %s</string>
     <string name="schedule_last_run_notification">Запуск по расписанию был выполнен в %s</string>
+    <string name="schedule_only_charging">Только при зарядке</string>
 
     <!-- Action strings -->
     <string name="action_home">Главная</string>

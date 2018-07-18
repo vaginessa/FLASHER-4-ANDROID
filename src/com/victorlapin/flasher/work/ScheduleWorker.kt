@@ -1,5 +1,6 @@
 package com.victorlapin.flasher.work
 
+import androidx.work.Constraints
 import androidx.work.OneTimeWorkRequest
 import androidx.work.Worker
 import com.victorlapin.flasher.manager.SettingsManager
@@ -41,11 +42,15 @@ class ScheduleWorker : Worker(), KoinComponent {
     companion object {
         const val JOB_TAG = "ScheduleWorker"
 
-        fun buildRequest(nextRun: Long): OneTimeWorkRequest {
+        fun buildRequest(nextRun: Long, settings: SettingsManager): OneTimeWorkRequest {
             val dateDiff = nextRun - System.currentTimeMillis()
+            val constraints = Constraints.Builder()
+                    .setRequiresCharging(settings.scheduleOnlyCharging)
+                    .build()
 
             return OneTimeWorkRequest.Builder(ScheduleWorker::class.java)
                     .setInitialDelay(dateDiff, TimeUnit.MILLISECONDS)
+                    .setConstraints(constraints)
                     .build()
         }
     }

@@ -71,6 +71,11 @@ class ScheduleFragment : HomeFragment() {
             updateNextRun()
         }
 
+        chk_charging.isChecked = mSettings.scheduleOnlyCharging
+        chk_charging.setOnCheckedChangeListener { _, isChecked ->
+            (presenter as ScheduleHomePresenter).onOnlyChargingChanged(isChecked)
+        }
+
         updateNextRun()
     }
 

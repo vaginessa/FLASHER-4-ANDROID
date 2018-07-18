@@ -79,4 +79,9 @@ class ScheduleHomePresenter constructor(
                     .addTo(mDisposable)
         }
     }
+
+    fun onOnlyChargingChanged(isChecked: Boolean) {
+        mSettings.scheduleOnlyCharging = isChecked
+        updateWork()
+    }
 }

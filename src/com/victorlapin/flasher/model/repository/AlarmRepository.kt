@@ -27,7 +27,7 @@ class AlarmRepository(
             WorkManager.getInstance()
                     ?.beginUniqueWork(ScheduleWorker.JOB_TAG,
                             ExistingWorkPolicy.REPLACE,
-                            ScheduleWorker.buildRequest(time))
+                            ScheduleWorker.buildRequest(time, mSettings))
                     ?.enqueue()
             mServices.enableBootReceiver()
         }
