@@ -162,8 +162,7 @@ class RecoveryScriptRepository constructor(
 
         // check for system space
         if (indexFlash >= 0) {
-            val systemSpace = if (script.contains("wipe system"))
-                StatFs("/system").totalBytes else StatFs("/system").freeBytes
+            val systemSpace = StatFs("/system").totalBytes
             var zipSpace = 0L
             script.split("\n")
                     .filter { it.startsWith("install ") }
