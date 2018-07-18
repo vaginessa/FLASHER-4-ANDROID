@@ -16,7 +16,7 @@ class ScheduleWorker : Worker(), KoinComponent {
 
     override fun doWork(): Result {
         Timber.i("Schedule worker started")
-        mSettings.alarmLastRun = System.currentTimeMillis()
+        mSettings.scheduleLastRun = System.currentTimeMillis()
         return try {
             val scriptResult = mScriptInteractor
                     .buildScript(Chain.SCHEDULE_ID)

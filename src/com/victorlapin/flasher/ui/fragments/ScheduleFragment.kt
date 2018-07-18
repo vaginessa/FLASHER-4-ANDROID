@@ -40,8 +40,8 @@ class ScheduleFragment : HomeFragment() {
     override fun onResume() {
         super.onResume()
 
-        val lastRun = mSettings.alarmLastRun
-        lbl_last_run.text = mResources.getString(R.string.alarm_last_run)
+        val lastRun = mSettings.scheduleLastRun
+        lbl_last_run.text = mResources.getString(R.string.schedule_last_run)
                 .format(if (lastRun > 0) mDateTimeFormatter.format(Date(lastRun)) else
                     mResources.getString(R.string.schedule_interval_never).toLowerCase())
 
@@ -118,7 +118,7 @@ class ScheduleFragment : HomeFragment() {
                     (!hasNext) -> mResources.getString(R.string.schedule_interval_never).toLowerCase()
             else -> mDateTimeFormatter.format(Date(nextRun))
         }
-        lbl_next_run.text = mResources.getString(R.string.alarm_next_run).format(displayText)
+        lbl_next_run.text = mResources.getString(R.string.schedule_next_run).format(displayText)
     }
 
     companion object {

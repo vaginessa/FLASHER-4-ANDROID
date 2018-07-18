@@ -40,7 +40,7 @@ class ServicesManager(
                 mContext.getString(R.string.channel_default_id))
                 .setShowWhen(false)
                 .setSmallIcon(R.drawable.android_head)
-                .setContentText(mContext.getString(R.string.alarm_last_run_notification,
+                .setContentText(mContext.getString(R.string.schedule_last_run_notification,
                         formatter.format(Date(alarmLastRun))))
                 .build()
         notificationManager.notify(BOOT_NOTIFICATION_ID, notification)

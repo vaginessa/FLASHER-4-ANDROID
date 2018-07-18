@@ -32,7 +32,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/chk_enable"
-        tools:text="@string/alarm_last_run" />
+        tools:text="@string/schedule_last_run" />
 
     <TextView
         android:id="@+id/lbl_next_run"
@@ -47,7 +47,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/lbl_last_run"
-        tools:text="@string/alarm_next_run" />
+        tools:text="@string/schedule_next_run" />
 
     <TextView
         android:id="@+id/lbl_time_title"

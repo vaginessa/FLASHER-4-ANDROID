@@ -29,7 +29,7 @@ class AlarmBootReceiverPresenter(
 
     fun showNotification() {
         if (mSettings.showNotificationOnBoot && mSettings.bootNotificationFlag) {
-            mServices.showBootNotification(mSettings.alarmLastRun)
+            mServices.showBootNotification(mSettings.scheduleLastRun)
         }
         mSettings.bootNotificationFlag = false
     }

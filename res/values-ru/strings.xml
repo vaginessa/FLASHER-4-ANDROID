@@ -14,9 +14,9 @@
     <string name="success">Успешно</string>
     <string name="schedule_time_title">Время</string>
     <string name="schedule_interval_title">Повтор через (в днях)</string>
-    <string name="alarm_last_run">Последний запуск: %s</string>
-    <string name="alarm_next_run">Следующий запуск: %s</string>
-    <string name="alarm_last_run_notification">Запуск по расписанию был выполнен в %s</string>
+    <string name="schedule_last_run">Последний запуск: %s</string>
+    <string name="schedule_next_run">Следующий запуск: %s</string>
+    <string name="schedule_last_run_notification">Запуск по расписанию был выполнен в %s</string>
 
     <!-- Action strings -->
     <string name="action_home">Главная</string>
