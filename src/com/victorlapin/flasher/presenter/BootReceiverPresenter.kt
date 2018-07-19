@@ -5,8 +5,9 @@ import com.victorlapin.flasher.manager.SettingsManager
 import com.victorlapin.flasher.model.DateBuilder
 import com.victorlapin.flasher.model.interactor.AlarmInteractor
 import io.reactivex.disposables.Disposable
+import timber.log.Timber
 
-class AlarmBootReceiverPresenter(
+class BootReceiverPresenter(
         private val mSettings: SettingsManager,
         private val mServices: ServicesManager,
         private val mAlarmInteractor: AlarmInteractor
@@ -21,6 +22,7 @@ class AlarmBootReceiverPresenter(
                     .doOnError { it.printStackTrace() }
                     .subscribe()
         } else {
+            Timber.i("Nothing to schedule")
             mAlarmInteractor.cancelAlarm()
                     .doOnError { it.printStackTrace() }
                     .subscribe()

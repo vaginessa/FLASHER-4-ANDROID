@@ -13,6 +13,5 @@ object Screens {
 
     const val SERVICE_SCRIPT = "tile_service_script"
 
-    const val RECEIVER_ALARM = "receiver_alarm"
-    const val RECEIVER_BOOT_ALARM = "receiver_boot_alarm"
+    const val RECEIVER_BOOT = "receiver_boot"
 }

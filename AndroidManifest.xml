@@ -43,7 +43,7 @@
         </service>
 
         <receiver
-            android:name=".ui.receivers.AlarmBootReceiver"
+            android:name=".ui.receivers.BootReceiver"
             android:enabled="false">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
