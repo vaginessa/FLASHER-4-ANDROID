@@ -13,6 +13,7 @@ import com.victorlapin.flasher.view.HomeFragmentView
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.subjects.PublishSubject
 import ru.terrakok.cicerone.Router
+import timber.log.Timber
 import java.io.File
 
 abstract class BaseHomeFragmentPresenter constructor(
@@ -119,7 +120,7 @@ abstract class BaseHomeFragmentPresenter constructor(
                         viewState.showInfoSnackbar(result)
                     }
                 }, {
-                    it.printStackTrace()
+                    Timber.e(it)
                 })
                 .addTo(mDisposable)
     }

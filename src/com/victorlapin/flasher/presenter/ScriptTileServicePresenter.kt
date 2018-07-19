@@ -5,6 +5,7 @@ import com.victorlapin.flasher.model.database.entity.Chain
 import com.victorlapin.flasher.model.interactor.RecoveryScriptInteractor
 import com.victorlapin.flasher.view.ScriptTileServiceView
 import io.reactivex.disposables.Disposable
+import timber.log.Timber
 
 class ScriptTileServicePresenter constructor(
         private val mScriptInteractor: RecoveryScriptInteractor,
@@ -30,7 +31,7 @@ class ScriptTileServicePresenter constructor(
                         mView?.showInfoToast(result)
                     }
                 }, {
-                    it.printStackTrace()
+                    Timber.e(it)
                 })
     }
 

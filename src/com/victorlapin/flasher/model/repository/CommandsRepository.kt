@@ -14,6 +14,7 @@ import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
+import timber.log.Timber
 import java.io.File
 
 class CommandsRepository constructor(
@@ -85,7 +86,7 @@ class CommandsRepository constructor(
             mCommandDao.insert(commands)
             emitter.onSuccess(EventArgs(isSuccess = true, messageId = R.string.success))
         } catch (ex: Exception) {
-            ex.printStackTrace()
+            Timber.e(ex)
             emitter.onSuccess(EventArgs(isSuccess = false, message = ex.message))
         }
     }

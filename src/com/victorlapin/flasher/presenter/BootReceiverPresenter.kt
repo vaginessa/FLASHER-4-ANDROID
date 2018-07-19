@@ -19,12 +19,12 @@ class BootReceiverPresenter(
         dateBuilder.interval = mSettings.scheduleInterval
         mDisposable = if (dateBuilder.hasNextAlarm()) {
             mAlarmInteractor.setAlarm()
-                    .doOnError { it.printStackTrace() }
+                    .doOnError { Timber.e(it) }
                     .subscribe()
         } else {
             Timber.i("Nothing to schedule")
             mAlarmInteractor.cancelAlarm()
-                    .doOnError { it.printStackTrace() }
+                    .doOnError { Timber.e(it) }
                     .subscribe()
         }
     }
