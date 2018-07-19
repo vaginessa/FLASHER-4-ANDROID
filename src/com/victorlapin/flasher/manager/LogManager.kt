@@ -11,13 +11,10 @@ class LogManager(
 
     fun onStartup() {
         if (BuildConfig.DEBUG) {
-            Timber.i("Initializing DebugTree")
             Timber.plant(Timber.DebugTree())
-            Timber.i("DebugTree planted")
         }
         if (mSettings.enableFileLog) {
             try {
-                Timber.i("Initializing FileTree")
                 enableFileLogs()
             } catch (ex: Exception) {
                 disableFileLogs()
@@ -28,13 +25,11 @@ class LogManager(
 
     fun enableFileLogs() {
         Timber.plant(mTree)
-        Timber.i("FileTree planted")
     }
 
     fun disableFileLogs() {
         if (Timber.forest().contains(mTree)) {
             Timber.uproot(mTree)
-            Timber.i("FileTree uprooted")
         }
     }
 }
