@@ -1,16 +1,13 @@
 package com.victorlapin.flasher.manager
 
-import android.app.AlarmManager
 import android.app.NotificationManager
-import android.app.PendingIntent
 import android.content.ComponentName
 import android.content.Context
-import android.content.Intent
 import android.content.pm.PackageManager
 import android.support.v4.app.NotificationCompat
 import com.victorlapin.flasher.R
+import com.victorlapin.flasher.model.EventArgs
 import com.victorlapin.flasher.ui.receivers.AlarmBootReceiver
-import com.victorlapin.flasher.ui.receivers.AlarmReceiver
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
@@ -18,16 +15,6 @@ import java.util.*
 class ServicesManager(
         private val mContext: Context
 ) {
-    val alarmManager by lazy {
-        mContext.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-    }
-
-    val alarmIntent: PendingIntent by lazy {
-        val intent = Intent(mContext, AlarmReceiver::class.java)
-        PendingIntent.getBroadcast(mContext, ALARM_REQUEST_CODE, intent,
-                PendingIntent.FLAG_CANCEL_CURRENT)
-    }
-
     fun enableBootReceiver() {
         val receiver = ComponentName(mContext, AlarmBootReceiver::class.java)
         val pm = mContext.packageManager
@@ -54,14 +41,35 @@ class ServicesManager(
                 mContext.getString(R.string.channel_default_id))
                 .setShowWhen(false)
                 .setSmallIcon(R.drawable.android_head)
-                .setContentText(mContext.getString(R.string.alarm_last_run_notification,
+                .setContentText(mContext.getString(R.string.schedule_last_run_notification,
                         formatter.format(Date(alarmLastRun))))
                 .build()
         notificationManager.notify(BOOT_NOTIFICATION_ID, notification)
     }
 
+    fun showInfoNotification(eventArgs: EventArgs) {
+        val text = when {
+            eventArgs.message != null -> eventArgs.message
+            eventArgs.messageId != null -> mContext.getString(eventArgs.messageId)
+            else -> null
+        }
+        showInfoNotification(text)
+    }
+
+    fun showInfoNotification(message: String?) {
+        message?.let {
+            val notification = NotificationCompat.Builder(mContext,
+                    mContext.getString(R.string.channel_default_id))
+                    .setShowWhen(true)
+                    .setSmallIcon(R.drawable.android_head)
+                    .setContentText(mContext.getString(R.string.schedule_error_notification, it))
+                    .build()
+            notificationManager.notify(INFO_NOTIFICATION_ID, notification)
+        }
+    }
+
     companion object {
-        private const val ALARM_REQUEST_CODE = 100
         private const val BOOT_NOTIFICATION_ID = 199
+        private const val INFO_NOTIFICATION_ID = 200
     }
 }

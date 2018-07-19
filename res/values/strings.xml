@@ -14,9 +14,13 @@
     <string name="success">Success</string>
     <string name="schedule_time_title">Time</string>
     <string name="schedule_interval_title">Repeat every (days)</string>
-    <string name="alarm_last_run">Last run: %s</string>
-    <string name="alarm_next_run">Next run: %s</string>
-    <string name="alarm_last_run_notification">Scheduled run was performed at %s</string>
+    <string name="schedule_last_run">Last run: %s</string>
+    <string name="schedule_next_run">Next run: %s</string>
+    <string name="schedule_last_run_notification">Scheduled run was performed at %s</string>
+    <string name="schedule_only_charging">Only when charging</string>
+    <string name="schedule_only_idle">Only when device is idle</string>
+    <string name="schedule_only_high_battery">Only when device has enough battery left</string>
+    <string name="schedule_error_notification">Scheduled run failed: %s</string>
 
     <!-- Action strings -->
     <string name="action_home">Home</string>

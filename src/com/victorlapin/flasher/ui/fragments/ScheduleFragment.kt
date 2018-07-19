@@ -40,8 +40,8 @@ class ScheduleFragment : HomeFragment() {
     override fun onResume() {
         super.onResume()
 
-        val lastRun = mSettings.alarmLastRun
-        lbl_last_run.text = mResources.getString(R.string.alarm_last_run)
+        val lastRun = mSettings.scheduleLastRun
+        lbl_last_run.text = mResources.getString(R.string.schedule_last_run)
                 .format(if (lastRun > 0) mDateTimeFormatter.format(Date(lastRun)) else
                     mResources.getString(R.string.schedule_interval_never).toLowerCase())
 
@@ -69,6 +69,21 @@ class ScheduleFragment : HomeFragment() {
         chk_enable.setOnCheckedChangeListener { _, isChecked ->
             (presenter as ScheduleHomePresenter).onScheduleEnabledChange(isChecked)
             updateNextRun()
+        }
+
+        chk_charging.isChecked = mSettings.scheduleOnlyCharging
+        chk_charging.setOnCheckedChangeListener { _, isChecked ->
+            (presenter as ScheduleHomePresenter).onOnlyChargingChanged(isChecked)
+        }
+
+        chk_idle.isChecked = mSettings.scheduleOnlyIdle
+        chk_idle.setOnCheckedChangeListener { _, isChecked ->
+            (presenter as ScheduleHomePresenter).onOnlyIdleChanged(isChecked)
+        }
+
+        chk_battery.isChecked = mSettings.scheduleOnlyHighBattery
+        chk_battery.setOnCheckedChangeListener { _, isChecked ->
+            (presenter as ScheduleHomePresenter).onOnlyHighBatteryChanged(isChecked)
         }
 
         updateNextRun()
@@ -118,7 +133,7 @@ class ScheduleFragment : HomeFragment() {
                     (!hasNext) -> mResources.getString(R.string.schedule_interval_never).toLowerCase()
             else -> mDateTimeFormatter.format(Date(nextRun))
         }
-        lbl_next_run.text = mResources.getString(R.string.alarm_next_run).format(displayText)
+        lbl_next_run.text = mResources.getString(R.string.schedule_next_run).format(displayText)
     }
 
     companion object {

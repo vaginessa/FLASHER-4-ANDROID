@@ -1,15 +1,16 @@
 package com.victorlapin.flasher.model.repository
 
-import android.app.AlarmManager
+import androidx.work.ExistingWorkPolicy
+import androidx.work.WorkManager
 import com.victorlapin.flasher.manager.ServicesManager
 import com.victorlapin.flasher.manager.SettingsManager
 import com.victorlapin.flasher.model.DateBuilder
+import com.victorlapin.flasher.work.ScheduleWorker
 import io.reactivex.Single
 import timber.log.Timber
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
-import java.util.concurrent.TimeUnit
 
 class AlarmRepository(
         private val mSettings: SettingsManager,
@@ -23,13 +24,11 @@ class AlarmRepository(
             val time = dateBuilder.nextAlarmTime
             Timber.i("Next run: ${SimpleDateFormat.getDateTimeInstance(DateFormat.MEDIUM,
                             DateFormat.SHORT).format(Date(time))}")
-            if (dateBuilder.interval > 0) {
-                mServices.alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, time,
-                        TimeUnit.DAYS.toMillis(dateBuilder.interval.toLong()), mServices.alarmIntent)
-            } else {
-                mServices.alarmManager.setWindow(AlarmManager.RTC_WAKEUP, time,
-                        TimeUnit.HOURS.toMillis(1), mServices.alarmIntent)
-            }
+            WorkManager.getInstance()
+                    ?.beginUniqueWork(ScheduleWorker.JOB_TAG,
+                            ExistingWorkPolicy.REPLACE,
+                            ScheduleWorker.buildRequest(time, mSettings))
+                    ?.enqueue()
             mServices.enableBootReceiver()
         }
         emitter.onSuccess(Any())
@@ -37,7 +36,7 @@ class AlarmRepository(
 
     fun cancelAlarm(): Single<Any> = Single.create { emitter ->
         Timber.i("Canceled")
-        mServices.alarmManager.cancel(mServices.alarmIntent)
+        WorkManager.getInstance()?.cancelUniqueWork(ScheduleWorker.JOB_TAG)
         mServices.disableBootReceiver()
         emitter.onSuccess(Any())
     }
