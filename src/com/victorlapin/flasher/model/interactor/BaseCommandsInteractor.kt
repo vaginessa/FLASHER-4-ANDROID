@@ -6,11 +6,11 @@ import com.victorlapin.flasher.R
 import com.victorlapin.flasher.model.EventArgs
 import com.victorlapin.flasher.model.database.entity.Command
 import com.victorlapin.flasher.model.repository.CommandsRepository
+import io.reactivex.Completable
 import io.reactivex.Flowable
 import io.reactivex.Maybe
-import io.reactivex.Observable
+import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
 
@@ -34,24 +34,23 @@ abstract class BaseCommandsInteractor constructor(
 
     fun deleteCommand(command: Command) = mRepo.deleteCommand(command)
 
-    fun changeOrder(orderedCommands: List<Command>): Observable<Any> =
+    fun changeOrder(orderedCommands: List<Command>): Completable =
             mRepo.changeOrder(orderedCommands)
 
     abstract fun addStubCommand()
 
-    fun exportCommands(fileName: String): Maybe<EventArgs> =
+    fun exportCommands(fileName: String): Single<EventArgs> =
             getCommands()
                     .firstOrError()
-                    .flatMapMaybe {
+                    .map {
                         val json = mGson.toJson(it)
-                        val result = mRepo.exportCommands(fileName, json)
-                        Maybe.just(result)
+                        mRepo.exportCommands(fileName, json)
                     }
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
 
-    fun importCommands(fileName: String): Maybe<EventArgs> =
-            Maybe.create<EventArgs> { emitter ->
+    fun importCommands(fileName: String): Single<EventArgs> =
+            Single.create<EventArgs> { emitter ->
                 try {
                     val json = mRepo.importJson(fileName)
                     val commands = mGson.fromJson<List<Command>>(json, object : TypeToken<List<Command>>() {}.type)

@@ -5,9 +5,9 @@ import com.victorlapin.flasher.R
 import com.victorlapin.flasher.model.EventArgs
 import com.victorlapin.flasher.model.database.dao.CommandDao
 import com.victorlapin.flasher.model.database.entity.Command
+import io.reactivex.Completable
 import io.reactivex.Flowable
 import io.reactivex.Maybe
-import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -33,10 +33,9 @@ class CommandsRepository constructor(
                 .subscribe()
     }
 
-    fun changeOrder(orderedCommands: List<Command>): Observable<Any> =
-            Observable.create<Any> { emitter ->
+    fun changeOrder(orderedCommands: List<Command>): Completable =
+            Completable.create { emitter ->
                 mCommandDao.update(orderedCommands)
-                emitter.onNext(Any())
                 emitter.onComplete()
             }
                     .subscribeOn(Schedulers.io())
