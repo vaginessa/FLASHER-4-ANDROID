@@ -32,6 +32,7 @@ import kotlinx.android.synthetic.main.include_progress.*
 import kotlinx.android.synthetic.main.include_toolbar.*
 import org.koin.android.ext.android.inject
 import org.koin.android.ext.android.release
+import timber.log.Timber
 import java.io.File
 
 open class HomeFragment : BaseFragment(), HomeFragmentView {
@@ -200,7 +201,8 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
 
     override fun showFlashFileDialog(command: Command, startPath: String?) {
         mRxPermissions.request(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                .subscribe { granted ->
+                .firstOrError()
+                .doOnSuccess { granted ->
                     if (granted) {
                         FileChooserDialog.Builder(context!!)
                                 .initialPath(startPath)
@@ -223,7 +225,8 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
                                 .show()
                     }
                 }
-                .addTo(mDisposable!!)
+                .doOnError { Timber.e(it) }
+                .subscribe()
     }
 
     override fun showEditMaskDialog(command: Command) {
@@ -239,7 +242,8 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
 
     override fun showSelectFolderDialog(command: Command, startPath: String?) {
         mRxPermissions.request(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                .subscribe { granted ->
+                .firstOrError()
+                .doOnSuccess { granted ->
                     if (granted) {
                         FolderChooserDialog.Builder()
                                 .initialPath(startPath)
@@ -260,7 +264,8 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
                                 .show()
                     }
                 }
-                .addTo(mDisposable!!)
+                .doOnError { Timber.e(it) }
+                .subscribe()
     }
 
     override fun showDeletedSnackbar(command: Command) {
@@ -295,7 +300,8 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
 
     override fun showExportDialog() {
         mRxPermissions.request(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                .subscribe { granted ->
+                .firstOrError()
+                .doOnSuccess { granted ->
                     if (granted) {
                         MaterialDialog.Builder(context!!)
                                 .title(R.string.enter_file_name)
@@ -314,12 +320,14 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
                                 .show()
                     }
                 }
-                .addTo(mDisposable!!)
+                .doOnError { Timber.e(it) }
+                .subscribe()
     }
 
     override fun showImportDialog() {
         mRxPermissions.request(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                .subscribe { granted ->
+                .firstOrError()
+                .doOnSuccess { granted ->
                     if (granted) {
                         FileChooserDialog.Builder(context!!)
                                 .initialPath(Const.APP_FOLDER)
@@ -339,7 +347,8 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
                                 .show()
                     }
                 }
-                .addTo(mDisposable!!)
+                .doOnError { Timber.e(it) }
+                .subscribe()
     }
 
     override fun showInfoToast(message: String) {
