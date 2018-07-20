@@ -56,8 +56,8 @@ val modelModule = module {
     }
 
     factory { CommandsRepository(get(), get()) }
-    factory { HomeInteractor(get()) }
-    factory { ScheduleInteractor(get()) }
+    factory { HomeInteractor(get(), get()) }
+    factory { ScheduleInteractor(get(), get()) }
     factory { AboutRepository(get(), get()) }
     factory { AboutInteractor(get()) }
     factory { RecoveryScriptRepository(get(), get(), get()) }
