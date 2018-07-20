@@ -55,7 +55,7 @@ val modelModule = module {
                 .create()
     }
 
-    factory { CommandsRepository(get(), get()) }
+    factory { CommandsRepository(get()) }
     factory { HomeInteractor(get(), get()) }
     factory { ScheduleInteractor(get(), get()) }
     factory { AboutRepository(get(), get()) }

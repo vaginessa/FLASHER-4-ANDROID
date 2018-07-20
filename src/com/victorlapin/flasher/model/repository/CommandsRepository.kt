@@ -1,6 +1,5 @@
 package com.victorlapin.flasher.model.repository
 
-import com.google.gson.Gson
 import com.victorlapin.flasher.Const
 import com.victorlapin.flasher.R
 import com.victorlapin.flasher.model.EventArgs
@@ -15,8 +14,7 @@ import io.reactivex.schedulers.Schedulers
 import java.io.File
 
 class CommandsRepository constructor(
-        private val mCommandDao: CommandDao,
-        private val mGson: Gson
+        private val mCommandDao: CommandDao
 ) {
     fun getCommands(chainId: Long): Flowable<List<Command>> = mCommandDao.getCommands(chainId)
 
