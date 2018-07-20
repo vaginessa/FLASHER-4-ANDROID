@@ -22,7 +22,7 @@ abstract class BaseHomeFragmentPresenter constructor(
         protected val mSettings: SettingsManager,
         private val mInteractor: BaseCommandsInteractor
 ) : MvpPresenter<HomeFragmentView>() {
-    protected val mDisposable = CompositeDisposable()
+    private val mDisposable = CompositeDisposable()
     private var mReorderSubject = PublishSubject.create<List<Command>>()
     protected abstract val mCurrentFragmentId: Int
 
