@@ -17,7 +17,6 @@ import com.victorlapin.flasher.model.interactor.AlarmInteractor
 import com.victorlapin.flasher.model.interactor.RecoveryScriptInteractor
 import com.victorlapin.flasher.ui.activities.BaseActivity
 import com.victorlapin.flasher.ui.activities.MainActivity
-import io.reactivex.disposables.Disposable
 import org.koin.android.ext.android.inject
 
 class SettingsGlobalFragment : PreferenceFragmentCompat() {
@@ -73,14 +72,12 @@ class SettingsGlobalFragment : PreferenceFragmentCompat() {
         findPreference(SettingsManager.KEY_CLEAR_SCHEDULE).onPreferenceClickListener =
                 Preference.OnPreferenceClickListener {
                     mSettings.apply {
-                        var disposable: Disposable? = null
-                        disposable = mAlarmInteractor.cancelAlarm()
-                                .doOnSuccess {
+                        mAlarmInteractor.cancelAlarm()
+                                .doOnComplete {
                                     useSchedule = false
                                     scheduleTime = 0
                                     scheduleInterval = 0
                                     scheduleLastRun = 0
-                                    disposable?.dispose()
                                 }
                                 .subscribe()
                     }

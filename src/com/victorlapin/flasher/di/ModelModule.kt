@@ -55,14 +55,14 @@ val modelModule = module {
                 .create()
     }
 
-    factory { CommandsRepository(get(), get()) }
-    factory { HomeInteractor(get()) }
-    factory { ScheduleInteractor(get()) }
+    factory { CommandsRepository(get()) }
+    factory { HomeInteractor(get(), get()) }
+    factory { ScheduleInteractor(get(), get()) }
     factory { AboutRepository(get(), get()) }
     factory { AboutInteractor(get()) }
-    factory { RecoveryScriptRepository(get(), get(), get()) }
-    factory { RecoveryScriptInteractor(get()) }
-    factory { AlarmRepository(get(), get()) }
-    factory { AlarmInteractor(get()) }
-    factory { BackupsRepository(get()) }
+    factory { RecoveryScriptRepository() }
+    factory { RecoveryScriptInteractor(get(), get(), get(), get()) }
+    factory { AlarmRepository(get()) }
+    factory { AlarmInteractor(get(), get(), get()) }
+    factory { BackupsRepository() }
 }

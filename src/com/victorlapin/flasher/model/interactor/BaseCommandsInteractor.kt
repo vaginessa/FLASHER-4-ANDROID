@@ -1,18 +1,28 @@
 package com.victorlapin.flasher.model.interactor
 
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import com.victorlapin.flasher.R
 import com.victorlapin.flasher.model.EventArgs
 import com.victorlapin.flasher.model.database.entity.Command
 import com.victorlapin.flasher.model.repository.CommandsRepository
+import io.reactivex.Completable
 import io.reactivex.Flowable
 import io.reactivex.Maybe
-import io.reactivex.Observable
+import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import timber.log.Timber
 
 abstract class BaseCommandsInteractor constructor(
-        protected val mRepo: CommandsRepository
+        private val mRepo: CommandsRepository,
+        private val mGson: Gson
 ) {
-    abstract fun getCommands(): Flowable<List<Command>>
+    protected abstract val mChainId: Long
+
+    fun getCommands(): Flowable<List<Command>> = mRepo.getCommands(mChainId)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
 
     fun getCommand(id: Long): Maybe<Command> = mRepo.getCommand(id)
             .subscribeOn(Schedulers.io())
@@ -24,14 +34,40 @@ abstract class BaseCommandsInteractor constructor(
 
     fun deleteCommand(command: Command) = mRepo.deleteCommand(command)
 
-    fun changeOrder(orderedCommands: List<Command>): Observable<Any> =
+    fun changeOrder(orderedCommands: List<Command>): Completable =
             mRepo.changeOrder(orderedCommands)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
 
     abstract fun addStubCommand()
 
-    abstract fun exportCommands(fileName: String): Maybe<EventArgs>
+    fun exportCommands(fileName: String): Single<EventArgs> =
+            getCommands()
+                    .firstOrError()
+                    .map {
+                        val json = mGson.toJson(it)
+                        mRepo.exportCommands(fileName, json)
+                    }
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
 
-    abstract fun importCommands(fileName: String): Maybe<EventArgs>
+    fun importCommands(fileName: String): Single<EventArgs> =
+            Single.create<EventArgs> { emitter ->
+                try {
+                    val json = mRepo.importJson(fileName)
+                    val commands = mGson.fromJson<List<Command>>(json, object : TypeToken<List<Command>>() {}.type)
+                    if (commands.isNotEmpty()) {
+                        var i = 0
+                        commands.forEach {
+                            it.chainId = mChainId
+                            it.orderNumber = ++i
+                        }
+                        mRepo.importCommands(commands)
+                    }
+                    emitter.onSuccess(EventArgs(isSuccess = true, messageId = R.string.success))
+                } catch (ex: Exception) {
+                    Timber.e(ex)
+                    emitter.onSuccess(EventArgs(isSuccess = false, message = ex.message))
+                }
+            }
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
 }

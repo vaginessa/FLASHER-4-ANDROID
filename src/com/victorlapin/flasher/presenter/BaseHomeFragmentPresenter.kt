@@ -3,14 +3,13 @@ package com.victorlapin.flasher.presenter
 import com.arellomobile.mvp.MvpPresenter
 import com.victorlapin.flasher.R
 import com.victorlapin.flasher.Screens
-import com.victorlapin.flasher.addTo
 import com.victorlapin.flasher.manager.SettingsManager
 import com.victorlapin.flasher.model.CommandClickEventArgs
 import com.victorlapin.flasher.model.database.entity.Command
 import com.victorlapin.flasher.model.interactor.BaseCommandsInteractor
 import com.victorlapin.flasher.model.interactor.RecoveryScriptInteractor
 import com.victorlapin.flasher.view.HomeFragmentView
-import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.disposables.Disposable
 import io.reactivex.subjects.PublishSubject
 import ru.terrakok.cicerone.Router
 import timber.log.Timber
@@ -22,27 +21,25 @@ abstract class BaseHomeFragmentPresenter constructor(
         protected val mSettings: SettingsManager,
         private val mInteractor: BaseCommandsInteractor
 ) : MvpPresenter<HomeFragmentView>() {
-    protected val mDisposable = CompositeDisposable()
+    private var mDisposable: Disposable? = null
     private var mReorderSubject = PublishSubject.create<List<Command>>()
     protected abstract val mCurrentFragmentId: Int
 
     override fun attachView(view: HomeFragmentView?) {
         super.attachView(view)
-        mInteractor.getCommands()
+        mDisposable = mInteractor.getCommands()
                 .subscribe {
                     viewState.setData(it)
                 }
-                .addTo(mDisposable)
         mReorderSubject
-                .switchMap { commands ->
+                .switchMapCompletable { commands ->
                     mInteractor.changeOrder(commands)
                 }
-                .subscribe { }
-                .addTo(mDisposable)
+                .subscribe()
     }
 
     override fun detachView(view: HomeFragmentView?) {
-        mDisposable.clear()
+        mDisposable?.dispose()
         super.detachView(view)
     }
 
@@ -51,11 +48,11 @@ abstract class BaseHomeFragmentPresenter constructor(
 
     fun onCommandSwiped(id: Long) {
         mInteractor.getCommand(id)
-                .subscribe {
+                .doOnSuccess {
                     mInteractor.deleteCommand(it)
                     viewState.showDeletedSnackbar(it)
                 }
-                .addTo(mDisposable)
+                .subscribe()
     }
 
     fun onUndoDelete(command: Command) =
@@ -108,7 +105,7 @@ abstract class BaseHomeFragmentPresenter constructor(
     fun buildAndDeploy(chainId: Long) {
         viewState.toggleProgress(true)
         mScriptInteractor.buildScript(chainId)
-                .subscribe({
+                .doOnSuccess {
                     if (mSettings.showMaskToast && it.resolvedFiles.isNotBlank()) {
                         viewState.showInfoToast(it.resolvedFiles)
                     }
@@ -119,10 +116,9 @@ abstract class BaseHomeFragmentPresenter constructor(
                     } else {
                         viewState.showInfoSnackbar(result)
                     }
-                }, {
-                    Timber.e(it)
-                })
-                .addTo(mDisposable)
+                }
+                .doOnError { Timber.e(it) }
+                .subscribe()
     }
 
     fun reboot() {
@@ -138,20 +134,18 @@ abstract class BaseHomeFragmentPresenter constructor(
 
     fun exportCommands(fileName: String) {
         mInteractor.exportCommands(fileName)
-                .subscribe {
-                    viewState.showInfoSnackbar(it)
-                }
-                .addTo(mDisposable)
+                .doOnSuccess { viewState.showInfoSnackbar(it) }
+                .doOnError { Timber.e(it) }
+                .subscribe()
     }
 
     fun onImportClicked() = viewState.showImportDialog()
 
     fun importCommands(fileName: String) {
         mInteractor.importCommands(fileName)
-                .subscribe {
-                    viewState.showInfoSnackbar(it)
-                }
-                .addTo(mDisposable)
+                .doOnSuccess { viewState.showInfoSnackbar(it) }
+                .doOnError { Timber.e(it) }
+                .subscribe()
     }
 
     fun onOrderChanged(commands: List<Command>) = mReorderSubject.onNext(commands)

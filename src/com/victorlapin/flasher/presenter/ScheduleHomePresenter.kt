@@ -2,7 +2,6 @@ package com.victorlapin.flasher.presenter
 
 import com.arellomobile.mvp.InjectViewState
 import com.victorlapin.flasher.R
-import com.victorlapin.flasher.addTo
 import com.victorlapin.flasher.manager.SettingsManager
 import com.victorlapin.flasher.model.DateBuilder
 import com.victorlapin.flasher.model.interactor.AlarmInteractor
@@ -30,7 +29,6 @@ class ScheduleHomePresenter constructor(
                         viewState.showInfoToast(it.localizedMessage)
                     }
                     .subscribe()
-                    .addTo(mDisposable)
         } else {
             mAlarmInteractor.cancelAlarm()
                     .doOnError {
@@ -38,7 +36,6 @@ class ScheduleHomePresenter constructor(
                         viewState.showInfoToast(it.localizedMessage)
                     }
                     .subscribe()
-                    .addTo(mDisposable)
         }
     }
 
@@ -76,7 +73,6 @@ class ScheduleHomePresenter constructor(
                         viewState.showInfoToast(it.localizedMessage)
                     }
                     .subscribe()
-                    .addTo(mDisposable)
         }
     }
 

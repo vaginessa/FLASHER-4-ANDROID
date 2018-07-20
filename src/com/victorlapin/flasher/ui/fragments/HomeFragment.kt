@@ -32,6 +32,7 @@ import kotlinx.android.synthetic.main.include_progress.*
 import kotlinx.android.synthetic.main.include_toolbar.*
 import org.koin.android.ext.android.inject
 import org.koin.android.ext.android.release
+import timber.log.Timber
 import java.io.File
 
 open class HomeFragment : BaseFragment(), HomeFragmentView {
@@ -160,7 +161,7 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
 
     override fun showWipeDialog(command: Command) {
         val indices = if (command.arg1 != null) {
-            val preselected = toArray(command.arg1!!)
+            val preselected = command.arg1!!.toArray()
             val i = arrayListOf<Int>()
             preselected.forEach { i.add(mWipePartitions.indexOf(it)) }
             i.toTypedArray()
@@ -169,7 +170,7 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
                 .title(R.string.command_wipe)
                 .items(mWipePartitions)
                 .itemsCallbackMultiChoice(indices) { _, _, items ->
-                    command.arg1 = flatten(items.toSet().toString())
+                    command.arg1 = items.toSet().toString().flatten()
                     presenter.onCommandUpdated(command)
                     return@itemsCallbackMultiChoice true
                 }
@@ -180,7 +181,7 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
 
     override fun showBackupDialog(command: Command) {
         val indices = if (command.arg1 != null) {
-            val preselected = toArray(command.arg1!!)
+            val preselected = command.arg1!!.toArray()
             val i = arrayListOf<Int>()
             preselected.forEach { i.add(mBackupPartitions.indexOf(it)) }
             i.toTypedArray()
@@ -189,7 +190,7 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
                 .title(R.string.command_backup)
                 .items(mBackupPartitions)
                 .itemsCallbackMultiChoice(indices) { _, _, items ->
-                    command.arg1 = flatten(items.toSet().toString())
+                    command.arg1 = items.toSet().toString().flatten()
                     presenter.onCommandUpdated(command)
                     return@itemsCallbackMultiChoice true
                 }
@@ -200,7 +201,8 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
 
     override fun showFlashFileDialog(command: Command, startPath: String?) {
         mRxPermissions.request(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                .subscribe { granted ->
+                .firstOrError()
+                .doOnSuccess { granted ->
                     if (granted) {
                         FileChooserDialog.Builder(context!!)
                                 .initialPath(startPath)
@@ -223,7 +225,8 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
                                 .show()
                     }
                 }
-                .addTo(mDisposable!!)
+                .doOnError { Timber.e(it) }
+                .subscribe()
     }
 
     override fun showEditMaskDialog(command: Command) {
@@ -239,7 +242,8 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
 
     override fun showSelectFolderDialog(command: Command, startPath: String?) {
         mRxPermissions.request(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                .subscribe { granted ->
+                .firstOrError()
+                .doOnSuccess { granted ->
                     if (granted) {
                         FolderChooserDialog.Builder()
                                 .initialPath(startPath)
@@ -260,7 +264,8 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
                                 .show()
                     }
                 }
-                .addTo(mDisposable!!)
+                .doOnError { Timber.e(it) }
+                .subscribe()
     }
 
     override fun showDeletedSnackbar(command: Command) {
@@ -295,7 +300,8 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
 
     override fun showExportDialog() {
         mRxPermissions.request(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                .subscribe { granted ->
+                .firstOrError()
+                .doOnSuccess { granted ->
                     if (granted) {
                         MaterialDialog.Builder(context!!)
                                 .title(R.string.enter_file_name)
@@ -314,12 +320,14 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
                                 .show()
                     }
                 }
-                .addTo(mDisposable!!)
+                .doOnError { Timber.e(it) }
+                .subscribe()
     }
 
     override fun showImportDialog() {
         mRxPermissions.request(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                .subscribe { granted ->
+                .firstOrError()
+                .doOnSuccess { granted ->
                     if (granted) {
                         FileChooserDialog.Builder(context!!)
                                 .initialPath(Const.APP_FOLDER)
@@ -339,7 +347,8 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
                                 .show()
                     }
                 }
-                .addTo(mDisposable!!)
+                .doOnError { Timber.e(it) }
+                .subscribe()
     }
 
     override fun showInfoToast(message: String) {
@@ -393,12 +402,6 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
             fragment.arguments = args
             return fragment
         }
-
-        private fun flatten(set: String) = set.replace("\\[|]".toRegex(), "")
-        private fun toArray(set: String) =
-                set.split(",")
-                        .map { it.trim() }
-                        .toTypedArray()
 
         const val ARG_CHAIN_ID = "ARG_CHAIN_ID"
     }
