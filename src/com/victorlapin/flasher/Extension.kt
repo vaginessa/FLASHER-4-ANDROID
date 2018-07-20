@@ -36,3 +36,8 @@ fun Snackbar.adjustLayout(): Snackbar {
     view.layoutParams = params
     return this
 }
+
+fun String.toArray() =
+        this.split(",")
+                .map { it.trim().toLowerCase() }
+                .toTypedArray()

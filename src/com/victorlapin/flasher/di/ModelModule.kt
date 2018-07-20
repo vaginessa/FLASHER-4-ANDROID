@@ -60,9 +60,9 @@ val modelModule = module {
     factory { ScheduleInteractor(get(), get()) }
     factory { AboutRepository(get(), get()) }
     factory { AboutInteractor(get()) }
-    factory { RecoveryScriptRepository(get(), get(), get()) }
-    factory { RecoveryScriptInteractor(get()) }
+    factory { RecoveryScriptRepository() }
+    factory { RecoveryScriptInteractor(get(), get(), get(), get()) }
     factory { AlarmRepository(get()) }
     factory { AlarmInteractor(get(), get(), get()) }
-    factory { BackupsRepository(get()) }
+    factory { BackupsRepository() }
 }
