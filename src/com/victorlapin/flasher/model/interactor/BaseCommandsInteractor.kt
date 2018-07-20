@@ -40,15 +40,13 @@ abstract class BaseCommandsInteractor constructor(
     abstract fun addStubCommand()
 
     fun exportCommands(fileName: String): Maybe<EventArgs> =
-            Maybe.create<EventArgs> { emitter ->
-                var disposable: Disposable? = null
-                disposable = getCommands().subscribe {
-                    val json = mGson.toJson(it)
-                    val result = mRepo.exportCommands(fileName, json)
-                    emitter.onSuccess(result)
-                    disposable?.dispose()
-                }
-            }
+            getCommands()
+                    .firstOrError()
+                    .flatMapMaybe {
+                        val json = mGson.toJson(it)
+                        val result = mRepo.exportCommands(fileName, json)
+                        Maybe.just(result)
+                    }
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
 

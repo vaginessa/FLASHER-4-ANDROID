@@ -8,7 +8,6 @@ import com.victorlapin.flasher.model.repository.CommandsRepository
 import com.victorlapin.flasher.model.repository.RecoveryScriptRepository
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
 
@@ -19,15 +18,11 @@ class RecoveryScriptInteractor constructor(
         private val mSettings: SettingsManager
 ) {
     fun buildScript(chainId: Long): Single<BuildScriptResult> =
-            Single.create<BuildScriptResult> { emitter ->
-                var disposable: Disposable? = null
-                disposable = mCommandsRepo.getCommands(chainId)
-                        .subscribe {
-                            val result = mScriptRepo.generateScript(it, mSettings.compressBackups)
-                            emitter.onSuccess(result)
-                            disposable?.dispose()
-                        }
-            }
+            mCommandsRepo.getCommands(chainId)
+                    .firstOrError()
+                    .map {
+                        mScriptRepo.generateScript(it, mSettings.compressBackups)
+                    }
                     .subscribeOn(Schedulers.computation())
                     .observeOn(AndroidSchedulers.mainThread())
 
