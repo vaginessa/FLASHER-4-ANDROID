@@ -9,7 +9,7 @@ import com.victorlapin.flasher.R
 import com.victorlapin.flasher.model.BuildScriptResult
 import com.victorlapin.flasher.model.EventArgs
 import com.victorlapin.flasher.model.database.entity.Command
-import com.victorlapin.flasher.toArray
+import com.victorlapin.flasher.toArrayLowerCase
 import timber.log.Timber
 import java.io.File
 import java.text.SimpleDateFormat
@@ -23,14 +23,14 @@ class RecoveryScriptRepository {
         commands.forEach {
             when (it.type) {
                 Command.TYPE_WIPE -> it.arg1?.let {
-                    val partitions = it.toArray()
+                    val partitions = it.toArrayLowerCase()
                             .map { if (it == "dalvik-cache") "dalvik" else it }
                     partitions.forEach {
                         scriptBuilder.appendln("wipe $it")
                     }
                 }
                 Command.TYPE_BACKUP -> it.arg1?.let {
-                    val partitions = it.toArray()
+                    val partitions = it.toArrayLowerCase()
                     val partString = StringBuilder()
                     partitions.forEach {
                         partString.append(it[0].toUpperCase())

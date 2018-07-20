@@ -161,7 +161,7 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
 
     override fun showWipeDialog(command: Command) {
         val indices = if (command.arg1 != null) {
-            val preselected = toArray(command.arg1!!)
+            val preselected = command.arg1!!.toArray()
             val i = arrayListOf<Int>()
             preselected.forEach { i.add(mWipePartitions.indexOf(it)) }
             i.toTypedArray()
@@ -170,7 +170,7 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
                 .title(R.string.command_wipe)
                 .items(mWipePartitions)
                 .itemsCallbackMultiChoice(indices) { _, _, items ->
-                    command.arg1 = flatten(items.toSet().toString())
+                    command.arg1 = items.toSet().toString().flatten()
                     presenter.onCommandUpdated(command)
                     return@itemsCallbackMultiChoice true
                 }
@@ -181,7 +181,7 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
 
     override fun showBackupDialog(command: Command) {
         val indices = if (command.arg1 != null) {
-            val preselected = toArray(command.arg1!!)
+            val preselected = command.arg1!!.toArray()
             val i = arrayListOf<Int>()
             preselected.forEach { i.add(mBackupPartitions.indexOf(it)) }
             i.toTypedArray()
@@ -190,7 +190,7 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
                 .title(R.string.command_backup)
                 .items(mBackupPartitions)
                 .itemsCallbackMultiChoice(indices) { _, _, items ->
-                    command.arg1 = flatten(items.toSet().toString())
+                    command.arg1 = items.toSet().toString().flatten()
                     presenter.onCommandUpdated(command)
                     return@itemsCallbackMultiChoice true
                 }
@@ -402,12 +402,6 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
             fragment.arguments = args
             return fragment
         }
-
-        private fun flatten(set: String) = set.replace("\\[|]".toRegex(), "")
-        private fun toArray(set: String) =
-                set.split(",")
-                        .map { it.trim() }
-                        .toTypedArray()
 
         const val ARG_CHAIN_ID = "ARG_CHAIN_ID"
     }
