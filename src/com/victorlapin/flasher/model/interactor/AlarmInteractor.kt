@@ -4,7 +4,7 @@ import com.victorlapin.flasher.manager.ServicesManager
 import com.victorlapin.flasher.manager.SettingsManager
 import com.victorlapin.flasher.model.DateBuilder
 import com.victorlapin.flasher.model.repository.AlarmRepository
-import io.reactivex.Single
+import io.reactivex.Completable
 import timber.log.Timber
 
 class AlarmInteractor(
@@ -12,18 +12,18 @@ class AlarmInteractor(
         private val mSettings: SettingsManager,
         private val mServices: ServicesManager
 ) {
-    fun setAlarm(): Single<Any> {
+    fun setAlarm(): Completable {
         val dateBuilder = DateBuilder(mSettings.scheduleTime)
         dateBuilder.interval = mSettings.scheduleInterval
         return if (dateBuilder.hasNextAlarm()) {
             mRepo.setAlarm(dateBuilder)
-                    .doOnSuccess { mServices.enableBootReceiver() }
+                    .doOnComplete { mServices.enableBootReceiver() }
         } else {
             Timber.i("Nothing to schedule")
             cancelAlarm()
         }
     }
 
-    fun cancelAlarm(): Single<Any> = mRepo.cancelAlarm()
-            .doOnSuccess { mServices.disableBootReceiver() }
+    fun cancelAlarm(): Completable = mRepo.cancelAlarm()
+            .doOnComplete { mServices.disableBootReceiver() }
 }

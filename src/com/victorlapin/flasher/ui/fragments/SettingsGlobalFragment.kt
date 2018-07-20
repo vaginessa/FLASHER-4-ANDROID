@@ -73,7 +73,7 @@ class SettingsGlobalFragment : PreferenceFragmentCompat() {
                 Preference.OnPreferenceClickListener {
                     mSettings.apply {
                         mAlarmInteractor.cancelAlarm()
-                                .doOnSuccess {
+                                .doOnComplete {
                                     useSchedule = false
                                     scheduleTime = 0
                                     scheduleInterval = 0

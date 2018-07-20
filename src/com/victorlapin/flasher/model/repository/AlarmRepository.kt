@@ -5,7 +5,7 @@ import androidx.work.WorkManager
 import com.victorlapin.flasher.manager.SettingsManager
 import com.victorlapin.flasher.model.DateBuilder
 import com.victorlapin.flasher.work.ScheduleWorker
-import io.reactivex.Single
+import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
@@ -16,8 +16,8 @@ import java.util.*
 class AlarmRepository(
         private val mSettings: SettingsManager
 ) {
-    fun setAlarm(dateBuilder: DateBuilder): Single<Any> =
-            Single.create<Any> { emitter ->
+    fun setAlarm(dateBuilder: DateBuilder): Completable =
+            Completable.create { emitter ->
                 if (dateBuilder.hasNextAlarm()) {
                     val time = dateBuilder.nextAlarmTime
                     Timber.i("Next run: ${SimpleDateFormat.getDateTimeInstance(DateFormat.MEDIUM,
@@ -28,15 +28,15 @@ class AlarmRepository(
                                     ScheduleWorker.buildRequest(dateBuilder.nextAlarmTime, mSettings))
                             ?.enqueue()
                 }
-                emitter.onSuccess(Any())
+                emitter.onComplete()
             }
                     .subscribeOn(Schedulers.computation())
                     .observeOn(AndroidSchedulers.mainThread())
 
-    fun cancelAlarm(): Single<Any> = Single.create<Any> { emitter ->
+    fun cancelAlarm(): Completable = Completable.create { emitter ->
         Timber.i("Canceled")
         WorkManager.getInstance()?.cancelUniqueWork(ScheduleWorker.JOB_TAG)
-        emitter.onSuccess(Any())
+        emitter.onComplete()
     }
             .subscribeOn(Schedulers.computation())
             .observeOn(AndroidSchedulers.mainThread())
