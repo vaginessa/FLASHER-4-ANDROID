@@ -85,13 +85,15 @@ class RecoveryScriptRepository {
         if (Shell.rootAccess()) {
             return try {
                 val scriptFile = SuFile(Const.SCRIPT_FILENAME)
-                scriptFile.parentFile
+                val logFiles = scriptFile.parentFile
                         .listFiles { _, name -> name.contains("log", true) }
-                        .forEach {
-                            Timber.i("Deleting ${it.absolutePath}")
-                            it.delete()
-                        }
-                Timber.i("Cleaned up recovery logs")
+                logFiles?.let {
+                    it.forEach {
+                        Timber.i("Deleting ${it.absolutePath}")
+                        it.delete()
+                    }
+                    Timber.i("Cleaned up recovery logs")
+                }
 
                 SuFileOutputStream(scriptFile).use {
                     it.write(script.toByteArray())
