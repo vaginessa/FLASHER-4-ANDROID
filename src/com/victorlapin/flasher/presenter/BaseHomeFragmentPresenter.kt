@@ -103,8 +103,8 @@ abstract class BaseHomeFragmentPresenter constructor(
     }
 
     fun buildAndDeploy(chainId: Long) {
-        viewState.toggleProgress(true)
         mScriptInteractor.buildScript(chainId)
+                .doOnSubscribe { viewState.toggleProgress(true) }
                 .doOnSuccess {
                     if (mSettings.showMaskToast && it.resolvedFiles.isNotBlank()) {
                         viewState.showInfoToast(it.resolvedFiles)
@@ -122,12 +122,15 @@ abstract class BaseHomeFragmentPresenter constructor(
     }
 
     fun reboot() {
-        viewState.toggleProgress(true)
-        val result = mScriptInteractor.rebootRecovery()
-        if (!result.isSuccess) {
-            viewState.toggleProgress(false)
-            viewState.showInfoSnackbar(result)
-        }
+        mScriptInteractor.rebootRecovery()
+                .doOnSubscribe { viewState.toggleProgress(true) }
+                .doOnSuccess {
+                    if (!it.isSuccess) {
+                        viewState.toggleProgress(false)
+                        viewState.showInfoSnackbar(it)
+                    }
+                }
+                .subscribe()
     }
 
     fun onExportClicked() = viewState.showExportDialog()

@@ -65,7 +65,7 @@ class SettingsGlobalFragment : PreferenceFragmentCompat() {
 
         findPreference(SettingsManager.KEY_DELETE_DEPLOYED_SCRIPT).onPreferenceClickListener =
                 Preference.OnPreferenceClickListener {
-                    mScriptInteractor.deleteScript()
+                    mScriptInteractor.deleteScript().subscribe()
                     return@OnPreferenceClickListener true
                 }
 

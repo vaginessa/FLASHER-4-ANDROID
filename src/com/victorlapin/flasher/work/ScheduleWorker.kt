@@ -27,7 +27,7 @@ class ScheduleWorker : Worker(), KoinComponent {
             val result = mScriptInteractor.deployScript(scriptResult.script)
             if (result.isSuccess) {
                 mSettings.bootNotificationFlag = true
-                mScriptInteractor.rebootRecovery()
+                mScriptInteractor.rebootRecovery().subscribe()
             } else {
                 mSettings.useSchedule = false
                 mServices.showInfoNotification(result)

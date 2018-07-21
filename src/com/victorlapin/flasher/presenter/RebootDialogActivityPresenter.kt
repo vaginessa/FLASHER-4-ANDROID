@@ -14,5 +14,7 @@ class RebootDialogActivityPresenter constructor(
         viewState.showRebootDialog()
     }
 
-    fun rebootRecovery() = mScriptInteractor.rebootRecovery()
+    fun rebootRecovery() {
+        mScriptInteractor.rebootRecovery().subscribe()
+    }
 }
