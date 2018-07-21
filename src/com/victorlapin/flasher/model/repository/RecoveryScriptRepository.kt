@@ -85,8 +85,11 @@ class RecoveryScriptRepository {
         if (Shell.rootAccess()) {
             return try {
                 SuFile(Const.SCRIPT_FILENAME).parentFile
-                        .listFiles { _, name -> name.endsWith(".log", true) }
-                        .forEach { it.delete() }
+                        .listFiles { _, name -> name.contains("log", true) }
+                        .forEach {
+                            Timber.i("Deleting ${it.absolutePath}")
+                            it.delete()
+                        }
                 Timber.i("Cleaned up recovery logs")
 
                 SuFileOutputStream(Const.SCRIPT_FILENAME).use {
