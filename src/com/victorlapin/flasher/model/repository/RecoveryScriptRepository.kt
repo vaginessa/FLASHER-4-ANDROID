@@ -74,10 +74,10 @@ class RecoveryScriptRepository {
         val result = BuildScriptResult(
                 script = scriptBuilder.toString(),
                 resolvedFiles = resolvedFilesBuilder.toString())
-        Timber.d("Generated script:\n${result.script}")
         if (result.resolvedFiles.isNotBlank()) {
             Timber.d("Resolved files:\n${result.resolvedFiles}")
         }
+        Timber.d("Generated script:\n${result.script}")
         return result
     }
 
