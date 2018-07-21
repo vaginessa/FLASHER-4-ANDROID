@@ -84,7 +84,8 @@ class RecoveryScriptRepository {
     fun deployScript(script: String): EventArgs {
         if (Shell.rootAccess()) {
             return try {
-                SuFile(Const.SCRIPT_FILENAME).parentFile
+                val scriptFile = SuFile(Const.SCRIPT_FILENAME)
+                scriptFile.parentFile
                         .listFiles { _, name -> name.contains("log", true) }
                         .forEach {
                             Timber.i("Deleting ${it.absolutePath}")
@@ -92,11 +93,17 @@ class RecoveryScriptRepository {
                         }
                 Timber.i("Cleaned up recovery logs")
 
-                SuFileOutputStream(Const.SCRIPT_FILENAME).use {
+                SuFileOutputStream(scriptFile).use {
                     it.write(script.toByteArray())
                 }
-                Timber.i("Script deployed")
-                EventArgs(isSuccess = true)
+
+                if (scriptFile.exists() && scriptFile.length() > 0) {
+                    Timber.i("Script deployed successfully")
+                    EventArgs(isSuccess = true)
+                } else {
+                    Timber.w("Deployed script has 0 bytes length")
+                    EventArgs(isSuccess = false, messageId = R.string.analyze_empty_script_deployed)
+                }
             } catch (ex: Exception) {
                 Timber.w(ex)
                 EventArgs(isSuccess = false, message = ex.toString())
