@@ -1,7 +1,7 @@
 package com.victorlapin.flasher.work
 
 import androidx.work.Constraints
-import androidx.work.OneTimeWorkRequest
+import androidx.work.PeriodicWorkRequest
 import androidx.work.Worker
 import com.victorlapin.flasher.manager.ServicesManager
 import com.victorlapin.flasher.manager.SettingsManager
@@ -18,7 +18,7 @@ class ScheduleWorker : Worker(), KoinComponent {
     private val mServices by inject<ServicesManager>()
 
     override fun doWork(): Result {
-        Timber.i("Schedule worker started")
+        Timber.i("Periodic worker started")
         mSettings.scheduleLastRun = System.currentTimeMillis()
         return try {
             val scriptResult = mScriptInteractor
@@ -32,7 +32,7 @@ class ScheduleWorker : Worker(), KoinComponent {
                 mSettings.useSchedule = false
                 mServices.showInfoNotification(result)
             }
-            Timber.i("Schedule worker finished")
+            Timber.i("Periodic worker finished")
             Result.SUCCESS
         } catch (t: Throwable) {
             Timber.e(t)
@@ -42,22 +42,21 @@ class ScheduleWorker : Worker(), KoinComponent {
     }
 
     override fun onStopped(cancelled: Boolean) {
-        Timber.w("Schedule worker stopped")
+        Timber.w("Periodic worker stopped")
     }
 
     companion object {
         const val JOB_TAG = "ScheduleWorker"
 
-        fun buildRequest(nextRun: Long, settings: SettingsManager): OneTimeWorkRequest {
-            val dateDiff = nextRun - System.currentTimeMillis()
+        fun buildRequest(settings: SettingsManager): PeriodicWorkRequest {
             val constraints = Constraints.Builder()
                     .setRequiresCharging(settings.scheduleOnlyCharging)
                     .setRequiresDeviceIdle(settings.scheduleOnlyIdle)
                     .setRequiresBatteryNotLow(settings.scheduleOnlyHighBattery)
                     .build()
 
-            return OneTimeWorkRequest.Builder(ScheduleWorker::class.java)
-                    .setInitialDelay(dateDiff, TimeUnit.MILLISECONDS)
+            return PeriodicWorkRequest.Builder(ScheduleWorker::class.java,
+                    settings.scheduleInterval.toLong(), TimeUnit.DAYS)
                     .setConstraints(constraints)
                     .build()
         }
