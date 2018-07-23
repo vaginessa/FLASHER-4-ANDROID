@@ -39,7 +39,7 @@ class ServicesManager(
         val formatter = SimpleDateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT)
         val notification = NotificationCompat.Builder(mContext,
                 mContext.getString(R.string.channel_default_id))
-                .setShowWhen(false)
+                .setShowWhen(true)
                 .setSmallIcon(R.drawable.android_head)
                 .setContentText(mContext.getString(R.string.schedule_last_run_notification,
                         formatter.format(Date(lastRun))))
