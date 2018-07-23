@@ -44,6 +44,9 @@
     <string name="theme_light">Светлая</string>
     <string name="theme_dark">Темная</string>
     <string name="theme_black">Черная</string>
+    <string name="theme_light_pixel">Светлая (акцент Pixel)</string>
+    <string name="theme_dark_pixel">Темная (акцент Pixel)</string>
+    <string name="theme_black_pixel">Черная (акцент Pixel)</string>
     <string name="pref_title_delete_deployed_script">Удалить установленный скрипт</string>
     <string name="pref_title_analyzer">Анализировать скрипт</string>
     <string name="pref_summary_analyzer">Прогонять базовые проверки \"от дурака\" на созданных скриптах. ВЫКЛЮЧАЙТЕ НА СВОЙ РИСК!</string>

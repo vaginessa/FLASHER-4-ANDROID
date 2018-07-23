@@ -28,8 +28,10 @@ abstract class RoundedBottomSheetDialogFragment : BottomSheetDialogFragment(),
             inflater.inflate(layoutRes, container, false)
 
     override fun getTheme() = when (mSettings.theme) {
-        R.style.AppTheme_Dark -> R.style.BottomSheetDialog_Dark
-        R.style.AppTheme_Black -> R.style.BottomSheetDialog_Dark
+        R.style.AppTheme_Dark,
+        R.style.AppTheme_Dark_Pixel,
+        R.style.AppTheme_Black,
+        R.style.AppTheme_Black_Pixel -> R.style.BottomSheetDialog_Dark
         else -> R.style.BottomSheetDialog_Light
     }
 

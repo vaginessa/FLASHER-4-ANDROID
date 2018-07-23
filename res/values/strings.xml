@@ -44,6 +44,9 @@
     <string name="theme_light">Light</string>
     <string name="theme_dark">Dark</string>
     <string name="theme_black">Black</string>
+    <string name="theme_light_pixel">Light (Pixel accent)</string>
+    <string name="theme_dark_pixel">Dark (Pixel accent)</string>
+    <string name="theme_black_pixel">Black (Pixel accent)</string>
     <string name="pref_title_delete_deployed_script">Delete deployed script</string>
     <string name="pref_title_analyzer">Use script analyzer</string>
     <string name="pref_summary_analyzer">Run very basic foolproof checks on a generated script. DISABLE AT YOUR OWN RISK!</string>
