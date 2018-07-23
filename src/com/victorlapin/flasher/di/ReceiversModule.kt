@@ -6,6 +6,6 @@ import org.koin.dsl.module.module
 
 val receiversModule = module {
     module(Screens.RECEIVER_BOOT) {
-        factory { BootReceiverPresenter(get(), get(), get()) }
+        factory { BootReceiverPresenter(get(), get()) }
     }
 }
