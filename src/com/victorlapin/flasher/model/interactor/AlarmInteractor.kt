@@ -26,6 +26,4 @@ class AlarmInteractor(
 
     fun cancelAlarm(): Completable = mRepo.cancelAlarm()
             .doOnComplete { mServices.disableBootReceiver() }
-
-    fun setPeriodic(): Completable = mRepo.setPeriodic(mSettings)
 }
