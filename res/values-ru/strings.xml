@@ -4,12 +4,12 @@
     <string name="command_type">Тип команды</string>
     <string name="command_args">Аргументы</string>
     <string name="command_tap_to_select">Нажмите чтобы выбрать…</string>
-    <string name="command_tap_to_enter_mask">Нажмите чтобы ввести маску…</string>
+    <string name="command_tap_to_enter_mask">Нажмите чтобы ввести часть имени файла…</string>
     <string name="command_tap_to_select_folder">Нажмите чтобы выбрать папку…</string>
     <string name="command_deleted">Команда удалена</string>
     <string name="not_found">Не найден</string>
     <string name="reboot">Скрипт установлен. Перезагрузиться в рекавери?</string>
-    <string name="enter_mask">Введите маску</string>
+    <string name="enter_mask">Введите часть имени файла</string>
     <string name="enter_file_name">Введите имя файла</string>
     <string name="success">Успешно</string>
     <string name="schedule_time_title">Время</string>
@@ -51,7 +51,7 @@
     <string name="pref_title_analyzer">Анализировать скрипт</string>
     <string name="pref_summary_analyzer">Прогонять базовые проверки \"от дурака\" на созданных скриптах. ВЫКЛЮЧАЙТЕ НА СВОЙ РИСК!</string>
     <string name="pref_title_mask_toast">Показывать имена файлов</string>
-    <string name="pref_summary_mask_toast">Показывать всплывающее уведомление с файлами, найденными по маскам</string>
+    <string name="pref_summary_mask_toast">Показывать всплывающее уведомление с файлами, выбранными умной прошивкой</string>
     <string name="pref_title_clear_schedule">Сбросить настройки расписания</string>
     <string name="pref_title_show_notification_on_boot">Показывать уведомление при загрузке</string>
     <string name="pref_summary_show_notification_on_boot">Показывать уведомление после запланированного запуска и загрузки обратно в систему</string>
@@ -65,7 +65,7 @@
     <string name="command_wipe">Вайп</string>
     <string name="command_backup">Резервная копия</string>
     <string name="command_flash_file">Прошить файл</string>
-    <string name="command_flash_mask">Прошить по маске</string>
+    <string name="command_flash_mask">Умная прошивка</string>
 
     <!-- Permissions -->
     <string name="permission_denied_storage">Необходим доступ к памяти устройства.</string>

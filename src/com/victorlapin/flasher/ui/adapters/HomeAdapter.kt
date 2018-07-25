@@ -88,7 +88,7 @@ class HomeAdapter constructor(
                 Command.TYPE_WIPE -> itemView.image.setImageResource(R.drawable.cellphone_erase)
                 Command.TYPE_BACKUP -> itemView.image.setImageResource(R.drawable.backup_restore)
                 Command.TYPE_FLASH_FILE -> itemView.image.setImageResource(R.drawable.flash)
-                Command.TYPE_FLASH_MASK -> itemView.image.setImageResource(R.drawable.regex)
+                Command.TYPE_FLASH_MASK -> itemView.image.setImageResource(R.drawable.folder_search)
             }
 
             val adapter = ArrayAdapter<String>(itemView.context,
