@@ -13,7 +13,7 @@ class BootReceiver : BroadcastReceiver(), KoinComponent {
 
     override fun onReceive(context: Context, intent: Intent) {
         if (intent.action == "android.intent.action.BOOT_COMPLETED") {
-            Timber.i("Recreating scheduled job on boot")
+            Timber.i("Recreating schedule worker on boot")
             mPresenter.resetAlarm()
             mPresenter.showNotification()
         }

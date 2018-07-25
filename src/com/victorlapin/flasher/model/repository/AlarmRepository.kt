@@ -20,6 +20,7 @@ class AlarmRepository(
             Completable.create { emitter ->
                 if (dateBuilder.hasNextAlarm()) {
                     val time = dateBuilder.nextAlarmTime
+                    Timber.i("Adding schedule worker")
                     Timber.i("Next run: ${SimpleDateFormat.getDateTimeInstance(DateFormat.MEDIUM,
                             DateFormat.SHORT).format(Date(time))}")
                     WorkManager.getInstance()
@@ -34,7 +35,7 @@ class AlarmRepository(
                     .observeOn(AndroidSchedulers.mainThread())
 
     fun cancelAlarm(): Completable = Completable.create { emitter ->
-        Timber.i("Canceled")
+        Timber.i("Schedule worker canceled")
         WorkManager.getInstance()?.cancelUniqueWork(ScheduleWorker.JOB_TAG)
         emitter.onComplete()
     }
