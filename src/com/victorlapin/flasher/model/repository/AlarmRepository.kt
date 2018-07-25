@@ -13,10 +13,8 @@ import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
-class AlarmRepository(
-        private val mSettings: SettingsManager
-) {
-    fun setAlarm(dateBuilder: DateBuilder): Completable =
+class AlarmRepository {
+    fun setAlarm(dateBuilder: DateBuilder, settings: SettingsManager): Completable =
             Completable.create { emitter ->
                 if (dateBuilder.hasNextAlarm()) {
                     val time = dateBuilder.nextAlarmTime
@@ -26,7 +24,7 @@ class AlarmRepository(
                     WorkManager.getInstance()
                             ?.beginUniqueWork(ScheduleWorker.JOB_TAG,
                                     ExistingWorkPolicy.REPLACE,
-                                    ScheduleWorker.buildRequest(dateBuilder.nextAlarmTime, mSettings))
+                                    ScheduleWorker.buildRequest(dateBuilder.nextAlarmTime, settings))
                             ?.enqueue()
                 }
                 emitter.onComplete()

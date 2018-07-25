@@ -16,7 +16,7 @@ class AlarmInteractor(
         val dateBuilder = DateBuilder(mSettings.scheduleTime)
         dateBuilder.interval = mSettings.scheduleInterval
         return if (dateBuilder.hasNextAlarm()) {
-            mRepo.setAlarm(dateBuilder)
+            mRepo.setAlarm(dateBuilder, mSettings)
                     .doOnComplete { mServices.enableBootReceiver() }
         } else {
             Timber.i("Nothing to schedule")
