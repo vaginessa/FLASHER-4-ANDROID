@@ -84,6 +84,9 @@ class SettingsGlobalFragment : PreferenceFragmentCompat() {
                                     scheduleTime = 0
                                     scheduleInterval = 0
                                     scheduleLastRun = 0
+                                    scheduleOnlyCharging = false
+                                    scheduleOnlyIdle = false
+                                    scheduleOnlyHighBattery = false
                                 }
                                 .subscribe()
                     }
