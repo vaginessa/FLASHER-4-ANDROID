@@ -9,7 +9,7 @@
     <string name="command_deleted">Команда удалена</string>
     <string name="not_found">Не найден</string>
     <string name="reboot">Скрипт установлен. Перезагрузиться в рекавери?</string>
-    <string name="enter_mask">Введите часть имени файла</string>
+    <string name="enter_mask">Введите имя (часть имени) файла</string>
     <string name="enter_file_name">Введите имя файла</string>
     <string name="success">Успешно</string>
     <string name="schedule_time_title">Время</string>
