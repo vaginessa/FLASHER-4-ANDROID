@@ -22,10 +22,10 @@ class AlarmRepository {
                     Timber.i("Next run: ${SimpleDateFormat.getDateTimeInstance(DateFormat.MEDIUM,
                             DateFormat.SHORT).format(Date(time))}")
                     WorkManager.getInstance()
-                            ?.beginUniqueWork(ScheduleWorker.JOB_TAG,
+                            .beginUniqueWork(ScheduleWorker.JOB_TAG,
                                     ExistingWorkPolicy.REPLACE,
                                     ScheduleWorker.buildRequest(dateBuilder.nextAlarmTime, settings))
-                            ?.enqueue()
+                            .enqueue()
                 }
                 emitter.onComplete()
             }
@@ -34,7 +34,7 @@ class AlarmRepository {
 
     fun cancelAlarm(): Completable = Completable.create { emitter ->
         Timber.i("Schedule worker canceled")
-        WorkManager.getInstance()?.cancelUniqueWork(ScheduleWorker.JOB_TAG)
+        WorkManager.getInstance().cancelUniqueWork(ScheduleWorker.JOB_TAG)
         emitter.onComplete()
     }
             .subscribeOn(Schedulers.computation())
