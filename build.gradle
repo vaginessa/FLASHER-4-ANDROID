@@ -1,7 +1,7 @@
 buildscript {
     ext {
         version_room = "1.1.1"
-        version_support = "28.0.0-alpha3"
+        version_support = "28.0.0-beta01"
         version_kotlin = "1.2.51"
         version_moxy = "1.5.5"
         version_test_runner = "1.0.2"
@@ -9,7 +9,7 @@ buildscript {
     apply from: 'repos.gradle'
     addRepos(repositories)
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.2.0-beta04'
+        classpath 'com.android.tools.build:gradle:3.2.0-beta05'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$version_kotlin"
     }
 }
