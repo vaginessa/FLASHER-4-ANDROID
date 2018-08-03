@@ -2,7 +2,7 @@ buildscript {
     ext {
         version_room = "1.1.1"
         version_support = "28.0.0-beta01"
-        version_kotlin = "1.2.51"
+        version_kotlin = "1.2.60"
         version_moxy = "1.5.5"
         version_test_runner = "1.0.2"
     }
@@ -105,7 +105,7 @@ dependencies {
     implementation "com.android.support:preference-v14:$version_support"
     implementation "com.android.support.constraint:constraint-layout:1.1.2"
     implementation "com.arello-mobile:moxy-app-compat:$version_moxy"
-    implementation "io.reactivex.rxjava2:rxjava:2.1.16"
+    implementation "io.reactivex.rxjava2:rxjava:2.2.0"
     implementation "io.reactivex.rxjava2:rxandroid:2.0.2"
     implementation "android.arch.persistence.room:runtime:$version_room"
     implementation "android.arch.persistence.room:rxjava2:$version_room"
@@ -117,7 +117,7 @@ dependencies {
     implementation "com.github.topjohnwu:libsu:1.2.0"
     implementation "com.google.code.gson:gson:2.8.5"
     implementation "com.jakewharton.timber:timber:4.7.1"
-    implementation "android.arch.work:work-runtime:1.0.0-alpha05"
+    implementation "android.arch.work:work-runtime:1.0.0-alpha06"
 
     debugImplementation "im.dino:dbinspector:3.4.1@aar"
 
