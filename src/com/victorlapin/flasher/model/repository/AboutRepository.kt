@@ -48,7 +48,7 @@ class AboutRepository(
         result.add(item)
         item = ListItem(mResources.getString(R.string.about_links_donate))
         item.description = mResources.getString(R.string.about_links_paypal)
-        item.url = "https://www.paypal.me/VictorLapin/2"
+        item.url = "https://www.paypal.me/VictorLapin/150"
         item.image = mResources.getDrawable(R.drawable.paypal)
         result.add(item)
 
