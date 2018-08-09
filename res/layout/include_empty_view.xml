@@ -4,24 +4,24 @@
     android:id="@+id/empty_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:visibility="gone"
+    app:layout_constraintBottom_toBottomOf="@id/list"
     app:layout_constraintEnd_toEndOf="@id/list"
     app:layout_constraintStart_toStartOf="@id/list"
-    app:layout_constraintTop_toTopOf="@id/list"
-    app:layout_constraintBottom_toBottomOf="@id/list"
-    android:visibility="gone">
+    app:layout_constraintTop_toTopOf="@id/list">
 
     <android.support.v7.widget.AppCompatImageView
         android:id="@+id/empty_view_background"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
+        android:layout_width="@dimen/empty_view_background"
+        android:layout_height="@dimen/empty_view_background"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/empty_view_background" />
 
     <android.support.v7.widget.AppCompatImageView
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:layout_width="@dimen/empty_view_foreground"
+        android:layout_height="@dimen/empty_view_foreground"
         android:src="@drawable/empty_view_foreground"
         app:layout_constraintBottom_toBottomOf="@id/empty_view_background"
         app:layout_constraintEnd_toEndOf="@id/empty_view_background"
@@ -45,7 +45,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_4"
         android:text="@string/empty_view_summary"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textAppearance="@style/TextAppearance.AppCompat"
         android:textColor="?android:attr/textColorTertiary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

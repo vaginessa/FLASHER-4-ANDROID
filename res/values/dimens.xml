@@ -22,4 +22,6 @@
     <dimen name="about_image_size">48dp</dimen>
     <dimen name="bottom_sheet_corner_radius">@dimen/margin_16</dimen>
     <dimen name="bottom_sheet_top_padding">@dimen/margin_8</dimen>
+    <dimen name="empty_view_background">230dp</dimen>
+    <dimen name="empty_view_foreground">180dp</dimen>
 </resources>
