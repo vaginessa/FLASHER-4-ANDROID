@@ -12,7 +12,7 @@ import com.victorlapin.flasher.model.database.entity.Command
 import com.victorlapin.flasher.model.interactor.*
 import com.victorlapin.flasher.model.repository.*
 import com.victorlapin.flasher.model.serialization.AnnotationExclusionStrategy
-import io.reactivex.Single
+import io.reactivex.Completable
 import io.reactivex.schedulers.Schedulers
 import org.koin.dsl.module.module
 
@@ -22,7 +22,7 @@ val modelModule = module {
                 .addCallback(object : RoomDatabase.Callback() {
                     override fun onCreate(db: SupportSQLiteDatabase) {
                         super.onCreate(db)
-                        Single.create<Any> { emitter ->
+                        Completable.create { emitter ->
                             val chains = ArrayList<Chain>()
                             chains.add(Chain(id = Chain.DEFAULT_ID, name = Chain.DEFAULT))
                             chains.add(Chain(id = Chain.SCHEDULE_ID, name = Chain.SCHEDULE))
@@ -35,7 +35,7 @@ val modelModule = module {
                             data.add(Command(type = Command.TYPE_BACKUP, arg1 = "Boot, Cache, System, Data",
                                     chainId = Chain.SCHEDULE_ID, orderNumber = 0))
                             get<CommandDao>().insert(data)
-                            emitter.onSuccess(Any())
+                            emitter.onComplete()
                         }
                                 .subscribeOn(Schedulers.io())
                                 .observeOn(Schedulers.io())
