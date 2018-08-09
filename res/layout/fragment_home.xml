@@ -9,63 +9,76 @@
         android:id="@+id/toolbar_container"
         layout="@layout/include_toolbar" />
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/list"
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:clipToPadding="false"
-        android:fitsSystemWindows="true"
-        android:paddingStart="@dimen/activity_generic_horizontal_margin"
-        android:paddingEnd="@dimen/activity_generic_horizontal_margin"
         android:paddingBottom="?attr/actionBarSize"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-    <android.support.constraint.ConstraintLayout
-        android:id="@+id/empty_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical">
-
-        <android.support.v7.widget.AppCompatImageView
-            android:id="@+id/empty_view_background"
-            android:layout_width="190dp"
-            android:layout_height="190dp"
-            app:srcCompat="@drawable/empty_view_background"
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/list"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:clipToPadding="false"
+            android:paddingStart="@dimen/activity_generic_horizontal_margin"
+            android:paddingEnd="@dimen/activity_generic_horizontal_margin"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintBottom_toBottomOf="parent" />
 
-        <android.support.v7.widget.AppCompatImageView
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:src="@drawable/empty_view_foreground"
-            app:layout_constraintTop_toTopOf="@id/empty_view_background"
-            app:layout_constraintBottom_toBottomOf="@id/empty_view_background"
-            app:layout_constraintStart_toStartOf="@id/empty_view_background"
-            app:layout_constraintEnd_toEndOf="@id/empty_view_background" />
-
-        <TextView
-            android:id="@+id/empty_view_title"
-            android:layout_width="wrap_content"
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/empty_view"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_16"
-            android:text="@string/empty_view_title"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            android:textColor="?android:attr/textColorPrimary"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/empty_view_background" />
+            app:layout_constraintEnd_toEndOf="@id/list"
+            app:layout_constraintStart_toStartOf="@id/list"
+            app:layout_constraintTop_toTopOf="@id/list"
+            app:layout_constraintBottom_toBottomOf="@id/list">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_4"
-            android:text="@string/empty_view_summary"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            android:textColor="?android:attr/textColorTertiary"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/empty_view_title" />
+            <android.support.v7.widget.AppCompatImageView
+                android:id="@+id/empty_view_background"
+                android:layout_width="190dp"
+                android:layout_height="190dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/empty_view_background" />
+
+            <android.support.v7.widget.AppCompatImageView
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:src="@drawable/empty_view_foreground"
+                app:layout_constraintBottom_toBottomOf="@id/empty_view_background"
+                app:layout_constraintEnd_toEndOf="@id/empty_view_background"
+                app:layout_constraintStart_toStartOf="@id/empty_view_background"
+                app:layout_constraintTop_toTopOf="@id/empty_view_background" />
+
+            <TextView
+                android:id="@+id/empty_view_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_16"
+                android:text="@string/empty_view_title"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textColor="?android:attr/textColorPrimary"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/empty_view_background" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_4"
+                android:text="@string/empty_view_summary"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textColor="?android:attr/textColorTertiary"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/empty_view_title" />
+
+        </android.support.constraint.ConstraintLayout>
 
     </android.support.constraint.ConstraintLayout>
 
