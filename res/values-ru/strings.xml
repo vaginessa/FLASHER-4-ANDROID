@@ -105,4 +105,7 @@
     <string name="schedule_interval_never">Никогда</string>
 
     <string name="channel_default_title">По умолчанию</string>
+
+    <string name="empty_view_title">Начните с нуля</string>
+    <string name="empty_view_summary">Что-нибудь прошить?</string>
 </resources>

@@ -156,6 +156,7 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
     override fun setData(commands: List<Command>) {
         list.post {
             mAdapter.setData(commands)
+            empty_view?.visible(commands.isEmpty())
         }
     }
 

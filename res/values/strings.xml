@@ -117,4 +117,7 @@
 
     <string name="channel_default_id" translatable="false">default</string>
     <string name="channel_default_title">Default</string>
+
+    <string name="empty_view_title">A fresh start</string>
+    <string name="empty_view_summary">Anything to flash?</string>
 </resources>
