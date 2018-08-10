@@ -31,7 +31,7 @@ class SettingsManager(context: Context) {
     private val mPrefs = PreferenceManager.getDefaultSharedPreferences(context)
 
     val themeString: String
-        get() = mPrefs.getString(KEY_THEME, R.style.AppTheme_Light.toString())
+        get() = mPrefs.getString(KEY_THEME, R.style.AppTheme_Light.toString())!!
 
     val theme: Int
         get() = Integer.parseInt(themeString)
@@ -76,7 +76,7 @@ class SettingsManager(context: Context) {
         get() = mPrefs.getBoolean(KEY_DELETE_OLD_BACKUPS, false)
 
     val backupsToKeep: Int
-        get() = mPrefs.getString(KEY_BACKUPS_TO_KEEP, "2").toInt()
+        get() = mPrefs.getString(KEY_BACKUPS_TO_KEEP, "2")!!.toInt()
 
     var enableFileLog: Boolean
         get() = mPrefs.getBoolean(KEY_ENABLE_FILE_LOG, false)

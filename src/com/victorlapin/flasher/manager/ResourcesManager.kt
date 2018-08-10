@@ -12,7 +12,7 @@ class ResourcesManager(private val mContext: Context) {
     fun getQuantityString(@PluralsRes id: Int, quantity: Int, formatArg: Int): String =
             mContext.resources.getQuantityString(id, quantity, formatArg)
 
-    fun getDrawable(@DrawableRes id: Int): Drawable = mContext.getDrawable(id)
+    fun getDrawable(@DrawableRes id: Int): Drawable? = mContext.getDrawable(id)
 
     fun getColor(@ColorRes id: Int): Int =
             ContextCompat.getColor(mContext, id)
