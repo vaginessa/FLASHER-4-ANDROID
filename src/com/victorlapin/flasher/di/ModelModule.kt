@@ -28,13 +28,9 @@ val modelModule = module {
                             chains.add(Chain(id = Chain.SCHEDULE_ID, name = Chain.SCHEDULE))
                             get<ChainDao>().insert(chains)
 
-                            val data = ArrayList<Command>()
-                            data.add(Command(type = Command.TYPE_BACKUP, arg1 = "Boot, Cache, System, Data", orderNumber = 1))
-                            data.add(Command(type = Command.TYPE_WIPE, arg1 = "Cache, Dalvik-cache, System", orderNumber = 2))
-                            data.add(Command(type = Command.TYPE_FLASH_FILE, orderNumber = 3))
-                            data.add(Command(type = Command.TYPE_BACKUP, arg1 = "Boot, Cache, System, Data",
-                                    chainId = Chain.SCHEDULE_ID, orderNumber = 0))
-                            get<CommandDao>().insert(data)
+                            val command = Command(type = Command.TYPE_BACKUP, arg1 = "Boot, Cache, System, Data",
+                                    chainId = Chain.SCHEDULE_ID, orderNumber = 0)
+                            get<CommandDao>().insert(command)
                             emitter.onComplete()
                         }
                                 .subscribeOn(Schedulers.io())
