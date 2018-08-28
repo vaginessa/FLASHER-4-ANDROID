@@ -5,6 +5,7 @@ buildscript {
         version_kotlin = "1.2.61"
         version_moxy = "1.5.5"
         version_test_runner = "1.0.2"
+        version_dialogs = "2.0.0-alpha05"
     }
     apply from: 'repos.gradle'
     addRepos(repositories)
@@ -112,7 +113,9 @@ dependencies {
     implementation "org.koin:koin-android:1.0.0-beta-8"
     implementation "ru.terrakok.cicerone:cicerone:3.0.0"
     implementation "com.amulyakhare:com.amulyakhare.textdrawable:1.0.1"
-    implementation "com.afollestad.material-dialogs:core:0.9.6.0"
+    implementation "com.afollestad.material-dialogs:core:$version_dialogs"
+    implementation "com.afollestad.material-dialogs:input:$version_dialogs"
+    implementation "com.afollestad.material-dialogs:files:$version_dialogs"
     implementation "com.github.tbruyelle:rxpermissions:0.10.2"
     implementation "com.github.topjohnwu:libsu:1.2.0"
     implementation "com.google.code.gson:gson:2.8.5"

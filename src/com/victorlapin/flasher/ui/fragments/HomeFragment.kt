@@ -11,8 +11,11 @@ import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
 import android.widget.Toast
 import com.afollestad.materialdialogs.MaterialDialog
-import com.afollestad.materialdialogs.folderselector.FileChooserDialog
-import com.afollestad.materialdialogs.folderselector.FolderChooserDialog
+import com.afollestad.materialdialogs.files.FileFilter
+import com.afollestad.materialdialogs.files.fileChooser
+import com.afollestad.materialdialogs.files.folderChooser
+import com.afollestad.materialdialogs.input.input
+import com.afollestad.materialdialogs.list.listItemsMultiChoice
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.tbruyelle.rxpermissions2.RxPermissions
@@ -165,18 +168,17 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
             val preselected = command.arg1!!.toArray()
             val i = arrayListOf<Int>()
             preselected.forEach { i.add(mWipePartitions.indexOf(it)) }
-            i.toTypedArray()
-        } else null
-        MaterialDialog.Builder(context!!)
-                .title(R.string.command_wipe)
-                .items(mWipePartitions)
-                .itemsCallbackMultiChoice(indices) { _, _, items ->
+            i.toIntArray()
+        } else intArrayOf()
+        MaterialDialog(context!!)
+                .title(res = R.string.command_wipe)
+                .listItemsMultiChoice(items = mWipePartitions,
+                        initialSelection = indices) { _, _, items ->
                     command.arg1 = items.toSet().toString().flatten()
                     presenter.onCommandUpdated(command)
-                    return@itemsCallbackMultiChoice true
                 }
-                .positiveText(android.R.string.ok)
-                .negativeText(android.R.string.cancel)
+                .positiveButton(res = android.R.string.ok)
+                .negativeButton(res = android.R.string.cancel)
                 .show()
     }
 
@@ -185,18 +187,17 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
             val preselected = command.arg1!!.toArray()
             val i = arrayListOf<Int>()
             preselected.forEach { i.add(mBackupPartitions.indexOf(it)) }
-            i.toTypedArray()
-        } else null
-        MaterialDialog.Builder(context!!)
-                .title(R.string.command_backup)
-                .items(mBackupPartitions)
-                .itemsCallbackMultiChoice(indices) { _, _, items ->
+            i.toIntArray()
+        } else intArrayOf()
+        MaterialDialog(context!!)
+                .title(res = R.string.command_backup)
+                .listItemsMultiChoice(items = mBackupPartitions,
+                        initialSelection = indices) { _, _, items ->
                     command.arg1 = items.toSet().toString().flatten()
                     presenter.onCommandUpdated(command)
-                    return@itemsCallbackMultiChoice true
                 }
-                .positiveText(android.R.string.ok)
-                .negativeText(android.R.string.cancel)
+                .positiveButton(res = android.R.string.ok)
+                .negativeButton(res = android.R.string.cancel)
                 .show()
     }
 
@@ -205,24 +206,26 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
                 .firstOrError()
                 .doOnSuccess { granted ->
                     if (granted) {
-                        FileChooserDialog.Builder(context!!)
-                                .initialPath(startPath)
-                                .extensionsFilter(".zip")
-                                .callback(object : FileChooserDialog.FileCallback {
-                                    override fun onFileChooserDismissed(dialog: FileChooserDialog) { }
-                                    override fun onFileSelection(dialog: FileChooserDialog, file: File) {
-                                        command.arg1 = file.absolutePath
-                                        command.arg2 = file.parent
-                                        presenter.onCommandUpdated(command)
-                                        presenter.onFileSelected(file)
-                                    }
-                                })
-                                .show(activity!!)
+                        val initialPath = startPath ?: Const.FALLBACK_FOLDER
+                        val filter: FileFilter = { it.isDirectory ||
+                                it.name.endsWith(".zip", true) }
+                        MaterialDialog(context!!)
+                                .fileChooser(initialDirectory = File(initialPath),
+                                        filter = filter,
+                                        emptyTextRes = R.string.folder_empty) { _, file ->
+                                    command.arg1 = file.absolutePath
+                                    command.arg2 = file.parent
+                                    presenter.onCommandUpdated(command)
+                                    presenter.onFileSelected(file)
+                                }
+                                .positiveButton(res = android.R.string.ok)
+                                .negativeButton(res = android.R.string.cancel)
+                                .show()
                     } else {
-                        MaterialDialog.Builder(context!!)
-                                .title(R.string.app_name)
-                                .content(R.string.permission_denied_storage)
-                                .positiveText(android.R.string.ok)
+                        MaterialDialog(context!!)
+                                .title(res = R.string.app_name)
+                                .message(res = R.string.permission_denied_storage)
+                                .positiveButton(res = android.R.string.ok)
                                 .show()
                     }
                 }
@@ -231,13 +234,14 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
     }
 
     override fun showEditMaskDialog(command: Command) {
-        MaterialDialog.Builder(context!!)
-                .title(R.string.enter_mask)
-                .input("", command.arg1, true) { _, input ->
+        MaterialDialog(context!!)
+                .title(res = R.string.enter_mask)
+                .input(prefill = command.arg1) { _, input ->
                     command.arg1 = if (input.isEmpty()) null else input.toString()
                     presenter.onCommandUpdated(command)
                 }
-                .negativeText(android.R.string.cancel)
+                .positiveButton(res = android.R.string.ok)
+                .negativeButton(res = android.R.string.cancel)
                 .show()
     }
 
@@ -246,22 +250,22 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
                 .firstOrError()
                 .doOnSuccess { granted ->
                     if (granted) {
-                        FolderChooserDialog.Builder()
-                                .initialPath(startPath)
-                                .callback(object : FolderChooserDialog.FolderCallback {
-                                    override fun onFolderChooserDismissed(dialog: FolderChooserDialog) { }
-                                    override fun onFolderSelection(dialog: FolderChooserDialog, folder: File) {
-                                        command.arg2 = folder.absolutePath
-                                        presenter.onCommandUpdated(command)
-                                        presenter.onFileSelected(folder)
-                                    }
-                                })
-                                .show(activity!!)
+                        val initialPath = startPath ?: Const.FALLBACK_FOLDER
+                        MaterialDialog(context!!)
+                                .folderChooser(initialDirectory = File(initialPath),
+                                        emptyTextRes = R.string.folder_empty) { _, folder ->
+                                    command.arg2 = folder.absolutePath
+                                    presenter.onCommandUpdated(command)
+                                    presenter.onFileSelected(folder)
+                                }
+                                .positiveButton(res = android.R.string.ok)
+                                .negativeButton(res = android.R.string.cancel)
+                                .show()
                     } else {
-                        MaterialDialog.Builder(context!!)
-                                .title(R.string.app_name)
-                                .content(R.string.permission_denied_storage)
-                                .positiveText(android.R.string.ok)
+                        MaterialDialog(context!!)
+                                .title(res = R.string.app_name)
+                                .message(res = R.string.permission_denied_storage)
+                                .positiveButton(res = android.R.string.ok)
                                 .show()
                     }
                 }
@@ -304,20 +308,21 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
                 .firstOrError()
                 .doOnSuccess { granted ->
                     if (granted) {
-                        MaterialDialog.Builder(context!!)
-                                .title(R.string.enter_file_name)
-                                .input(null, null, false) { _, input ->
+                        MaterialDialog(context!!)
+                                .title(res = R.string.enter_file_name)
+                                .input { _, input ->
                                     val fileName = if (input.endsWith(".json", true))
                                         input.toString() else "$input.json"
                                     presenter.exportCommands(fileName)
                                 }
-                                .negativeText(android.R.string.cancel)
+                                .positiveButton(res = android.R.string.ok)
+                                .negativeButton(res = android.R.string.cancel)
                                 .show()
                     } else {
-                        MaterialDialog.Builder(context!!)
-                                .title(R.string.app_name)
-                                .content(R.string.permission_denied_storage)
-                                .positiveText(android.R.string.ok)
+                        MaterialDialog(context!!)
+                                .title(res = R.string.app_name)
+                                .message(res = R.string.permission_denied_storage)
+                                .positiveButton(res = android.R.string.ok)
                                 .show()
                     }
                 }
@@ -330,21 +335,22 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
                 .firstOrError()
                 .doOnSuccess { granted ->
                     if (granted) {
-                        FileChooserDialog.Builder(context!!)
-                                .initialPath(Const.APP_FOLDER)
-                                .extensionsFilter(".json")
-                                .callback(object : FileChooserDialog.FileCallback {
-                                    override fun onFileChooserDismissed(dialog: FileChooserDialog) { }
-                                    override fun onFileSelection(dialog: FileChooserDialog, file: File) {
-                                        presenter.importCommands(file.absolutePath)
-                                    }
-                                })
-                                .show(activity!!)
+                        val filter: FileFilter = { it.isDirectory ||
+                                it.name.endsWith(".json", true) }
+                        MaterialDialog(context!!)
+                                .fileChooser(initialDirectory = File(Const.APP_FOLDER),
+                                        filter = filter,
+                                        emptyTextRes = R.string.folder_empty) { _, file ->
+                                    presenter.importCommands(file.absolutePath)
+                                }
+                                .positiveButton(res = android.R.string.ok)
+                                .negativeButton(res = android.R.string.cancel)
+                                .show()
                     } else {
-                        MaterialDialog.Builder(context!!)
-                                .title(R.string.app_name)
-                                .content(R.string.permission_denied_storage)
-                                .positiveText(android.R.string.ok)
+                        MaterialDialog(context!!)
+                                .title(res = R.string.app_name)
+                                .message(res = R.string.permission_denied_storage)
+                                .positiveButton(res = android.R.string.ok)
                                 .show()
                     }
                 }

@@ -13,4 +13,6 @@ object Const {
     const val SCRIPT_FILENAME: String = "/cache/recovery/openrecoveryscript"
 
     val LOG_FILENAME: String = File(APP_FOLDER, "app.log").absolutePath
+
+    val FALLBACK_FOLDER: String = Environment.getExternalStorageDirectory().absolutePath
 }

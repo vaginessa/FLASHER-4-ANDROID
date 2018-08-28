@@ -3,5 +3,6 @@ static def addRepos(RepositoryHandler handler) {
     handler.jcenter()
     handler.maven { url 'https://jitpack.io' }
     handler.maven { url 'http://dl.bintray.com/amulyakhare/maven' }
+    handler.maven { url 'https://dl.bintray.com/drummer-aidan/maven' }
 }
 ext.addRepos = this.&addRepos

@@ -4,6 +4,7 @@ import android.app.TimePickerDialog
 import android.os.Bundle
 import android.text.InputType
 import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.input.input
 import com.victorlapin.flasher.R
 import com.victorlapin.flasher.Screens
 import com.victorlapin.flasher.manager.ResourcesManager
@@ -110,10 +111,10 @@ class ScheduleFragment : HomeFragment() {
     }
 
     override fun showSelectIntervalDialog(defInterval: Int) {
-        MaterialDialog.Builder(context!!)
-                .title(R.string.schedule_interval_title)
-                .inputType(InputType.TYPE_CLASS_NUMBER)
-                .input(null, defInterval.toString(), true) { _, input ->
+        MaterialDialog(context!!)
+                .title(res = R.string.schedule_interval_title)
+                .input(inputType = InputType.TYPE_CLASS_NUMBER,
+                        prefill = defInterval.toString()) { _, input ->
                     val interval = if (input.isBlank()) 0 else input.toString().toInt()
                     (presenter as ScheduleHomePresenter).onIntervalSelected(interval)
                     lbl_interval.text = if (interval == 0)
@@ -121,7 +122,8 @@ class ScheduleFragment : HomeFragment() {
                         mResources.getQuantityString(R.plurals.schedule_interval, interval, interval)
                     updateNextRun()
                 }
-                .negativeText(android.R.string.cancel)
+                .positiveButton(res = android.R.string.ok)
+                .negativeButton(res = android.R.string.cancel)
                 .show()
     }
 

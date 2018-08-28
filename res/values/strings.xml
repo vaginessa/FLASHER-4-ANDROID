@@ -21,6 +21,7 @@
     <string name="schedule_only_idle">Only when device is idle</string>
     <string name="schedule_only_high_battery">Only when device has enough battery left</string>
     <string name="schedule_error_notification">Scheduled run failed: %s</string>
+    <string name="folder_empty">Folder is empty</string>
 
     <!-- Action strings -->
     <string name="action_home">Home</string>
