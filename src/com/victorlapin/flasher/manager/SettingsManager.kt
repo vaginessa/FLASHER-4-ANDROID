@@ -63,7 +63,7 @@ class SettingsManager(context: Context) {
         set(time) = mPrefs.edit().putLong(KEY_SCHEDULE_LAST_RUN, time).apply()
 
     val showNotificationOnBoot: Boolean
-        get() = mPrefs.getBoolean(KEY_SHOW_NOTIFICATION_ON_BOOT, false)
+        get() = mPrefs.getBoolean(KEY_SHOW_NOTIFICATION_ON_BOOT, true)
 
     var bootNotificationFlag: Boolean
         get() = mPrefs.getBoolean(KEY_BOOT_NOTIFICATION_FLAG, false)
