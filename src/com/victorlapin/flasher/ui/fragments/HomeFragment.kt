@@ -31,7 +31,7 @@ import com.victorlapin.flasher.view.HomeFragmentView
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.include_progress.*
-import kotlinx.android.synthetic.main.include_toolbar.*
+import kotlinx.android.synthetic.main.include_toolbar_center.*
 import org.koin.android.ext.android.inject
 import org.koin.android.ext.android.release
 import timber.log.Timber
@@ -53,7 +53,7 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
 
     private val mAdapter by inject<HomeAdapter>()
 
-    private val mResources by inject<ResourcesManager>()
+    protected val mResources by inject<ResourcesManager>()
 
     private val mRxPermissions by lazy {
         RxPermissions(this)
@@ -79,7 +79,7 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
             setHasFixedSize(true)
             adapter = mAdapter
         }
-        toolbar.setTitle(R.string.action_home)
+        toolbar_title.text = mResources.getString(R.string.action_home)
         fab.setOnClickListener { presenter.onFabClicked() }
 
         bottom_app_bar.inflateMenu(R.menu.fragment_home)

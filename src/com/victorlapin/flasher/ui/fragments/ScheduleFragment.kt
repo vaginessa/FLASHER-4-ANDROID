@@ -7,13 +7,12 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.input.input
 import com.victorlapin.flasher.R
 import com.victorlapin.flasher.Screens
-import com.victorlapin.flasher.manager.ResourcesManager
 import com.victorlapin.flasher.manager.SettingsManager
 import com.victorlapin.flasher.model.database.entity.Chain
 import com.victorlapin.flasher.presenter.BaseHomeFragmentPresenter
 import com.victorlapin.flasher.presenter.ScheduleHomePresenter
+import kotlinx.android.synthetic.main.fragment_schedule.*
 import kotlinx.android.synthetic.main.include_schedule_settings.*
-import kotlinx.android.synthetic.main.include_toolbar.*
 import org.koin.android.ext.android.inject
 import org.koin.android.ext.android.release
 import java.text.DateFormat
@@ -28,14 +27,13 @@ class ScheduleFragment : HomeFragment() {
     override fun providePresenter(): BaseHomeFragmentPresenter = mSchedulePresenter
 
     private val mSettings by inject<SettingsManager>()
-    private val mResources by inject<ResourcesManager>()
     private val mDateTimeFormatter = SimpleDateFormat
             .getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT)
     private val mTimeFormatter = SimpleDateFormat.getTimeInstance(DateFormat.SHORT)
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        toolbar.setTitle(R.string.action_schedule)
+        toolbar_title.text = mResources.getString(R.string.action_schedule)
     }
 
     override fun onResume() {

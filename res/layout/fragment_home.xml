@@ -7,7 +7,7 @@
 
     <include
         android:id="@+id/toolbar_container"
-        layout="@layout/include_toolbar" />
+        layout="@layout/include_toolbar_center" />
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"

@@ -10,11 +10,12 @@
         android:layout_height="wrap_content"
         app:elevation="@dimen/margin_0">
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
+        <TextView
+            android:id="@+id/toolbar_title"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:elevation="@dimen/margin_0"
+            android:gravity="center"
+            android:textAppearance="@style/TextAppearance.Widget.AppCompat.Toolbar.Title"
             app:layout_scrollFlags="scroll" />
 
         <android.support.design.widget.CollapsingToolbarLayout
