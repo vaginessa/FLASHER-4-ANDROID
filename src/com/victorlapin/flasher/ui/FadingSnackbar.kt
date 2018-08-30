@@ -20,6 +20,7 @@ import android.content.Context
 import android.support.annotation.StringRes
 import android.util.AttributeSet
 import android.view.LayoutInflater
+import android.view.View
 import android.widget.Button
 import android.widget.FrameLayout
 import android.widget.TextView
@@ -32,9 +33,13 @@ class FadingSnackbar(context: Context, attrs: AttributeSet) : FrameLayout(contex
 
     private val message: TextView
     private val action: Button
+    private val container: View
+
+    private var callback: Runnable? = null
 
     init {
         val view = LayoutInflater.from(context).inflate(R.layout.fading_snackbar_layout, this, true)
+        container = view.findViewById(R.id.snackbar_container)
         message = view.findViewById(R.id.snackbar_text)
         action = view.findViewById(R.id.snackbar_action)
     }
@@ -53,6 +58,7 @@ class FadingSnackbar(context: Context, attrs: AttributeSet) : FrameLayout(contex
             messageText: CharSequence? = null,
             @StringRes actionId: Int? = null,
             longDuration: Boolean = true,
+            isIndefinite: Boolean = false,
             actionClick: () -> Unit = { dismiss() },
             dismissListener: () -> Unit = { }
     ) {
@@ -73,11 +79,22 @@ class FadingSnackbar(context: Context, attrs: AttributeSet) : FrameLayout(contex
         animate()
                 .alpha(1f)
                 .duration = ENTER_DURATION
-        val showDuration = ENTER_DURATION + if (longDuration) LONG_DURATION else SHORT_DURATION
-        postDelayed({
-            dismiss()
-            dismissListener()
-        }, showDuration)
+        removeCallbacks(callback)
+        if (isIndefinite) {
+            callback = null
+            container.setOnClickListener {
+                dismiss()
+                dismissListener()
+            }
+        } else {
+            container.setOnClickListener(null)
+            val showDuration = ENTER_DURATION + if (longDuration) LONG_DURATION else SHORT_DURATION
+            callback = Runnable {
+                dismiss()
+                dismissListener()
+            }
+            postDelayed(callback, showDuration)
+        }
     }
 
     companion object {

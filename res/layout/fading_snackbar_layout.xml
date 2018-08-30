@@ -21,6 +21,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/snackbar_container"
         android:layout_margin="@dimen/margin_16"
         android:background="@drawable/fading_snackbar_background"
         android:theme="@style/ThemeOverlay.MaterialComponents.Dark">
