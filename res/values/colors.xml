@@ -5,4 +5,5 @@
     <color name="dark_transparent">#b3303030</color>
     <color name="black_transparent">#b3000000</color>
     <color name="pixel">#5e97f6</color>
+    <color name="snackbar">#202124</color>
 </resources>
