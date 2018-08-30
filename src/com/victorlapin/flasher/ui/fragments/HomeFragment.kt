@@ -2,7 +2,6 @@ package com.victorlapin.flasher.ui.fragments
 
 import android.Manifest
 import android.os.Bundle
-import android.support.design.widget.Snackbar
 import android.support.transition.Fade
 import android.support.transition.TransitionManager
 import android.support.v4.view.animation.FastOutLinearInInterpolator
@@ -274,33 +273,33 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
     }
 
     override fun showDeletedSnackbar(command: Command) {
-        Snackbar.make(coordinator, R.string.command_deleted, Snackbar.LENGTH_LONG)
-                .setAction(R.string.action_undo) { presenter.onUndoDelete(command) }
-                .adjustLayout()
-                .show()
+        snackbar.show(
+                messageId = R.string.command_deleted,
+                actionId = R.string.action_undo,
+                actionClick = {
+                    presenter.onUndoDelete(command)
+                    snackbar.dismiss()
+                }
+        )
     }
 
     override fun showInfoSnackbar(args: EventArgs) {
-        args.message?.let {
-            Snackbar.make(coordinator, it.replace("\n", "").trim(),
-                    Snackbar.LENGTH_LONG)
-                    .adjustLayout()
-                    .show()
-            return
-        }
-        args.messageId?.let {
-            Snackbar.make(coordinator, mResources.getString(it),
-                    Snackbar.LENGTH_LONG)
-                    .adjustLayout()
-                    .show()
-        }
+        snackbar.show(
+                messageText = args.message?.replace("\n", "")?.trim(),
+                messageId = args.messageId
+        )
     }
 
     override fun showRebootSnackbar() {
-        Snackbar.make(coordinator, R.string.reboot, Snackbar.LENGTH_INDEFINITE)
-                .setAction(R.string.action_reboot) { presenter.reboot() }
-                .adjustLayout()
-                .show()
+        snackbar.show(
+                messageId = R.string.reboot,
+                actionId = R.string.action_reboot,
+                actionClick = {
+                    presenter.reboot()
+                    snackbar.dismiss()
+                },
+                isIndefinite = true
+        )
     }
 
     override fun showExportDialog() {

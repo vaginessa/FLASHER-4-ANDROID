@@ -1,62 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/coordinator"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <android.support.design.widget.CoordinatorLayout
-        android:id="@+id/coordinator"
+    <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        app:elevation="@dimen/margin_0">
 
-        <android.support.design.widget.AppBarLayout
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:elevation="@dimen/margin_0"
+            app:layout_scrollFlags="scroll" />
+
+        <android.support.design.widget.CollapsingToolbarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:elevation="@dimen/margin_0">
+            android:background="@android:color/transparent"
+            app:layout_scrollFlags="scroll"
+            app:scrimAnimationDuration="0">
 
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                app:elevation="@dimen/margin_0"
-                app:layout_scrollFlags="scroll" />
+            <include layout="@layout/include_schedule_settings" />
+        </android.support.design.widget.CollapsingToolbarLayout>
+    </android.support.design.widget.AppBarLayout>
 
-            <android.support.design.widget.CollapsingToolbarLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@android:color/transparent"
-                app:layout_scrollFlags="scroll"
-                app:scrimAnimationDuration="0">
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="?attr/actionBarSize"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-                <include layout="@layout/include_schedule_settings" />
-            </android.support.design.widget.CollapsingToolbarLayout>
-        </android.support.design.widget.AppBarLayout>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/list"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:clipToPadding="false"
+            android:paddingStart="@dimen/activity_generic_horizontal_margin"
+            android:paddingEnd="@dimen/activity_generic_horizontal_margin"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <android.support.constraint.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingBottom="?attr/actionBarSize"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        <include
+            android:id="@+id/empty_view"
+            layout="@layout/include_empty_view" />
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/list"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:clipToPadding="false"
-                android:paddingStart="@dimen/activity_generic_horizontal_margin"
-                android:paddingEnd="@dimen/activity_generic_horizontal_margin"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <include
-                android:id="@+id/empty_view"
-                layout="@layout/include_empty_view" />
-
-        </android.support.constraint.ConstraintLayout>
-    </android.support.design.widget.CoordinatorLayout>
+    </android.support.constraint.ConstraintLayout>
 
     <android.support.design.bottomappbar.BottomAppBar
         android:id="@+id/bottom_app_bar"
@@ -65,6 +60,14 @@
         android:layout_gravity="bottom"
         app:backgroundTint="?android:attr/windowBackground"
         app:navigationIcon="@drawable/menu" />
+
+    <com.victorlapin.flasher.ui.FadingSnackbar
+        android:id="@+id/snackbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="84dp"
+        android:visibility="gone"
+        app:layout_anchor="@id/bottom_app_bar" />
 
     <View
         android:layout_width="match_parent"
