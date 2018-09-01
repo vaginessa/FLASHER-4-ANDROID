@@ -68,6 +68,12 @@ class ServicesManager(
         }
     }
 
+    val selfPackageName: String = mContext.packageName
+
+    val packageManager: PackageManager by lazy {
+        mContext.packageManager
+    }
+
     companion object {
         private const val BOOT_NOTIFICATION_ID = 199
         private const val INFO_NOTIFICATION_ID = 200

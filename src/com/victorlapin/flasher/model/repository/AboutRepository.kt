@@ -1,15 +1,17 @@
 package com.victorlapin.flasher.model.repository
 
-import android.content.Context
 import android.content.pm.PackageManager
 import android.graphics.drawable.Drawable
+import android.support.annotation.DrawableRes
+import android.support.annotation.StringRes
 import com.amulyakhare.textdrawable.TextDrawable
 import com.amulyakhare.textdrawable.util.ColorGenerator
 import com.victorlapin.flasher.R
 import com.victorlapin.flasher.manager.ResourcesManager
+import com.victorlapin.flasher.manager.ServicesManager
 
 class AboutRepository(
-        private val mContext: Context,
+        private val mServices: ServicesManager,
         private val mResources: ResourcesManager
 ) {
     private val mColorGenerator = ColorGenerator.MATERIAL
@@ -28,87 +30,48 @@ class AboutRepository(
         // show versions
         result.add(ListItem(name = ITEM_VERSIONS))
         // the app itself
-        var item: ListItem = getAppInfo(mContext.packageName)
-        result.add(item)
+        result.add(getAppInfo(mServices.selfPackageName))
 
         // show developers
         result.add(ListItem(name = ITEM_TEAM))
-        item = ListItem(mResources.getString(R.string.about_team_victor))
-        item.description = mResources.getString(R.string.about_developer)
-        var color = mColorGenerator.getColor(item.name)
-        item.image = mBuilder.build("VL", color)
-        result.add(item)
+        result.add(getCreditItem(nameRes = R.string.about_team_victor,
+                descriptionRes = R.string.about_developer))
 
         // show links
         result.add(ListItem(name = ITEM_LINKS))
-        item = ListItem(mResources.getString(R.string.about_links_source_code))
-        item.description = mResources.getString(R.string.about_links_gitlab)
-        item.url = "https://gitlab.com/victorlapin/flasher"
-        item.image = mResources.getDrawable(R.drawable.git)
-        result.add(item)
-        item = ListItem(mResources.getString(R.string.about_links_donate))
-        item.description = mResources.getString(R.string.about_links_paypal)
-        item.url = "https://www.paypal.me/VictorLapin/150"
-        item.image = mResources.getDrawable(R.drawable.paypal)
-        result.add(item)
+        result.add(getLinkItem(nameRes = R.string.about_links_source_code,
+                descriptionRes = R.string.about_links_gitlab,
+                imageRes = R.drawable.git,
+                url = "https://gitlab.com/victorlapin/usage-stats"))
+        result.add(getLinkItem(nameRes = R.string.about_links_donate,
+                descriptionRes = R.string.about_links_paypal,
+                imageRes = R.drawable.paypal,
+                url = "https://www.paypal.me/VictorLapin"))
 
         // show credits
         result.add(ListItem(name = ITEM_CREDITS))
-        item = ListItem(mResources.getString(R.string.about_credits_bauke))
-        item.description = mResources.getString(R.string.about_credits_bauke_text)
-        color = mColorGenerator.getColor(item.name)
-        item.image = mBuilder.build("BZ", color)
-        result.add(item)
-        item = ListItem(mResources.getString(R.string.about_credits_dave))
-        item.description = mResources.getString(R.string.about_credits_dave_text)
-        color = mColorGenerator.getColor(item.name)
-        item.image = mBuilder.build("DW", color)
-        result.add(item)
-        item = ListItem(mResources.getString(R.string.about_credits_roger))
-        item.description = mResources.getString(R.string.about_credits_roger_text)
-        color = mColorGenerator.getColor(item.name)
-        item.image = mBuilder.build("RT", color)
-        result.add(item)
-        item = ListItem(mResources.getString(R.string.about_credits_bill))
-        item.description = mResources.getString(R.string.about_credits_bill_text)
-        color = mColorGenerator.getColor(item.name)
-        item.image = mBuilder.build("BB", color)
-        result.add(item)
-        item = ListItem(mResources.getString(R.string.about_credits_anton))
-        item.description = mResources.getString(R.string.about_credits_anton_text)
-        color = mColorGenerator.getColor(item.name)
-        item.image = mBuilder.build("AK", color)
-        result.add(item)
-        item = ListItem(mResources.getString(R.string.about_credits_george))
-        item.description = mResources.getString(R.string.about_credits_anton_text)
-        color = mColorGenerator.getColor(item.name)
-        item.image = mBuilder.build("GG", color)
-        result.add(item)
-        item = ListItem(mResources.getString(R.string.about_credits_austin))
-        item.description = mResources.getString(R.string.about_credits_austin_text)
-        color = mColorGenerator.getColor(item.name)
-        item.image = mBuilder.build("AA", color)
-        result.add(item)
-        item = ListItem(mResources.getString(R.string.about_credits_doug))
-        item.description = mResources.getString(R.string.about_credits_austin_text)
-        color = mColorGenerator.getColor(item.name)
-        item.image = mBuilder.build("DH", color)
-        result.add(item)
-        item = ListItem(mResources.getString(R.string.about_credits_jared))
-        item.description = mResources.getString(R.string.about_credits_jared_text)
-        color = mColorGenerator.getColor(item.name)
-        item.image = mBuilder.build("JR", color)
-        result.add(item)
-        item = ListItem(mResources.getString(R.string.about_credits_topjohnwu))
-        item.description = mResources.getString(R.string.about_credits_topjohnwu_text)
-        color = mColorGenerator.getColor(item.name)
-        item.image = mBuilder.build("JW", color)
-        result.add(item)
-        item = ListItem(mResources.getString(R.string.about_credits_aidan))
-        item.description = mResources.getString(R.string.about_credits_aidan_text)
-        color = mColorGenerator.getColor(item.name)
-        item.image = mBuilder.build("AF", color)
-        result.add(item)
+        result.add(getCreditItem(nameRes = R.string.about_credits_bauke,
+                descriptionRes = R.string.about_credits_bauke_text))
+        result.add(getCreditItem(nameRes = R.string.about_credits_dave,
+                descriptionRes = R.string.about_credits_dave_text))
+        result.add(getCreditItem(nameRes = R.string.about_credits_roger,
+                descriptionRes = R.string.about_credits_roger_text))
+        result.add(getCreditItem(nameRes = R.string.about_credits_bill,
+                descriptionRes = R.string.about_credits_bill_text))
+        result.add(getCreditItem(nameRes = R.string.about_credits_anton,
+                descriptionRes = R.string.about_credits_anton_text))
+        result.add(getCreditItem(nameRes = R.string.about_credits_george,
+                descriptionRes = R.string.about_credits_anton_text))
+        result.add(getCreditItem(nameRes = R.string.about_credits_austin,
+                descriptionRes = R.string.about_credits_austin_text))
+        result.add(getCreditItem(nameRes = R.string.about_credits_doug,
+                descriptionRes = R.string.about_credits_austin_text))
+        result.add(getCreditItem(nameRes = R.string.about_credits_jared,
+                descriptionRes = R.string.about_credits_jared_text))
+        result.add(getCreditItem(nameRes = R.string.about_credits_topjohnwu,
+                descriptionRes = R.string.about_credits_topjohnwu_text))
+        result.add(getCreditItem(nameRes = R.string.about_credits_aidan,
+                descriptionRes = R.string.about_credits_aidan_text))
 
         return result
     }
@@ -116,7 +79,7 @@ class AboutRepository(
     private fun getAppInfo(packageName: String): ListItem {
         val item = ListItem("")
         try {
-            val pm = mContext.packageManager
+            val pm = mServices.packageManager
             val packageInfo = pm.getPackageInfo(packageName, 0)
             item.name = pm.getApplicationLabel(packageInfo.applicationInfo)
             item.image = packageInfo.applicationInfo.loadIcon(pm)
@@ -128,6 +91,24 @@ class AboutRepository(
             item.isError = true
         }
 
+        return item
+    }
+
+    private fun getLinkItem(@StringRes nameRes: Int,
+                            @StringRes descriptionRes: Int,
+                            @DrawableRes imageRes: Int,
+                            url: String): ListItem =
+            ListItem(name = mResources.getString(nameRes),
+                    description = mResources.getString(descriptionRes),
+                    image = mResources.getDrawable(imageRes),
+                    url = url)
+
+    private fun getCreditItem(@StringRes nameRes: Int,
+                              @StringRes descriptionRes: Int): ListItem {
+        val item = ListItem(name = mResources.getString(nameRes),
+                description = mResources.getString(descriptionRes))
+        item.image = mBuilder.build(item.name.filter { it.isUpperCase() }.toString(),
+                mColorGenerator.getColor(item.name))
         return item
     }
 
