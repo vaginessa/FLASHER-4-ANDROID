@@ -5,7 +5,7 @@ buildscript {
         version_kotlin = "1.2.61"
         version_moxy = "1.5.5"
         version_test_runner = "1.0.2"
-        version_dialogs = "2.0.0-alpha05"
+        version_dialogs = "2.0.0-alpha06"
     }
     apply from: 'repos.gradle'
     addRepos(repositories)
