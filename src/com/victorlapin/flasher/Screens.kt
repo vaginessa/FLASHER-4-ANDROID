@@ -8,10 +8,13 @@ object Screens {
     const val FRAGMENT_SCHEDULE = "fragment_schedule"
     const val FRAGMENT_SETTINGS = "fragment_settings"
     const val FRAGMENT_ABOUT = "fragment_about"
+    const val FRAGMENT_BOTTOM = "fragment_bottom"
 
     const val EXTERNAL_ABOUT = "about"
 
     const val SERVICE_SCRIPT = "tile_service_script"
 
     const val RECEIVER_BOOT = "receiver_boot"
+
+    const val WORKER_SCHEDULE = "worker_schedule"
 }

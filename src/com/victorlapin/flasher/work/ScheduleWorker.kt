@@ -3,11 +3,13 @@ package com.victorlapin.flasher.work
 import androidx.work.Constraints
 import androidx.work.OneTimeWorkRequest
 import androidx.work.Worker
+import com.victorlapin.flasher.Screens
 import com.victorlapin.flasher.manager.ServicesManager
 import com.victorlapin.flasher.manager.SettingsManager
 import com.victorlapin.flasher.model.database.entity.Chain
 import com.victorlapin.flasher.model.interactor.RecoveryScriptInteractor
 import org.koin.standalone.KoinComponent
+import org.koin.standalone.getKoin
 import org.koin.standalone.inject
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
@@ -18,6 +20,7 @@ class ScheduleWorker : Worker(), KoinComponent {
     private val mServices by inject<ServicesManager>()
 
     override fun doWork(): Result {
+        val scope = getKoin().createScope(Screens.WORKER_SCHEDULE)
         Timber.i("Schedule worker started")
         mSettings.scheduleLastRun = System.currentTimeMillis()
         return try {
@@ -38,6 +41,8 @@ class ScheduleWorker : Worker(), KoinComponent {
             Timber.e(t)
             mServices.showInfoNotification(t.message)
             Result.RETRY
+        } finally {
+            scope.close()
         }
     }
 

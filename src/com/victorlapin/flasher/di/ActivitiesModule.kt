@@ -7,25 +7,15 @@ import com.victorlapin.flasher.ui.adapters.HomeAdapter
 import org.koin.dsl.module.module
 
 val activitiesModule = module {
-    module(Screens.ACTIVITY_MAIN) {
-        factory { MainActivityPresenter(get()) }
-    }
+    scope(Screens.ACTIVITY_MAIN) { MainActivityPresenter(get()) }
 
-    module(Screens.FRAGMENT_HOME) {
-        factory { DefaultHomePresenter(get(), get(), get(), get()) }
-        factory { HomeAdapter(get()) }
-    }
+    scope(Screens.FRAGMENT_HOME) { DefaultHomePresenter(get(), get(), get(), get()) }
+    factory { HomeAdapter(get()) }
 
-    module(Screens.FRAGMENT_SCHEDULE) {
-        factory { ScheduleHomePresenter(get(), get(), get(), get(), get()) }
-    }
+    scope(Screens.FRAGMENT_SCHEDULE) { ScheduleHomePresenter(get(), get(), get(), get(), get()) }
 
-    module(Screens.FRAGMENT_ABOUT) {
-        factory { AboutFragmentPresenter(get(), get()) }
-        factory { AboutAdapter(get()) }
-    }
+    scope(Screens.FRAGMENT_ABOUT) { AboutFragmentPresenter(get(), get()) }
+    scope(Screens.FRAGMENT_ABOUT) { AboutAdapter(get()) }
 
-    module(Screens.ACTIVITY_REBOOT_DIALOG) {
-        factory { RebootDialogActivityPresenter(get()) }
-    }
+    scope(Screens.ACTIVITY_REBOOT_DIALOG) { RebootDialogActivityPresenter(get()) }
 }

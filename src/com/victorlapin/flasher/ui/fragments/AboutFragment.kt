@@ -15,19 +15,18 @@ import com.victorlapin.flasher.view.AboutFragmentView
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.fragment_list.*
 import kotlinx.android.synthetic.main.include_toolbar.*
+import org.koin.android.ext.android.get
 import org.koin.android.ext.android.inject
-import org.koin.android.ext.android.release
 
 class AboutFragment : BaseFragment(), AboutFragmentView {
     override val layoutRes = R.layout.fragment_list
-
-    private val mPresenter by inject<AboutFragmentPresenter>()
+    override val scopeName = Screens.FRAGMENT_ABOUT
 
     @InjectPresenter
     lateinit var presenter: AboutFragmentPresenter
 
     @ProvidePresenter
-    fun providePresenter() = mPresenter
+    fun providePresenter() = get<AboutFragmentPresenter>()
 
     private val mEventsDisposable = CompositeDisposable()
 
@@ -47,11 +46,6 @@ class AboutFragment : BaseFragment(), AboutFragmentView {
             setHasFixedSize(true)
             adapter = mAdapter
         }
-    }
-
-    override fun onStop() {
-        super.onStop()
-        release(Screens.FRAGMENT_ABOUT)
     }
 
     override fun onDestroyView() {

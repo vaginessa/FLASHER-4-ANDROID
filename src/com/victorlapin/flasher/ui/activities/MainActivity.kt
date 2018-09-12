@@ -15,26 +15,19 @@ import com.victorlapin.flasher.ui.fragments.HomeFragment
 import com.victorlapin.flasher.ui.fragments.ScheduleFragment
 import com.victorlapin.flasher.ui.fragments.SettingsGlobalFragment
 import com.victorlapin.flasher.view.MainActivityView
-import org.koin.android.ext.android.inject
-import org.koin.android.ext.android.release
+import org.koin.android.ext.android.get
 import ru.terrakok.cicerone.android.SupportAppNavigator
 import ru.terrakok.cicerone.commands.Command
 
 class MainActivity : BaseActivity(), MainActivityView {
     override val layoutRes = R.layout.activity_generic_no_toolbar
-
-    private val mPresenter by inject<MainActivityPresenter>()
+    override val scopeName = Screens.ACTIVITY_MAIN
 
     @InjectPresenter
     lateinit var presenter: MainActivityPresenter
 
     @ProvidePresenter
-    fun providePresenter() = mPresenter
-
-    override fun onStop() {
-        super.onStop()
-        release(Screens.ACTIVITY_MAIN)
-    }
+    fun providePresenter() = get<MainActivityPresenter>()
 
     override val navigator = object : SupportAppNavigator(this, R.id.fragment_container) {
         override fun createActivityIntent(context: Context?, screenKey: String?, data: Any?): Intent? =

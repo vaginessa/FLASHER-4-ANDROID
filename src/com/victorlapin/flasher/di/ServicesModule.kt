@@ -5,7 +5,5 @@ import com.victorlapin.flasher.presenter.ScriptTileServicePresenter
 import org.koin.dsl.module.module
 
 val servicesModule = module {
-    module(Screens.SERVICE_SCRIPT) {
-        factory { ScriptTileServicePresenter(get(), get()) }
-    }
+    scope(Screens.SERVICE_SCRIPT) { ScriptTileServicePresenter(get(), get()) }
 }

@@ -10,6 +10,7 @@ import android.support.v7.preference.PreferenceFragmentCompat
 import com.tbruyelle.rxpermissions2.RxPermissions
 import com.victorlapin.flasher.Const
 import com.victorlapin.flasher.R
+import com.victorlapin.flasher.Screens
 import com.victorlapin.flasher.manager.LogManager
 import com.victorlapin.flasher.manager.ResourcesManager
 import com.victorlapin.flasher.manager.SettingsManager
@@ -17,9 +18,11 @@ import com.victorlapin.flasher.model.interactor.AlarmInteractor
 import com.victorlapin.flasher.model.interactor.RecoveryScriptInteractor
 import com.victorlapin.flasher.ui.activities.BaseActivity
 import com.victorlapin.flasher.ui.activities.MainActivity
+import org.koin.android.ext.android.getKoin
 import org.koin.android.ext.android.inject
 
 class SettingsGlobalFragment : PreferenceFragmentCompat() {
+    private val mScope = getKoin().createScope(Screens.FRAGMENT_SETTINGS)
     private val mSettings by inject<SettingsManager>()
     private val mResources by inject<ResourcesManager>()
     private val mLogs by inject<LogManager>()
@@ -129,6 +132,11 @@ class SettingsGlobalFragment : PreferenceFragmentCompat() {
                     }
                     return@OnPreferenceChangeListener true
                 }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        mScope.close()
     }
 
     companion object {

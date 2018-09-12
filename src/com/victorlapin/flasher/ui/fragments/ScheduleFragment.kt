@@ -13,18 +13,17 @@ import com.victorlapin.flasher.presenter.BaseHomeFragmentPresenter
 import com.victorlapin.flasher.presenter.ScheduleHomePresenter
 import kotlinx.android.synthetic.main.fragment_schedule.*
 import kotlinx.android.synthetic.main.include_schedule_settings.*
+import org.koin.android.ext.android.get
 import org.koin.android.ext.android.inject
-import org.koin.android.ext.android.release
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
 class ScheduleFragment : HomeFragment() {
     override val layoutRes = R.layout.fragment_schedule
+    override val scopeName = Screens.FRAGMENT_SCHEDULE
 
-    private val mSchedulePresenter by inject<ScheduleHomePresenter>()
-
-    override fun providePresenter(): BaseHomeFragmentPresenter = mSchedulePresenter
+    override fun providePresenter(): BaseHomeFragmentPresenter = get<ScheduleHomePresenter>()
 
     private val mSettings by inject<SettingsManager>()
     private val mDateTimeFormatter = SimpleDateFormat
@@ -86,11 +85,6 @@ class ScheduleFragment : HomeFragment() {
         }
 
         updateNextRun()
-    }
-
-    override fun onStop() {
-        super.onStop()
-        release(Screens.FRAGMENT_SCHEDULE)
     }
 
     override fun showSelectTimeDialog(defHourOfDay: Int, defMinute: Int) {

@@ -8,10 +8,11 @@ import com.victorlapin.flasher.model.EventArgs
 import com.victorlapin.flasher.presenter.ScriptTileServicePresenter
 import com.victorlapin.flasher.ui.activities.RebootDialogActivity
 import com.victorlapin.flasher.view.ScriptTileServiceView
+import org.koin.android.ext.android.getKoin
 import org.koin.android.ext.android.inject
-import org.koin.android.ext.android.release
 
 class ScriptTileService : TileService(), ScriptTileServiceView {
+    private val mScope = getKoin().createScope(Screens.SERVICE_SCRIPT)
     private val mPresenter by inject<ScriptTileServicePresenter>()
 
     override fun onClick() {
@@ -23,7 +24,7 @@ class ScriptTileService : TileService(), ScriptTileServiceView {
 
     override fun onStopListening() {
         mPresenter.cleanup()
-        release(Screens.SERVICE_SCRIPT)
+        mScope.close()
         super.onStopListening()
     }
 

@@ -32,21 +32,20 @@ import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.include_progress.*
 import kotlinx.android.synthetic.main.include_toolbar_center.*
+import org.koin.android.ext.android.get
 import org.koin.android.ext.android.inject
-import org.koin.android.ext.android.release
 import timber.log.Timber
 import java.io.File
 
 open class HomeFragment : BaseFragment(), HomeFragmentView {
     override val layoutRes = R.layout.fragment_home
-
-    private val mDefaultPresenter by inject<DefaultHomePresenter>()
+    override val scopeName = Screens.FRAGMENT_HOME
 
     @InjectPresenter
     lateinit var presenter: BaseHomeFragmentPresenter
 
     @ProvidePresenter
-    open fun providePresenter(): BaseHomeFragmentPresenter = mDefaultPresenter
+    open fun providePresenter(): BaseHomeFragmentPresenter = get<DefaultHomePresenter>()
 
     private var mDisposable: CompositeDisposable? = null
     private val mNavEventsDisposable = CompositeDisposable()
@@ -130,11 +129,6 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
             }
         }
         ItemTouchHelper(swipeCallback).attachToRecyclerView(list)
-    }
-
-    override fun onStop() {
-        super.onStop()
-        release(Screens.FRAGMENT_HOME)
     }
 
     override fun onDestroyView() {
