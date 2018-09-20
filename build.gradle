@@ -87,6 +87,7 @@ android {
 
     packagingOptions {
         exclude 'META-INF/rxjava.properties'
+        exclude 'META-INF/proguard/androidx-annotations.pro'
     }
 
     compileOptions {
@@ -106,11 +107,11 @@ dependencies {
     implementation "com.android.support:preference-v14:$version_support"
     implementation "com.android.support.constraint:constraint-layout:1.1.3"
     implementation "com.arello-mobile:moxy-app-compat:$version_moxy"
-    implementation "io.reactivex.rxjava2:rxjava:2.2.1"
+    implementation "io.reactivex.rxjava2:rxjava:2.2.2"
     implementation "io.reactivex.rxjava2:rxandroid:2.1.0"
     implementation "android.arch.persistence.room:runtime:$version_room"
     implementation "android.arch.persistence.room:rxjava2:$version_room"
-    implementation "org.koin:koin-android:1.0.0-RC-3"
+    implementation "org.koin:koin-android:1.0.0"
     implementation "ru.terrakok.cicerone:cicerone:3.0.0"
     implementation "com.amulyakhare:com.amulyakhare.textdrawable:1.0.1"
     implementation "com.afollestad.material-dialogs:core:$version_dialogs"
@@ -120,7 +121,7 @@ dependencies {
     implementation "com.github.topjohnwu:libsu:1.2.0"
     implementation "com.google.code.gson:gson:2.8.5"
     implementation "com.jakewharton.timber:timber:4.7.1"
-    implementation "android.arch.work:work-runtime:1.0.0-alpha08"
+    implementation "android.arch.work:work-runtime:1.0.0-alpha09"
 
     debugImplementation "im.dino:dbinspector:3.4.1@aar"
 
