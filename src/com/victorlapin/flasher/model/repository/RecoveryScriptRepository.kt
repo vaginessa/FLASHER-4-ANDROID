@@ -41,7 +41,7 @@ class RecoveryScriptRepository {
                         }
                         val dt = SimpleDateFormat("YYYY-MM-dd_HH-mm-ss",
                                 Locale.getDefault()).format(Date())
-                        val out = Shell.Sync.sh("getprop ro.build.id")
+                        val out = Shell.sh("getprop ro.build.id").exec().out
                         val buildId = if (out.isNotEmpty()) out[0] else ""
                         val backupName = if (buildId.isNotEmpty())
                             "${dt}_${buildId}_Flasher" else "${dt}_Flasher"
@@ -117,7 +117,7 @@ class RecoveryScriptRepository {
     }
 
     fun rebootRecovery(): EventArgs = if (Shell.rootAccess()) {
-        Shell.Sync.su("reboot recovery")
+        Shell.su("reboot recovery").submit()
         Timber.i("Reboot")
         EventArgs(isSuccess = true)
     } else {
