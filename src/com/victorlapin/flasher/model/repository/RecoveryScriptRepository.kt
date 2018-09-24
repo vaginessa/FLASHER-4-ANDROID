@@ -99,7 +99,7 @@ class RecoveryScriptRepository {
                     it.write(script.toByteArray())
                 }
 
-                if (scriptFile.exists() && scriptFile.length() > 0) {
+                if (Shell.su("cat ${scriptFile.absolutePath}").exec().out.isNotEmpty()) {
                     Timber.i("Script deployed successfully")
                     EventArgs(isSuccess = true)
                 } else {
