@@ -1,8 +1,8 @@
 buildscript {
     ext {
         version_room = "1.1.1"
-        version_support = "28.0.0-rc02"
-        version_kotlin = "1.2.70"
+        version_support = "28.0.0"
+        version_kotlin = "1.2.71"
         version_moxy = "1.5.5"
         version_test_runner = "1.0.2"
         version_dialogs = "2.0.0-alpha12"
@@ -26,7 +26,7 @@ apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 28
-    buildToolsVersion "28.0.2"
+    buildToolsVersion "28.0.3"
 
     defaultConfig {
         applicationId "com.victorlapin.flasher"
