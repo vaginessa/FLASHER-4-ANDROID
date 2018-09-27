@@ -71,6 +71,7 @@ abstract class BaseHomeFragmentPresenter constructor(
                     viewState.showFlashFileDialog(args.command, path)
                 }
                 Command.TYPE_FLASH_MASK -> viewState.showEditMaskDialog(args.command)
+                Command.TYPE_DECRYPT_PIN -> viewState.showPinDialog(args.command)
             }
 
             CommandClickEventArgs.ARG2 -> when (args.command.type) {

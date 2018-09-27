@@ -25,6 +25,7 @@ class HomeAdapter constructor(
     private val mDefaultArgText = resources.getString(R.string.command_tap_to_select)
     private val mEnterMaskText = resources.getString(R.string.command_tap_to_enter_mask)
     private val mSelectFolderText = resources.getString(R.string.command_tap_to_select_folder)
+    private val mEnterPinText = resources.getString(R.string.command_tap_to_enter_pin)
 
     // events stuff
     private val mChangeTypeSubject = PublishSubject.create<Pair<Command, Int>>()
@@ -89,6 +90,7 @@ class HomeAdapter constructor(
                 Command.TYPE_BACKUP -> itemView.image.setImageResource(R.drawable.backup_restore)
                 Command.TYPE_FLASH_FILE -> itemView.image.setImageResource(R.drawable.flash)
                 Command.TYPE_FLASH_MASK -> itemView.image.setImageResource(R.drawable.folder_search)
+                Command.TYPE_DECRYPT_PIN -> itemView.image.setImageResource(R.drawable.lock_open)
             }
 
             val adapter = ArrayAdapter<String>(itemView.context,
@@ -110,6 +112,9 @@ class HomeAdapter constructor(
                 itemView.lbl_arg2.visible(true)
                 itemView.lbl_arg1.text = if (command.arg1 != null) command.arg1 else mEnterMaskText
                 itemView.lbl_arg2.text = if (command.arg2 != null) command.arg2 else mSelectFolderText
+            } else if (command.type == Command.TYPE_DECRYPT_PIN) {
+                itemView.lbl_arg2.visible(false)
+                itemView.lbl_arg1.text = mEnterPinText
             } else {
                 itemView.lbl_arg2.visible(false)
                 itemView.lbl_arg1.text = if (command.arg1 != null) command.arg1 else mDefaultArgText

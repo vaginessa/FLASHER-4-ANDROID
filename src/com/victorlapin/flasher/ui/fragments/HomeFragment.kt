@@ -10,11 +10,14 @@ import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
 import android.widget.Toast
 import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.customview.customView
+import com.afollestad.materialdialogs.customview.getCustomView
 import com.afollestad.materialdialogs.files.FileFilter
 import com.afollestad.materialdialogs.files.fileChooser
 import com.afollestad.materialdialogs.files.folderChooser
 import com.afollestad.materialdialogs.input.input
 import com.afollestad.materialdialogs.list.listItemsMultiChoice
+import com.andrognito.pinlockview.PinLockListener
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.tbruyelle.rxpermissions2.RxPermissions
@@ -29,6 +32,7 @@ import com.victorlapin.flasher.ui.adapters.HomeAdapter
 import com.victorlapin.flasher.ui.adapters.LinearLayoutManagerWrapper
 import com.victorlapin.flasher.view.HomeFragmentView
 import io.reactivex.disposables.CompositeDisposable
+import kotlinx.android.synthetic.main.dialog_pin.view.*
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.include_progress.*
 import kotlinx.android.synthetic.main.include_toolbar_center.*
@@ -392,6 +396,34 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
                 .addTo(mNavEventsDisposable)
         navFragment.show(activity!!.supportFragmentManager,
                 BottomNavigationDrawerFragment::class.java.simpleName)
+    }
+
+    override fun showPinDialog(command: Command) {
+        val dialog = MaterialDialog(context!!)
+                .title(res = R.string.enter_pin)
+                .customView(viewRes = R.layout.dialog_pin, scrollable = true)
+        val view = dialog.getCustomView()!!
+        view.pin.text = command.arg1
+        view.pin_lock_view.setPinLockListener(object : PinLockListener {
+            override fun onEmpty() {
+                view.pin.text = null
+            }
+
+            override fun onComplete(pin: String?) {
+                view.pin.text = pin
+            }
+
+            override fun onPinChange(pinLength: Int, intermediatePin: String?) {
+                view.pin.text = intermediatePin
+            }
+        })
+        dialog
+                .positiveButton(res = android.R.string.ok) {
+                    command.arg1 = view.pin.text.toString()
+                    presenter.onCommandUpdated(command)
+                }
+                .negativeButton(res = android.R.string.cancel)
+                .show()
     }
 
     companion object {

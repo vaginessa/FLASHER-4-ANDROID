@@ -6,11 +6,13 @@
     <string name="command_tap_to_select">Tap to select…</string>
     <string name="command_tap_to_enter_mask">Tap to enter partial file name…</string>
     <string name="command_tap_to_select_folder">Tap to select folder…</string>
+    <string name="command_tap_to_enter_pin">Tap to enter PIN…</string>
     <string name="command_deleted">Command deleted</string>
     <string name="not_found">Not found</string>
     <string name="reboot">Script deployed. Reboot to recovery?</string>
     <string name="enter_mask">Enter (partial) file name</string>
     <string name="enter_file_name">Enter file name</string>
+    <string name="enter_pin">Enter PIN</string>
     <string name="success">Success</string>
     <string name="schedule_time_title">Time</string>
     <string name="schedule_interval_title">Repeat every (days)</string>
@@ -67,6 +69,7 @@
     <string name="command_backup">Backup</string>
     <string name="command_flash_file">Flash file</string>
     <string name="command_flash_mask">Smart flash</string>
+    <string name="command_decrypt_pin">Decrypt PIN</string>
 
     <!-- Permissions -->
     <string name="permission_denied_storage">Storage permission is required.</string>

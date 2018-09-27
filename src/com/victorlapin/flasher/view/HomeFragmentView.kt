@@ -40,4 +40,6 @@ interface HomeFragmentView : MvpView {
     fun toggleProgress(isVisible: Boolean)
     @StateStrategyType(SkipStrategy::class)
     fun showNavigationFragment(selectedId: Int)
+    @StateStrategyType(SkipStrategy::class)
+    fun showPinDialog(command: Command)
 }

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/pin"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:paddingTop="@dimen/margin_8"
+        android:paddingBottom="@dimen/margin_24"
+        android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+        android:textColor="?android:attr/textColorPrimary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.andrognito.pinlockview.PinLockView
+        android:id="@+id/pin_lock_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingStart="@dimen/margin_24"
+        android:paddingEnd="@dimen/margin_24"
+        app:keypadButtonBackgroundDrawable="?attr/selectableItemBackgroundBorderless"
+        app:keypadDeleteButtonDrawable="@drawable/backspace_outline"
+        app:keypadDeleteButtonSize="@dimen/margin_24"
+        app:keypadShowDeleteButton="true"
+        app:keypadTextColor="?android:attr/textColorPrimary"
+        app:keypadTextSize="@dimen/margin_24"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/pin"
+        app:pinLength="8" />
+
+</android.support.constraint.ConstraintLayout>
