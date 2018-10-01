@@ -70,7 +70,7 @@ class RecoveryScriptRepository {
                     }
                 }
                 Command.TYPE_DECRYPT_PIN -> it.arg1?.let { pin ->
-                    scriptBuilder.appendln("decrypt '$pin'")
+                    scriptBuilder.appendln("decrypt $pin")
                 }
             }
         }
