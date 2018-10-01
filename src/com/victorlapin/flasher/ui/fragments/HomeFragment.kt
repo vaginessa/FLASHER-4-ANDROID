@@ -446,6 +446,7 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
                 val resolvedPassword = PatternUtils.patternToString(pattern,
                         view.pattern_lock_view.dotCount)
                 command.arg1 = resolvedPassword
+                command.arg2 = view.pattern_lock_view.dotCount.toString()
             }
 
             override fun onCleared() {
