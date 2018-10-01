@@ -123,6 +123,7 @@ dependencies {
     implementation "com.jakewharton.timber:timber:4.7.1"
     implementation "android.arch.work:work-runtime:1.0.0-alpha09"
     implementation "com.andrognito.pinlockview:pinlockview:2.1.0"
+    implementation "com.andrognito.patternlockview:patternlockview:1.0.0"
 
     debugImplementation "im.dino:dbinspector:3.4.1@aar"
 
