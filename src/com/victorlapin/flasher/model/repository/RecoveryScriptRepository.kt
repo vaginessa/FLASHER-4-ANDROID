@@ -168,6 +168,15 @@ class RecoveryScriptRepository {
             }
         }
 
+        // check for encrypted device
+        val encryptedState = Shell.sh("getprop ro.crypto.state").exec().out
+        if (encryptedState.isNotEmpty()) {
+            if (encryptedState.first() == "encrypted" && !script.startsWith("decrypt")) {
+                Timber.w("Encrypted device and no decrypt command detected")
+                return EventArgs(isSuccess = false, messageId = R.string.analyze_encrypted_device)
+            }
+        }
+
         return null
     }
 

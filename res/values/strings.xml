@@ -85,6 +85,7 @@
     <string name="analyze_system_space">Insufficient system space to flash selected files.</string>
     <string name="analyze_empty_script">Script is empty</string>
     <string name="analyze_empty_script_deployed">Deployed script has 0 bytes size (insufficient cache space?)</string>
+    <string name="analyze_encrypted_device">Encrypted device and no decrypt command detected.</string>
 
     <!-- About activity -->
     <string name="about_versions">Versions</string>

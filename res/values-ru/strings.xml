@@ -85,6 +85,7 @@
     <string name="analyze_system_space">Недостаточно места на системном разделе для прошивки выбранных файлов.</string>
     <string name="analyze_empty_script">Пустой скрипт</string>
     <string name="analyze_empty_script_deployed">Установленный скрипт имеет нулевую длину (недостаточно места в cache?)</string>
+    <string name="analyze_encrypted_device">Обнаружено зашифрованное устройство без команды для расшифровки.</string>
 
     <!-- About activity -->
     <string name="about_versions">Версии</string>
