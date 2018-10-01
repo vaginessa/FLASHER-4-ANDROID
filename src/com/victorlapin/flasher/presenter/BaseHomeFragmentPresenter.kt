@@ -72,6 +72,7 @@ abstract class BaseHomeFragmentPresenter constructor(
                 }
                 Command.TYPE_FLASH_MASK -> viewState.showEditMaskDialog(args.command)
                 Command.TYPE_DECRYPT_PIN -> viewState.showPinDialog(args.command)
+                Command.TYPE_DECRYPT_PATTERN -> viewState.showPatternDialog(args.command)
             }
 
             CommandClickEventArgs.ARG2 -> when (args.command.type) {
@@ -83,6 +84,7 @@ abstract class BaseHomeFragmentPresenter constructor(
                     }
                     viewState.showSelectFolderDialog(args.command, path)
                 }
+                Command.TYPE_DECRYPT_PATTERN -> viewState.showPatternDimensionDialog(args.command)
             }
         }
     }

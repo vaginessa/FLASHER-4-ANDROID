@@ -69,8 +69,9 @@ class RecoveryScriptRepository {
                         resolvedFilesBuilder.appendln("${it.arg1} -> ${files[0].name}")
                     }
                 }
-                Command.TYPE_DECRYPT_PIN -> it.arg1?.let { pin ->
-                    scriptBuilder.appendln("decrypt $pin")
+                Command.TYPE_DECRYPT_PIN,
+                Command.TYPE_DECRYPT_PATTERN -> it.arg1?.let { password ->
+                    scriptBuilder.appendln("decrypt $password")
                 }
             }
         }

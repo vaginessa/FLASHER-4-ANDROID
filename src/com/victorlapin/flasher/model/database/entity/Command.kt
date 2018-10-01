@@ -46,5 +46,6 @@ data class Command(
         const val TYPE_FLASH_FILE = 2
         const val TYPE_FLASH_MASK = 3
         const val TYPE_DECRYPT_PIN = 4
+        const val TYPE_DECRYPT_PATTERN = 5
     }
 }

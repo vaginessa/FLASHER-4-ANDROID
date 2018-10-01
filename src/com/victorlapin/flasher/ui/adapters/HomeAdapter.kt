@@ -26,6 +26,8 @@ class HomeAdapter constructor(
     private val mEnterMaskText = resources.getString(R.string.command_tap_to_enter_mask)
     private val mSelectFolderText = resources.getString(R.string.command_tap_to_select_folder)
     private val mEnterPinText = resources.getString(R.string.command_tap_to_enter_pin)
+    private val mEnterPatternText = resources.getString(R.string.command_tap_to_enter_pattern)
+    private val mPatternDimensionText = resources.getString(R.string.pattern_dimension)
 
     // events stuff
     private val mChangeTypeSubject = PublishSubject.create<Pair<Command, Int>>()
@@ -91,6 +93,7 @@ class HomeAdapter constructor(
                 Command.TYPE_FLASH_FILE -> itemView.image.setImageResource(R.drawable.flash)
                 Command.TYPE_FLASH_MASK -> itemView.image.setImageResource(R.drawable.folder_search)
                 Command.TYPE_DECRYPT_PIN -> itemView.image.setImageResource(R.drawable.lock_open)
+                Command.TYPE_DECRYPT_PATTERN -> itemView.image.setImageResource(R.drawable.lock_pattern)
             }
 
             val adapter = ArrayAdapter<String>(itemView.context,
@@ -108,16 +111,26 @@ class HomeAdapter constructor(
                         }
                     }
 
-            if (command.type == Command.TYPE_FLASH_MASK) {
-                itemView.lbl_arg2.visible(true)
-                itemView.lbl_arg1.text = if (command.arg1 != null) command.arg1 else mEnterMaskText
-                itemView.lbl_arg2.text = if (command.arg2 != null) command.arg2 else mSelectFolderText
-            } else if (command.type == Command.TYPE_DECRYPT_PIN) {
-                itemView.lbl_arg2.visible(false)
-                itemView.lbl_arg1.text = mEnterPinText
-            } else {
-                itemView.lbl_arg2.visible(false)
-                itemView.lbl_arg1.text = if (command.arg1 != null) command.arg1 else mDefaultArgText
+            when (command.type) {
+                Command.TYPE_FLASH_MASK -> {
+                    itemView.lbl_arg2.visible(true)
+                    itemView.lbl_arg1.text = if (command.arg1 != null) command.arg1 else mEnterMaskText
+                    itemView.lbl_arg2.text = if (command.arg2 != null) command.arg2 else mSelectFolderText
+                }
+                Command.TYPE_DECRYPT_PIN -> {
+                    itemView.lbl_arg2.visible(false)
+                    itemView.lbl_arg1.text = mEnterPinText
+                }
+                Command.TYPE_DECRYPT_PATTERN -> {
+                    itemView.lbl_arg2.visible(true)
+                    itemView.lbl_arg1.text = mEnterPatternText
+                    val dimension = command.arg2 ?: "4"
+                    itemView.lbl_arg2.text = mPatternDimensionText.format(dimension)
+                }
+                else -> {
+                    itemView.lbl_arg2.visible(false)
+                    itemView.lbl_arg1.text = if (command.arg1 != null) command.arg1 else mDefaultArgText
+                }
             }
             itemView.lbl_arg1.setOnClickListener {
                 mArgsClickSubject.onNext(CommandClickEventArgs(command.clone(),

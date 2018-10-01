@@ -6,6 +6,7 @@
         <item>@string/command_flash_file</item>
         <item>@string/command_flash_mask</item>
         <item>@string/command_decrypt_pin</item>
+        <item>@string/command_decrypt_pattern</item>
     </string-array>
 
     <string-array name="wipe_partitions">

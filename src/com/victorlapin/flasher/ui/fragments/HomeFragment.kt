@@ -17,6 +17,9 @@ import com.afollestad.materialdialogs.files.fileChooser
 import com.afollestad.materialdialogs.files.folderChooser
 import com.afollestad.materialdialogs.input.input
 import com.afollestad.materialdialogs.list.listItemsMultiChoice
+import com.afollestad.materialdialogs.list.listItemsSingleChoice
+import com.andrognito.patternlockview.PatternLockView
+import com.andrognito.patternlockview.listener.PatternLockViewListener
 import com.andrognito.pinlockview.PinLockListener
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
@@ -24,6 +27,7 @@ import com.tbruyelle.rxpermissions2.RxPermissions
 import com.victorlapin.flasher.*
 import com.victorlapin.flasher.manager.ResourcesManager
 import com.victorlapin.flasher.model.EventArgs
+import com.victorlapin.flasher.model.PatternUtils
 import com.victorlapin.flasher.model.database.entity.Chain
 import com.victorlapin.flasher.model.database.entity.Command
 import com.victorlapin.flasher.presenter.BaseHomeFragmentPresenter
@@ -32,6 +36,7 @@ import com.victorlapin.flasher.ui.adapters.HomeAdapter
 import com.victorlapin.flasher.ui.adapters.LinearLayoutManagerWrapper
 import com.victorlapin.flasher.view.HomeFragmentView
 import io.reactivex.disposables.CompositeDisposable
+import kotlinx.android.synthetic.main.dialog_pattern.view.*
 import kotlinx.android.synthetic.main.dialog_pin.view.*
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.include_progress.*
@@ -422,6 +427,59 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
                     command.arg1 = view.pin.text.toString()
                     presenter.onCommandUpdated(command)
                 }
+                .negativeButton(res = android.R.string.cancel)
+                .show()
+    }
+
+    override fun showPatternDialog(command: Command) {
+        val dialog = MaterialDialog(context!!)
+                .title(res = R.string.enter_pattern)
+                .customView(viewRes = R.layout.dialog_pattern, scrollable = true)
+        val view = dialog.getCustomView()!!
+        view.pattern_lock_view.dotCount = (command.arg2 ?: "4").toInt()
+        command.arg1?.let {
+            view.pattern_lock_view.setPattern(PatternLockView.PatternViewMode.CORRECT,
+                    PatternUtils.stringToPattern(it, view.pattern_lock_view.dotCount))
+        }
+        view.pattern_lock_view.addPatternLockListener(object : PatternLockViewListener {
+            override fun onComplete(pattern: MutableList<PatternLockView.Dot>?) {
+                val resolvedPassword = PatternUtils.patternToString(pattern,
+                        view.pattern_lock_view.dotCount)
+                command.arg1 = resolvedPassword
+            }
+
+            override fun onCleared() {
+                command.arg1 = null
+            }
+
+            override fun onStarted() {
+
+            }
+
+            override fun onProgress(progressPattern: MutableList<PatternLockView.Dot>?) {
+
+            }
+        })
+        dialog
+                .positiveButton(res = android.R.string.ok) {
+                    presenter.onCommandUpdated(command)
+                }
+                .negativeButton(res = android.R.string.cancel)
+                .show()
+    }
+
+    override fun showPatternDimensionDialog(command: Command) {
+        val dimensionItems = listOf("3", "4", "5")
+        val selectedIndex = dimensionItems.indexOf(command.arg2 ?: "4")
+        MaterialDialog(context!!)
+                .title(R.string.pattern_dimension_title)
+                .listItemsSingleChoice(items = dimensionItems,
+                        initialSelection = selectedIndex) { _, _, text ->
+                    command.arg1 = null
+                    command.arg2 = text
+                    presenter.onCommandUpdated(command)
+                }
+                .positiveButton(res = android.R.string.ok)
                 .negativeButton(res = android.R.string.cancel)
                 .show()
     }

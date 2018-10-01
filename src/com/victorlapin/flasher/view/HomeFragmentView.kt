@@ -42,4 +42,8 @@ interface HomeFragmentView : MvpView {
     fun showNavigationFragment(selectedId: Int)
     @StateStrategyType(SkipStrategy::class)
     fun showPinDialog(command: Command)
+    @StateStrategyType(SkipStrategy::class)
+    fun showPatternDialog(command: Command)
+    @StateStrategyType(SkipStrategy::class)
+    fun showPatternDimensionDialog(command: Command)
 }
