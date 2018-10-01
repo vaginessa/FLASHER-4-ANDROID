@@ -42,8 +42,14 @@ abstract class BaseCommandsInteractor constructor(
     fun exportCommands(fileName: String): Single<EventArgs> =
             getCommands()
                     .firstOrError()
-                    .map {
-                        val json = mGson.toJson(it)
+                    .map { commands ->
+                        commands.filter { c ->
+                            c.type == Command.TYPE_DECRYPT_PIN ||
+                                    c.type == Command.TYPE_DECRYPT_PATTERN
+                        }.forEach {
+                            it.arg1 = null
+                        }
+                        val json = mGson.toJson(commands)
                         mRepo.exportCommands(fileName, json)
                     }
                     .subscribeOn(Schedulers.io())
