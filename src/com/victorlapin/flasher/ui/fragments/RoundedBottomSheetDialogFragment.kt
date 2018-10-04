@@ -9,7 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.victorlapin.flasher.R
-import com.victorlapin.flasher.Screens
+import com.victorlapin.flasher.Const
 import com.victorlapin.flasher.manager.SettingsManager
 import io.reactivex.subjects.PublishSubject
 import org.koin.android.ext.android.getKoin
@@ -20,7 +20,7 @@ abstract class RoundedBottomSheetDialogFragment : BottomSheetDialogFragment(),
         KoinComponent {
     abstract val layoutRes: Int
 
-    private val mScope = getKoin().createScope(Screens.FRAGMENT_BOTTOM)
+    private val mScope = getKoin().createScope(Const.FRAGMENT_BOTTOM)
     private val mSettings by inject<SettingsManager>()
 
     private val mDismissSubject: PublishSubject<Any> = PublishSubject.create()

@@ -2,7 +2,8 @@ package com.victorlapin.flasher.presenter
 
 import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
-import com.victorlapin.flasher.Screens
+import com.victorlapin.flasher.AboutScreen
+import com.victorlapin.flasher.HomeScreen
 import com.victorlapin.flasher.view.MainActivityView
 import ru.terrakok.cicerone.Router
 
@@ -15,7 +16,7 @@ class MainActivityPresenter constructor(
         selectHome()
     }
 
-    private fun selectHome() = mRouter.newRootScreen(Screens.FRAGMENT_HOME)
+    private fun selectHome() = mRouter.newRootScreen(HomeScreen())
 
-    fun selectAbout() = mRouter.navigateTo(Screens.FRAGMENT_ABOUT)
+    fun selectAbout() = mRouter.navigateTo(AboutScreen())
 }

@@ -1,8 +1,9 @@
 package com.victorlapin.flasher.model
 
 import com.victorlapin.flasher.model.database.entity.Command
+import ru.terrakok.cicerone.Screen
 
-data class AboutClickEventArgs(val screenKey: String, val data: Any?)
+data class AboutClickEventArgs(val screen: Screen)
 
 data class EventArgs(
         val isSuccess: Boolean,

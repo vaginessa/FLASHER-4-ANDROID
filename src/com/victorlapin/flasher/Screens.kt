@@ -1,20 +1,52 @@
 package com.victorlapin.flasher
 
-object Screens {
-    const val ACTIVITY_MAIN = "activity_main"
-    const val ACTIVITY_REBOOT_DIALOG = "activity_reboot_dialog"
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
+import android.support.v4.app.Fragment
+import com.victorlapin.flasher.ui.fragments.AboutFragment
+import com.victorlapin.flasher.ui.fragments.HomeFragment
+import com.victorlapin.flasher.ui.fragments.ScheduleFragment
+import com.victorlapin.flasher.ui.fragments.SettingsGlobalFragment
+import ru.terrakok.cicerone.android.support.SupportAppScreen
 
-    const val FRAGMENT_HOME = "fragment_home"
-    const val FRAGMENT_SCHEDULE = "fragment_schedule"
-    const val FRAGMENT_SETTINGS = "fragment_settings"
-    const val FRAGMENT_ABOUT = "fragment_about"
-    const val FRAGMENT_BOTTOM = "fragment_bottom"
+class HomeScreen : SupportAppScreen() {
+    init {
+        this.screenKey = Const.FRAGMENT_HOME
+    }
 
-    const val EXTERNAL_ABOUT = "about"
+    override fun getFragment(): Fragment = HomeFragment.newInstance()
+}
 
-    const val SERVICE_SCRIPT = "tile_service_script"
+class ScheduleScreen : SupportAppScreen() {
+    init {
+        this.screenKey = Const.FRAGMENT_SCHEDULE
+    }
 
-    const val RECEIVER_BOOT = "receiver_boot"
+    override fun getFragment(): Fragment = ScheduleFragment.newInstance()
+}
 
-    const val WORKER_SCHEDULE = "worker_schedule"
+class SettingsScreen : SupportAppScreen() {
+    init {
+        this.screenKey = Const.FRAGMENT_SETTINGS
+    }
+
+    override fun getFragment(): Fragment = SettingsGlobalFragment.newInstance()
+}
+
+class AboutScreen : SupportAppScreen() {
+    init {
+        this.screenKey = Const.FRAGMENT_ABOUT
+    }
+
+    override fun getFragment(): Fragment = AboutFragment.newInstance()
+}
+
+class AboutExternalScreen(private val url: String) : SupportAppScreen() {
+    init {
+        this.screenKey = Const.EXTERNAL_ABOUT
+    }
+
+    override fun getActivityIntent(context: Context?): Intent =
+            Intent(Intent.ACTION_VIEW, Uri.parse(url))
 }

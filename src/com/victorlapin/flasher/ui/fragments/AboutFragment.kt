@@ -6,7 +6,7 @@ import android.support.v7.widget.LinearLayoutManager
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.victorlapin.flasher.R
-import com.victorlapin.flasher.Screens
+import com.victorlapin.flasher.Const
 import com.victorlapin.flasher.addTo
 import com.victorlapin.flasher.model.repository.AboutRepository
 import com.victorlapin.flasher.presenter.AboutFragmentPresenter
@@ -20,7 +20,7 @@ import org.koin.android.ext.android.inject
 
 class AboutFragment : BaseFragment(), AboutFragmentView {
     override val layoutRes = R.layout.fragment_list
-    override val scopeName = Screens.FRAGMENT_ABOUT
+    override val scopeName = Const.FRAGMENT_ABOUT
 
     @InjectPresenter
     lateinit var presenter: AboutFragmentPresenter

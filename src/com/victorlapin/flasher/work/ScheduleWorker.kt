@@ -3,7 +3,7 @@ package com.victorlapin.flasher.work
 import androidx.work.Constraints
 import androidx.work.OneTimeWorkRequest
 import androidx.work.Worker
-import com.victorlapin.flasher.Screens
+import com.victorlapin.flasher.Const
 import com.victorlapin.flasher.manager.ServicesManager
 import com.victorlapin.flasher.manager.SettingsManager
 import com.victorlapin.flasher.model.database.entity.Chain
@@ -20,7 +20,7 @@ class ScheduleWorker : Worker(), KoinComponent {
     private val mServices by inject<ServicesManager>()
 
     override fun doWork(): Result {
-        val scope = getKoin().createScope(Screens.WORKER_SCHEDULE)
+        val scope = getKoin().createScope(Const.WORKER_SCHEDULE)
         Timber.i("Schedule worker started")
         mSettings.scheduleLastRun = System.currentTimeMillis()
         return try {
