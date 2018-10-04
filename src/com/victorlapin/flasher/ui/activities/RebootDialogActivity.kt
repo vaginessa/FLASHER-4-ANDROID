@@ -5,14 +5,14 @@ import com.arellomobile.mvp.MvpAppCompatActivity
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.victorlapin.flasher.R
-import com.victorlapin.flasher.Screens
+import com.victorlapin.flasher.Const
 import com.victorlapin.flasher.presenter.RebootDialogActivityPresenter
 import com.victorlapin.flasher.view.RebootDialogActivityView
 import org.koin.android.ext.android.get
 import org.koin.android.ext.android.getKoin
 
 class RebootDialogActivity : MvpAppCompatActivity(), RebootDialogActivityView {
-    private val mScope = getKoin().createScope(Screens.ACTIVITY_REBOOT_DIALOG)
+    private val mScope = getKoin().createScope(Const.ACTIVITY_REBOOT_DIALOG)
 
     @InjectPresenter
     lateinit var presenter: RebootDialogActivityPresenter

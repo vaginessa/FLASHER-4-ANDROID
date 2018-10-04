@@ -2,7 +2,7 @@ package com.victorlapin.flasher.presenter
 
 import com.arellomobile.mvp.MvpPresenter
 import com.victorlapin.flasher.R
-import com.victorlapin.flasher.Screens
+import com.victorlapin.flasher.Const
 import com.victorlapin.flasher.manager.SettingsManager
 import com.victorlapin.flasher.model.CommandClickEventArgs
 import com.victorlapin.flasher.model.database.entity.Command
@@ -153,13 +153,13 @@ abstract class BaseHomeFragmentPresenter constructor(
 
     fun onOrderChanged(commands: List<Command>) = mReorderSubject.onNext(commands)
 
-    private fun selectHome() = mRouter.newRootScreen(Screens.FRAGMENT_HOME)
+    private fun selectHome() = mRouter.newRootScreen(Const.FRAGMENT_HOME)
 
-    private fun selectSchedule() = mRouter.newRootScreen(Screens.FRAGMENT_SCHEDULE)
+    private fun selectSchedule() = mRouter.newRootScreen(Const.FRAGMENT_SCHEDULE)
 
     fun onFabClicked() = mInteractor.addStubCommand()
 
-    fun selectSettings() = mRouter.navigateTo(Screens.FRAGMENT_SETTINGS)
+    fun selectSettings() = mRouter.navigateTo(Const.FRAGMENT_SETTINGS)
 
     fun selectNavigation() = viewState.showNavigationFragment(mCurrentFragmentId)
 

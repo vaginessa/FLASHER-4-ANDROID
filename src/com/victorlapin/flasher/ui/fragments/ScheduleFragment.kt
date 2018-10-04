@@ -6,7 +6,7 @@ import android.text.InputType
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.input.input
 import com.victorlapin.flasher.R
-import com.victorlapin.flasher.Screens
+import com.victorlapin.flasher.Const
 import com.victorlapin.flasher.manager.SettingsManager
 import com.victorlapin.flasher.model.database.entity.Chain
 import com.victorlapin.flasher.presenter.BaseHomeFragmentPresenter
@@ -21,7 +21,7 @@ import java.util.*
 
 class ScheduleFragment : HomeFragment() {
     override val layoutRes = R.layout.fragment_schedule
-    override val scopeName = Screens.FRAGMENT_SCHEDULE
+    override val scopeName = Const.FRAGMENT_SCHEDULE
 
     override fun providePresenter(): BaseHomeFragmentPresenter = get<ScheduleHomePresenter>()
 

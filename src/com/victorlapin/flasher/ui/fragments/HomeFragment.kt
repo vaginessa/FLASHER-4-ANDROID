@@ -39,7 +39,7 @@ import java.io.File
 
 open class HomeFragment : BaseFragment(), HomeFragmentView {
     override val layoutRes = R.layout.fragment_home
-    override val scopeName = Screens.FRAGMENT_HOME
+    override val scopeName = Const.FRAGMENT_HOME
 
     @InjectPresenter
     lateinit var presenter: BaseHomeFragmentPresenter
