@@ -10,7 +10,7 @@ import org.koin.android.ext.android.getKoin
 import org.koin.android.ext.android.inject
 import org.koin.core.scope.Scope
 import ru.terrakok.cicerone.NavigatorHolder
-import ru.terrakok.cicerone.android.SupportAppNavigator
+import ru.terrakok.cicerone.android.support.SupportAppNavigator
 
 abstract class BaseActivity : MvpAppCompatActivity() {
     abstract val layoutRes: Int
