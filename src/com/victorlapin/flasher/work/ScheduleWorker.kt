@@ -1,8 +1,10 @@
 package com.victorlapin.flasher.work
 
+import android.content.Context
 import androidx.work.Constraints
 import androidx.work.OneTimeWorkRequest
 import androidx.work.Worker
+import androidx.work.WorkerParameters
 import com.victorlapin.flasher.Const
 import com.victorlapin.flasher.manager.ServicesManager
 import com.victorlapin.flasher.manager.SettingsManager
@@ -14,7 +16,8 @@ import org.koin.standalone.inject
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
 
-class ScheduleWorker : Worker(), KoinComponent {
+class ScheduleWorker(context: Context, params: WorkerParameters) :
+        Worker(context, params), KoinComponent {
     private val mSettings by inject<SettingsManager>()
     private val mScriptInteractor by inject<RecoveryScriptInteractor>()
     private val mServices by inject<ServicesManager>()
