@@ -44,6 +44,22 @@
 
     </PreferenceCategory>
 
+    <PreferenceCategory android:title="@string/pref_category_security">
+
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="ask_fp_on_launch"
+            android:summary="@string/pref_summary_ask_fingerprint_on_launch"
+            android:title="@string/pref_title_ask_fingerprint_on_launch" />
+
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="ask_fp_to_reboot"
+            android:summary="@string/pref_summary_ask_fingerprint_to_reboot"
+            android:title="@string/pref_title_ask_fingerprint_to_reboot" />
+
+    </PreferenceCategory>
+
     <PreferenceCategory android:title="@string/pref_category_debug">
 
         <SwitchPreference

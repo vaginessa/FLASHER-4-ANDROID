@@ -7,6 +7,7 @@ import android.support.v7.preference.EditTextPreference
 import android.support.v7.preference.ListPreference
 import android.support.v7.preference.Preference
 import android.support.v7.preference.PreferenceFragmentCompat
+import com.mtramin.rxfingerprint.RxFingerprint
 import com.tbruyelle.rxpermissions2.RxPermissions
 import com.victorlapin.flasher.Const
 import com.victorlapin.flasher.R
@@ -131,6 +132,11 @@ class SettingsGlobalFragment : PreferenceFragmentCompat() {
                     }
                     return@OnPreferenceChangeListener true
                 }
+
+        val fpPreference = findPreference(SettingsManager.KEY_ASK_FINGERPRINT_ON_LAUNCH)
+        fpPreference.isEnabled = RxFingerprint.isAvailable(context!!)
+        val fpRebootPreference = findPreference(SettingsManager.KEY_ASK_FINGERPRINT_TO_REBOOT)
+        fpRebootPreference.isEnabled = RxFingerprint.isAvailable(context!!)
     }
 
     override fun onStop() {

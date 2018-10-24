@@ -41,6 +41,7 @@
     <string name="pref_category_misc">Прочее</string>
     <string name="pref_category_debug">Отладка</string>
     <string name="pref_category_general">Основное</string>
+    <string name="pref_category_security">Безопасность</string>
     <string name="pref_title_theme">Тема приложения</string>
     <string name="theme_light">Светлая</string>
     <string name="theme_dark">Темная</string>
@@ -61,6 +62,10 @@
     <string name="pref_title_backups_to_keep">Сохранять резервных копий</string>
     <string name="pref_title_enable_file_log">Писать отладочный лог в файл</string>
     <string name="pref_summary_enable_file_log">Будет сохранено в %s</string>
+    <string name="pref_title_ask_fingerprint_on_launch">Защита отпечатком пальца</string>
+    <string name="pref_summary_ask_fingerprint_on_launch">Использовать сканер отпечатков для доступа к приложению</string>
+    <string name="pref_title_ask_fingerprint_to_reboot">Перезагрузка отпечатком пальца</string>
+    <string name="pref_summary_ask_fingerprint_to_reboot">Использовать сканер отпечатков для перезагрузки в рекавери</string>
 
     <!-- Command names -->
     <string name="command_wipe">Вайп</string>

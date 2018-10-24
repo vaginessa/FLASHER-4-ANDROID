@@ -26,6 +26,8 @@ class SettingsManager(context: Context) {
         const val KEY_SCHEDULE_ONLY_CHARGING = "schedule_only_charging"
         const val KEY_SCHEDULE_ONLY_IDLE = "schedule_only_idle"
         const val KEY_SCHEDULE_ONLY_HIGH_BATTERY = "schedule_only_high_battery"
+        const val KEY_ASK_FINGERPRINT_ON_LAUNCH = "ask_fp_on_launch"
+        const val KEY_ASK_FINGERPRINT_TO_REBOOT = "ask_fp_to_reboot"
     }
 
     private val mPrefs = PreferenceManager.getDefaultSharedPreferences(context)
@@ -93,4 +95,10 @@ class SettingsManager(context: Context) {
     var scheduleOnlyHighBattery: Boolean
         get() = mPrefs.getBoolean(KEY_SCHEDULE_ONLY_HIGH_BATTERY, false)
         set(value) = mPrefs.edit().putBoolean(KEY_SCHEDULE_ONLY_HIGH_BATTERY, value).apply()
+
+    val askFingerprintOnLaunch: Boolean
+        get() = mPrefs.getBoolean(KEY_ASK_FINGERPRINT_ON_LAUNCH, false)
+
+    val askFingerprintToReboot: Boolean
+        get() = mPrefs.getBoolean(KEY_ASK_FINGERPRINT_TO_REBOOT, false)
 }
