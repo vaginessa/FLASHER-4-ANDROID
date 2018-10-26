@@ -20,7 +20,7 @@ abstract class RoundedBottomSheetDialogFragment : BottomSheetDialogFragment(),
         KoinComponent {
     abstract val layoutRes: Int
 
-    private val mScope = getKoin().createScope(Const.FRAGMENT_BOTTOM)
+    private val mScope = getKoin().getOrCreateScope(Const.FRAGMENT_BOTTOM)
     private val mSettings by inject<SettingsManager>()
 
     private val mDismissSubject: PublishSubject<Any> = PublishSubject.create()
