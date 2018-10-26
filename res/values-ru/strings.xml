@@ -114,4 +114,9 @@
 
     <string name="empty_view_title">Начните с нуля</string>
     <string name="empty_view_summary">Что-нибудь прошить?</string>
+
+    <string name="fingerprint_auth_title">Проверка безопасности</string>
+    <string name="fingerprint_auth_subtitle">Приложение заблокировано</string>
+    <string name="fingerprint_auth_description">Приложите палец к сканеру отпечатков чтобы получить доступ</string>
+    <string name="fingerprint_auth_error">Отпечаток не распознан, попробуйте еще раз!</string>
 </resources>

@@ -2,4 +2,5 @@
 <resources>
     <attr name="navigation_color_selected" format="reference" />
     <attr name="progress_background_color" format="reference" />
+    <attr name="fingerprint_accent_color" format="reference" />
 </resources>

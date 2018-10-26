@@ -126,4 +126,9 @@
 
     <string name="empty_view_title">A fresh start</string>
     <string name="empty_view_summary">Anything to flash?</string>
+
+    <string name="fingerprint_auth_title">Security check</string>
+    <string name="fingerprint_auth_subtitle">The app is locked</string>
+    <string name="fingerprint_auth_description">Place your finger on the scanner to get access</string>
+    <string name="fingerprint_auth_error">Fingerprint not recognized, try again!</string>
 </resources>

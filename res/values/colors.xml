@@ -6,4 +6,5 @@
     <color name="black_transparent">#b3000000</color>
     <color name="pixel">#5e97f6</color>
     <color name="snackbar">#202124</color>
+    <color name="red">#ff0000</color>
 </resources>
