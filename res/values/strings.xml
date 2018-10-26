@@ -131,4 +131,6 @@
     <string name="fingerprint_auth_subtitle">The app is locked</string>
     <string name="fingerprint_auth_description">Place your finger on the scanner to get access</string>
     <string name="fingerprint_auth_error">Fingerprint not recognized, try again!</string>
+    <string name="fingerprint_reboot_subtitle">Reboot option is locked</string>
+    <string name="fingerprint_reboot_description">Place your finger on the scanner to reboot to recovery</string>
 </resources>

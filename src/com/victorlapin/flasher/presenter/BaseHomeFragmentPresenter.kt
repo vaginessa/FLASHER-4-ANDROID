@@ -120,6 +120,14 @@ abstract class BaseHomeFragmentPresenter constructor(
                 .subscribe()
     }
 
+    fun onRebootRequested() {
+        if (mSettings.askFingerprintToReboot) {
+            viewState.askFingerprint()
+        } else {
+            reboot()
+        }
+    }
+
     fun reboot() {
         mScriptInteractor.rebootRecovery()
                 .doOnSubscribe { viewState.toggleProgress(true) }

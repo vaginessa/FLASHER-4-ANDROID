@@ -17,6 +17,7 @@ import com.afollestad.materialdialogs.input.input
 import com.afollestad.materialdialogs.list.listItemsMultiChoice
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
+import com.mtramin.rxfingerprint.RxFingerprint
 import com.tbruyelle.rxpermissions2.RxPermissions
 import com.victorlapin.flasher.*
 import com.victorlapin.flasher.manager.ResourcesManager
@@ -49,6 +50,7 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
 
     private var mDisposable: CompositeDisposable? = null
     private val mNavEventsDisposable = CompositeDisposable()
+    private val mFingerprintDisposable = CompositeDisposable()
 
     private val mAdapter by inject<HomeAdapter>()
 
@@ -289,11 +291,25 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
                 messageId = R.string.reboot,
                 actionId = R.string.action_reboot,
                 actionClick = {
-                    presenter.reboot()
                     snackbar.dismiss()
+                    presenter.onRebootRequested()
                 },
                 isIndefinite = true
         )
+    }
+
+    override fun askFingerprint() {
+        if (RxFingerprint.isAvailable(context!!)) {
+            val fragment = FingerprintRebootFragment.newInstance()
+            fragment.successEvent.subscribe { presenter.reboot() }
+                    .addTo(mFingerprintDisposable)
+            fragment.dismissEvent.subscribe { mFingerprintDisposable.clear() }
+                    .addTo(mFingerprintDisposable)
+            fragment.show(activity!!.supportFragmentManager,
+                    FingerprintRebootFragment::class.java.simpleName)
+        } else {
+            presenter.reboot()
+        }
     }
 
     override fun showExportDialog() {

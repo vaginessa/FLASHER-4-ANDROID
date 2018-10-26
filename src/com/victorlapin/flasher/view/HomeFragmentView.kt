@@ -40,4 +40,5 @@ interface HomeFragmentView : MvpView {
     fun toggleProgress(isVisible: Boolean)
     @StateStrategyType(SkipStrategy::class)
     fun showNavigationFragment(selectedId: Int)
+    fun askFingerprint()
 }
