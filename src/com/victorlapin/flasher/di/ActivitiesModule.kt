@@ -17,5 +17,5 @@ val activitiesModule = module {
     scope(Const.FRAGMENT_ABOUT) { AboutFragmentPresenter(get(), get()) }
     scope(Const.FRAGMENT_ABOUT) { AboutAdapter(get()) }
 
-    scope(Const.ACTIVITY_REBOOT_DIALOG) { RebootDialogActivityPresenter(get()) }
+    scope(Const.ACTIVITY_REBOOT_DIALOG) { RebootDialogActivityPresenter(get(), get()) }
 }
