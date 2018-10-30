@@ -1,8 +1,10 @@
 package com.victorlapin.flasher.ui.fragments
 
 import android.content.DialogInterface
+import android.content.res.ColorStateList
 import android.os.Bundle
 import android.support.annotation.StringRes
+import android.support.v4.content.ContextCompat
 import android.view.View
 import com.mtramin.rxfingerprint.RxFingerprint
 import com.mtramin.rxfingerprint.data.FingerprintResult
@@ -60,15 +62,30 @@ abstract class FingerprintBottomSheetDialogFragment : RoundedBottomSheetDialogFr
                 .subscribe({
                     when (it.result!!) {
                         FingerprintResult.AUTHENTICATED -> {
-                            lbl_status.text = ""
+                            img_fingerprint.backgroundTintList = ColorStateList
+                                    .valueOf(ContextCompat.getColor(view.context, R.color.green))
+                            lbl_status.setTextColor(img_fingerprint.backgroundTintList)
+                            lbl_status.text = view.context.getString(R.string.success)
                             mSuccessSubject.onNext(Any())
                             dismiss()
                         }
-                        FingerprintResult.HELP -> lbl_status.text = it.message
-                        FingerprintResult.FAILED ->
+                        FingerprintResult.HELP -> {
+                            img_fingerprint.backgroundTintList = ColorStateList
+                                    .valueOf(ContextCompat.getColor(view.context, R.color.red))
+                            lbl_status.setTextColor(img_fingerprint.backgroundTintList)
+                            lbl_status.text = it.message
+                        }
+                        FingerprintResult.FAILED -> {
+                            img_fingerprint.backgroundTintList = ColorStateList
+                                    .valueOf(ContextCompat.getColor(view.context, R.color.red))
+                            lbl_status.setTextColor(img_fingerprint.backgroundTintList)
                             lbl_status.text = view.context.getString(R.string.fingerprint_auth_error)
+                        }
                     }
                 }, {
+                    img_fingerprint.backgroundTintList = ColorStateList
+                            .valueOf(ContextCompat.getColor(view.context, R.color.red))
+                    lbl_status.setTextColor(img_fingerprint.backgroundTintList)
                     lbl_status.text = it.localizedMessage
                     Timber.e(it, "Fingerprint auth failed")
                 })
