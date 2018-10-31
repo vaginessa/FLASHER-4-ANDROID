@@ -89,7 +89,7 @@ abstract class FingerprintBottomSheetDialogFragment : RoundedBottomSheetDialogFr
                     img_fingerprint.backgroundTintList = ColorStateList
                             .valueOf(ContextCompat.getColor(view.context, R.color.red))
                     lbl_status.setTextColor(img_fingerprint.backgroundTintList)
-                    lbl_status.text = it.localizedMessage
+                    lbl_status.text = it.localizedMessage ?: it.message
                     Timber.e(it, "Fingerprint auth failed")
                 })
     }
