@@ -1,5 +1,6 @@
 package com.victorlapin.flasher.ui.activities
 
+import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentTransaction
 import com.arellomobile.mvp.presenter.InjectPresenter
@@ -26,14 +27,30 @@ class MainActivity : BaseActivity(), MainActivityView {
     @ProvidePresenter
     fun providePresenter() = get<MainActivityPresenter>()
 
+    private var mShouldAuth = true
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        savedInstanceState?.let {
+            mShouldAuth = it.getBoolean(ARG_SHOULD_AUTH)
+        }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle?) {
+        super.onSaveInstanceState(outState)
+        outState?.putBoolean(ARG_SHOULD_AUTH, mShouldAuth)
+    }
+
     override fun askFingerprint() {
-        if (RxFingerprint.isAvailable(this)) {
+        if (mShouldAuth && RxFingerprint.isAvailable(this)) {
             val oldFragment = supportFragmentManager
                     .findFragmentByTag(FingerprintAuthFragment::class.java.simpleName)
             if (oldFragment != null) {
-                (oldFragment as FingerprintAuthFragment).cancelListener = { presenter.exit() }
+                (oldFragment as FingerprintAuthFragment).successListener = { mShouldAuth = false }
+                oldFragment.cancelListener = { presenter.exit() }
             } else {
                 val fragment = FingerprintAuthFragment.newInstance(
+                        successListener = { mShouldAuth = false },
                         cancelListener = { presenter.exit() }
                 )
                 fragment.show(supportFragmentManager,
@@ -56,5 +73,9 @@ class MainActivity : BaseActivity(), MainActivityView {
                 }
             }
         }
+    }
+
+    companion object {
+        private const val ARG_SHOULD_AUTH = "ARG_SHOULD_AUTH"
     }
 }
