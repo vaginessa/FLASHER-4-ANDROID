@@ -11,17 +11,14 @@ import com.mtramin.rxfingerprint.RxFingerprint
 import com.mtramin.rxfingerprint.data.FingerprintResult
 import com.victorlapin.flasher.R
 import io.reactivex.disposables.Disposable
-import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.fragment_fingerprint.*
 import timber.log.Timber
 
 abstract class FingerprintBottomSheetDialogFragment : RoundedBottomSheetDialogFragment() {
     override val layoutRes = R.layout.fragment_fingerprint
 
-    private val mCancelSubject: PublishSubject<Any> = PublishSubject.create()
-    val cancelEvent: PublishSubject<Any> = mCancelSubject
-    private val mSuccessSubject: PublishSubject<Any> = PublishSubject.create()
-    val successEvent: PublishSubject<Any> = mSuccessSubject
+    protected var successListener: () -> Unit = {}
+    protected var cancelListener: () -> Unit = {}
 
     @StringRes
     private var mTitle: Int? = null
@@ -53,7 +50,7 @@ abstract class FingerprintBottomSheetDialogFragment : RoundedBottomSheetDialogFr
             lbl_description.text = view.context.getString(mDescription!!)
         }
         btn_cancel.setOnClickListener {
-            mCancelSubject.onNext(Any())
+            cancelListener()
             dismiss()
         }
         val logo = view.context.packageManager.getApplicationIcon(view.context.packageName)
@@ -68,7 +65,7 @@ abstract class FingerprintBottomSheetDialogFragment : RoundedBottomSheetDialogFr
                             lbl_status.setTextColor(img_fingerprint.backgroundTintList)
                             lbl_status.text = view.context.getString(R.string.success)
                             Handler().postDelayed({
-                                mSuccessSubject.onNext(Any())
+                                successListener()
                                 dismiss()
                             }, 250)
                         }

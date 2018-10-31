@@ -46,9 +46,9 @@ class RebootDialogActivity : MvpAppCompatActivity(), RebootDialogActivityView {
 
     override fun askFingerprint() {
         if (RxFingerprint.isAvailable(this)) {
-            val fragment = FingerprintRebootFragment.newInstance()
-            fragment.successEvent.subscribe { presenter.rebootRecovery() }
-                    .addTo(mFingerprintDisposable)
+            val fragment = FingerprintRebootFragment.newInstance(
+                    successListener = { presenter.rebootRecovery() }
+            )
             fragment.dismissEvent.subscribe { mFingerprintDisposable.clear() }
                     .addTo(mFingerprintDisposable)
             fragment.show(supportFragmentManager,

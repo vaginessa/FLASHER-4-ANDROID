@@ -300,9 +300,9 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
 
     override fun askFingerprint() {
         if (RxFingerprint.isAvailable(context!!)) {
-            val fragment = FingerprintRebootFragment.newInstance()
-            fragment.successEvent.subscribe { presenter.reboot() }
-                    .addTo(mFingerprintDisposable)
+            val fragment = FingerprintRebootFragment.newInstance(
+                    successListener = { presenter.reboot() }
+            )
             fragment.dismissEvent.subscribe { mFingerprintDisposable.clear() }
                     .addTo(mFingerprintDisposable)
             fragment.show(activity!!.supportFragmentManager,

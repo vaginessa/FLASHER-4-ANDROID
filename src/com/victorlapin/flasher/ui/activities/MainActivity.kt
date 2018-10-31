@@ -32,9 +32,9 @@ class MainActivity : BaseActivity(), MainActivityView {
 
     override fun askFingerprint() {
         if (RxFingerprint.isAvailable(this)) {
-            val fragment = FingerprintAuthFragment.newInstance()
-            fragment.cancelEvent.subscribe { presenter.exit() }
-                    .addTo(mEventsDisposable)
+            val fragment = FingerprintAuthFragment.newInstance(
+                    cancelListener = { presenter.exit() }
+            )
             fragment.dismissEvent.subscribe { mEventsDisposable.clear() }
                     .addTo(mEventsDisposable)
             fragment.show(supportFragmentManager,
