@@ -41,6 +41,7 @@
     <string name="pref_category_misc">Misc</string>
     <string name="pref_category_debug">Debug</string>
     <string name="pref_category_general">General</string>
+    <string name="pref_category_security">Security</string>
     <string name="pref_title_theme">App Theme</string>
     <string name="theme_light">Light</string>
     <string name="theme_dark">Dark</string>
@@ -61,6 +62,10 @@
     <string name="pref_title_backups_to_keep">Backups to keep</string>
     <string name="pref_title_enable_file_log">Write debug log to file</string>
     <string name="pref_summary_enable_file_log">Will be saved to %s</string>
+    <string name="pref_title_ask_fingerprint_on_launch">Protect app with fingerprint</string>
+    <string name="pref_summary_ask_fingerprint_on_launch">Use fingerprint scanner to allow access to the app</string>
+    <string name="pref_title_ask_fingerprint_to_reboot">Protect reboot option with fingerprint</string>
+    <string name="pref_summary_ask_fingerprint_to_reboot">Use fingerprint scanner to allow reboot to recovery</string>
 
     <!-- Command names -->
     <string name="command_wipe">Wipe</string>
@@ -121,4 +126,11 @@
 
     <string name="empty_view_title">A fresh start</string>
     <string name="empty_view_summary">Anything to flash?</string>
+
+    <string name="fingerprint_auth_title">Security check</string>
+    <string name="fingerprint_auth_subtitle">The app is locked</string>
+    <string name="fingerprint_auth_description">Place your finger on the scanner to get access</string>
+    <string name="fingerprint_auth_error">Fingerprint not recognized, try again!</string>
+    <string name="fingerprint_reboot_subtitle">Reboot option is locked</string>
+    <string name="fingerprint_reboot_description">Place your finger on the scanner to reboot to recovery</string>
 </resources>

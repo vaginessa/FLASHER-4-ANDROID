@@ -20,11 +20,10 @@ abstract class RoundedBottomSheetDialogFragment : BottomSheetDialogFragment(),
         KoinComponent {
     abstract val layoutRes: Int
 
-    private val mScope = getKoin().createScope(Const.FRAGMENT_BOTTOM)
+    private val mScope = getKoin().getOrCreateScope(Const.FRAGMENT_BOTTOM)
     private val mSettings by inject<SettingsManager>()
 
-    private val mDismissSubject: PublishSubject<Any> = PublishSubject.create()
-    val dismissEvent: PublishSubject<Any> = mDismissSubject
+    protected var dismissListener: () -> Unit = {}
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? =
@@ -43,7 +42,7 @@ abstract class RoundedBottomSheetDialogFragment : BottomSheetDialogFragment(),
 
     override fun onDismiss(dialog: DialogInterface?) {
         super.onDismiss(dialog)
-        mDismissSubject.onNext(Any())
+        dismissListener()
         mScope.close()
     }
 }

@@ -42,7 +42,7 @@ class AboutRepository(
         result.add(getLinkItem(nameRes = R.string.about_links_source_code,
                 descriptionRes = R.string.about_links_gitlab,
                 imageRes = R.drawable.git,
-                url = "https://gitlab.com/victorlapin/usage-stats"))
+                url = "https://gitlab.com/victorlapin/flasher"))
         result.add(getLinkItem(nameRes = R.string.about_links_donate,
                 descriptionRes = R.string.about_links_paypal,
                 imageRes = R.drawable.paypal,

@@ -41,6 +41,7 @@
     <string name="pref_category_misc">Прочее</string>
     <string name="pref_category_debug">Отладка</string>
     <string name="pref_category_general">Основное</string>
+    <string name="pref_category_security">Безопасность</string>
     <string name="pref_title_theme">Тема приложения</string>
     <string name="theme_light">Светлая</string>
     <string name="theme_dark">Темная</string>
@@ -61,6 +62,10 @@
     <string name="pref_title_backups_to_keep">Сохранять резервных копий</string>
     <string name="pref_title_enable_file_log">Писать отладочный лог в файл</string>
     <string name="pref_summary_enable_file_log">Будет сохранено в %s</string>
+    <string name="pref_title_ask_fingerprint_on_launch">Защита отпечатком пальца</string>
+    <string name="pref_summary_ask_fingerprint_on_launch">Использовать сканер отпечатков для доступа к приложению</string>
+    <string name="pref_title_ask_fingerprint_to_reboot">Перезагрузка отпечатком пальца</string>
+    <string name="pref_summary_ask_fingerprint_to_reboot">Использовать сканер отпечатков для перезагрузки в рекавери</string>
 
     <!-- Command names -->
     <string name="command_wipe">Вайп</string>
@@ -109,4 +114,11 @@
 
     <string name="empty_view_title">Начните с нуля</string>
     <string name="empty_view_summary">Что-нибудь прошить?</string>
+
+    <string name="fingerprint_auth_title">Проверка безопасности</string>
+    <string name="fingerprint_auth_subtitle">Приложение заблокировано</string>
+    <string name="fingerprint_auth_description">Приложите палец к сканеру отпечатков чтобы получить доступ</string>
+    <string name="fingerprint_auth_error">Отпечаток не распознан, попробуйте еще раз!</string>
+    <string name="fingerprint_reboot_subtitle">Перезагрузка заблокирована</string>
+    <string name="fingerprint_reboot_description">Приложите палец к сканеру отпечатков чтобы перезагрузиться в рекавери</string>
 </resources>

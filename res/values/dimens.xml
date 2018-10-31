@@ -24,4 +24,5 @@
     <dimen name="bottom_sheet_top_padding">@dimen/margin_8</dimen>
     <dimen name="empty_view_background">230dp</dimen>
     <dimen name="empty_view_foreground">180dp</dimen>
+    <dimen name="fingerprint_background">20dp</dimen>
 </resources>

@@ -17,6 +17,7 @@ import com.afollestad.materialdialogs.input.input
 import com.afollestad.materialdialogs.list.listItemsMultiChoice
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
+import com.mtramin.rxfingerprint.RxFingerprint
 import com.tbruyelle.rxpermissions2.RxPermissions
 import com.victorlapin.flasher.*
 import com.victorlapin.flasher.manager.ResourcesManager
@@ -28,7 +29,6 @@ import com.victorlapin.flasher.presenter.DefaultHomePresenter
 import com.victorlapin.flasher.ui.adapters.HomeAdapter
 import com.victorlapin.flasher.ui.adapters.LinearLayoutManagerWrapper
 import com.victorlapin.flasher.view.HomeFragmentView
-import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.include_progress.*
 import kotlinx.android.synthetic.main.include_toolbar_center.*
@@ -47,11 +47,6 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
     @ProvidePresenter
     open fun providePresenter(): BaseHomeFragmentPresenter = get<DefaultHomePresenter>()
 
-    private var mDisposable: CompositeDisposable? = null
-    private val mNavEventsDisposable = CompositeDisposable()
-
-    private val mAdapter by inject<HomeAdapter>()
-
     protected val mResources by inject<ResourcesManager>()
 
     private val mRxPermissions by lazy {
@@ -65,18 +60,36 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
         arguments!!.getLong(ARG_CHAIN_ID)
     }
 
+    private var mIsRebootInProgress = false
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        savedInstanceState?.let {
+            mIsRebootInProgress = it.getBoolean(ARG_REBOOT_IN_PROGRESS)
+        }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putBoolean(ARG_REBOOT_IN_PROGRESS, mIsRebootInProgress)
+    }
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        mDisposable = CompositeDisposable()
         mWipePartitions = mResources.getStringList(R.array.wipe_partitions)
         mBackupPartitions = mResources.getStringList(R.array.backup_partitions)
 
-        setupEvents()
+        val homeAdapter = HomeAdapter(
+                resources = get(),
+                changeTypeListener = { presenter.onCommandTypeChanged(it) },
+                argsClickListener = { presenter.onArgumentsClicked(it) },
+                itemInsertListener = { list.smoothScrollToPosition(it) }
+        )
         list.apply {
             layoutManager = LinearLayoutManagerWrapper(context)
             itemAnimator = DefaultItemAnimator()
             setHasFixedSize(true)
-            adapter = mAdapter
+            adapter = homeAdapter
         }
         toolbar_title.text = mResources.getString(R.string.action_home)
         fab.setOnClickListener { presenter.onFabClicked() }
@@ -103,7 +116,8 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
 
             override fun onMove(recyclerView: RecyclerView, dragged: RecyclerView.ViewHolder,
                                 target: RecyclerView.ViewHolder): Boolean {
-                mAdapter.moveItems(dragged.adapterPosition, target.adapterPosition)
+                (recyclerView.adapter as HomeAdapter).
+                        moveItems(dragged.adapterPosition, target.adapterPosition)
                 return true
             }
 
@@ -123,35 +137,18 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
                 super.clearView(recyclerView, viewHolder)
 
                 (viewHolder as HomeAdapter.ViewHolder).onCleared()
-                mAdapter.onMoveFinished()
-                val newItems = mAdapter.getItems()
+                val adapter = recyclerView.adapter as HomeAdapter
+                adapter.onMoveFinished()
+                val newItems = adapter.getItems()
                 presenter.onOrderChanged(newItems)
             }
         }
         ItemTouchHelper(swipeCallback).attachToRecyclerView(list)
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        mDisposable?.clear()
-        mDisposable = null
-    }
-
-    private fun setupEvents() {
-        mAdapter.changeTypeEvent
-                .subscribe { presenter.onCommandTypeChanged(it) }
-                .addTo(mDisposable!!)
-        mAdapter.argsClickEvent
-                .subscribe { presenter.onArgumentsClicked(it) }
-                .addTo(mDisposable!!)
-        mAdapter.itemInsertEvent
-                .subscribe { list.smoothScrollToPosition(it) }
-                .addTo(mDisposable!!)
-    }
-
     override fun setData(commands: List<Command>) {
         list.post {
-            mAdapter.setData(commands)
+            (list.adapter as HomeAdapter).setData(commands)
             empty_view?.visible(commands.isEmpty())
         }
     }
@@ -289,11 +286,36 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
                 messageId = R.string.reboot,
                 actionId = R.string.action_reboot,
                 actionClick = {
-                    presenter.reboot()
                     snackbar.dismiss()
+                    mIsRebootInProgress = true
+                    presenter.onRebootRequested()
                 },
                 isIndefinite = true
         )
+    }
+
+    override fun askFingerprint() {
+        if (mIsRebootInProgress) {
+            if (RxFingerprint.isAvailable(context!!)) {
+                val oldFragment = activity!!.supportFragmentManager
+                        .findFragmentByTag(FingerprintRebootFragment::class.java.simpleName)
+                if (oldFragment != null) {
+                    (oldFragment as FingerprintRebootFragment)
+                            .successListener = { presenter.reboot() }
+                    oldFragment.cancelListener = { mIsRebootInProgress = false }
+                } else {
+                    val fragment = FingerprintRebootFragment.newInstance(
+                            successListener = { presenter.reboot() },
+                            cancelListener = { mIsRebootInProgress = false }
+                    )
+                    fragment.show(activity!!.supportFragmentManager,
+                            FingerprintRebootFragment::class.java.simpleName)
+                }
+            } else {
+                presenter.reboot()
+                mIsRebootInProgress = false
+            }
+        }
     }
 
     override fun showExportDialog() {
@@ -379,17 +401,10 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
     }
 
     override fun showNavigationFragment(selectedId: Int) {
-        val navFragment = BottomNavigationDrawerFragment.newInstance(selectedId)
-        navFragment.clickEvent
-                .subscribe {
-                    presenter.onNavigationClicked(it)
-                }
-                .addTo(mNavEventsDisposable)
-        navFragment.dismissEvent
-                .subscribe {
-                    mNavEventsDisposable.clear()
-                }
-                .addTo(mNavEventsDisposable)
+        val navFragment = BottomNavigationDrawerFragment.newInstance(
+                selectedId = selectedId,
+                clickListener = { presenter.onNavigationClicked(it) }
+        )
         navFragment.show(activity!!.supportFragmentManager,
                 BottomNavigationDrawerFragment::class.java.simpleName)
     }
@@ -404,5 +419,6 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
         }
 
         const val ARG_CHAIN_ID = "ARG_CHAIN_ID"
+        private const val ARG_REBOOT_IN_PROGRESS = "ARG_REBOOT_IN_PROGRESS"
     }
 }
