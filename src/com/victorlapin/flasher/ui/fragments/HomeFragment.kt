@@ -65,6 +65,20 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
         arguments!!.getLong(ARG_CHAIN_ID)
     }
 
+    private var mIsRebootInProgress = false
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        savedInstanceState?.let {
+            mIsRebootInProgress = it.getBoolean(ARG_REBOOT_IN_PROGRESS)
+        }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putBoolean(ARG_REBOOT_IN_PROGRESS, mIsRebootInProgress)
+    }
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         mDisposable = CompositeDisposable()
@@ -290,6 +304,7 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
                 actionId = R.string.action_reboot,
                 actionClick = {
                     snackbar.dismiss()
+                    mIsRebootInProgress = true
                     presenter.onRebootRequested()
                 },
                 isIndefinite = true
@@ -297,21 +312,26 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
     }
 
     override fun askFingerprint() {
-        if (RxFingerprint.isAvailable(context!!)) {
-            val oldFragment = activity!!.supportFragmentManager
-                    .findFragmentByTag(FingerprintRebootFragment::class.java.simpleName)
-            if (oldFragment != null) {
-                (oldFragment as FingerprintRebootFragment)
-                        .successListener = { presenter.reboot() }
+        if (mIsRebootInProgress) {
+            if (RxFingerprint.isAvailable(context!!)) {
+                val oldFragment = activity!!.supportFragmentManager
+                        .findFragmentByTag(FingerprintRebootFragment::class.java.simpleName)
+                if (oldFragment != null) {
+                    (oldFragment as FingerprintRebootFragment)
+                            .successListener = { presenter.reboot() }
+                    oldFragment.cancelListener = { mIsRebootInProgress = false }
+                } else {
+                    val fragment = FingerprintRebootFragment.newInstance(
+                            successListener = { presenter.reboot() },
+                            cancelListener = { mIsRebootInProgress = false }
+                    )
+                    fragment.show(activity!!.supportFragmentManager,
+                            FingerprintRebootFragment::class.java.simpleName)
+                }
             } else {
-                val fragment = FingerprintRebootFragment.newInstance(
-                        successListener = { presenter.reboot() }
-                )
-                fragment.show(activity!!.supportFragmentManager,
-                        FingerprintRebootFragment::class.java.simpleName)
+                presenter.reboot()
+                mIsRebootInProgress = false
             }
-        } else {
-            presenter.reboot()
         }
     }
 
@@ -416,5 +436,6 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
         }
 
         const val ARG_CHAIN_ID = "ARG_CHAIN_ID"
+        private const val ARG_REBOOT_IN_PROGRESS = "ARG_REBOOT_IN_PROGRESS"
     }
 }
