@@ -29,7 +29,6 @@ import com.victorlapin.flasher.presenter.DefaultHomePresenter
 import com.victorlapin.flasher.ui.adapters.HomeAdapter
 import com.victorlapin.flasher.ui.adapters.LinearLayoutManagerWrapper
 import com.victorlapin.flasher.view.HomeFragmentView
-import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.include_progress.*
 import kotlinx.android.synthetic.main.include_toolbar_center.*
@@ -47,10 +46,6 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
 
     @ProvidePresenter
     open fun providePresenter(): BaseHomeFragmentPresenter = get<DefaultHomePresenter>()
-
-    private var mDisposable: CompositeDisposable? = null
-
-    private val mAdapter by inject<HomeAdapter>()
 
     protected val mResources by inject<ResourcesManager>()
 
@@ -81,16 +76,20 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        mDisposable = CompositeDisposable()
         mWipePartitions = mResources.getStringList(R.array.wipe_partitions)
         mBackupPartitions = mResources.getStringList(R.array.backup_partitions)
 
-        setupEvents()
+        val homeAdapter = HomeAdapter(
+                resources = get(),
+                changeTypeListener = { presenter.onCommandTypeChanged(it) },
+                argsClickListener = { presenter.onArgumentsClicked(it) },
+                itemInsertListener = { list.smoothScrollToPosition(it) }
+        )
         list.apply {
             layoutManager = LinearLayoutManagerWrapper(context)
             itemAnimator = DefaultItemAnimator()
             setHasFixedSize(true)
-            adapter = mAdapter
+            adapter = homeAdapter
         }
         toolbar_title.text = mResources.getString(R.string.action_home)
         fab.setOnClickListener { presenter.onFabClicked() }
@@ -117,7 +116,8 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
 
             override fun onMove(recyclerView: RecyclerView, dragged: RecyclerView.ViewHolder,
                                 target: RecyclerView.ViewHolder): Boolean {
-                mAdapter.moveItems(dragged.adapterPosition, target.adapterPosition)
+                (recyclerView.adapter as HomeAdapter).
+                        moveItems(dragged.adapterPosition, target.adapterPosition)
                 return true
             }
 
@@ -137,35 +137,18 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
                 super.clearView(recyclerView, viewHolder)
 
                 (viewHolder as HomeAdapter.ViewHolder).onCleared()
-                mAdapter.onMoveFinished()
-                val newItems = mAdapter.getItems()
+                val adapter = recyclerView.adapter as HomeAdapter
+                adapter.onMoveFinished()
+                val newItems = adapter.getItems()
                 presenter.onOrderChanged(newItems)
             }
         }
         ItemTouchHelper(swipeCallback).attachToRecyclerView(list)
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        mDisposable?.clear()
-        mDisposable = null
-    }
-
-    private fun setupEvents() {
-        mAdapter.changeTypeEvent
-                .subscribe { presenter.onCommandTypeChanged(it) }
-                .addTo(mDisposable!!)
-        mAdapter.argsClickEvent
-                .subscribe { presenter.onArgumentsClicked(it) }
-                .addTo(mDisposable!!)
-        mAdapter.itemInsertEvent
-                .subscribe { list.smoothScrollToPosition(it) }
-                .addTo(mDisposable!!)
-    }
-
     override fun setData(commands: List<Command>) {
         list.post {
-            mAdapter.setData(commands)
+            (list.adapter as HomeAdapter).setData(commands)
             empty_view?.visible(commands.isEmpty())
         }
     }

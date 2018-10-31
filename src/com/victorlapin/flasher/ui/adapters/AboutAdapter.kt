@@ -9,11 +9,11 @@ import com.victorlapin.flasher.inflate
 import com.victorlapin.flasher.manager.ResourcesManager
 import com.victorlapin.flasher.model.AboutClickEventArgs
 import com.victorlapin.flasher.model.repository.AboutRepository
-import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.item_about.view.*
 
 class AboutAdapter(
-        resources: ResourcesManager
+        resources: ResourcesManager,
+        private val itemClickListener: (AboutClickEventArgs) -> Unit
 ) : RecyclerView.Adapter<AboutAdapter.ViewHolder>() {
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
@@ -23,9 +23,6 @@ class AboutAdapter(
     private val strTeam = resources.getString(R.string.about_the_team)
     private val strCredits = resources.getString(R.string.about_credits)
     private val strLinks = resources.getString(R.string.about_links)
-
-    private val mClickSubject = PublishSubject.create<AboutClickEventArgs>()
-    val clickEvent: PublishSubject<AboutClickEventArgs> = mClickSubject
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view: View = when (viewType) {
@@ -51,7 +48,7 @@ class AboutAdapter(
                 holder.itemView.img_picture.setImageDrawable(item.image)
                 if (item.url != null) {
                     holder.itemView.click_container.setOnClickListener {
-                        mClickSubject.onNext(AboutClickEventArgs(
+                        itemClickListener(AboutClickEventArgs(
                                 AboutExternalScreen(item.url!!.toString())))
                     }
 

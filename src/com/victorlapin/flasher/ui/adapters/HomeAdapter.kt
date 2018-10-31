@@ -13,26 +13,20 @@ import com.victorlapin.flasher.manager.ResourcesManager
 import com.victorlapin.flasher.model.CommandClickEventArgs
 import com.victorlapin.flasher.model.database.entity.Command
 import com.victorlapin.flasher.visible
-import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.item_command.view.*
 import java.util.*
 
 class HomeAdapter constructor(
-        resources: ResourcesManager
+        resources: ResourcesManager,
+        private val changeTypeListener: (Pair<Command, Int>) -> Unit,
+        private val argsClickListener: (CommandClickEventArgs) -> Unit,
+        private val itemInsertListener: (Int) -> Unit
 ) : RecyclerView.Adapter<HomeAdapter.ViewHolder>() {
     private val mItems: ArrayList<Command> = arrayListOf()
     private val mCommands = resources.getStringArray(R.array.commands)
     private val mDefaultArgText = resources.getString(R.string.command_tap_to_select)
     private val mEnterMaskText = resources.getString(R.string.command_tap_to_enter_mask)
     private val mSelectFolderText = resources.getString(R.string.command_tap_to_select_folder)
-
-    // events stuff
-    private val mChangeTypeSubject = PublishSubject.create<Pair<Command, Int>>()
-    val changeTypeEvent: PublishSubject<Pair<Command, Int>> = mChangeTypeSubject
-    private val mArgsClickSubject = PublishSubject.create<CommandClickEventArgs>()
-    val argsClickEvent: PublishSubject<CommandClickEventArgs> = mArgsClickSubject
-    private val mItemInsertSubject = PublishSubject.create<Int>()
-    val itemInsertEvent: PublishSubject<Int> = mItemInsertSubject
 
     private val mCallback = object : ListUpdateCallback {
         override fun onChanged(position: Int, count: Int, payload: Any?) {
@@ -45,7 +39,7 @@ class HomeAdapter constructor(
 
         override fun onInserted(position: Int, count: Int) {
             notifyItemRangeInserted(position, count)
-            mItemInsertSubject.onNext(position)
+            itemInsertListener(position)
         }
 
         override fun onRemoved(position: Int, count: Int) {
@@ -102,7 +96,7 @@ class HomeAdapter constructor(
                         override fun onNothingSelected(parent: AdapterView<*>?) {}
                         override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
                             val pair = Pair(command.clone(), position)
-                            mChangeTypeSubject.onNext(pair)
+                            changeTypeListener(pair)
                         }
                     }
 
@@ -115,12 +109,12 @@ class HomeAdapter constructor(
                 itemView.lbl_arg1.text = if (command.arg1 != null) command.arg1 else mDefaultArgText
             }
             itemView.lbl_arg1.setOnClickListener {
-                mArgsClickSubject.onNext(CommandClickEventArgs(command.clone(),
-                        CommandClickEventArgs.ARG1))
+                val args = CommandClickEventArgs(command.clone(), CommandClickEventArgs.ARG1)
+                argsClickListener(args)
             }
             itemView.lbl_arg2.setOnClickListener {
-                mArgsClickSubject.onNext(CommandClickEventArgs(command.clone(),
-                        CommandClickEventArgs.ARG2))
+                val args = CommandClickEventArgs(command.clone(), CommandClickEventArgs.ARG2)
+                argsClickListener(args)
             }
         }
 
