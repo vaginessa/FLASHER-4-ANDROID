@@ -42,11 +42,18 @@ class RebootDialogActivity : MvpAppCompatActivity(), RebootDialogActivityView {
 
     override fun askFingerprint() {
         if (RxFingerprint.isAvailable(this)) {
-            val fragment = FingerprintRebootFragment.newInstance(
-                    successListener = { presenter.rebootRecovery() }
-            )
-            fragment.show(supportFragmentManager,
-                    FingerprintRebootFragment::class.java.simpleName)
+            val oldFragment = supportFragmentManager
+                    .findFragmentByTag(FingerprintRebootFragment::class.java.simpleName)
+            if (oldFragment != null) {
+                (oldFragment as FingerprintRebootFragment)
+                        .successListener = { presenter.rebootRecovery() }
+            } else {
+                val fragment = FingerprintRebootFragment.newInstance(
+                        successListener = { presenter.rebootRecovery() }
+                )
+                fragment.show(supportFragmentManager,
+                        FingerprintRebootFragment::class.java.simpleName)
+            }
         } else {
             presenter.rebootRecovery()
         }

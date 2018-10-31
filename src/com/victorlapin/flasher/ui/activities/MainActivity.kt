@@ -28,11 +28,17 @@ class MainActivity : BaseActivity(), MainActivityView {
 
     override fun askFingerprint() {
         if (RxFingerprint.isAvailable(this)) {
-            val fragment = FingerprintAuthFragment.newInstance(
-                    cancelListener = { presenter.exit() }
-            )
-            fragment.show(supportFragmentManager,
-                    FingerprintAuthFragment::class.java.simpleName)
+            val oldFragment = supportFragmentManager
+                    .findFragmentByTag(FingerprintAuthFragment::class.java.simpleName)
+            if (oldFragment != null) {
+                (oldFragment as FingerprintAuthFragment).cancelListener = { presenter.exit() }
+            } else {
+                val fragment = FingerprintAuthFragment.newInstance(
+                        cancelListener = { presenter.exit() }
+                )
+                fragment.show(supportFragmentManager,
+                        FingerprintAuthFragment::class.java.simpleName)
+            }
         }
     }
 

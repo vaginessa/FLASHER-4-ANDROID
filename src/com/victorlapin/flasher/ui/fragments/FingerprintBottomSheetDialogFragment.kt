@@ -16,8 +16,8 @@ import timber.log.Timber
 abstract class FingerprintBottomSheetDialogFragment : RoundedBottomSheetDialogFragment() {
     override val layoutRes = R.layout.fragment_fingerprint
 
-    protected var successListener: () -> Unit = {}
-    protected var cancelListener: () -> Unit = {}
+    var successListener: () -> Unit = {}
+    var cancelListener: () -> Unit = {}
 
     @StringRes
     private var mTitle: Int? = null

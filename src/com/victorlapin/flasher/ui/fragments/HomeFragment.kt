@@ -298,11 +298,18 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
 
     override fun askFingerprint() {
         if (RxFingerprint.isAvailable(context!!)) {
-            val fragment = FingerprintRebootFragment.newInstance(
-                    successListener = { presenter.reboot() }
-            )
-            fragment.show(activity!!.supportFragmentManager,
-                    FingerprintRebootFragment::class.java.simpleName)
+            val oldFragment = activity!!.supportFragmentManager
+                    .findFragmentByTag(FingerprintRebootFragment::class.java.simpleName)
+            if (oldFragment != null) {
+                (oldFragment as FingerprintRebootFragment)
+                        .successListener = { presenter.reboot() }
+            } else {
+                val fragment = FingerprintRebootFragment.newInstance(
+                        successListener = { presenter.reboot() }
+                )
+                fragment.show(activity!!.supportFragmentManager,
+                        FingerprintRebootFragment::class.java.simpleName)
+            }
         } else {
             presenter.reboot()
         }
