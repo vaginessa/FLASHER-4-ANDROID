@@ -49,8 +49,6 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
     open fun providePresenter(): BaseHomeFragmentPresenter = get<DefaultHomePresenter>()
 
     private var mDisposable: CompositeDisposable? = null
-    private val mNavEventsDisposable = CompositeDisposable()
-    private val mFingerprintDisposable = CompositeDisposable()
 
     private val mAdapter by inject<HomeAdapter>()
 
@@ -303,8 +301,6 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
             val fragment = FingerprintRebootFragment.newInstance(
                     successListener = { presenter.reboot() }
             )
-            fragment.dismissEvent.subscribe { mFingerprintDisposable.clear() }
-                    .addTo(mFingerprintDisposable)
             fragment.show(activity!!.supportFragmentManager,
                     FingerprintRebootFragment::class.java.simpleName)
         } else {
@@ -395,17 +391,10 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
     }
 
     override fun showNavigationFragment(selectedId: Int) {
-        val navFragment = BottomNavigationDrawerFragment.newInstance(selectedId)
-        navFragment.clickEvent
-                .subscribe {
-                    presenter.onNavigationClicked(it)
-                }
-                .addTo(mNavEventsDisposable)
-        navFragment.dismissEvent
-                .subscribe {
-                    mNavEventsDisposable.clear()
-                }
-                .addTo(mNavEventsDisposable)
+        val navFragment = BottomNavigationDrawerFragment.newInstance(
+                selectedId = selectedId,
+                clickListener = { presenter.onNavigationClicked(it) }
+        )
         navFragment.show(activity!!.supportFragmentManager,
                 BottomNavigationDrawerFragment::class.java.simpleName)
     }

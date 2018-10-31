@@ -5,13 +5,11 @@ import com.arellomobile.mvp.MvpAppCompatActivity
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.mtramin.rxfingerprint.RxFingerprint
-import com.victorlapin.flasher.R
 import com.victorlapin.flasher.Const
-import com.victorlapin.flasher.addTo
+import com.victorlapin.flasher.R
 import com.victorlapin.flasher.presenter.RebootDialogActivityPresenter
 import com.victorlapin.flasher.ui.fragments.FingerprintRebootFragment
 import com.victorlapin.flasher.view.RebootDialogActivityView
-import io.reactivex.disposables.CompositeDisposable
 import org.koin.android.ext.android.get
 import org.koin.android.ext.android.getKoin
 
@@ -23,8 +21,6 @@ class RebootDialogActivity : MvpAppCompatActivity(), RebootDialogActivityView {
 
     @ProvidePresenter
     fun providePresenter() = get<RebootDialogActivityPresenter>()
-
-    private val mFingerprintDisposable = CompositeDisposable()
 
     override fun onStop() {
         super.onStop()
@@ -49,8 +45,6 @@ class RebootDialogActivity : MvpAppCompatActivity(), RebootDialogActivityView {
             val fragment = FingerprintRebootFragment.newInstance(
                     successListener = { presenter.rebootRecovery() }
             )
-            fragment.dismissEvent.subscribe { mFingerprintDisposable.clear() }
-                    .addTo(mFingerprintDisposable)
             fragment.show(supportFragmentManager,
                     FingerprintRebootFragment::class.java.simpleName)
         } else {
