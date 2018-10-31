@@ -1,6 +1,5 @@
 package com.victorlapin.flasher.ui.fragments
 
-import android.content.DialogInterface
 import android.content.res.ColorStateList
 import android.os.Bundle
 import android.os.Handler
@@ -91,9 +90,10 @@ abstract class FingerprintBottomSheetDialogFragment : RoundedBottomSheetDialogFr
                 })
     }
 
-    override fun onDismiss(dialog: DialogInterface?) {
-        super.onDismiss(dialog)
+    override fun onDestroyView() {
         mAuthDisposable?.dispose()
+        mAuthDisposable = null
+        super.onDestroyView()
     }
 
     companion object {
