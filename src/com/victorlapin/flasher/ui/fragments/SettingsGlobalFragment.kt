@@ -20,9 +20,10 @@ import com.victorlapin.flasher.ui.activities.BaseActivity
 import com.victorlapin.flasher.ui.activities.MainActivity
 import org.koin.android.ext.android.getKoin
 import org.koin.android.ext.android.inject
+import org.koin.core.scope.Scope
 
 class SettingsGlobalFragment : PreferenceFragmentCompat() {
-    private val mScope = getKoin().createScope(Const.FRAGMENT_SETTINGS)
+    private lateinit var mScope: Scope
     private val mSettings by inject<SettingsManager>()
     private val mResources by inject<ResourcesManager>()
     private val mLogs by inject<LogManager>()
@@ -31,6 +32,11 @@ class SettingsGlobalFragment : PreferenceFragmentCompat() {
 
     private val mRxPermissions by lazy {
         RxPermissions(this)
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        mScope = getKoin().createScope(Const.FRAGMENT_SETTINGS)
+        super.onCreate(savedInstanceState)
     }
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
