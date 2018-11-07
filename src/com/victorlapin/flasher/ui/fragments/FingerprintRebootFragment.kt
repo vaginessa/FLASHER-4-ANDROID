@@ -7,7 +7,8 @@ class FingerprintRebootFragment : FingerprintBottomSheetDialogFragment() {
     companion object {
         fun newInstance(
                 successListener: () -> Unit = {},
-                cancelListener: () -> Unit = {}
+                cancelListener: () -> Unit = {},
+                dismissListener: () -> Unit = {}
         ): FingerprintRebootFragment {
             val fragment = FingerprintRebootFragment()
             val args = Bundle()
@@ -17,6 +18,7 @@ class FingerprintRebootFragment : FingerprintBottomSheetDialogFragment() {
             fragment.arguments = args
             fragment.successListener = successListener
             fragment.cancelListener = cancelListener
+            fragment.dismissListener = dismissListener
             return fragment
         }
     }

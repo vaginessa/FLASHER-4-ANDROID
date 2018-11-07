@@ -8,10 +8,9 @@ import android.support.design.widget.BottomSheetDialogFragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.victorlapin.flasher.R
 import com.victorlapin.flasher.Const
+import com.victorlapin.flasher.R
 import com.victorlapin.flasher.manager.SettingsManager
-import io.reactivex.subjects.PublishSubject
 import org.koin.android.ext.android.getKoin
 import org.koin.android.ext.android.inject
 import org.koin.standalone.KoinComponent
@@ -23,7 +22,7 @@ abstract class RoundedBottomSheetDialogFragment : BottomSheetDialogFragment(),
     private val mScope = getKoin().getOrCreateScope(Const.FRAGMENT_BOTTOM)
     private val mSettings by inject<SettingsManager>()
 
-    protected var dismissListener: () -> Unit = {}
+    var dismissListener: () -> Unit = {}
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? =
