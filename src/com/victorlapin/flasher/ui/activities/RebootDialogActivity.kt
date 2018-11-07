@@ -47,15 +47,18 @@ class RebootDialogActivity : MvpAppCompatActivity(), RebootDialogActivityView {
             if (oldFragment != null) {
                 (oldFragment as FingerprintRebootFragment)
                         .successListener = { presenter.rebootRecovery() }
+                (oldFragment).dismissListener = { finish() }
             } else {
                 val fragment = FingerprintRebootFragment.newInstance(
-                        successListener = { presenter.rebootRecovery() }
+                        successListener = { presenter.rebootRecovery() },
+                        dismissListener = { finish() }
                 )
                 fragment.show(supportFragmentManager,
                         FingerprintRebootFragment::class.java.simpleName)
             }
         } else {
             presenter.rebootRecovery()
+            finish()
         }
     }
 }
