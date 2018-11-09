@@ -49,7 +49,7 @@ class ScheduleWorker(context: Context, params: WorkerParameters) :
         }
     }
 
-    override fun onStopped(cancelled: Boolean) {
+    override fun onStopped() {
         Timber.w("Schedule worker stopped")
     }
 
