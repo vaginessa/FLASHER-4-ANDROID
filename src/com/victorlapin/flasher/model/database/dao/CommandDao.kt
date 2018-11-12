@@ -1,6 +1,6 @@
 package com.victorlapin.flasher.model.database.dao
 
-import android.arch.persistence.room.*
+import androidx.room.*
 import com.victorlapin.flasher.model.database.entity.Command
 import io.reactivex.Flowable
 import io.reactivex.Maybe

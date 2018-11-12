@@ -1,7 +1,7 @@
 package com.victorlapin.flasher.manager
 
 import android.content.Context
-import android.support.v7.preference.PreferenceManager
+import androidx.preference.PreferenceManager
 import com.victorlapin.flasher.R
 
 class SettingsManager(context: Context) {

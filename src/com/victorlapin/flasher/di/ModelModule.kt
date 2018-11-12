@@ -1,8 +1,8 @@
 package com.victorlapin.flasher.di
 
-import android.arch.persistence.db.SupportSQLiteDatabase
-import android.arch.persistence.room.Room
-import android.arch.persistence.room.RoomDatabase
+import androidx.room.Room
+import androidx.room.RoomDatabase
+import androidx.sqlite.db.SupportSQLiteDatabase
 import com.google.gson.GsonBuilder
 import com.victorlapin.flasher.model.database.AppDatabase
 import com.victorlapin.flasher.model.database.dao.ChainDao

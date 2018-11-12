@@ -2,8 +2,8 @@ package com.victorlapin.flasher.model.repository
 
 import android.content.pm.PackageManager
 import android.graphics.drawable.Drawable
-import android.support.annotation.DrawableRes
-import android.support.annotation.StringRes
+import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
 import com.amulyakhare.textdrawable.TextDrawable
 import com.amulyakhare.textdrawable.util.ColorGenerator
 import com.victorlapin.flasher.R
