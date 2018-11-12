@@ -2,7 +2,7 @@ package com.victorlapin.flasher.ui.activities
 
 import android.os.Bundle
 import android.os.Handler
-import android.support.annotation.StyleRes
+import androidx.annotation.StyleRes
 import com.arellomobile.mvp.MvpAppCompatActivity
 import com.victorlapin.flasher.manager.SettingsManager
 import com.victorlapin.flasher.ui.LifecycleAwareNavigatorHolder
@@ -10,7 +10,7 @@ import kotlinx.android.synthetic.main.include_toolbar.*
 import org.koin.android.ext.android.getKoin
 import org.koin.android.ext.android.inject
 import org.koin.core.scope.Scope
-import ru.terrakok.cicerone.android.support.SupportAppNavigator
+import ru.terrakok.cicerone.androidx.SupportAppNavigator
 
 abstract class BaseActivity : MvpAppCompatActivity() {
     abstract val layoutRes: Int

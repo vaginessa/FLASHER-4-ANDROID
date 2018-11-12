@@ -3,12 +3,12 @@ package com.victorlapin.flasher
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 import com.victorlapin.flasher.ui.fragments.AboutFragment
 import com.victorlapin.flasher.ui.fragments.HomeFragment
 import com.victorlapin.flasher.ui.fragments.ScheduleFragment
 import com.victorlapin.flasher.ui.fragments.SettingsGlobalFragment
-import ru.terrakok.cicerone.android.support.SupportAppScreen
+import ru.terrakok.cicerone.androidx.SupportAppScreen
 
 class HomeScreen : SupportAppScreen() {
     init {

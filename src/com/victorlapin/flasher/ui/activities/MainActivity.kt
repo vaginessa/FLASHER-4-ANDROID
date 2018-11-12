@@ -1,8 +1,8 @@
 package com.victorlapin.flasher.ui.activities
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentTransaction
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.mtramin.rxfingerprint.RxFingerprint
@@ -14,7 +14,7 @@ import com.victorlapin.flasher.ui.fragments.FingerprintAuthFragment
 import com.victorlapin.flasher.ui.fragments.SettingsGlobalFragment
 import com.victorlapin.flasher.view.MainActivityView
 import org.koin.android.ext.android.get
-import ru.terrakok.cicerone.android.support.SupportAppNavigator
+import ru.terrakok.cicerone.androidx.SupportAppNavigator
 import ru.terrakok.cicerone.commands.Command
 
 class MainActivity : BaseActivity(), MainActivityView {

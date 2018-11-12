@@ -1,6 +1,6 @@
 package com.victorlapin.flasher.ui.adapters
 
-import android.support.v7.util.DiffUtil
+import androidx.recyclerview.widget.DiffUtil
 import com.victorlapin.flasher.model.database.entity.Command
 
 class HomeAdapterDiffUtilCallback(
