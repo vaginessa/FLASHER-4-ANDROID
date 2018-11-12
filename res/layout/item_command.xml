@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/card"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="@dimen/card_margin_bottom"
-    android:layout_marginEnd="@dimen/card_margin"
     android:layout_marginStart="@dimen/card_margin"
     android:layout_marginTop="@dimen/card_margin_top"
+    android:layout_marginEnd="@dimen/card_margin"
+    android:layout_marginBottom="@dimen/card_margin_bottom"
     android:descendantFocusability="blocksDescendants"
     app:cardCornerRadius="@dimen/card_corner_radius">
 
-    <android.support.constraint.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="@dimen/margin_8">
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/image"
             android:layout_width="@dimen/card_image_size"
             android:layout_height="@dimen/card_image_size"
@@ -34,24 +34,25 @@
             android:id="@+id/lbl_type"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:paddingBottom="@dimen/margin_8"
-            android:paddingEnd="@dimen/margin_16"
             android:paddingStart="@dimen/margin_16"
             android:paddingTop="@dimen/margin_8"
+            android:paddingEnd="@dimen/margin_16"
+            android:paddingBottom="@dimen/margin_8"
             android:text="@string/command_type"
             android:textAppearance="@style/TextAppearance.AppCompat.Small"
             android:textColor="?android:attr/textColorTertiary"
             app:layout_constraintEnd_toStartOf="@id/image"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <android.support.v7.widget.AppCompatSpinner
+        <androidx.appcompat.widget.AppCompatSpinner
             android:id="@+id/spinner_type"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/margin_16"
             android:layout_marginStart="@dimen/margin_16"
-            android:paddingBottom="@dimen/margin_8"
+            android:layout_marginEnd="@dimen/margin_16"
             android:paddingTop="@dimen/margin_8"
+            android:paddingBottom="@dimen/margin_8"
             app:layout_constraintEnd_toStartOf="@id/image"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/lbl_type" />
@@ -60,10 +61,10 @@
             android:id="@+id/lbl_args"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:paddingBottom="@dimen/margin_8"
-            android:paddingEnd="@dimen/margin_16"
             android:paddingStart="@dimen/margin_16"
             android:paddingTop="@dimen/margin_16"
+            android:paddingEnd="@dimen/margin_16"
+            android:paddingBottom="@dimen/margin_8"
             android:text="@string/command_args"
             android:textAppearance="@style/TextAppearance.AppCompat.Small"
             android:textColor="?android:attr/textColorTertiary"
@@ -75,10 +76,10 @@
             android:id="@+id/lbl_arg1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:paddingBottom="@dimen/margin_8"
-            android:paddingEnd="@dimen/margin_16"
             android:paddingStart="@dimen/margin_16"
             android:paddingTop="@dimen/margin_16"
+            android:paddingEnd="@dimen/margin_16"
+            android:paddingBottom="@dimen/margin_8"
             android:text="@string/command_tap_to_select"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             android:textColor="?android:colorAccent"
@@ -90,10 +91,10 @@
             android:id="@+id/lbl_arg2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:paddingBottom="@dimen/margin_8"
-            android:paddingEnd="@dimen/margin_16"
             android:paddingStart="@dimen/margin_16"
             android:paddingTop="@dimen/margin_16"
+            android:paddingEnd="@dimen/margin_16"
+            android:paddingBottom="@dimen/margin_8"
             android:text="@string/command_tap_to_select"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             android:textColor="?android:colorAccent"
@@ -101,6 +102,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/lbl_arg1" />
 
-    </android.support.constraint.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-</android.support.design.card.MaterialCardView>
+</com.google.android.material.card.MaterialCardView>
