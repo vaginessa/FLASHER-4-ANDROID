@@ -6,7 +6,6 @@ import android.content.Intent
 import com.victorlapin.flasher.Const
 import com.victorlapin.flasher.presenter.BootReceiverPresenter
 import org.koin.standalone.KoinComponent
-import org.koin.standalone.getKoin
 import org.koin.standalone.inject
 import timber.log.Timber
 

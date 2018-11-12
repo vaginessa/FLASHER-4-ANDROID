@@ -11,7 +11,6 @@ import com.victorlapin.flasher.manager.SettingsManager
 import com.victorlapin.flasher.model.database.entity.Chain
 import com.victorlapin.flasher.model.interactor.RecoveryScriptInteractor
 import org.koin.standalone.KoinComponent
-import org.koin.standalone.getKoin
 import org.koin.standalone.inject
 import timber.log.Timber
 import java.util.concurrent.TimeUnit

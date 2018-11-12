@@ -19,7 +19,7 @@ class App : Application() {
     override fun onCreate() {
         super.onCreate()
         val logger = if (BuildConfig.DEBUG) AndroidLogger() else EmptyLogger()
-        startKoin(context = this, modules = allModules, logger = logger)
+        startKoin(androidContext = this, modules = allModules, logger = logger)
         createNotificationChannels()
         mLogs.onStartup()
     }
