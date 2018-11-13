@@ -6,6 +6,7 @@ import android.widget.Toast
 import androidx.interpolator.view.animation.FastOutLinearInInterpolator
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.transition.Fade
 import androidx.transition.TransitionManager
@@ -27,7 +28,6 @@ import com.victorlapin.flasher.model.database.entity.Command
 import com.victorlapin.flasher.presenter.BaseHomeFragmentPresenter
 import com.victorlapin.flasher.presenter.DefaultHomePresenter
 import com.victorlapin.flasher.ui.adapters.HomeAdapter
-import com.victorlapin.flasher.ui.adapters.LinearLayoutManagerWrapper
 import com.victorlapin.flasher.view.HomeFragmentView
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.include_progress.*
@@ -86,7 +86,7 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
                 itemInsertListener = { list.smoothScrollToPosition(it) }
         )
         list.apply {
-            layoutManager = LinearLayoutManagerWrapper(context)
+            layoutManager = LinearLayoutManager(context)
             itemAnimator = DefaultItemAnimator()
             setHasFixedSize(true)
             adapter = homeAdapter
