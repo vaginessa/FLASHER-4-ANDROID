@@ -5,11 +5,12 @@ import android.os.Handler
 import androidx.annotation.StyleRes
 import com.arellomobile.mvp.MvpAppCompatActivity
 import com.victorlapin.flasher.manager.SettingsManager
-import com.victorlapin.flasher.ui.LifecycleAwareNavigatorHolder
+import com.victorlapin.flasher.setNavigator
 import kotlinx.android.synthetic.main.include_toolbar.*
 import org.koin.android.ext.android.getKoin
 import org.koin.android.ext.android.inject
 import org.koin.core.scope.Scope
+import ru.terrakok.cicerone.NavigatorHolder
 import ru.terrakok.cicerone.androidx.SupportAppNavigator
 
 abstract class BaseActivity : MvpAppCompatActivity() {
@@ -18,7 +19,7 @@ abstract class BaseActivity : MvpAppCompatActivity() {
     abstract val scopeName: String
 
     private lateinit var mScope: Scope
-    private val mNavigationHolder by inject<LifecycleAwareNavigatorHolder>()
+    private val mNavigationHolder by inject<NavigatorHolder>()
     private val mSettings by inject<SettingsManager>()
 
     @StyleRes
@@ -32,8 +33,7 @@ abstract class BaseActivity : MvpAppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(layoutRes)
         setSupportActionBar(toolbar)
-        mNavigationHolder.register(this)
-        mNavigationHolder.setNavigator(navigator)
+        this.setNavigator(mNavigationHolder, navigator)
     }
 
     override fun onResume() {
