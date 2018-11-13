@@ -1,7 +1,9 @@
 package com.victorlapin.flasher.ui.fragments
 
+import android.content.res.Configuration
 import android.os.Bundle
 import androidx.recyclerview.widget.DefaultItemAnimator
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
@@ -37,7 +39,21 @@ class AboutFragment : BaseFragment(), AboutFragmentView {
                 itemClickListener = { presenter.onItemClick(it) }
         )
         list.apply {
-            layoutManager = LinearLayoutManager(context)
+            when (activity!!.resources.configuration.orientation) {
+                Configuration.ORIENTATION_LANDSCAPE -> {
+                    val lm = GridLayoutManager(context, GRID_COLUMN_COUNT)
+                    lm.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+                        override fun getSpanSize(position: Int): Int {
+                            return when (adapter!!.getItemViewType(position)) {
+                                AboutAdapter.ITEM_TYPE_ITEM -> 1
+                                else -> GRID_COLUMN_COUNT
+                            }
+                        }
+                    }
+                    layoutManager = lm
+                }
+                else -> layoutManager = LinearLayoutManager(context)
+            }
             itemAnimator = DefaultItemAnimator()
             setHasFixedSize(true)
             adapter = aboutAdapter
@@ -49,6 +65,8 @@ class AboutFragment : BaseFragment(), AboutFragmentView {
     }
 
     companion object {
+        private const val GRID_COLUMN_COUNT = 2
+
         fun newInstance() = AboutFragment()
     }
 }

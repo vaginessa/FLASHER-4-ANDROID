@@ -79,7 +79,7 @@ class AboutAdapter(
     }
 
     companion object {
-        private const val ITEM_TYPE_ITEM = 0
+        const val ITEM_TYPE_ITEM = 0
         private const val ITEM_TYPE_VERSIONS = 1
         private const val ITEM_TYPE_TEAM = 2
         private const val ITEM_TYPE_CREDITS = 3
