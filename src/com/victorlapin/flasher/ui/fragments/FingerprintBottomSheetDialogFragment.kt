@@ -3,9 +3,9 @@ package com.victorlapin.flasher.ui.fragments
 import android.content.res.ColorStateList
 import android.os.Bundle
 import android.os.Handler
-import android.support.annotation.StringRes
-import android.support.v4.content.ContextCompat
 import android.view.View
+import androidx.annotation.StringRes
+import androidx.core.content.ContextCompat
 import com.mtramin.rxfingerprint.RxFingerprint
 import com.mtramin.rxfingerprint.data.FingerprintResult
 import com.victorlapin.flasher.R

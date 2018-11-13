@@ -4,7 +4,7 @@ import android.app.NotificationManager
 import android.content.ComponentName
 import android.content.Context
 import android.content.pm.PackageManager
-import android.support.v4.app.NotificationCompat
+import androidx.core.app.NotificationCompat
 import com.victorlapin.flasher.R
 import com.victorlapin.flasher.model.EventArgs
 import com.victorlapin.flasher.ui.receivers.BootReceiver

@@ -3,8 +3,8 @@ package com.victorlapin.flasher.manager
 import android.content.Context
 import android.content.res.Resources
 import android.graphics.drawable.Drawable
-import android.support.annotation.*
-import android.support.v4.content.ContextCompat
+import androidx.annotation.*
+import androidx.core.content.ContextCompat
 
 class ResourcesManager(private val mContext: Context) {
     fun getString(@StringRes id: Int): String = mContext.getString(id)

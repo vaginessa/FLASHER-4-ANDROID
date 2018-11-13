@@ -2,13 +2,13 @@ package com.victorlapin.flasher.ui.fragments
 
 import android.Manifest
 import android.os.Bundle
-import android.support.transition.Fade
-import android.support.transition.TransitionManager
-import android.support.v4.view.animation.FastOutLinearInInterpolator
-import android.support.v7.widget.DefaultItemAnimator
-import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.helper.ItemTouchHelper
 import android.widget.Toast
+import androidx.interpolator.view.animation.FastOutLinearInInterpolator
+import androidx.recyclerview.widget.DefaultItemAnimator
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.RecyclerView
+import androidx.transition.Fade
+import androidx.transition.TransitionManager
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.files.FileFilter
 import com.afollestad.materialdialogs.files.fileChooser

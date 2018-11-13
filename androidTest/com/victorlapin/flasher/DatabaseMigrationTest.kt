@@ -1,13 +1,13 @@
 package com.victorlapin.flasher
 
-import android.arch.persistence.db.SupportSQLiteDatabase
-import android.arch.persistence.db.framework.FrameworkSQLiteOpenHelperFactory
-import android.arch.persistence.room.Room
-import android.arch.persistence.room.testing.MigrationTestHelper
 import android.content.ContentValues
 import android.database.sqlite.SQLiteDatabase
-import android.support.test.InstrumentationRegistry
-import android.support.test.runner.AndroidJUnit4
+import androidx.room.Room
+import androidx.room.testing.MigrationTestHelper
+import androidx.sqlite.db.SupportSQLiteDatabase
+import androidx.sqlite.db.framework.FrameworkSQLiteOpenHelperFactory
+import androidx.test.platform.app.InstrumentationRegistry
+import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.victorlapin.flasher.model.database.AppDatabase
 import com.victorlapin.flasher.model.database.entity.Chain
 import com.victorlapin.flasher.model.database.entity.Command
@@ -91,7 +91,7 @@ class DatabaseMigrationTest {
 
     private fun getMigratedDatabase(): AppDatabase {
         val database = Room.databaseBuilder(
-                InstrumentationRegistry.getTargetContext(),
+                InstrumentationRegistry.getInstrumentation().targetContext,
                 AppDatabase::class.java,
                 TEST_DB_NAME)
                 .allowMainThreadQueries()

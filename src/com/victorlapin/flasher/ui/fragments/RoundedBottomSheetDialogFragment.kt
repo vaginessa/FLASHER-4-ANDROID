@@ -3,15 +3,14 @@ package com.victorlapin.flasher.ui.fragments
 import android.app.Dialog
 import android.content.DialogInterface
 import android.os.Bundle
-import android.support.design.widget.BottomSheetDialog
-import android.support.design.widget.BottomSheetDialogFragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.victorlapin.flasher.Const
 import com.victorlapin.flasher.R
 import com.victorlapin.flasher.manager.SettingsManager
-import org.koin.android.ext.android.getKoin
 import org.koin.android.ext.android.inject
 import org.koin.standalone.KoinComponent
 

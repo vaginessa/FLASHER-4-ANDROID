@@ -1,9 +1,9 @@
 package com.victorlapin.flasher.model.database
 
-import android.arch.persistence.db.SupportSQLiteDatabase
-import android.arch.persistence.room.Database
-import android.arch.persistence.room.RoomDatabase
-import android.arch.persistence.room.migration.Migration
+import androidx.room.Database
+import androidx.room.RoomDatabase
+import androidx.room.migration.Migration
+import androidx.sqlite.db.SupportSQLiteDatabase
 import com.victorlapin.flasher.model.database.dao.ChainDao
 import com.victorlapin.flasher.model.database.dao.CommandDao
 import com.victorlapin.flasher.model.database.dao.TestsDao
