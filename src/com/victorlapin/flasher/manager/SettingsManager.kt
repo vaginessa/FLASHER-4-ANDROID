@@ -96,9 +96,11 @@ class SettingsManager(context: Context) {
         get() = mPrefs.getBoolean(KEY_SCHEDULE_ONLY_HIGH_BATTERY, false)
         set(value) = mPrefs.edit().putBoolean(KEY_SCHEDULE_ONLY_HIGH_BATTERY, value).apply()
 
-    val askFingerprintOnLaunch: Boolean
+    var askFingerprintOnLaunch: Boolean
         get() = mPrefs.getBoolean(KEY_ASK_FINGERPRINT_ON_LAUNCH, false)
+        set(value) = mPrefs.edit().putBoolean(KEY_ASK_FINGERPRINT_ON_LAUNCH, value).apply()
 
-    val askFingerprintToReboot: Boolean
+    var askFingerprintToReboot: Boolean
         get() = mPrefs.getBoolean(KEY_ASK_FINGERPRINT_TO_REBOOT, false)
+        set(value) = mPrefs.edit().putBoolean(KEY_ASK_FINGERPRINT_TO_REBOOT, value).apply()
 }

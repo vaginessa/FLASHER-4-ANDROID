@@ -12,6 +12,7 @@ import com.victorlapin.flasher.manager.ServicesManager
 import com.victorlapin.flasher.manager.SettingsManager
 import com.victorlapin.flasher.model.interactor.AlarmInteractor
 import com.victorlapin.flasher.model.interactor.RecoveryScriptInteractor
+import com.victorlapin.flasher.ui.Biometric
 import com.victorlapin.flasher.ui.activities.BaseActivity
 import com.victorlapin.flasher.ui.activities.MainActivity
 import org.koin.android.ext.android.getKoin
@@ -138,9 +139,51 @@ class SettingsGlobalFragment : PreferenceFragmentCompat() {
 
         val isFPAvailable = mServices.isFingerprintAvailable()
         val fpPreference = findPreference(SettingsManager.KEY_ASK_FINGERPRINT_ON_LAUNCH)
-        fpPreference.isEnabled = isFPAvailable
+                as SwitchPreference
         val fpRebootPreference = findPreference(SettingsManager.KEY_ASK_FINGERPRINT_TO_REBOOT)
-        fpRebootPreference.isEnabled = isFPAvailable
+                as SwitchPreference
+        if (isFPAvailable) {
+            fpPreference.isEnabled = true
+            fpRebootPreference.isEnabled = true
+            fpPreference.setOnPreferenceChangeListener { it, newValue ->
+                val b = newValue as Boolean
+                if (b) {
+                    Biometric.askFingerprint(
+                            activity = activity!!,
+                            title = R.string.fingerprint_setting_title,
+                            description = R.string.fingerprint_setting_description,
+                            cancelListener = {
+                                mSettings.askFingerprintOnLaunch = false
+                                (it as SwitchPreference).isChecked = false
+                            }
+                    )
+                }
+                true
+            }
+
+            fpRebootPreference.setOnPreferenceChangeListener { it, newValue ->
+                val b = newValue as Boolean
+                if (b) {
+                    Biometric.askFingerprint(
+                            activity = activity!!,
+                            title = R.string.fingerprint_setting_title,
+                            description = R.string.fingerprint_setting_description,
+                            cancelListener = {
+                                mSettings.askFingerprintToReboot = false
+                                (it as SwitchPreference).isChecked = false
+                            }
+                    )
+                }
+                true
+            }
+        } else {
+            mSettings.askFingerprintOnLaunch = false
+            fpPreference.isChecked = false
+            fpPreference.isEnabled = false
+            mSettings.askFingerprintToReboot = false
+            fpRebootPreference.isChecked = false
+            fpRebootPreference.isEnabled = false
+        }
     }
 
     override fun onStop() {

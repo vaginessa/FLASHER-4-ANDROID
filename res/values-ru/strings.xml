@@ -119,4 +119,6 @@
     <string name="fingerprint_auth_description">Подтвердите отпечаток пальца для доступа к приложению.</string>
     <string name="fingerprint_reboot_title">Перезагрузка заблокирована</string>
     <string name="fingerprint_reboot_description">Подтвердите отпечаток пальца для перезагрузки в рекавери.</string>
+    <string name="fingerprint_setting_title">Отпечаток пальца</string>
+    <string name="fingerprint_setting_description">Требуется подтверждение.</string>
 </resources>
