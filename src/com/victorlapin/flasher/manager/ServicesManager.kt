@@ -5,6 +5,7 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.pm.PackageManager
 import androidx.core.app.NotificationCompat
+import androidx.core.hardware.fingerprint.FingerprintManagerCompat
 import com.victorlapin.flasher.R
 import com.victorlapin.flasher.model.EventArgs
 import com.victorlapin.flasher.ui.receivers.BootReceiver
@@ -73,6 +74,14 @@ class ServicesManager(
     val packageManager: PackageManager by lazy {
         mContext.packageManager
     }
+
+    private val fingerprintManager by lazy {
+        FingerprintManagerCompat.from(mContext)
+    }
+
+    fun isFingerprintAvailable(): Boolean =
+            fingerprintManager.isHardwareDetected
+                    && fingerprintManager.hasEnrolledFingerprints()
 
     companion object {
         private const val BOOT_NOTIFICATION_ID = 199
