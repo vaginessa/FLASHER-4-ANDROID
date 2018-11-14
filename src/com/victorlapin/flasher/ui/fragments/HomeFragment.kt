@@ -1,11 +1,8 @@
 package com.victorlapin.flasher.ui.fragments
 
 import android.Manifest
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.widget.Toast
-import androidx.biometrics.BiometricConstants
-import androidx.biometrics.BiometricPrompt
 import androidx.interpolator.view.animation.FastOutLinearInInterpolator
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -30,7 +27,7 @@ import com.victorlapin.flasher.model.database.entity.Chain
 import com.victorlapin.flasher.model.database.entity.Command
 import com.victorlapin.flasher.presenter.BaseHomeFragmentPresenter
 import com.victorlapin.flasher.presenter.DefaultHomePresenter
-import com.victorlapin.flasher.ui.HandlerExecutor
+import com.victorlapin.flasher.ui.Biometric
 import com.victorlapin.flasher.ui.adapters.HomeAdapter
 import com.victorlapin.flasher.view.HomeFragmentView
 import kotlinx.android.synthetic.main.fragment_home.*
@@ -302,30 +299,12 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
     override fun askFingerprint() {
         if (mIsRebootInProgress) {
             if (mServices.isFingerprintAvailable()) {
-                val builder = BiometricPrompt.PromptInfo.Builder().apply {
-                    setTitle(mResources.getString(R.string.fingerprint_auth_title))
-                    setNegativeButtonText(mResources.getString(android.R.string.cancel))
-                }
-                val callback = object : BiometricPrompt.AuthenticationCallback() {
-                    override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
-                        super.onAuthenticationSucceeded(result)
-                        Timber.i("Fingerprint check success")
-                        presenter.reboot()
-                    }
-
-                    @SuppressLint("SwitchIntDef")
-                    override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
-                        Timber.i("Fingerprint check error: $errString")
-                        when (errorCode) {
-                            BiometricConstants.ERROR_NEGATIVE_BUTTON,
-                            BiometricConstants.ERROR_USER_CANCELED -> mIsRebootInProgress = false
-                            else -> super.onAuthenticationError(errorCode, errString)
-                        }
-                    }
-                }
-
-                BiometricPrompt(activity!!, HandlerExecutor(), callback)
-                        .authenticate(builder.build())
+                Biometric.askFingerprint(
+                        activity = activity!!,
+                        title = R.string.fingerprint_reboot_title,
+                        successListener = { presenter.reboot(); mIsRebootInProgress = false },
+                        cancelListener = { mIsRebootInProgress = false }
+                )
             } else {
                 presenter.reboot()
                 mIsRebootInProgress = false
