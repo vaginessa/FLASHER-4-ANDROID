@@ -49,6 +49,7 @@ class MainActivity : BaseActivity(), MainActivityView {
             Biometric.askFingerprint(
                     activity = this,
                     title = R.string.fingerprint_auth_title,
+                    description = R.string.fingerprint_auth_description,
                     successListener = { mShouldAuth = false },
                     cancelListener = { presenter.exit() }
             )

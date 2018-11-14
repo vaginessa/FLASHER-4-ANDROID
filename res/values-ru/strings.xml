@@ -116,5 +116,7 @@
     <string name="empty_view_summary">Что-нибудь прошить?</string>
 
     <string name="fingerprint_auth_title">Приложение заблокировано</string>
+    <string name="fingerprint_auth_description">Подтвердите отпечаток пальца для доступа к приложению.</string>
     <string name="fingerprint_reboot_title">Перезагрузка заблокирована</string>
+    <string name="fingerprint_reboot_description">Подтвердите отпечаток пальца для перезагрузки в рекавери.</string>
 </resources>

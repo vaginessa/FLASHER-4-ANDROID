@@ -13,11 +13,13 @@ object Biometric {
     fun askFingerprint(
             activity: FragmentActivity,
             @StringRes title: Int,
+            @StringRes description: Int,
             successListener: () -> Unit = {},
             cancelListener: () -> Unit = {}
             ) {
         val builder = BiometricPrompt.PromptInfo.Builder().apply {
             setTitle(activity.getString(title))
+            setDescription(activity.getString(description))
             setNegativeButtonText(activity.getString(android.R.string.cancel))
         }
         val callback = object : BiometricPrompt.AuthenticationCallback() {

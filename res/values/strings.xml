@@ -128,5 +128,7 @@
     <string name="empty_view_summary">Anything to flash?</string>
 
     <string name="fingerprint_auth_title">The app is locked</string>
+    <string name="fingerprint_auth_description">Confirm fingerprint to access the app.</string>
     <string name="fingerprint_reboot_title">Reboot option is locked</string>
+    <string name="fingerprint_reboot_description">Confirm fingerprint to reboot to recovery.</string>
 </resources>

@@ -48,6 +48,7 @@ class RebootDialogActivity : MvpAppCompatActivity(), RebootDialogActivityView {
             Biometric.askFingerprint(
                     activity = this,
                     title = R.string.fingerprint_reboot_title,
+                    description = R.string.fingerprint_reboot_description,
                     successListener = { presenter.rebootRecovery(); finish() },
                     cancelListener = { finish() }
             )

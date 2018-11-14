@@ -302,6 +302,7 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
                 Biometric.askFingerprint(
                         activity = activity!!,
                         title = R.string.fingerprint_reboot_title,
+                        description = R.string.fingerprint_reboot_description,
                         successListener = { presenter.reboot(); mIsRebootInProgress = false },
                         cancelListener = { mIsRebootInProgress = false }
                 )
