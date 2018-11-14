@@ -1,21 +1,27 @@
 package com.victorlapin.flasher.ui.activities
 
+import android.annotation.SuppressLint
 import android.os.Bundle
+import androidx.biometrics.BiometricConstants
+import androidx.biometrics.BiometricPrompt
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
-import com.mtramin.rxfingerprint.RxFingerprint
 import com.victorlapin.flasher.Const
 import com.victorlapin.flasher.R
+import com.victorlapin.flasher.manager.ResourcesManager
+import com.victorlapin.flasher.manager.ServicesManager
 import com.victorlapin.flasher.presenter.MainActivityPresenter
+import com.victorlapin.flasher.ui.HandlerExecutor
 import com.victorlapin.flasher.ui.fragments.AboutFragment
-import com.victorlapin.flasher.ui.fragments.FingerprintAuthFragment
 import com.victorlapin.flasher.ui.fragments.SettingsGlobalFragment
 import com.victorlapin.flasher.view.MainActivityView
 import org.koin.android.ext.android.get
+import org.koin.android.ext.android.inject
 import ru.terrakok.cicerone.androidx.SupportAppNavigator
 import ru.terrakok.cicerone.commands.Command
+import timber.log.Timber
 
 class MainActivity : BaseActivity(), MainActivityView {
     override val layoutRes = R.layout.activity_generic_no_toolbar
@@ -26,6 +32,9 @@ class MainActivity : BaseActivity(), MainActivityView {
 
     @ProvidePresenter
     fun providePresenter() = get<MainActivityPresenter>()
+
+    private val mServices by inject<ServicesManager>()
+    private val mResources by inject<ResourcesManager>()
 
     private var mShouldAuth = true
 
@@ -42,20 +51,31 @@ class MainActivity : BaseActivity(), MainActivityView {
     }
 
     override fun askFingerprint() {
-        if (mShouldAuth && RxFingerprint.isAvailable(this)) {
-            val oldFragment = supportFragmentManager
-                    .findFragmentByTag(FingerprintAuthFragment::class.java.simpleName)
-            if (oldFragment != null) {
-                (oldFragment as FingerprintAuthFragment).successListener = { mShouldAuth = false }
-                oldFragment.cancelListener = { presenter.exit() }
-            } else {
-                val fragment = FingerprintAuthFragment.newInstance(
-                        successListener = { mShouldAuth = false },
-                        cancelListener = { presenter.exit() }
-                )
-                fragment.show(supportFragmentManager,
-                        FingerprintAuthFragment::class.java.simpleName)
+        if (mShouldAuth && mServices.isFingerprintAvailable()) {
+            val builder = BiometricPrompt.PromptInfo.Builder().apply {
+                setTitle(mResources.getString(R.string.fingerprint_auth_title))
+                setNegativeButtonText(mResources.getString(android.R.string.cancel))
             }
+            val callback = object : BiometricPrompt.AuthenticationCallback() {
+                override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
+                    super.onAuthenticationSucceeded(result)
+                    Timber.i("Fingerprint check success")
+                    mShouldAuth = false
+                }
+
+                @SuppressLint("SwitchIntDef")
+                override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
+                    Timber.i("Fingerprint check error: $errString")
+                    when (errorCode) {
+                        BiometricConstants.ERROR_NEGATIVE_BUTTON,
+                        BiometricConstants.ERROR_USER_CANCELED -> presenter.exit()
+                        else -> super.onAuthenticationError(errorCode, errString)
+                    }
+                }
+            }
+
+            BiometricPrompt(this, HandlerExecutor(), callback)
+                    .authenticate(builder.build())
         }
     }
 

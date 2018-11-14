@@ -3,12 +3,12 @@ package com.victorlapin.flasher.ui.fragments
 import android.Manifest
 import android.os.Bundle
 import androidx.preference.*
-import com.mtramin.rxfingerprint.RxFingerprint
 import com.tbruyelle.rxpermissions2.RxPermissions
 import com.victorlapin.flasher.Const
 import com.victorlapin.flasher.R
 import com.victorlapin.flasher.manager.LogManager
 import com.victorlapin.flasher.manager.ResourcesManager
+import com.victorlapin.flasher.manager.ServicesManager
 import com.victorlapin.flasher.manager.SettingsManager
 import com.victorlapin.flasher.model.interactor.AlarmInteractor
 import com.victorlapin.flasher.model.interactor.RecoveryScriptInteractor
@@ -22,6 +22,7 @@ class SettingsGlobalFragment : PreferenceFragmentCompat() {
     private lateinit var mScope: Scope
     private val mSettings by inject<SettingsManager>()
     private val mResources by inject<ResourcesManager>()
+    private val mServices by inject<ServicesManager>()
     private val mLogs by inject<LogManager>()
     private val mScriptInteractor by inject<RecoveryScriptInteractor>()
     private val mAlarmInteractor by inject<AlarmInteractor>()
@@ -135,10 +136,11 @@ class SettingsGlobalFragment : PreferenceFragmentCompat() {
                     return@OnPreferenceChangeListener true
                 }
 
+        val isFPAvailable = mServices.isFingerprintAvailable()
         val fpPreference = findPreference(SettingsManager.KEY_ASK_FINGERPRINT_ON_LAUNCH)
-        fpPreference.isEnabled = RxFingerprint.isAvailable(context!!)
+        fpPreference.isEnabled = isFPAvailable
         val fpRebootPreference = findPreference(SettingsManager.KEY_ASK_FINGERPRINT_TO_REBOOT)
-        fpRebootPreference.isEnabled = RxFingerprint.isAvailable(context!!)
+        fpRebootPreference.isEnabled = isFPAvailable
     }
 
     override fun onStop() {

@@ -115,10 +115,6 @@
     <string name="empty_view_title">Начните с нуля</string>
     <string name="empty_view_summary">Что-нибудь прошить?</string>
 
-    <string name="fingerprint_auth_title">Проверка безопасности</string>
-    <string name="fingerprint_auth_subtitle">Приложение заблокировано</string>
-    <string name="fingerprint_auth_description">Приложите палец к сканеру отпечатков чтобы получить доступ</string>
-    <string name="fingerprint_auth_error">Отпечаток не распознан, попробуйте еще раз!</string>
-    <string name="fingerprint_reboot_subtitle">Перезагрузка заблокирована</string>
-    <string name="fingerprint_reboot_description">Приложите палец к сканеру отпечатков чтобы перезагрузиться в рекавери</string>
+    <string name="fingerprint_auth_title">Приложение заблокировано</string>
+    <string name="fingerprint_reboot_title">Перезагрузка заблокирована</string>
 </resources>

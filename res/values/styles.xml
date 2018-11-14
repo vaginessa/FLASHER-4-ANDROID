@@ -15,7 +15,6 @@
         <item name="md_color_content">?android:attr/textColorSecondary</item>
         <!-- Overlays -->
         <item name="navigation_color_selected">@*android:color/accent_device_default_light</item>
-        <item name="fingerprint_accent_color">@*android:color/accent_device_default_light</item>
     </style>
 
     <style name="Base.Dark" parent="Theme.MaterialComponents.NoActionBar">
@@ -33,7 +32,6 @@
         <item name="md_color_content">?android:attr/textColorSecondary</item>
         <!-- Overlays -->
         <item name="navigation_color_selected">@*android:color/accent_device_default_dark</item>
-        <item name="fingerprint_accent_color">@*android:color/accent_device_default_dark</item>
     </style>
 
     <style name="Base.AppTheme.Light" parent="Base.Light">
@@ -65,21 +63,18 @@
     <style name="AppTheme.Light.Pixel" parent="AppTheme.Light">
         <item name="colorAccent">@color/pixel</item>
         <item name="navigation_color_selected">@color/pixel</item>
-        <item name="fingerprint_accent_color">@color/pixel</item>
         <item name="android:timePickerDialogTheme">@style/TimePickerDialog.Light.Pixel</item>
     </style>
 
     <style name="AppTheme.Dark.Pixel" parent="AppTheme.Dark">
         <item name="colorAccent">@color/pixel</item>
         <item name="navigation_color_selected">@color/pixel</item>
-        <item name="fingerprint_accent_color">@color/pixel</item>
         <item name="android:timePickerDialogTheme">@style/TimePickerDialog.Dark.Pixel</item>
     </style>
 
     <style name="AppTheme.Black.Pixel" parent="AppTheme.Black">
         <item name="colorAccent">@color/pixel</item>
         <item name="navigation_color_selected">@color/pixel</item>
-        <item name="fingerprint_accent_color">@color/pixel</item>
         <item name="android:timePickerDialogTheme">@style/TimePickerDialog.Dark.Pixel</item>
     </style>
 

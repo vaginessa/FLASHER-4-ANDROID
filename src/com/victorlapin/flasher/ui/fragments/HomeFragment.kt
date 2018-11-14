@@ -1,8 +1,11 @@
 package com.victorlapin.flasher.ui.fragments
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.widget.Toast
+import androidx.biometrics.BiometricConstants
+import androidx.biometrics.BiometricPrompt
 import androidx.interpolator.view.animation.FastOutLinearInInterpolator
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -18,15 +21,16 @@ import com.afollestad.materialdialogs.input.input
 import com.afollestad.materialdialogs.list.listItemsMultiChoice
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
-import com.mtramin.rxfingerprint.RxFingerprint
 import com.tbruyelle.rxpermissions2.RxPermissions
 import com.victorlapin.flasher.*
 import com.victorlapin.flasher.manager.ResourcesManager
+import com.victorlapin.flasher.manager.ServicesManager
 import com.victorlapin.flasher.model.EventArgs
 import com.victorlapin.flasher.model.database.entity.Chain
 import com.victorlapin.flasher.model.database.entity.Command
 import com.victorlapin.flasher.presenter.BaseHomeFragmentPresenter
 import com.victorlapin.flasher.presenter.DefaultHomePresenter
+import com.victorlapin.flasher.ui.HandlerExecutor
 import com.victorlapin.flasher.ui.adapters.HomeAdapter
 import com.victorlapin.flasher.view.HomeFragmentView
 import kotlinx.android.synthetic.main.fragment_home.*
@@ -47,6 +51,7 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
     @ProvidePresenter
     open fun providePresenter(): BaseHomeFragmentPresenter = get<DefaultHomePresenter>()
 
+    private val mServices by inject<ServicesManager>()
     protected val mResources by inject<ResourcesManager>()
 
     private val mRxPermissions by lazy {
@@ -296,21 +301,31 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
 
     override fun askFingerprint() {
         if (mIsRebootInProgress) {
-            if (RxFingerprint.isAvailable(context!!)) {
-                val oldFragment = activity!!.supportFragmentManager
-                        .findFragmentByTag(FingerprintRebootFragment::class.java.simpleName)
-                if (oldFragment != null) {
-                    (oldFragment as FingerprintRebootFragment)
-                            .successListener = { presenter.reboot() }
-                    oldFragment.cancelListener = { mIsRebootInProgress = false }
-                } else {
-                    val fragment = FingerprintRebootFragment.newInstance(
-                            successListener = { presenter.reboot() },
-                            cancelListener = { mIsRebootInProgress = false }
-                    )
-                    fragment.show(activity!!.supportFragmentManager,
-                            FingerprintRebootFragment::class.java.simpleName)
+            if (mServices.isFingerprintAvailable()) {
+                val builder = BiometricPrompt.PromptInfo.Builder().apply {
+                    setTitle(mResources.getString(R.string.fingerprint_auth_title))
+                    setNegativeButtonText(mResources.getString(android.R.string.cancel))
                 }
+                val callback = object : BiometricPrompt.AuthenticationCallback() {
+                    override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
+                        super.onAuthenticationSucceeded(result)
+                        Timber.i("Fingerprint check success")
+                        presenter.reboot()
+                    }
+
+                    @SuppressLint("SwitchIntDef")
+                    override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
+                        Timber.i("Fingerprint check error: $errString")
+                        when (errorCode) {
+                            BiometricConstants.ERROR_NEGATIVE_BUTTON,
+                            BiometricConstants.ERROR_USER_CANCELED -> mIsRebootInProgress = false
+                            else -> super.onAuthenticationError(errorCode, errString)
+                        }
+                    }
+                }
+
+                BiometricPrompt(activity!!, HandlerExecutor(), callback)
+                        .authenticate(builder.build())
             } else {
                 presenter.reboot()
                 mIsRebootInProgress = false
