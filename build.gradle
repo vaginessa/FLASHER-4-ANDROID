@@ -31,8 +31,8 @@ android {
         applicationId "com.victorlapin.flasher"
         minSdkVersion 24
         targetSdkVersion 28
-        versionCode 34
-        versionName "1.3.0-beta01"
+        versionCode 37
+        versionName "1.3.0-beta04"
         archivesBaseName = "Flasher"
         resConfigs "en", "ru"
 
@@ -123,9 +123,7 @@ dependencies {
     implementation "com.google.code.gson:gson:2.8.5"
     implementation "com.jakewharton.timber:timber:4.7.1"
     implementation "android.arch.work:work-runtime:1.0.0-alpha11"
-    implementation ("com.mtramin:rxfingerprint:2.2.1") {
-        exclude group: "io.reactivex.rxjava2"
-    }
+    implementation "androidx.biometric:biometric:1.0.0-alpha02"
 
     debugImplementation "im.dino:dbinspector:3.4.1@aar"
 

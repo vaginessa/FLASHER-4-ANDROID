@@ -127,10 +127,10 @@
     <string name="empty_view_title">A fresh start</string>
     <string name="empty_view_summary">Anything to flash?</string>
 
-    <string name="fingerprint_auth_title">Security check</string>
-    <string name="fingerprint_auth_subtitle">The app is locked</string>
-    <string name="fingerprint_auth_description">Place your finger on the scanner to get access</string>
-    <string name="fingerprint_auth_error">Fingerprint not recognized, try again!</string>
-    <string name="fingerprint_reboot_subtitle">Reboot option is locked</string>
-    <string name="fingerprint_reboot_description">Place your finger on the scanner to reboot to recovery</string>
+    <string name="fingerprint_auth_title">The app is locked</string>
+    <string name="fingerprint_auth_description">Confirm fingerprint to access the app.</string>
+    <string name="fingerprint_reboot_title">Reboot option is locked</string>
+    <string name="fingerprint_reboot_description">Confirm fingerprint to reboot to recovery.</string>
+    <string name="fingerprint_setting_title">Use fingerprint</string>
+    <string name="fingerprint_setting_description">Confirmation is required.</string>
 </resources>

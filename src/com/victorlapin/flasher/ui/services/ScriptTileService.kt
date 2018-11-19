@@ -12,7 +12,7 @@ import org.koin.android.ext.android.getKoin
 import org.koin.android.ext.android.inject
 
 class ScriptTileService : TileService(), ScriptTileServiceView {
-    private val mScope = getKoin().createScope(Const.SERVICE_SCRIPT)
+    private val mScope = getKoin().getOrCreateScope(Const.SERVICE_SCRIPT)
     private val mPresenter by inject<ScriptTileServicePresenter>()
 
     override fun onClick() {

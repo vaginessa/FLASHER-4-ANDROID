@@ -18,15 +18,16 @@ import com.afollestad.materialdialogs.input.input
 import com.afollestad.materialdialogs.list.listItemsMultiChoice
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
-import com.mtramin.rxfingerprint.RxFingerprint
 import com.tbruyelle.rxpermissions2.RxPermissions
 import com.victorlapin.flasher.*
 import com.victorlapin.flasher.manager.ResourcesManager
+import com.victorlapin.flasher.manager.ServicesManager
 import com.victorlapin.flasher.model.EventArgs
 import com.victorlapin.flasher.model.database.entity.Chain
 import com.victorlapin.flasher.model.database.entity.Command
 import com.victorlapin.flasher.presenter.BaseHomeFragmentPresenter
 import com.victorlapin.flasher.presenter.DefaultHomePresenter
+import com.victorlapin.flasher.ui.Biometric
 import com.victorlapin.flasher.ui.adapters.HomeAdapter
 import com.victorlapin.flasher.view.HomeFragmentView
 import kotlinx.android.synthetic.main.fragment_home.*
@@ -47,6 +48,7 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
     @ProvidePresenter
     open fun providePresenter(): BaseHomeFragmentPresenter = get<DefaultHomePresenter>()
 
+    private val mServices by inject<ServicesManager>()
     protected val mResources by inject<ResourcesManager>()
 
     private val mRxPermissions by lazy {
@@ -296,21 +298,14 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
 
     override fun askFingerprint() {
         if (mIsRebootInProgress) {
-            if (RxFingerprint.isAvailable(context!!)) {
-                val oldFragment = activity!!.supportFragmentManager
-                        .findFragmentByTag(FingerprintRebootFragment::class.java.simpleName)
-                if (oldFragment != null) {
-                    (oldFragment as FingerprintRebootFragment)
-                            .successListener = { presenter.reboot() }
-                    oldFragment.cancelListener = { mIsRebootInProgress = false }
-                } else {
-                    val fragment = FingerprintRebootFragment.newInstance(
-                            successListener = { presenter.reboot() },
-                            cancelListener = { mIsRebootInProgress = false }
-                    )
-                    fragment.show(activity!!.supportFragmentManager,
-                            FingerprintRebootFragment::class.java.simpleName)
-                }
+            if (mServices.isFingerprintAvailable()) {
+                Biometric.askFingerprint(
+                        activity = activity!!,
+                        title = R.string.fingerprint_reboot_title,
+                        description = R.string.fingerprint_reboot_description,
+                        successListener = { presenter.reboot(); mIsRebootInProgress = false },
+                        cancelListener = { mIsRebootInProgress = false }
+                )
             } else {
                 presenter.reboot()
                 mIsRebootInProgress = false
