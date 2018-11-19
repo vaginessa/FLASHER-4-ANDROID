@@ -1,6 +1,8 @@
 package com.victorlapin.flasher.ui
 
 import android.annotation.SuppressLint
+import android.content.pm.ActivityInfo
+import android.content.res.Configuration
 import android.os.Handler
 import androidx.annotation.StringRes
 import androidx.biometrics.BiometricConstants
@@ -17,6 +19,18 @@ object Biometric {
             successListener: () -> Unit = {},
             cancelListener: () -> Unit = {}
             ) {
+        val oldOrientation = activity.requestedOrientation
+        val newOrientation: Int
+        if (oldOrientation == ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED) {
+            newOrientation = if (activity.resources.configuration.orientation ==
+                    Configuration.ORIENTATION_LANDSCAPE) {
+                ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
+            } else {
+                ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+            }
+            activity.requestedOrientation = newOrientation
+        }
+
         val builder = BiometricPrompt.PromptInfo.Builder().apply {
             setTitle(activity.getString(title))
             description?.let {
@@ -29,6 +43,7 @@ object Biometric {
                 super.onAuthenticationSucceeded(result)
                 Timber.i("Fingerprint check success")
                 successListener()
+                activity.requestedOrientation = oldOrientation
             }
 
             @SuppressLint("SwitchIntDef")
@@ -36,7 +51,10 @@ object Biometric {
                 Timber.i("Fingerprint check error: $errString")
                 when (errorCode) {
                     BiometricConstants.ERROR_NEGATIVE_BUTTON,
-                    BiometricConstants.ERROR_USER_CANCELED -> cancelListener()
+                    BiometricConstants.ERROR_USER_CANCELED -> {
+                        cancelListener()
+                        activity.requestedOrientation = oldOrientation
+                    }
                     else -> super.onAuthenticationError(errorCode, errString)
                 }
             }
