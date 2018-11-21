@@ -3,7 +3,6 @@ package com.victorlapin.flasher.ui.adapters
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.victorlapin.flasher.AboutExternalScreen
 import com.victorlapin.flasher.R
 import com.victorlapin.flasher.inflate
 import com.victorlapin.flasher.manager.ResourcesManager
@@ -46,12 +45,10 @@ class AboutAdapter(
                 holder.itemView.lbl_name.text = item.name
                 holder.itemView.lbl_description.text = item.description
                 holder.itemView.img_picture.setImageDrawable(item.image)
-                if (item.url != null) {
+                if (item.screen != null) {
                     holder.itemView.click_container.setOnClickListener {
-                        itemClickListener(AboutClickEventArgs(
-                                AboutExternalScreen(item.url!!.toString())))
+                        itemClickListener(AboutClickEventArgs(item.screen!!))
                     }
-
                 } else {
                     holder.itemView.click_container.setOnClickListener(null)
                 }

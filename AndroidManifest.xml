@@ -36,6 +36,12 @@
             android:noHistory="true"
             android:excludeFromRecents="true" />
 
+        <activity android:name="com.google.android.gms.oss.licenses.OssLicensesMenuActivity"
+            android:theme="@style/AppTheme.Oss" />
+
+        <activity android:name="com.google.android.gms.oss.licenses.OssLicensesActivity"
+            android:theme="@style/AppTheme.Oss" />
+
         <service
             android:name=".ui.services.ScriptTileService"
             android:icon="@drawable/creation_black"

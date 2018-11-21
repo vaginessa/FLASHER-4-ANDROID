@@ -11,6 +11,7 @@ buildscript {
     dependencies {
         classpath 'com.android.tools.build:gradle:3.3.0-beta04'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$version_kotlin"
+        classpath 'com.google.android.gms:oss-licenses-plugin:0.9.4'
     }
 }
 
@@ -22,6 +23,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'com.google.android.gms.oss-licenses-plugin'
 
 android {
     compileSdkVersion 28
@@ -124,6 +126,7 @@ dependencies {
     implementation "com.jakewharton.timber:timber:4.7.1"
     implementation "android.arch.work:work-runtime:1.0.0-alpha11"
     implementation "androidx.biometric:biometric:1.0.0-alpha02"
+    implementation "com.google.android.gms:play-services-oss-licenses:16.0.1"
 
     debugImplementation "im.dino:dbinspector:3.4.1@aar"
 

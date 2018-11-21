@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import androidx.fragment.app.Fragment
+import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
 import com.victorlapin.flasher.ui.fragments.AboutFragment
 import com.victorlapin.flasher.ui.fragments.HomeFragment
 import com.victorlapin.flasher.ui.fragments.ScheduleFragment
@@ -29,4 +30,11 @@ class AboutScreen : SupportAppScreen() {
 class AboutExternalScreen(private val url: String) : SupportAppScreen() {
     override fun getActivityIntent(context: Context?): Intent =
             Intent(Intent.ACTION_VIEW, Uri.parse(url))
+}
+
+class OssScreen : SupportAppScreen() {
+    override fun getActivityIntent(context: Context): Intent {
+        OssLicensesMenuActivity.setActivityTitle(context.getString(R.string.about_links_oss))
+        return Intent(context, OssLicensesMenuActivity::class.java)
+    }
 }
