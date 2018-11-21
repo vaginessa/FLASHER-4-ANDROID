@@ -13,8 +13,6 @@ object Const {
     const val FRAGMENT_ABOUT = "fragment_about"
     const val FRAGMENT_BOTTOM = "fragment_bottom"
 
-    const val EXTERNAL_ABOUT = "about"
-
     const val SERVICE_SCRIPT = "tile_service_script"
 
     const val RECEIVER_BOOT = "receiver_boot"
