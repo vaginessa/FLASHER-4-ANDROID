@@ -114,6 +114,8 @@
     <string name="about_links_gitlab">View at Gitlab.com</string>
     <string name="about_links_donate">Buy me a coffee</string>
     <string name="about_links_paypal">Donate via PayPal</string>
+    <string name="about_links_oss">Open source licenses</string>
+    <string name="about_links_oss_text">License details for open source software</string>
 
     <plurals name="schedule_interval">
         <item quantity="one">%1$d day</item>

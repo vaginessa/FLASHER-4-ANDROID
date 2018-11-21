@@ -102,6 +102,8 @@
     <string name="about_links_gitlab">Посмотреть на Gitlab.com</string>
     <string name="about_links_donate">Купите мне кофе</string>
     <string name="about_links_paypal">Пожертвовать через PayPal</string>
+    <string name="about_links_oss">Лицензии на ПО с открытым исходным кодом</string>
+    <string name="about_links_oss_text">Сведения о лицензиях на ПО с открытым исходным кодом</string>
 
     <plurals name="schedule_interval">
         <item quantity="one">%1$d день</item>

@@ -6,9 +6,12 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import com.amulyakhare.textdrawable.TextDrawable
 import com.amulyakhare.textdrawable.util.ColorGenerator
+import com.victorlapin.flasher.AboutExternalScreen
+import com.victorlapin.flasher.OssScreen
 import com.victorlapin.flasher.R
 import com.victorlapin.flasher.manager.ResourcesManager
 import com.victorlapin.flasher.manager.ServicesManager
+import ru.terrakok.cicerone.Screen
 
 class AboutRepository(
         private val mServices: ServicesManager,
@@ -42,11 +45,15 @@ class AboutRepository(
         result.add(getLinkItem(nameRes = R.string.about_links_source_code,
                 descriptionRes = R.string.about_links_gitlab,
                 imageRes = R.drawable.git,
-                url = "https://gitlab.com/victorlapin/flasher"))
+                screen = AboutExternalScreen("https://gitlab.com/victorlapin/flasher")))
         result.add(getLinkItem(nameRes = R.string.about_links_donate,
                 descriptionRes = R.string.about_links_paypal,
                 imageRes = R.drawable.paypal,
-                url = "https://www.paypal.me/VictorLapin"))
+                screen = AboutExternalScreen("https://www.paypal.me/VictorLapin")))
+        result.add(getLinkItem(nameRes = R.string.about_links_oss,
+                descriptionRes = R.string.about_links_oss_text,
+                imageRes = R.drawable.library,
+                screen = OssScreen()))
 
         // show credits
         result.add(ListItem(name = ITEM_CREDITS))
@@ -97,11 +104,11 @@ class AboutRepository(
     private fun getLinkItem(@StringRes nameRes: Int,
                             @StringRes descriptionRes: Int,
                             @DrawableRes imageRes: Int,
-                            url: String): ListItem =
+                            screen: Screen): ListItem =
             ListItem(name = mResources.getString(nameRes),
                     description = mResources.getString(descriptionRes),
                     image = mResources.getDrawable(imageRes),
-                    url = url)
+                    screen = screen)
 
     private fun getCreditItem(@StringRes nameRes: Int,
                               @StringRes descriptionRes: Int): ListItem {
@@ -117,7 +124,7 @@ class AboutRepository(
             var description: CharSequence? = null,
             var image: Drawable? = null,
             var isError: Boolean = false,
-            var url : CharSequence? = null
+            var screen : Screen? = null
     )
 
     companion object {
