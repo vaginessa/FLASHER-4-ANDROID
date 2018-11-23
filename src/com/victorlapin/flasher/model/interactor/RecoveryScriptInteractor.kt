@@ -40,7 +40,7 @@ class RecoveryScriptInteractor constructor(
                 && mSettings.deleteObsoleteBackups) {
             var backupsToKeep = mSettings.backupsToKeep
             if (backupsToKeep <= 0) backupsToKeep = 1
-            mBackupsRepo.deleteObsoleteBackups(backupsToKeep)
+            mBackupsRepo.deleteObsoleteBackups(mSettings.backupsPath, backupsToKeep)
         }
         return result
     }

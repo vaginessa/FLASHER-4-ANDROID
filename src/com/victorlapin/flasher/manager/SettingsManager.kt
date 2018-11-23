@@ -2,7 +2,9 @@ package com.victorlapin.flasher.manager
 
 import android.content.Context
 import androidx.preference.PreferenceManager
+import com.victorlapin.flasher.Const
 import com.victorlapin.flasher.R
+import java.io.File
 
 class SettingsManager(context: Context) {
     companion object {
@@ -28,6 +30,7 @@ class SettingsManager(context: Context) {
         const val KEY_SCHEDULE_ONLY_HIGH_BATTERY = "schedule_only_high_battery"
         const val KEY_ASK_FINGERPRINT_ON_LAUNCH = "ask_fp_on_launch"
         const val KEY_ASK_FINGERPRINT_TO_REBOOT = "ask_fp_to_reboot"
+        const val KEY_BACKUPS_PATH = "backups_path"
     }
 
     private val mPrefs = PreferenceManager.getDefaultSharedPreferences(context)
@@ -103,4 +106,8 @@ class SettingsManager(context: Context) {
     var askFingerprintToReboot: Boolean
         get() = mPrefs.getBoolean(KEY_ASK_FINGERPRINT_TO_REBOOT, false)
         set(value) = mPrefs.edit().putBoolean(KEY_ASK_FINGERPRINT_TO_REBOOT, value).apply()
+
+    var backupsPath: String
+        get() = mPrefs.getString(KEY_BACKUPS_PATH, File(Const.TWRP_FOLDER, "BACKUPS").absolutePath)!!
+        set(path) = mPrefs.edit().putString(KEY_BACKUPS_PATH, path).apply()
 }
