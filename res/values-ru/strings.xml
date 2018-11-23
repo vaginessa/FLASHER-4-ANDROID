@@ -66,6 +66,7 @@
     <string name="pref_summary_ask_fingerprint_on_launch">Использовать сканер отпечатков для доступа к приложению</string>
     <string name="pref_title_ask_fingerprint_to_reboot">Перезагрузка отпечатком пальца</string>
     <string name="pref_summary_ask_fingerprint_to_reboot">Использовать сканер отпечатков для перезагрузки в рекавери</string>
+    <string name="pref_title_backups_path">Расположение резервных копий</string>
 
     <!-- Command names -->
     <string name="command_wipe">Вайп</string>

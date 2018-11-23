@@ -66,6 +66,7 @@
     <string name="pref_summary_ask_fingerprint_on_launch">Use fingerprint scanner to allow access to the app</string>
     <string name="pref_title_ask_fingerprint_to_reboot">Protect reboot option with fingerprint</string>
     <string name="pref_summary_ask_fingerprint_to_reboot">Use fingerprint scanner to allow reboot to recovery</string>
+    <string name="pref_title_backups_path">Backups location</string>
 
     <!-- Command names -->
     <string name="command_wipe">Wipe</string>

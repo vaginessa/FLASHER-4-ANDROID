@@ -42,6 +42,11 @@
             android:key="backups_to_keep"
             android:title="@string/pref_title_backups_to_keep" />
 
+        <Preference
+            android:dependency="delete_old_backups"
+            android:key="backups_path"
+            android:title="@string/pref_title_backups_path" />
+
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/pref_category_security">

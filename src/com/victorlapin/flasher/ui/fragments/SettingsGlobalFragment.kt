@@ -3,6 +3,8 @@ package com.victorlapin.flasher.ui.fragments
 import android.Manifest
 import android.os.Bundle
 import androidx.preference.*
+import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.files.folderChooser
 import com.tbruyelle.rxpermissions2.RxPermissions
 import com.victorlapin.flasher.Const
 import com.victorlapin.flasher.R
@@ -18,6 +20,7 @@ import com.victorlapin.flasher.ui.activities.MainActivity
 import org.koin.android.ext.android.getKoin
 import org.koin.android.ext.android.inject
 import org.koin.core.scope.Scope
+import java.io.File
 
 class SettingsGlobalFragment : PreferenceFragmentCompat() {
     private lateinit var mScope: Scope
@@ -107,6 +110,27 @@ class SettingsGlobalFragment : PreferenceFragmentCompat() {
             } catch (ignore: Exception) {
                 false
             }
+        }
+
+        val backupsPathPreference = findPreference(SettingsManager.KEY_BACKUPS_PATH)
+        backupsPathPreference.summary = mSettings.backupsPath
+        backupsPathPreference.setOnPreferenceClickListener {
+            mRxPermissions.request(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    .firstOrError()
+                    .subscribe { granted ->
+                        if (granted) {
+                            MaterialDialog(context!!)
+                                    .folderChooser(initialDirectory = File(mSettings.backupsPath),
+                                            emptyTextRes = R.string.folder_empty) { _, folder ->
+                                        mSettings.backupsPath = folder.absolutePath
+                                        it.summary = folder.absolutePath
+                                    }
+                                    .positiveButton(res = android.R.string.ok)
+                                    .negativeButton(res = android.R.string.cancel)
+                                    .show()
+                        }
+                    }
+            true
         }
 
         val logPreference = findPreference(SettingsManager.KEY_ENABLE_FILE_LOG)
