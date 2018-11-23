@@ -63,79 +63,74 @@ class SettingsGlobalFragment : PreferenceFragmentCompat() {
         themePreference.entries = entries
         themePreference.entryValues = values
         themePreference.value = value
-        themePreference.onPreferenceChangeListener =
-                Preference.OnPreferenceChangeListener { _, newValue ->
-                    (activity as BaseActivity)
-                            .updateTheme(Integer.valueOf(newValue as String))
-                    true
-                }
+        themePreference.setOnPreferenceChangeListener { _, newValue ->
+            (activity as BaseActivity)
+                    .updateTheme(Integer.valueOf(newValue as String))
+            true
+        }
 
-        findPreference(SettingsManager.KEY_ABOUT).onPreferenceClickListener =
-                Preference.OnPreferenceClickListener {
-                    (activity as MainActivity).presenter.selectAbout()
-                    return@OnPreferenceClickListener true
-                }
+        findPreference(SettingsManager.KEY_ABOUT).setOnPreferenceClickListener {
+            (activity as MainActivity).presenter.selectAbout()
+            true
+        }
 
-        findPreference(SettingsManager.KEY_DELETE_DEPLOYED_SCRIPT).onPreferenceClickListener =
-                Preference.OnPreferenceClickListener {
-                    mScriptInteractor.deleteScript().subscribe()
-                    return@OnPreferenceClickListener true
-                }
+        findPreference(SettingsManager.KEY_DELETE_DEPLOYED_SCRIPT).setOnPreferenceClickListener {
+            mScriptInteractor.deleteScript().subscribe()
+            true
+        }
 
-        findPreference(SettingsManager.KEY_CLEAR_SCHEDULE).onPreferenceClickListener =
-                Preference.OnPreferenceClickListener {
-                    mSettings.apply {
-                        mAlarmInteractor.cancelAlarm()
-                                .doOnComplete {
-                                    useSchedule = false
-                                    scheduleTime = 0
-                                    scheduleInterval = 0
-                                    scheduleLastRun = 0
-                                    scheduleOnlyCharging = false
-                                    scheduleOnlyIdle = false
-                                    scheduleOnlyHighBattery = false
-                                }
-                                .subscribe()
-                    }
-                    return@OnPreferenceClickListener true
-                }
+        findPreference(SettingsManager.KEY_CLEAR_SCHEDULE).setOnPreferenceClickListener {
+            mSettings.apply {
+                mAlarmInteractor.cancelAlarm()
+                        .doOnComplete {
+                            useSchedule = false
+                            scheduleTime = 0
+                            scheduleInterval = 0
+                            scheduleLastRun = 0
+                            scheduleOnlyCharging = false
+                            scheduleOnlyIdle = false
+                            scheduleOnlyHighBattery = false
+                        }
+                        .subscribe()
+            }
+            true
+        }
 
         val backupsToKeepPreference = findPreference(SettingsManager.KEY_BACKUPS_TO_KEEP)
                 as EditTextPreference
         backupsToKeepPreference.summary = mSettings.backupsToKeep.toString()
-        backupsToKeepPreference.onPreferenceChangeListener =
-                Preference.OnPreferenceChangeListener { it, newValue ->
-                    try {
-                        val i = newValue.toString().trim().toInt()
-                        it.summary = i.toString()
-                        return@OnPreferenceChangeListener true
-                    } catch (ignore: Exception) {
-                        return@OnPreferenceChangeListener false
-                    }
-                }
+        backupsToKeepPreference.setOnPreferenceChangeListener { it, newValue ->
+            try {
+                val i = newValue.toString().trim().toInt()
+                it.summary = i.toString()
+                true
+            } catch (ignore: Exception) {
+                false
+            }
+        }
 
         val logPreference = findPreference(SettingsManager.KEY_ENABLE_FILE_LOG)
         logPreference.summary = mResources.getString(R.string.pref_summary_enable_file_log)
                 .format(Const.LOG_FILENAME)
-        logPreference.onPreferenceChangeListener =
-                Preference.OnPreferenceChangeListener { it, newValue ->
-                    val b = newValue as Boolean
-                    if (b) {
-                        mRxPermissions.request(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                                .subscribe { granted ->
-                                    if (granted) {
-                                        mLogs.enableFileLogs()
-                                    } else {
-                                        mLogs.disableFileLogs()
-                                        mSettings.enableFileLog = false
-                                        (it as SwitchPreference).isChecked = false
-                                    }
-                                }
-                    } else {
-                        mLogs.disableFileLogs()
-                    }
-                    return@OnPreferenceChangeListener true
-                }
+        logPreference.setOnPreferenceChangeListener { it, newValue ->
+            val b = newValue as Boolean
+            if (b) {
+                mRxPermissions.request(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                        .firstOrError()
+                        .subscribe { granted ->
+                            if (granted) {
+                                mLogs.enableFileLogs()
+                            } else {
+                                mLogs.disableFileLogs()
+                                mSettings.enableFileLog = false
+                                (it as SwitchPreference).isChecked = false
+                            }
+                        }
+            } else {
+                mLogs.disableFileLogs()
+            }
+            true
+        }
 
         val isFPAvailable = mServices.isFingerprintAvailable()
         val fpPreference = findPreference(SettingsManager.KEY_ASK_FINGERPRINT_ON_LAUNCH)
