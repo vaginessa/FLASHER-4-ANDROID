@@ -57,7 +57,7 @@
     <style name="Base.AppTheme.Oss" parent="Theme.MaterialComponents.Light">
         <item name="colorPrimary">@android:color/transparent</item>
         <item name="colorPrimaryDark">@android:color/transparent</item>
-        <item name="colorAccent">@*android:color/accent_device_default_light</item>
+        <item name="colorAccent">@color/pixel</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:windowLightStatusBar">true</item>
         <item name="android:windowBackground">@android:color/white</item>
