@@ -39,7 +39,8 @@ class RecoveryScriptInteractor constructor(
         }
         val result = mScriptRepo.deployScript(script)
         if (result.isSuccess && script.contains("backup ")
-                && mSettings.deleteObsoleteBackups) {
+                && mSettings.deleteObsoleteBackups
+                && mSettings.backupsPath != null) {
             var backupsToKeep = mSettings.backupsToKeep
             if (backupsToKeep <= 0) backupsToKeep = 1
             mBackupsRepo.deleteObsoleteBackups(mServices.context,
