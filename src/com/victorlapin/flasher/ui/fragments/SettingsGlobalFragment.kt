@@ -3,7 +3,11 @@ package com.victorlapin.flasher.ui.fragments
 import android.Manifest
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.style.ForegroundColorSpan
 import androidx.preference.*
 import com.tbruyelle.rxpermissions2.RxPermissions
 import com.victorlapin.flasher.Const
@@ -114,7 +118,12 @@ class SettingsGlobalFragment : PreferenceFragmentCompat() {
         }
 
         mBackupsPathPreference = findPreference(SettingsManager.KEY_BACKUPS_PATH)
-        mBackupsPathPreference.summary = mSettings.backupsPath
+        mBackupsPathPreference.summary = if (mSettings.backupsPath != null) mSettings.backupsPath else {
+            val spannable = SpannableString(mResources.getString(R.string.pref_backups_path_empty))
+            spannable.setSpan(ForegroundColorSpan(Color.RED), 0, spannable.length,
+                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+            spannable
+        }
         mBackupsPathPreference.setOnPreferenceClickListener {
             mRxPermissions.request(Manifest.permission.WRITE_EXTERNAL_STORAGE)
                     .firstOrError()
