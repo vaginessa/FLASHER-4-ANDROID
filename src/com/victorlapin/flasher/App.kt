@@ -4,6 +4,7 @@ import android.app.Application
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.os.Build
+import com.topjohnwu.superuser.Shell
 import com.victorlapin.flasher.di.allModules
 import com.victorlapin.flasher.manager.LogManager
 import com.victorlapin.flasher.manager.ServicesManager
@@ -21,6 +22,8 @@ class App : Application() {
         val logger = if (BuildConfig.DEBUG) AndroidLogger() else EmptyLogger()
         startKoin(androidContext = this, modules = allModules, logger = logger)
         createNotificationChannels()
+        Shell.Config.setContainer(Shell.Config.newContainer())
+        Shell.Config.verboseLogging(BuildConfig.DEBUG)
         mLogs.onStartup()
     }
 
