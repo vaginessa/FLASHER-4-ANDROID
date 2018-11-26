@@ -1,5 +1,6 @@
 package com.victorlapin.flasher.model.interactor
 
+import com.victorlapin.flasher.manager.ServicesManager
 import com.victorlapin.flasher.manager.SettingsManager
 import com.victorlapin.flasher.model.BuildScriptResult
 import com.victorlapin.flasher.model.EventArgs
@@ -16,7 +17,8 @@ class RecoveryScriptInteractor constructor(
         private val mScriptRepo: RecoveryScriptRepository,
         private val mCommandsRepo: CommandsRepository,
         private val mBackupsRepo: BackupsRepository,
-        private val mSettings: SettingsManager
+        private val mSettings: SettingsManager,
+        private val mServices: ServicesManager
 ) {
     fun buildScript(chainId: Long): Single<BuildScriptResult> =
             mCommandsRepo.getCommands(chainId)
@@ -40,7 +42,8 @@ class RecoveryScriptInteractor constructor(
                 && mSettings.deleteObsoleteBackups) {
             var backupsToKeep = mSettings.backupsToKeep
             if (backupsToKeep <= 0) backupsToKeep = 1
-            mBackupsRepo.deleteObsoleteBackups(mSettings.backupsPath, backupsToKeep)
+            mBackupsRepo.deleteObsoleteBackups(mServices.context,
+                    mSettings.backupsPath, backupsToKeep)
         }
         return result
     }

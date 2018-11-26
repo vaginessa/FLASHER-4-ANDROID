@@ -16,6 +16,8 @@ import java.util.*
 class ServicesManager(
         private val mContext: Context
 ) {
+    val context = mContext
+
     fun enableBootReceiver() {
         val receiver = ComponentName(mContext, BootReceiver::class.java)
         val pm = mContext.packageManager

@@ -107,7 +107,7 @@ class SettingsManager(context: Context) {
         get() = mPrefs.getBoolean(KEY_ASK_FINGERPRINT_TO_REBOOT, false)
         set(value) = mPrefs.edit().putBoolean(KEY_ASK_FINGERPRINT_TO_REBOOT, value).apply()
 
-    var backupsPath: String
-        get() = mPrefs.getString(KEY_BACKUPS_PATH, File(Const.TWRP_FOLDER, "BACKUPS").absolutePath)!!
+    var backupsPath: String?
+        get() = mPrefs.getString(KEY_BACKUPS_PATH, null)
         set(path) = mPrefs.edit().putString(KEY_BACKUPS_PATH, path).apply()
 }
