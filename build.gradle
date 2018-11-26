@@ -121,7 +121,7 @@ dependencies {
     implementation ("com.github.tbruyelle:rxpermissions:0.10.2") {
         exclude group: "io.reactivex.rxjava2"
     }
-    implementation "com.github.topjohnwu:libsu:2.0.3"
+    implementation "com.github.topjohnwu:libsu:2.1.2"
     implementation "com.google.code.gson:gson:2.8.5"
     implementation "com.jakewharton.timber:timber:4.7.1"
     implementation "android.arch.work:work-runtime:1.0.0-alpha11"
