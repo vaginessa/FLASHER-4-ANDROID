@@ -2,6 +2,7 @@ package com.victorlapin.flasher.model.repository
 
 import android.content.Context
 import android.net.Uri
+import android.provider.DocumentsContract
 import androidx.documentfile.provider.DocumentFile
 import timber.log.Timber
 import java.util.*
@@ -27,7 +28,7 @@ class BackupsRepository {
                     val backupsToDelete = backups.drop(backupsToKeep - 1)
                     backupsToDelete.forEach {
                         Timber.i("Deleting backup: ${it.name}")
-                        if (it.delete()) {
+                        if (DocumentsContract.deleteDocument(context.contentResolver, it.uri)) {
                             Timber.i("Successful")
                         } else {
                             Timber.w("Fail")
