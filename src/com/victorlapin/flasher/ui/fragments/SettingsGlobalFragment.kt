@@ -216,9 +216,12 @@ class SettingsGlobalFragment : PreferenceFragmentCompat() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_DOCUMENT_TREE && resultCode == Activity.RESULT_OK) {
-            val uri = data.data!!.toString()
-            mSettings.backupsPath = uri
-            mBackupsPathPreference.summary = uri
+            val uri = data.data!!
+            context!!.contentResolver.takePersistableUriPermission(uri,
+                    Intent.FLAG_GRANT_WRITE_URI_PERMISSION or
+                            Intent.FLAG_GRANT_READ_URI_PERMISSION)
+            mSettings.backupsPath = uri.toString()
+            mBackupsPathPreference.summary = uri.toString()
         }
     }
 
