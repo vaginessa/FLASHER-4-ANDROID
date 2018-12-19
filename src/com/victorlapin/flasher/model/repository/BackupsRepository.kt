@@ -1,46 +1,47 @@
 package com.victorlapin.flasher.model.repository
 
+import android.content.Context
+import android.net.Uri
+import android.provider.DocumentsContract
+import androidx.documentfile.provider.DocumentFile
 import timber.log.Timber
-import java.io.File
 import java.util.*
 
 class BackupsRepository {
-    fun deleteObsoleteBackups(backupsPath: String, backupsToKeep: Int) {
+    fun deleteObsoleteBackups(context: Context, backupsPath: String?, backupsToKeep: Int) {
         Timber.i("Going to delete old backups, will keep $backupsToKeep")
-        val backupsFolder = File(backupsPath)
-        if (backupsFolder.exists()) {
-            val profiles = backupsFolder.listFiles()
-            if (profiles != null && profiles.isNotEmpty()) {
-                val backups = profiles[0].listFiles { file, name ->
-                    name.endsWith("_Flasher") && File(file, name).isDirectory
-                }
-                if (backups.isNotEmpty()) {
-                    if (backups.size > backupsToKeep - 1) {
-                        Arrays.sort(backups) { f1, f2 ->
-                            val dateDiff = f2.lastModified() - f1.lastModified()
-                            when {
-                                (dateDiff < 0) -> -1
-                                (dateDiff > 0) -> 1
-                                else -> 0
-                            }
+        val backupsFolder = DocumentFile.fromTreeUri(context, Uri.parse(backupsPath))
+        if (backupsFolder != null && backupsFolder.exists()) {
+            val backups = backupsFolder.listFiles().filter { file ->
+                file.name!!.endsWith("_Flasher") && file.isDirectory
+            }.toTypedArray()
+            if (backups.isNotEmpty()) {
+                if (backups.size > backupsToKeep - 1) {
+                    Arrays.sort(backups) { f1, f2 ->
+                        val dateDiff = f2.lastModified() - f1.lastModified()
+                        when {
+                            (dateDiff < 0) -> -1
+                            (dateDiff > 0) -> 1
+                            else -> 0
                         }
-                        val backupsToDelete = backups.drop(backupsToKeep - 1)
-                        backupsToDelete.forEach {
-                            Timber.i("Deleting backup: ${it.name}")
-                            it.deleteRecursively()
+                    }
+                    val backupsToDelete = backups.drop(backupsToKeep - 1)
+                    backupsToDelete.forEach {
+                        Timber.i("Deleting backup: ${it.name}")
+                        if (DocumentsContract.deleteDocument(context.contentResolver, it.uri)) {
                             Timber.i("Successful")
+                        } else {
+                            Timber.w("Fail")
                         }
-                    } else {
-                        Timber.i("Found ${backups.size} backups, no need to delete anything")
                     }
                 } else {
-                    Timber.w("No backups created by Flasher found")
+                    Timber.i("Found ${backups.size} backups, no need to delete anything")
                 }
             } else {
-                Timber.w("Backup profiles can't be found (file listing is null or empty)")
+                Timber.w("No backups created by Flasher found")
             }
         } else {
-            Timber.w("Folder '${backupsFolder.absolutePath}' can't be found")
+            Timber.w("Folder '$backupsPath' can't be found")
         }
     }
 }

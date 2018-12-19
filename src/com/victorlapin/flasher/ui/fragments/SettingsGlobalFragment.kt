@@ -1,10 +1,16 @@
 package com.victorlapin.flasher.ui.fragments
 
 import android.Manifest
+import android.app.Activity
+import android.content.Intent
+import android.graphics.Color
+import android.net.Uri
 import android.os.Bundle
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.style.ForegroundColorSpan
+import androidx.documentfile.provider.DocumentFile
 import androidx.preference.*
-import com.afollestad.materialdialogs.MaterialDialog
-import com.afollestad.materialdialogs.files.folderChooser
 import com.tbruyelle.rxpermissions2.RxPermissions
 import com.victorlapin.flasher.Const
 import com.victorlapin.flasher.R
@@ -20,7 +26,6 @@ import com.victorlapin.flasher.ui.activities.MainActivity
 import org.koin.android.ext.android.getKoin
 import org.koin.android.ext.android.inject
 import org.koin.core.scope.Scope
-import java.io.File
 
 class SettingsGlobalFragment : PreferenceFragmentCompat() {
     private lateinit var mScope: Scope
@@ -34,6 +39,8 @@ class SettingsGlobalFragment : PreferenceFragmentCompat() {
     private val mRxPermissions by lazy {
         RxPermissions(this)
     }
+
+    private lateinit var mBackupsPathPreference: Preference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         mScope = getKoin().createScope(Const.FRAGMENT_SETTINGS)
@@ -112,22 +119,20 @@ class SettingsGlobalFragment : PreferenceFragmentCompat() {
             }
         }
 
-        val backupsPathPreference = findPreference(SettingsManager.KEY_BACKUPS_PATH)
-        backupsPathPreference.summary = mSettings.backupsPath
-        backupsPathPreference.setOnPreferenceClickListener {
+        mBackupsPathPreference = findPreference(SettingsManager.KEY_BACKUPS_PATH)
+        mBackupsPathPreference.summary = if (mSettings.backupsPath != null) mSettings.backupsPath else {
+            val spannable = SpannableString(mResources.getString(R.string.pref_backups_path_empty))
+            spannable.setSpan(ForegroundColorSpan(Color.RED), 0, spannable.length,
+                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+            spannable
+        }
+        mBackupsPathPreference.setOnPreferenceClickListener {
             mRxPermissions.request(Manifest.permission.WRITE_EXTERNAL_STORAGE)
                     .firstOrError()
                     .subscribe { granted ->
                         if (granted) {
-                            MaterialDialog(context!!)
-                                    .folderChooser(initialDirectory = File(mSettings.backupsPath),
-                                            emptyTextRes = R.string.folder_empty) { _, folder ->
-                                        mSettings.backupsPath = folder.absolutePath
-                                        it.summary = folder.absolutePath
-                                    }
-                                    .positiveButton(res = android.R.string.ok)
-                                    .negativeButton(res = android.R.string.cancel)
-                                    .show()
+                            startActivityForResult(Intent(Intent.ACTION_OPEN_DOCUMENT_TREE),
+                                    REQUEST_DOCUMENT_TREE)
                         }
                     }
             true
@@ -210,7 +215,35 @@ class SettingsGlobalFragment : PreferenceFragmentCompat() {
         mScope.close()
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, intent: Intent?) {
+        super.onActivityResult(requestCode, resultCode, intent)
+        if (requestCode == REQUEST_DOCUMENT_TREE && resultCode == Activity.RESULT_OK) {
+            intent?.let { data ->
+                val flags = Intent.FLAG_GRANT_WRITE_URI_PERMISSION or
+                        Intent.FLAG_GRANT_READ_URI_PERMISSION
+                val uri = data.data!!
+                val uriString = uri.toString()
+                mSettings.backupsPath?.let {
+                    if (it != uriString) {
+                        val oldDir = DocumentFile.fromSingleUri(context!!, Uri.parse(it))
+                        oldDir?.let { dir ->
+                            try {
+                                context!!.contentResolver.releasePersistableUriPermission(dir.uri, flags)
+                            } catch (ignore: SecurityException) {
+                            }
+                        }
+                    }
+                }
+                context!!.contentResolver.takePersistableUriPermission(uri, flags)
+                mSettings.backupsPath = uri.toString()
+                mBackupsPathPreference.summary = uri.toString()
+            }
+        }
+    }
+
     companion object {
+        private const val REQUEST_DOCUMENT_TREE = 112
+
         fun newInstance() = SettingsGlobalFragment()
     }
 }

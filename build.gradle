@@ -1,15 +1,15 @@
 buildscript {
     ext {
-        version_room = "2.1.0-alpha02"
-        version_kotlin = "1.3.10"
+        version_room = "2.1.0-alpha03"
+        version_kotlin = "1.3.11"
         version_moxy = "1.5.5"
         version_test_runner = "1.1.0"
-        version_dialogs = "2.0.0-beta6"
+        version_dialogs = "2.0.0-rc3"
     }
     apply from: 'repos.gradle'
     addRepos(repositories)
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.3.0-beta04'
+        classpath 'com.android.tools.build:gradle:3.3.0-rc02'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$version_kotlin"
         classpath 'com.google.android.gms:oss-licenses-plugin:0.9.4'
     }
@@ -33,8 +33,8 @@ android {
         applicationId "com.victorlapin.flasher"
         minSdkVersion 24
         targetSdkVersion 28
-        versionCode 40
-        versionName "1.3.1-beta02"
+        versionCode 42
+        versionName "1.3.1-beta04"
         archivesBaseName = "Flasher"
         resConfigs "en", "ru"
 
@@ -108,7 +108,7 @@ dependencies {
     implementation "androidx.preference:preference:1.0.0"
     implementation "androidx.constraintlayout:constraintlayout:2.0.0-alpha2"
     implementation "com.arello-mobile:moxy:$version_moxy"
-    implementation "io.reactivex.rxjava2:rxjava:2.2.3"
+    implementation "io.reactivex.rxjava2:rxjava:2.2.4"
     implementation "io.reactivex.rxjava2:rxandroid:2.1.0"
     implementation "androidx.room:room-runtime:$version_room"
     implementation "androidx.room:room-rxjava2:$version_room"
@@ -124,7 +124,7 @@ dependencies {
     implementation "com.github.topjohnwu:libsu:2.1.2"
     implementation "com.google.code.gson:gson:2.8.5"
     implementation "com.jakewharton.timber:timber:4.7.1"
-    implementation "android.arch.work:work-runtime:1.0.0-alpha11"
+    implementation "android.arch.work:work-rxjava2:1.0.0-alpha12"
     implementation "androidx.biometric:biometric:1.0.0-alpha02"
     implementation "com.google.android.gms:play-services-oss-licenses:16.0.1"
 
