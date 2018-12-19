@@ -215,26 +215,29 @@ class SettingsGlobalFragment : PreferenceFragmentCompat() {
         mScope.close()
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
-        super.onActivityResult(requestCode, resultCode, data)
+    override fun onActivityResult(requestCode: Int, resultCode: Int, intent: Intent?) {
+        super.onActivityResult(requestCode, resultCode, intent)
         if (requestCode == REQUEST_DOCUMENT_TREE && resultCode == Activity.RESULT_OK) {
-            val flags = Intent.FLAG_GRANT_WRITE_URI_PERMISSION or
-                    Intent.FLAG_GRANT_READ_URI_PERMISSION
-            val uri = data.data!!
-            val uriString = uri.toString()
-            mSettings.backupsPath?.let {
-                if (it != uriString) {
-                    val oldDir = DocumentFile.fromSingleUri(context!!, Uri.parse(it))
-                    oldDir?.let { dir ->
-                        try {
-                            context!!.contentResolver.releasePersistableUriPermission(dir.uri, flags)
-                        } catch (ignore: SecurityException) { }
+            intent?.let { data ->
+                val flags = Intent.FLAG_GRANT_WRITE_URI_PERMISSION or
+                        Intent.FLAG_GRANT_READ_URI_PERMISSION
+                val uri = data.data!!
+                val uriString = uri.toString()
+                mSettings.backupsPath?.let {
+                    if (it != uriString) {
+                        val oldDir = DocumentFile.fromSingleUri(context!!, Uri.parse(it))
+                        oldDir?.let { dir ->
+                            try {
+                                context!!.contentResolver.releasePersistableUriPermission(dir.uri, flags)
+                            } catch (ignore: SecurityException) {
+                            }
+                        }
                     }
                 }
+                context!!.contentResolver.takePersistableUriPermission(uri, flags)
+                mSettings.backupsPath = uri.toString()
+                mBackupsPathPreference.summary = uri.toString()
             }
-            context!!.contentResolver.takePersistableUriPermission(uri, flags)
-            mSettings.backupsPath = uri.toString()
-            mBackupsPathPreference.summary = uri.toString()
         }
     }
 
