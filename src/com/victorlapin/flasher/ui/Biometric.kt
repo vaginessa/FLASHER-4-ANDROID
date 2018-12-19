@@ -5,8 +5,8 @@ import android.content.pm.ActivityInfo
 import android.content.res.Configuration
 import android.os.Handler
 import androidx.annotation.StringRes
-import androidx.biometrics.BiometricConstants
-import androidx.biometrics.BiometricPrompt
+import androidx.biometric.BiometricConstants
+import androidx.biometric.BiometricPrompt
 import androidx.fragment.app.FragmentActivity
 import timber.log.Timber
 import java.util.concurrent.Executor

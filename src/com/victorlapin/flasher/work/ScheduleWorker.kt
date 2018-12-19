@@ -33,8 +33,8 @@ class ScheduleWorker(context: Context, params: WorkerParameters) :
                 }
                 Completable.complete()
             }
-            .toSingleDefault(androidx.work.Result.success())
-            .onErrorReturnItem(androidx.work.Result.retry())
+            .toSingleDefault(Result.success())
+            .onErrorReturnItem(Result.retry())
             .doOnSubscribe {
                 Timber.i("Schedule worker started")
                 getKoin().createScope(Const.WORKER_SCHEDULE)
