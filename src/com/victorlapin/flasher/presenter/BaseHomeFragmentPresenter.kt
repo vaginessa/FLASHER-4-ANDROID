@@ -1,12 +1,10 @@
 package com.victorlapin.flasher.presenter
 
 import com.arellomobile.mvp.MvpPresenter
-import com.victorlapin.flasher.HomeScreen
-import com.victorlapin.flasher.R
-import com.victorlapin.flasher.ScheduleScreen
-import com.victorlapin.flasher.SettingsScreen
+import com.victorlapin.flasher.*
 import com.victorlapin.flasher.manager.SettingsManager
 import com.victorlapin.flasher.model.CommandClickEventArgs
+import com.victorlapin.flasher.model.EventArgs
 import com.victorlapin.flasher.model.database.entity.Command
 import com.victorlapin.flasher.model.interactor.BaseCommandsInteractor
 import com.victorlapin.flasher.model.interactor.RecoveryScriptInteractor
@@ -126,6 +124,13 @@ abstract class BaseHomeFragmentPresenter constructor(
                     }
                 }, {
                     Timber.e(it)
+                    if (it.message!! == "files must not be null") {
+                        viewState.showInfoSnackbar(EventArgs(isSuccess = false,
+                                messageId = R.string.permission_denied_storage))
+                    } else {
+                        viewState.showInfoSnackbar(EventArgs(isSuccess = false,
+                                message = it.message))
+                    }
                 })
     }
 

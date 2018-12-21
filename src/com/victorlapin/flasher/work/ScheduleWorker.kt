@@ -6,8 +6,10 @@ import androidx.work.OneTimeWorkRequest
 import androidx.work.RxWorker
 import androidx.work.WorkerParameters
 import com.victorlapin.flasher.Const
+import com.victorlapin.flasher.R
 import com.victorlapin.flasher.manager.ServicesManager
 import com.victorlapin.flasher.manager.SettingsManager
+import com.victorlapin.flasher.model.EventArgs
 import com.victorlapin.flasher.model.database.entity.Chain
 import com.victorlapin.flasher.model.interactor.RecoveryScriptInteractor
 import io.reactivex.Completable
@@ -44,7 +46,12 @@ class ScheduleWorker(context: Context, params: WorkerParameters) :
             }
             .doOnError {
                 Timber.e(it)
-                mServices.showInfoNotification(it.message)
+                if (it.message!! == "files must not be null") {
+                    mServices.showInfoNotification(EventArgs(isSuccess = false,
+                            messageId = R.string.permission_denied_storage))
+                } else {
+                    mServices.showInfoNotification(it.message)
+                }
             }
             .doFinally {
                 Timber.i("Schedule worker finished")

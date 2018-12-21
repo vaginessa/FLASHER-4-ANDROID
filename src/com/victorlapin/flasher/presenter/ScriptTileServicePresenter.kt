@@ -1,6 +1,8 @@
 package com.victorlapin.flasher.presenter
 
+import com.victorlapin.flasher.R
 import com.victorlapin.flasher.manager.SettingsManager
+import com.victorlapin.flasher.model.EventArgs
 import com.victorlapin.flasher.model.database.entity.Chain
 import com.victorlapin.flasher.model.interactor.RecoveryScriptInteractor
 import com.victorlapin.flasher.view.ScriptTileServiceView
@@ -34,6 +36,12 @@ class ScriptTileServicePresenter constructor(
                     }
                 }, {
                     Timber.e(it)
+                    if (it.message!! == "files must not be null") {
+                        mView?.showInfoToast(EventArgs(isSuccess = false,
+                                messageId = R.string.permission_denied_storage))
+                    } else {
+                        mView?.showInfoToast(it.message!!)
+                    }
                 })
     }
 
