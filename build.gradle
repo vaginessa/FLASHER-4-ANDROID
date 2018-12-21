@@ -9,7 +9,7 @@ buildscript {
     apply from: 'repos.gradle'
     addRepos(repositories)
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.3.0-rc02'
+        classpath 'com.android.tools.build:gradle:3.3.0-rc03'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$version_kotlin"
         classpath 'com.google.android.gms:oss-licenses-plugin:0.9.4'
     }
