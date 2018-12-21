@@ -5,7 +5,7 @@ import com.victorlapin.flasher.presenter.*
 import org.koin.dsl.module.module
 
 val activitiesModule = module {
-    scope(Const.ACTIVITY_MAIN) { MainActivityPresenter(get(), get()) }
+    scope(Const.ACTIVITY_MAIN) { MainActivityPresenter(get(), get(), get()) }
 
     scope(Const.FRAGMENT_HOME) { DefaultHomePresenter(get(), get(), get(), get()) }
 
