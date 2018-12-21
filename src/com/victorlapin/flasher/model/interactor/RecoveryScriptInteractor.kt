@@ -29,12 +29,12 @@ class RecoveryScriptInteractor constructor(
                     .subscribeOn(Schedulers.computation())
                     .observeOn(AndroidSchedulers.mainThread())
 
-    fun deployScript(script: String): EventArgs {
+    fun deployScript(script: String): Single<EventArgs> = Single.create<EventArgs> { emitter ->
         if (mSettings.useAnalyzer) {
             val analyzeResult = mScriptRepo.analyzeScript(script)
-            if (analyzeResult != null) {
+            analyzeResult?.let {
                 Timber.i("Analyzer checks failed, script won't be deployed")
-                return analyzeResult
+                emitter.onSuccess(it)
             }
         }
         val result = mScriptRepo.deployScript(script)
@@ -46,8 +46,10 @@ class RecoveryScriptInteractor constructor(
             mBackupsRepo.deleteObsoleteBackups(mServices.context,
                     mSettings.backupsPath, backupsToKeep)
         }
-        return result
+        emitter.onSuccess(result)
     }
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
 
     fun rebootRecovery(): Single<EventArgs> = Single.create<EventArgs> { emitter ->
         val result = mScriptRepo.rebootRecovery()

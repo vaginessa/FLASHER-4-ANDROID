@@ -1,7 +1,10 @@
 package com.victorlapin.flasher.presenter
 
 import com.arellomobile.mvp.MvpPresenter
-import com.victorlapin.flasher.*
+import com.victorlapin.flasher.HomeScreen
+import com.victorlapin.flasher.R
+import com.victorlapin.flasher.ScheduleScreen
+import com.victorlapin.flasher.SettingsScreen
 import com.victorlapin.flasher.manager.SettingsManager
 import com.victorlapin.flasher.model.CommandClickEventArgs
 import com.victorlapin.flasher.model.database.entity.Command
@@ -102,22 +105,28 @@ abstract class BaseHomeFragmentPresenter constructor(
     }
 
     fun buildAndDeploy(chainId: Long) {
-        mScriptInteractor.buildScript(chainId)
-                .doOnSubscribe { viewState.toggleProgress(true) }
-                .doOnSuccess {
+        var disposable: Disposable? = null
+        disposable = mScriptInteractor.buildScript(chainId)
+                .flatMap {
                     if (mSettings.showMaskToast && it.resolvedFiles.isNotBlank()) {
                         viewState.showInfoToast(it.resolvedFiles)
                     }
-                    val result = mScriptInteractor.deployScript(it.script)
+                    mScriptInteractor.deployScript(it.script)
+                }
+                .doOnSubscribe { viewState.toggleProgress(true) }
+                .doFinally {
                     viewState.toggleProgress(false)
-                    if (result.isSuccess) {
+                    disposable?.dispose()
+                }
+                .subscribe({
+                    if (it.isSuccess) {
                         viewState.showRebootSnackbar()
                     } else {
-                        viewState.showInfoSnackbar(result)
+                        viewState.showInfoSnackbar(it)
                     }
-                }
-                .doOnError { Timber.e(it) }
-                .subscribe()
+                }, {
+                    Timber.e(it)
+                })
     }
 
     fun onRebootRequested() {

@@ -20,15 +20,17 @@ class ScriptTileServicePresenter constructor(
 
     fun buildAndDeploy() {
         mDisposable = mScriptInteractor.buildScript(Chain.DEFAULT_ID)
-                .subscribe({
+                .flatMap {
                     if (mSettings.showMaskToast && it.resolvedFiles.isNotBlank()) {
                         mView?.showInfoToast(it.resolvedFiles)
                     }
-                    val result = mScriptInteractor.deployScript(it.script)
-                    if (result.isSuccess) {
+                    mScriptInteractor.deployScript(it.script)
+                }
+                .subscribe({
+                    if (it.isSuccess) {
                         mView?.showRebootDialog()
                     } else {
-                        mView?.showInfoToast(result)
+                        mView?.showInfoToast(it)
                     }
                 }, {
                     Timber.e(it)

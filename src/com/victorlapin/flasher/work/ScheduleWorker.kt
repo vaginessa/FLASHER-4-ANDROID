@@ -1,7 +1,10 @@
 package com.victorlapin.flasher.work
 
 import android.content.Context
-import androidx.work.*
+import androidx.work.Constraints
+import androidx.work.OneTimeWorkRequest
+import androidx.work.RxWorker
+import androidx.work.WorkerParameters
 import com.victorlapin.flasher.Const
 import com.victorlapin.flasher.manager.ServicesManager
 import com.victorlapin.flasher.manager.SettingsManager
@@ -22,7 +25,7 @@ class ScheduleWorker(context: Context, params: WorkerParameters) :
 
     override fun createWork(): Single<Result> = mScriptInteractor
             .buildScript(Chain.SCHEDULE_ID)
-            .map { mScriptInteractor.deployScript(it.script) }
+            .flatMap { mScriptInteractor.deployScript(it.script) }
             .flatMapCompletable { args ->
                 if (args.isSuccess) {
                     mSettings.bootNotificationFlag = true
