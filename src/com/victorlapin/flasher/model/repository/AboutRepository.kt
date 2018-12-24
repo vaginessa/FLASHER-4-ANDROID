@@ -46,10 +46,6 @@ class AboutRepository(
                 descriptionRes = R.string.about_links_gitlab,
                 imageRes = R.drawable.git,
                 screen = AboutExternalScreen("https://gitlab.com/victorlapin/flasher")))
-        result.add(getLinkItem(nameRes = R.string.about_links_donate,
-                descriptionRes = R.string.about_links_paypal,
-                imageRes = R.drawable.paypal,
-                screen = AboutExternalScreen("https://www.paypal.me/VictorLapin")))
         result.add(getLinkItem(nameRes = R.string.about_links_oss,
                 descriptionRes = R.string.about_links_oss_text,
                 imageRes = R.drawable.library,

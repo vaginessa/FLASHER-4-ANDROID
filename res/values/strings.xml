@@ -114,8 +114,6 @@
     <string name="about_credits_bill_text">Testing</string>
     <string name="about_links_source_code">Source code</string>
     <string name="about_links_gitlab">View at Gitlab.com</string>
-    <string name="about_links_donate">Buy me a coffee</string>
-    <string name="about_links_paypal">Donate via PayPal</string>
     <string name="about_links_oss">Open source licenses</string>
     <string name="about_links_oss_text">License details for open source software</string>
 
