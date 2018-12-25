@@ -7,9 +7,9 @@ import com.arellomobile.mvp.MvpAppCompatActivity
 import com.victorlapin.flasher.manager.SettingsManager
 import com.victorlapin.flasher.setNavigator
 import kotlinx.android.synthetic.main.include_toolbar.*
-import org.koin.android.ext.android.getKoin
 import org.koin.android.ext.android.inject
-import org.koin.core.scope.Scope
+import org.koin.android.scope.ext.android.bindScope
+import org.koin.android.scope.ext.android.createScope
 import ru.terrakok.cicerone.NavigatorHolder
 import ru.terrakok.cicerone.androidx.SupportAppNavigator
 
@@ -18,7 +18,6 @@ abstract class BaseActivity : MvpAppCompatActivity() {
     abstract val navigator: SupportAppNavigator?
     abstract val scopeName: String
 
-    private lateinit var mScope: Scope
     private val mNavigationHolder by inject<NavigatorHolder>()
     private val mSettings by inject<SettingsManager>()
 
@@ -27,7 +26,7 @@ abstract class BaseActivity : MvpAppCompatActivity() {
     private val mHandler = Handler()
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        mScope = getKoin().createScope(scopeName)
+        bindScope(createScope(scopeName))
         mCurrentTheme = mSettings.theme
         setTheme(mCurrentTheme)
         super.onCreate(savedInstanceState)
@@ -48,10 +47,5 @@ abstract class BaseActivity : MvpAppCompatActivity() {
     fun updateTheme(@StyleRes newTheme: Int) {
         mCurrentTheme = newTheme
         recreate()
-    }
-
-    override fun onStop() {
-        super.onStop()
-        mScope.close()
     }
 }
