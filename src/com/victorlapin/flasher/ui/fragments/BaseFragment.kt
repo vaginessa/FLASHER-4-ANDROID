@@ -5,8 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.arellomobile.mvp.MvpAppCompatFragment
-import org.koin.android.scope.ext.android.bindScope
-import org.koin.android.scope.ext.android.createScope
+import org.koin.androidx.scope.ext.android.bindScope
+import org.koin.androidx.scope.ext.android.createScope
 
 abstract class BaseFragment : MvpAppCompatFragment() {
     abstract val layoutRes: Int

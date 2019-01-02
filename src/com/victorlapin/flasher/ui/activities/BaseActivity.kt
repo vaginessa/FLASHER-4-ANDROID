@@ -8,8 +8,8 @@ import com.victorlapin.flasher.manager.SettingsManager
 import com.victorlapin.flasher.setNavigator
 import kotlinx.android.synthetic.main.include_toolbar.*
 import org.koin.android.ext.android.inject
-import org.koin.android.scope.ext.android.bindScope
-import org.koin.android.scope.ext.android.createScope
+import org.koin.androidx.scope.ext.android.bindScope
+import org.koin.androidx.scope.ext.android.createScope
 import ru.terrakok.cicerone.NavigatorHolder
 import ru.terrakok.cicerone.androidx.SupportAppNavigator
 
