@@ -1,6 +1,5 @@
 package com.victorlapin.flasher.ui.fragments
 
-import android.Manifest
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
@@ -10,8 +9,14 @@ import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
 import androidx.documentfile.provider.DocumentFile
-import androidx.preference.*
-import com.tbruyelle.rxpermissions2.RxPermissions
+import androidx.preference.EditTextPreference
+import androidx.preference.ListPreference
+import androidx.preference.Preference
+import androidx.preference.PreferenceFragmentCompat
+import androidx.preference.SwitchPreference
+import com.afollestad.assent.Permission
+import com.afollestad.assent.askForPermissions
+import com.afollestad.assent.runWithPermissions
 import com.victorlapin.flasher.Const
 import com.victorlapin.flasher.R
 import com.victorlapin.flasher.manager.LogManager
@@ -35,10 +40,6 @@ class SettingsGlobalFragment : PreferenceFragmentCompat() {
     private val mLogs by inject<LogManager>()
     private val mScriptInteractor by inject<RecoveryScriptInteractor>()
     private val mAlarmInteractor by inject<AlarmInteractor>()
-
-    private val mRxPermissions by lazy {
-        RxPermissions(this)
-    }
 
     private lateinit var mBackupsPathPreference: Preference
 
@@ -127,14 +128,10 @@ class SettingsGlobalFragment : PreferenceFragmentCompat() {
             spannable
         }
         mBackupsPathPreference.setOnPreferenceClickListener {
-            mRxPermissions.request(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                    .firstOrError()
-                    .subscribe { granted ->
-                        if (granted) {
-                            startActivityForResult(Intent(Intent.ACTION_OPEN_DOCUMENT_TREE),
-                                    REQUEST_DOCUMENT_TREE)
-                        }
-                    }
+            runWithPermissions(Permission.WRITE_EXTERNAL_STORAGE) {
+                startActivityForResult(Intent(Intent.ACTION_OPEN_DOCUMENT_TREE),
+                        REQUEST_DOCUMENT_TREE)
+            }
             true
         }
 
@@ -144,17 +141,15 @@ class SettingsGlobalFragment : PreferenceFragmentCompat() {
         logPreference.setOnPreferenceChangeListener { it, newValue ->
             val b = newValue as Boolean
             if (b) {
-                mRxPermissions.request(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                        .firstOrError()
-                        .subscribe { granted ->
-                            if (granted) {
-                                mLogs.enableFileLogs()
-                            } else {
-                                mLogs.disableFileLogs()
-                                mSettings.enableFileLog = false
-                                (it as SwitchPreference).isChecked = false
-                            }
-                        }
+                askForPermissions(Permission.WRITE_EXTERNAL_STORAGE) { result ->
+                    if (result.isAllGranted(Permission.WRITE_EXTERNAL_STORAGE)) {
+                        mLogs.enableFileLogs()
+                    } else {
+                        mLogs.disableFileLogs()
+                        mSettings.enableFileLog = false
+                        (it as SwitchPreference).isChecked = false
+                    }
+                }
             } else {
                 mLogs.disableFileLogs()
             }
