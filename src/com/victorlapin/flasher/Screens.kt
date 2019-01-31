@@ -9,7 +9,7 @@ import com.victorlapin.flasher.ui.fragments.AboutFragment
 import com.victorlapin.flasher.ui.fragments.HomeFragment
 import com.victorlapin.flasher.ui.fragments.ScheduleFragment
 import com.victorlapin.flasher.ui.fragments.SettingsGlobalFragment
-import ru.terrakok.cicerone.androidx.SupportAppScreen
+import ru.terrakok.cicerone.android.support.SupportAppScreen
 
 class HomeScreen : SupportAppScreen() {
     override fun getFragment(): Fragment = HomeFragment.newInstance()

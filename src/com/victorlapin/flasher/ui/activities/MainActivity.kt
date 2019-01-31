@@ -12,7 +12,7 @@ import com.victorlapin.flasher.ui.fragments.AboutFragment
 import com.victorlapin.flasher.ui.fragments.SettingsGlobalFragment
 import com.victorlapin.flasher.view.MainActivityView
 import org.koin.android.ext.android.get
-import ru.terrakok.cicerone.androidx.SupportAppNavigator
+import ru.terrakok.cicerone.android.support.SupportAppNavigator
 import ru.terrakok.cicerone.commands.Command
 
 class MainActivity : BaseActivity(), MainActivityView {
@@ -40,7 +40,7 @@ class MainActivity : BaseActivity(), MainActivityView {
                                               currentFragment: Fragment?,
                                               nextFragment: Fragment?,
                                               fragmentTransaction: FragmentTransaction?) {
-            nextFragment?.let { _ ->
+            nextFragment?.let {
                 fragmentTransaction?.let {
                     if (nextFragment is SettingsGlobalFragment || nextFragment is AboutFragment) {
                         it.setCustomAnimations(R.animator.slide_up, R.animator.fade_out,
