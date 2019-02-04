@@ -2,7 +2,7 @@ buildscript {
     ext {
         version_room = "2.1.0-alpha04"
         version_kotlin = "1.3.20"
-        version_moxy = "1.5.5"
+        version_moxy = "1.5.6"
         version_test_runner = "1.1.0"
         version_dialogs = "2.0.0-rc9"
     }
@@ -100,14 +100,14 @@ android {
 apply from: 'keystore.gradle'
 
 dependencies {
-    kapt "com.arello-mobile:moxy-compiler:$version_moxy"
+    kapt "tech.schoolhelper:moxy-x-compiler:$version_moxy"
     kapt "androidx.room:room-compiler:$version_room"
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$version_kotlin"
     implementation "com.google.android.material:material:1.0.0"
     implementation "androidx.preference:preference:1.0.0"
     implementation "androidx.constraintlayout:constraintlayout:2.0.0-alpha3"
-    implementation "com.arello-mobile:moxy:$version_moxy"
+    implementation "tech.schoolhelper:moxy-x-androidx:$version_moxy"
     implementation "io.reactivex.rxjava2:rxjava:2.2.6"
     implementation ("io.reactivex.rxjava2:rxandroid:2.1.0") {
         exclude group: "io.reactivex.rxjava2"
