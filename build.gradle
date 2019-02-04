@@ -48,11 +48,11 @@ android {
 
     signingConfigs {
         debug {
-            v1SigningEnabled true
+            v1SigningEnabled false
             v2SigningEnabled true
         }
         release {
-            v1SigningEnabled true
+            v1SigningEnabled false
             v2SigningEnabled true
         }
     }
