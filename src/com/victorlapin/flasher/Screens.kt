@@ -29,7 +29,7 @@ class AboutScreen : SupportAppScreen() {
 
 class AboutExternalScreen(private val url: String) : SupportAppScreen() {
     override fun getActivityIntent(context: Context?): Intent =
-            Intent(Intent.ACTION_VIEW, Uri.parse(url))
+        Intent(Intent.ACTION_VIEW, Uri.parse(url))
 }
 
 class OssScreen : SupportAppScreen() {

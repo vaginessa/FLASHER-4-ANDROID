@@ -13,17 +13,18 @@ import java.util.concurrent.Executor
 
 object Biometric {
     fun askFingerprint(
-            activity: FragmentActivity,
-            @StringRes title: Int,
-            @StringRes description: Int? = null,
-            successListener: () -> Unit = {},
-            cancelListener: () -> Unit = {}
-            ) {
+        activity: FragmentActivity,
+        @StringRes title: Int,
+        @StringRes description: Int? = null,
+        successListener: () -> Unit = {},
+        cancelListener: () -> Unit = {}
+    ) {
         val oldOrientation = activity.requestedOrientation
         val newOrientation: Int
         if (oldOrientation == ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED) {
             newOrientation = if (activity.resources.configuration.orientation ==
-                    Configuration.ORIENTATION_LANDSCAPE) {
+                Configuration.ORIENTATION_LANDSCAPE
+            ) {
                 ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
             } else {
                 ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
@@ -61,7 +62,7 @@ object Biometric {
         }
 
         BiometricPrompt(activity, HandlerExecutor(), callback)
-                .authenticate(builder.build())
+            .authenticate(builder.build())
     }
 
     private class HandlerExecutor : Executor {

@@ -35,8 +35,8 @@ class AboutFragment : BaseFragment(), AboutFragmentView {
         toolbar.setNavigationOnClickListener { presenter.onBackPressed() }
 
         val aboutAdapter = AboutAdapter(
-                resources = get(),
-                itemClickListener = { presenter.onItemClick(it) }
+            resources = get(),
+            itemClickListener = { presenter.onItemClick(it) }
         )
         list.apply {
             when (activity!!.resources.configuration.orientation) {

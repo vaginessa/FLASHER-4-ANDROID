@@ -12,11 +12,11 @@ import timber.log.Timber
 
 @InjectViewState
 class ScheduleHomePresenter constructor(
-        router: Router,
-        scriptInteractor: RecoveryScriptInteractor,
-        settings: SettingsManager,
-        interactor: ScheduleInteractor,
-        private val mAlarmInteractor: AlarmInteractor
+    router: Router,
+    scriptInteractor: RecoveryScriptInteractor,
+    settings: SettingsManager,
+    interactor: ScheduleInteractor,
+    private val mAlarmInteractor: AlarmInteractor
 ) : BaseHomeFragmentPresenter(router, scriptInteractor, settings, interactor) {
     override val mCurrentFragmentId = R.id.action_schedule
 
@@ -24,26 +24,27 @@ class ScheduleHomePresenter constructor(
         mSettings.useSchedule = isEnabled
         if (isEnabled) {
             mAlarmInteractor.setAlarm()
-                    .doOnError {
-                        Timber.e(it)
-                        viewState.showInfoToast(it.localizedMessage)
-                    }
-                    .subscribe()
+                .doOnError {
+                    Timber.e(it)
+                    viewState.showInfoToast(it.localizedMessage)
+                }
+                .subscribe()
         } else {
             mAlarmInteractor.cancelAlarm()
-                    .doOnError {
-                        Timber.e(it)
-                        viewState.showInfoToast(it.localizedMessage)
-                    }
-                    .subscribe()
+                .doOnError {
+                    Timber.e(it)
+                    viewState.showInfoToast(it.localizedMessage)
+                }
+                .subscribe()
         }
     }
 
     fun selectTime() {
         val dateBuilder = DateBuilder(mSettings.scheduleTime)
         viewState.showSelectTimeDialog(
-                dateBuilder.hourOfDay,
-                dateBuilder.minute)
+            dateBuilder.hourOfDay,
+            dateBuilder.minute
+        )
     }
 
     fun onTimeSelected(hourOfDay: Int, minute: Int) {
@@ -68,11 +69,11 @@ class ScheduleHomePresenter constructor(
     private fun updateWork() {
         if (mSettings.useSchedule) {
             mAlarmInteractor.setAlarm()
-                    .doOnError {
-                        Timber.e(it)
-                        viewState.showInfoToast(it.localizedMessage)
-                    }
-                    .subscribe()
+                .doOnError {
+                    Timber.e(it)
+                    viewState.showInfoToast(it.localizedMessage)
+                }
+                .subscribe()
         }
     }
 

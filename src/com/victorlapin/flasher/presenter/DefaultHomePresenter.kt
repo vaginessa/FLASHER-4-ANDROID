@@ -9,10 +9,10 @@ import ru.terrakok.cicerone.Router
 
 @InjectViewState
 class DefaultHomePresenter constructor(
-        router: Router,
-        scriptInteractor: RecoveryScriptInteractor,
-        settings: SettingsManager,
-        interactor: HomeInteractor
+    router: Router,
+    scriptInteractor: RecoveryScriptInteractor,
+    settings: SettingsManager,
+    interactor: HomeInteractor
 ) : BaseHomeFragmentPresenter(router, scriptInteractor, settings, interactor) {
     override val mCurrentFragmentId = R.id.action_home
 }

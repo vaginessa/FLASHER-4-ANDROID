@@ -5,6 +5,6 @@ import org.junit.runners.Suite
 
 @RunWith(Suite::class)
 @Suite.SuiteClasses(
-        DatabaseMigrationTest::class
+    DatabaseMigrationTest::class
 )
 class DatabaseTestSuite

@@ -22,8 +22,8 @@ class BottomNavigationDrawerFragment : RoundedBottomSheetDialogFragment() {
 
     companion object {
         fun newInstance(
-                selectedId: Int,
-                clickListener: (Int) -> Unit = {}
+            selectedId: Int,
+            clickListener: (Int) -> Unit = {}
         ): BottomNavigationDrawerFragment {
             val fragment = BottomNavigationDrawerFragment()
             val args = Bundle()

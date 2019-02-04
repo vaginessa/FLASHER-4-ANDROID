@@ -81,10 +81,10 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
         mBackupPartitions = mResources.getStringList(R.array.backup_partitions)
 
         val homeAdapter = HomeAdapter(
-                resources = get(),
-                changeTypeListener = { presenter.onCommandTypeChanged(it) },
-                argsClickListener = { presenter.onArgumentsClicked(it) },
-                itemInsertListener = { list.smoothScrollToPosition(it) }
+            resources = get(),
+            changeTypeListener = { presenter.onCommandTypeChanged(it) },
+            argsClickListener = { presenter.onArgumentsClicked(it) },
+            itemInsertListener = { list.smoothScrollToPosition(it) }
         )
         list.apply {
             layoutManager = LinearLayoutManager(context)
@@ -99,26 +99,39 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
         bottom_app_bar.setNavigationOnClickListener { presenter.selectNavigation() }
         bottom_app_bar.setOnMenuItemClickListener {
             when (it.itemId) {
-                R.id.action_build -> { presenter.buildAndDeploy(mChainId); true }
-                R.id.action_export -> { presenter.onExportClicked(); true }
-                R.id.action_import -> { presenter.onImportClicked(); true }
-                R.id.action_settings -> { presenter.selectSettings(); true }
+                R.id.action_build -> {
+                    presenter.buildAndDeploy(mChainId); true
+                }
+                R.id.action_export -> {
+                    presenter.onExportClicked(); true
+                }
+                R.id.action_import -> {
+                    presenter.onImportClicked(); true
+                }
+                R.id.action_settings -> {
+                    presenter.selectSettings(); true
+                }
                 else -> false
             }
         }
 
         val swipeCallback = object : ItemTouchHelper.SimpleCallback(
-                ItemTouchHelper.UP or ItemTouchHelper.DOWN,
-                ItemTouchHelper.START or ItemTouchHelper.END) {
+            ItemTouchHelper.UP or ItemTouchHelper.DOWN,
+            ItemTouchHelper.START or ItemTouchHelper.END
+        ) {
 
             override fun isLongPressDragEnabled(): Boolean = true
 
             override fun isItemViewSwipeEnabled(): Boolean = true
 
-            override fun onMove(recyclerView: RecyclerView, dragged: RecyclerView.ViewHolder,
-                                target: RecyclerView.ViewHolder): Boolean {
-                (recyclerView.adapter as HomeAdapter).
-                        moveItems(dragged.adapterPosition, target.adapterPosition)
+            override fun onMove(
+                recyclerView: RecyclerView, dragged: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                (recyclerView.adapter as HomeAdapter).moveItems(
+                    dragged.adapterPosition,
+                    target.adapterPosition
+                )
                 return true
             }
 
@@ -134,7 +147,10 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
                 super.onSelectedChanged(viewHolder, actionState)
             }
 
-            override fun clearView(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder) {
+            override fun clearView(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder
+            ) {
                 super.clearView(recyclerView, viewHolder)
 
                 (viewHolder as HomeAdapter.ViewHolder).onCleared()
@@ -162,15 +178,17 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
             i.toIntArray()
         } else intArrayOf()
         MaterialDialog(context!!)
-                .title(res = R.string.command_wipe)
-                .listItemsMultiChoice(items = mWipePartitions,
-                        initialSelection = indices) { _, _, items ->
-                    command.arg1 = items.toSet().toString().flatten()
-                    presenter.onCommandUpdated(command)
-                }
-                .positiveButton(res = android.R.string.ok)
-                .negativeButton(res = android.R.string.cancel)
-                .show()
+            .title(res = R.string.command_wipe)
+            .listItemsMultiChoice(
+                items = mWipePartitions,
+                initialSelection = indices
+            ) { _, _, items ->
+                command.arg1 = items.toSet().toString().flatten()
+                presenter.onCommandUpdated(command)
+            }
+            .positiveButton(res = android.R.string.ok)
+            .negativeButton(res = android.R.string.cancel)
+            .show()
     }
 
     override fun showBackupDialog(command: Command) {
@@ -181,109 +199,115 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
             i.toIntArray()
         } else intArrayOf()
         MaterialDialog(context!!)
-                .title(res = R.string.command_backup)
-                .listItemsMultiChoice(items = mBackupPartitions,
-                        initialSelection = indices) { _, _, items ->
-                    command.arg1 = items.toSet().toString().flatten()
-                    presenter.onCommandUpdated(command)
-                }
-                .positiveButton(res = android.R.string.ok)
-                .negativeButton(res = android.R.string.cancel)
-                .show()
+            .title(res = R.string.command_backup)
+            .listItemsMultiChoice(
+                items = mBackupPartitions,
+                initialSelection = indices
+            ) { _, _, items ->
+                command.arg1 = items.toSet().toString().flatten()
+                presenter.onCommandUpdated(command)
+            }
+            .positiveButton(res = android.R.string.ok)
+            .negativeButton(res = android.R.string.cancel)
+            .show()
     }
 
     override fun showFlashFileDialog(command: Command, startPath: String?) =
-            askForPermissions(Permission.WRITE_EXTERNAL_STORAGE) { result ->
-                if (result.isAllGranted(Permission.WRITE_EXTERNAL_STORAGE)) {
-                    val initialPath = startPath ?: Const.FALLBACK_FOLDER
-                    val filter: FileFilter = {
-                        it.isDirectory ||
-                                it.name.endsWith(".zip", true)
-                    }
-                    MaterialDialog(context!!)
-                            .fileChooser(initialDirectory = File(initialPath),
-                                    filter = filter,
-                                    emptyTextRes = R.string.folder_empty) { _, file ->
-                                command.arg1 = file.absolutePath
-                                command.arg2 = file.parent
-                                presenter.onCommandUpdated(command)
-                                presenter.onFileSelected(file)
-                            }
-                            .positiveButton(res = android.R.string.ok)
-                            .negativeButton(res = android.R.string.cancel)
-                            .show()
-                } else {
-                    MaterialDialog(context!!)
-                            .title(res = R.string.app_name)
-                            .message(res = R.string.permission_denied_storage)
-                            .positiveButton(res = android.R.string.ok)
-                            .show()
+        askForPermissions(Permission.WRITE_EXTERNAL_STORAGE) { result ->
+            if (result.isAllGranted(Permission.WRITE_EXTERNAL_STORAGE)) {
+                val initialPath = startPath ?: Const.FALLBACK_FOLDER
+                val filter: FileFilter = {
+                    it.isDirectory ||
+                            it.name.endsWith(".zip", true)
                 }
+                MaterialDialog(context!!)
+                    .fileChooser(
+                        initialDirectory = File(initialPath),
+                        filter = filter,
+                        emptyTextRes = R.string.folder_empty
+                    ) { _, file ->
+                        command.arg1 = file.absolutePath
+                        command.arg2 = file.parent
+                        presenter.onCommandUpdated(command)
+                        presenter.onFileSelected(file)
+                    }
+                    .positiveButton(res = android.R.string.ok)
+                    .negativeButton(res = android.R.string.cancel)
+                    .show()
+            } else {
+                MaterialDialog(context!!)
+                    .title(res = R.string.app_name)
+                    .message(res = R.string.permission_denied_storage)
+                    .positiveButton(res = android.R.string.ok)
+                    .show()
             }
+        }
 
     override fun showEditMaskDialog(command: Command) {
         MaterialDialog(context!!)
-                .title(res = R.string.enter_mask)
-                .input(prefill = command.arg1) { _, input ->
-                    command.arg1 = if (input.isEmpty()) null else input.toString()
-                    presenter.onCommandUpdated(command)
-                }
-                .positiveButton(res = android.R.string.ok)
-                .negativeButton(res = android.R.string.cancel)
-                .show()
+            .title(res = R.string.enter_mask)
+            .input(prefill = command.arg1) { _, input ->
+                command.arg1 = if (input.isEmpty()) null else input.toString()
+                presenter.onCommandUpdated(command)
+            }
+            .positiveButton(res = android.R.string.ok)
+            .negativeButton(res = android.R.string.cancel)
+            .show()
     }
 
     override fun showSelectFolderDialog(command: Command, startPath: String?) =
-            askForPermissions(Permission.WRITE_EXTERNAL_STORAGE) { result ->
-                if (result.isAllGranted(Permission.WRITE_EXTERNAL_STORAGE)) {
-                    val initialPath = startPath ?: Const.FALLBACK_FOLDER
-                    MaterialDialog(context!!)
-                            .folderChooser(initialDirectory = File(initialPath),
-                                    emptyTextRes = R.string.folder_empty) { _, folder ->
-                                command.arg2 = folder.absolutePath
-                                presenter.onCommandUpdated(command)
-                                presenter.onFileSelected(folder)
-                            }
-                            .positiveButton(res = android.R.string.ok)
-                            .negativeButton(res = android.R.string.cancel)
-                            .show()
-                } else {
-                    MaterialDialog(context!!)
-                            .title(res = R.string.app_name)
-                            .message(res = R.string.permission_denied_storage)
-                            .positiveButton(res = android.R.string.ok)
-                            .show()
-                }
+        askForPermissions(Permission.WRITE_EXTERNAL_STORAGE) { result ->
+            if (result.isAllGranted(Permission.WRITE_EXTERNAL_STORAGE)) {
+                val initialPath = startPath ?: Const.FALLBACK_FOLDER
+                MaterialDialog(context!!)
+                    .folderChooser(
+                        initialDirectory = File(initialPath),
+                        emptyTextRes = R.string.folder_empty
+                    ) { _, folder ->
+                        command.arg2 = folder.absolutePath
+                        presenter.onCommandUpdated(command)
+                        presenter.onFileSelected(folder)
+                    }
+                    .positiveButton(res = android.R.string.ok)
+                    .negativeButton(res = android.R.string.cancel)
+                    .show()
+            } else {
+                MaterialDialog(context!!)
+                    .title(res = R.string.app_name)
+                    .message(res = R.string.permission_denied_storage)
+                    .positiveButton(res = android.R.string.ok)
+                    .show()
             }
+        }
 
     override fun showDeletedSnackbar(command: Command) {
         snackbar.show(
-                messageId = R.string.command_deleted,
-                actionId = R.string.action_undo,
-                actionClick = {
-                    presenter.onUndoDelete(command)
-                    snackbar.dismiss()
-                }
+            messageId = R.string.command_deleted,
+            actionId = R.string.action_undo,
+            actionClick = {
+                presenter.onUndoDelete(command)
+                snackbar.dismiss()
+            }
         )
     }
 
     override fun showInfoSnackbar(args: EventArgs) {
         snackbar.show(
-                messageText = args.message?.replace("\n", "")?.trim(),
-                messageId = args.messageId
+            messageText = args.message?.replace("\n", "")?.trim(),
+            messageId = args.messageId
         )
     }
 
     override fun showRebootSnackbar() {
         snackbar.show(
-                messageId = R.string.reboot,
-                actionId = R.string.action_reboot,
-                actionClick = {
-                    snackbar.dismiss()
-                    mIsRebootInProgress = true
-                    presenter.onRebootRequested()
-                },
-                isIndefinite = true
+            messageId = R.string.reboot,
+            actionId = R.string.action_reboot,
+            actionClick = {
+                snackbar.dismiss()
+                mIsRebootInProgress = true
+                presenter.onRebootRequested()
+            },
+            isIndefinite = true
         )
     }
 
@@ -291,11 +315,11 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
         if (mIsRebootInProgress) {
             if (mServices.isFingerprintAvailable()) {
                 Biometric.askFingerprint(
-                        activity = activity!!,
-                        title = R.string.fingerprint_reboot_title,
-                        description = R.string.fingerprint_reboot_description,
-                        successListener = { presenter.reboot(); mIsRebootInProgress = false },
-                        cancelListener = { mIsRebootInProgress = false }
+                    activity = activity!!,
+                    title = R.string.fingerprint_reboot_title,
+                    description = R.string.fingerprint_reboot_description,
+                    successListener = { presenter.reboot(); mIsRebootInProgress = false },
+                    cancelListener = { mIsRebootInProgress = false }
                 )
             } else {
                 presenter.reboot()
@@ -305,51 +329,53 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
     }
 
     override fun showExportDialog() =
-            askForPermissions(Permission.WRITE_EXTERNAL_STORAGE) { result ->
-                if (result.isAllGranted(Permission.WRITE_EXTERNAL_STORAGE)) {
-                    MaterialDialog(context!!)
-                            .title(res = R.string.enter_file_name)
-                            .input { _, input ->
-                                val fileName = if (input.endsWith(".json", true))
-                                    input.toString() else "$input.json"
-                                presenter.exportCommands(fileName)
-                            }
-                            .positiveButton(res = android.R.string.ok)
-                            .negativeButton(res = android.R.string.cancel)
-                            .show()
-                } else {
-                    MaterialDialog(context!!)
-                            .title(res = R.string.app_name)
-                            .message(res = R.string.permission_denied_storage)
-                            .positiveButton(res = android.R.string.ok)
-                            .show()
-                }
+        askForPermissions(Permission.WRITE_EXTERNAL_STORAGE) { result ->
+            if (result.isAllGranted(Permission.WRITE_EXTERNAL_STORAGE)) {
+                MaterialDialog(context!!)
+                    .title(res = R.string.enter_file_name)
+                    .input { _, input ->
+                        val fileName = if (input.endsWith(".json", true))
+                            input.toString() else "$input.json"
+                        presenter.exportCommands(fileName)
+                    }
+                    .positiveButton(res = android.R.string.ok)
+                    .negativeButton(res = android.R.string.cancel)
+                    .show()
+            } else {
+                MaterialDialog(context!!)
+                    .title(res = R.string.app_name)
+                    .message(res = R.string.permission_denied_storage)
+                    .positiveButton(res = android.R.string.ok)
+                    .show()
             }
+        }
 
     override fun showImportDialog() =
-            askForPermissions(Permission.WRITE_EXTERNAL_STORAGE) { result ->
-                if (result.isAllGranted(Permission.WRITE_EXTERNAL_STORAGE)) {
-                    val filter: FileFilter = {
-                        it.isDirectory ||
-                                it.name.endsWith(".json", true)
-                    }
-                    MaterialDialog(context!!)
-                            .fileChooser(initialDirectory = File(Const.APP_FOLDER),
-                                    filter = filter,
-                                    emptyTextRes = R.string.folder_empty) { _, file ->
-                                presenter.importCommands(file.absolutePath)
-                            }
-                            .positiveButton(res = android.R.string.ok)
-                            .negativeButton(res = android.R.string.cancel)
-                            .show()
-                } else {
-                    MaterialDialog(context!!)
-                            .title(res = R.string.app_name)
-                            .message(res = R.string.permission_denied_storage)
-                            .positiveButton(res = android.R.string.ok)
-                            .show()
+        askForPermissions(Permission.WRITE_EXTERNAL_STORAGE) { result ->
+            if (result.isAllGranted(Permission.WRITE_EXTERNAL_STORAGE)) {
+                val filter: FileFilter = {
+                    it.isDirectory ||
+                            it.name.endsWith(".json", true)
                 }
+                MaterialDialog(context!!)
+                    .fileChooser(
+                        initialDirectory = File(Const.APP_FOLDER),
+                        filter = filter,
+                        emptyTextRes = R.string.folder_empty
+                    ) { _, file ->
+                        presenter.importCommands(file.absolutePath)
+                    }
+                    .positiveButton(res = android.R.string.ok)
+                    .negativeButton(res = android.R.string.cancel)
+                    .show()
+            } else {
+                MaterialDialog(context!!)
+                    .title(res = R.string.app_name)
+                    .message(res = R.string.permission_denied_storage)
+                    .positiveButton(res = android.R.string.ok)
+                    .show()
             }
+        }
 
 
     override fun showInfoToast(message: String) {
@@ -381,11 +407,13 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
 
     override fun showNavigationFragment(selectedId: Int) {
         val navFragment = BottomNavigationDrawerFragment.newInstance(
-                selectedId = selectedId,
-                clickListener = { presenter.onNavigationClicked(it) }
+            selectedId = selectedId,
+            clickListener = { presenter.onNavigationClicked(it) }
         )
-        navFragment.show(activity!!.supportFragmentManager,
-                BottomNavigationDrawerFragment::class.java.simpleName)
+        navFragment.show(
+            activity!!.supportFragmentManager,
+            BottomNavigationDrawerFragment::class.java.simpleName
+        )
     }
 
     companion object {

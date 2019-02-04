@@ -9,8 +9,8 @@ import ru.terrakok.cicerone.Router
 
 @InjectViewState
 class AboutFragmentPresenter(
-        private val mInteractor: AboutInteractor,
-        private val mRouter: Router
+    private val mInteractor: AboutInteractor,
+    private val mRouter: Router
 ) : MvpPresenter<AboutFragmentView>() {
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
@@ -23,7 +23,7 @@ class AboutFragmentPresenter(
     }
 
     fun onItemClick(args: AboutClickEventArgs) =
-            mRouter.navigateTo(args.screen)
+        mRouter.navigateTo(args.screen)
 
     fun onBackPressed() = mRouter.exit()
 }

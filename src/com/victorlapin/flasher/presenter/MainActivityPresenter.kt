@@ -11,10 +11,10 @@ import ru.terrakok.cicerone.Router
 
 @InjectViewState
 class MainActivityPresenter constructor(
-        private val mRouter: Router,
-        private val mSettings: SettingsManager,
-        private val mServices: ServicesManager
-): MvpPresenter<MainActivityView>() {
+    private val mRouter: Router,
+    private val mSettings: SettingsManager,
+    private val mServices: ServicesManager
+) : MvpPresenter<MainActivityView>() {
     private var mFingerprintChecked = false
 
     override fun onFirstViewAttach() {
@@ -25,7 +25,8 @@ class MainActivityPresenter constructor(
     override fun attachView(view: MainActivityView?) {
         super.attachView(view)
         if (mSettings.askFingerprintOnLaunch && !mFingerprintChecked &&
-                mServices.isFingerprintAvailable()) {
+            mServices.isFingerprintAvailable()
+        ) {
             viewState.askFingerprint()
         }
     }

@@ -33,9 +33,11 @@ class App : Application() {
 
             val channelId = getString(R.string.channel_default_id)
             if (manager.getNotificationChannel(channelId) == null) {
-                val channel = NotificationChannel(channelId,
-                        getString(R.string.channel_default_title),
-                        NotificationManager.IMPORTANCE_LOW)
+                val channel = NotificationChannel(
+                    channelId,
+                    getString(R.string.channel_default_title),
+                    NotificationManager.IMPORTANCE_LOW
+                )
                 channel.setShowBadge(true)
                 manager.createNotificationChannel(channel)
             }

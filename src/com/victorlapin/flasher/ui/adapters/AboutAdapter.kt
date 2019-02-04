@@ -11,8 +11,8 @@ import com.victorlapin.flasher.model.repository.AboutRepository
 import kotlinx.android.synthetic.main.item_about.view.*
 
 class AboutAdapter(
-        resources: ResourcesManager,
-        private val itemClickListener: (AboutClickEventArgs) -> Unit
+    resources: ResourcesManager,
+    private val itemClickListener: (AboutClickEventArgs) -> Unit
 ) : RecyclerView.Adapter<AboutAdapter.ViewHolder>() {
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 

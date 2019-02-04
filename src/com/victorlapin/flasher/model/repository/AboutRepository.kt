@@ -14,18 +14,18 @@ import com.victorlapin.flasher.manager.ServicesManager
 import ru.terrakok.cicerone.Screen
 
 class AboutRepository(
-        private val mServices: ServicesManager,
-        private val mResources: ResourcesManager
+    private val mServices: ServicesManager,
+    private val mResources: ResourcesManager
 ) {
     private val mColorGenerator = ColorGenerator.MATERIAL
     private val mBuilder = TextDrawable.builder()
-            .beginConfig()
-            .textColor(mResources.getColor(android.R.color.white))
-            .fontSize(48)
-            .bold()
-            .toUpperCase()
-            .endConfig()
-            .round()
+        .beginConfig()
+        .textColor(mResources.getColor(android.R.color.white))
+        .fontSize(48)
+        .bold()
+        .toUpperCase()
+        .endConfig()
+        .round()
 
     fun getData(): List<ListItem> {
         val result = ArrayList<ListItem>()
@@ -37,44 +37,100 @@ class AboutRepository(
 
         // show developers
         result.add(ListItem(name = ITEM_TEAM))
-        result.add(getCreditItem(nameRes = R.string.about_team_victor,
-                descriptionRes = R.string.about_developer))
+        result.add(
+            getCreditItem(
+                nameRes = R.string.about_team_victor,
+                descriptionRes = R.string.about_developer
+            )
+        )
 
         // show links
         result.add(ListItem(name = ITEM_LINKS))
-        result.add(getLinkItem(nameRes = R.string.about_links_source_code,
+        result.add(
+            getLinkItem(
+                nameRes = R.string.about_links_source_code,
                 descriptionRes = R.string.about_links_gitlab,
                 imageRes = R.drawable.git,
-                screen = AboutExternalScreen("https://gitlab.com/victorlapin/flasher")))
-        result.add(getLinkItem(nameRes = R.string.about_links_oss,
+                screen = AboutExternalScreen("https://gitlab.com/victorlapin/flasher")
+            )
+        )
+        result.add(
+            getLinkItem(
+                nameRes = R.string.about_links_oss,
                 descriptionRes = R.string.about_links_oss_text,
                 imageRes = R.drawable.library,
-                screen = OssScreen()))
+                screen = OssScreen()
+            )
+        )
 
         // show credits
         result.add(ListItem(name = ITEM_CREDITS))
-        result.add(getCreditItem(nameRes = R.string.about_credits_bauke,
-                descriptionRes = R.string.about_credits_bauke_text))
-        result.add(getCreditItem(nameRes = R.string.about_credits_dave,
-                descriptionRes = R.string.about_credits_dave_text))
-        result.add(getCreditItem(nameRes = R.string.about_credits_roger,
-                descriptionRes = R.string.about_credits_roger_text))
-        result.add(getCreditItem(nameRes = R.string.about_credits_bill,
-                descriptionRes = R.string.about_credits_bill_text))
-        result.add(getCreditItem(nameRes = R.string.about_credits_anton,
-                descriptionRes = R.string.about_credits_anton_text))
-        result.add(getCreditItem(nameRes = R.string.about_credits_george,
-                descriptionRes = R.string.about_credits_anton_text))
-        result.add(getCreditItem(nameRes = R.string.about_credits_austin,
-                descriptionRes = R.string.about_credits_austin_text))
-        result.add(getCreditItem(nameRes = R.string.about_credits_doug,
-                descriptionRes = R.string.about_credits_austin_text))
-        result.add(getCreditItem(nameRes = R.string.about_credits_jared,
-                descriptionRes = R.string.about_credits_jared_text))
-        result.add(getCreditItem(nameRes = R.string.about_credits_topjohnwu,
-                descriptionRes = R.string.about_credits_topjohnwu_text))
-        result.add(getCreditItem(nameRes = R.string.about_credits_aidan,
-                descriptionRes = R.string.about_credits_aidan_text))
+        result.add(
+            getCreditItem(
+                nameRes = R.string.about_credits_bauke,
+                descriptionRes = R.string.about_credits_bauke_text
+            )
+        )
+        result.add(
+            getCreditItem(
+                nameRes = R.string.about_credits_dave,
+                descriptionRes = R.string.about_credits_dave_text
+            )
+        )
+        result.add(
+            getCreditItem(
+                nameRes = R.string.about_credits_roger,
+                descriptionRes = R.string.about_credits_roger_text
+            )
+        )
+        result.add(
+            getCreditItem(
+                nameRes = R.string.about_credits_bill,
+                descriptionRes = R.string.about_credits_bill_text
+            )
+        )
+        result.add(
+            getCreditItem(
+                nameRes = R.string.about_credits_anton,
+                descriptionRes = R.string.about_credits_anton_text
+            )
+        )
+        result.add(
+            getCreditItem(
+                nameRes = R.string.about_credits_george,
+                descriptionRes = R.string.about_credits_anton_text
+            )
+        )
+        result.add(
+            getCreditItem(
+                nameRes = R.string.about_credits_austin,
+                descriptionRes = R.string.about_credits_austin_text
+            )
+        )
+        result.add(
+            getCreditItem(
+                nameRes = R.string.about_credits_doug,
+                descriptionRes = R.string.about_credits_austin_text
+            )
+        )
+        result.add(
+            getCreditItem(
+                nameRes = R.string.about_credits_jared,
+                descriptionRes = R.string.about_credits_jared_text
+            )
+        )
+        result.add(
+            getCreditItem(
+                nameRes = R.string.about_credits_topjohnwu,
+                descriptionRes = R.string.about_credits_topjohnwu_text
+            )
+        )
+        result.add(
+            getCreditItem(
+                nameRes = R.string.about_credits_aidan,
+                descriptionRes = R.string.about_credits_aidan_text
+            )
+        )
 
         return result
     }
@@ -97,30 +153,40 @@ class AboutRepository(
         return item
     }
 
-    private fun getLinkItem(@StringRes nameRes: Int,
-                            @StringRes descriptionRes: Int,
-                            @DrawableRes imageRes: Int,
-                            screen: Screen): ListItem =
-            ListItem(name = mResources.getString(nameRes),
-                    description = mResources.getString(descriptionRes),
-                    image = mResources.getDrawable(imageRes),
-                    screen = screen)
+    private fun getLinkItem(
+        @StringRes nameRes: Int,
+        @StringRes descriptionRes: Int,
+        @DrawableRes imageRes: Int,
+        screen: Screen
+    ): ListItem =
+        ListItem(
+            name = mResources.getString(nameRes),
+            description = mResources.getString(descriptionRes),
+            image = mResources.getDrawable(imageRes),
+            screen = screen
+        )
 
-    private fun getCreditItem(@StringRes nameRes: Int,
-                              @StringRes descriptionRes: Int): ListItem {
-        val item = ListItem(name = mResources.getString(nameRes),
-                description = mResources.getString(descriptionRes))
-        item.image = mBuilder.build(item.name.filter { it.isUpperCase() }.toString(),
-                mColorGenerator.getColor(item.name))
+    private fun getCreditItem(
+        @StringRes nameRes: Int,
+        @StringRes descriptionRes: Int
+    ): ListItem {
+        val item = ListItem(
+            name = mResources.getString(nameRes),
+            description = mResources.getString(descriptionRes)
+        )
+        item.image = mBuilder.build(
+            item.name.filter { it.isUpperCase() }.toString(),
+            mColorGenerator.getColor(item.name)
+        )
         return item
     }
 
     data class ListItem(
-            var name: CharSequence,
-            var description: CharSequence? = null,
-            var image: Drawable? = null,
-            var isError: Boolean = false,
-            var screen : Screen? = null
+        var name: CharSequence,
+        var description: CharSequence? = null,
+        var image: Drawable? = null,
+        var isError: Boolean = false,
+        var screen: Screen? = null
     )
 
     companion object {

@@ -53,20 +53,20 @@ class SettingsGlobalFragment : PreferenceFragmentCompat() {
 
         val themePreference = findPreference(SettingsManager.KEY_THEME) as ListPreference
         val entries = arrayOf(
-                mResources.getString(R.string.theme_light),
-                mResources.getString(R.string.theme_light_pixel),
-                mResources.getString(R.string.theme_dark),
-                mResources.getString(R.string.theme_dark_pixel),
-                mResources.getString(R.string.theme_black),
-                mResources.getString(R.string.theme_black_pixel)
+            mResources.getString(R.string.theme_light),
+            mResources.getString(R.string.theme_light_pixel),
+            mResources.getString(R.string.theme_dark),
+            mResources.getString(R.string.theme_dark_pixel),
+            mResources.getString(R.string.theme_black),
+            mResources.getString(R.string.theme_black_pixel)
         )
         val values = arrayOf(
-                Integer.toString(R.style.AppTheme_Light),
-                Integer.toString(R.style.AppTheme_Light_Pixel),
-                Integer.toString(R.style.AppTheme_Dark),
-                Integer.toString(R.style.AppTheme_Dark_Pixel),
-                Integer.toString(R.style.AppTheme_Black),
-                Integer.toString(R.style.AppTheme_Black_Pixel)
+            Integer.toString(R.style.AppTheme_Light),
+            Integer.toString(R.style.AppTheme_Light_Pixel),
+            Integer.toString(R.style.AppTheme_Dark),
+            Integer.toString(R.style.AppTheme_Dark_Pixel),
+            Integer.toString(R.style.AppTheme_Black),
+            Integer.toString(R.style.AppTheme_Black_Pixel)
         )
 
         val value = mSettings.themeString
@@ -76,7 +76,7 @@ class SettingsGlobalFragment : PreferenceFragmentCompat() {
         themePreference.value = value
         themePreference.setOnPreferenceChangeListener { _, newValue ->
             (activity as BaseActivity)
-                    .updateTheme(Integer.valueOf(newValue as String))
+                .updateTheme(Integer.valueOf(newValue as String))
             true
         }
 
@@ -93,16 +93,16 @@ class SettingsGlobalFragment : PreferenceFragmentCompat() {
         findPreference(SettingsManager.KEY_CLEAR_SCHEDULE).setOnPreferenceClickListener {
             mSettings.apply {
                 mAlarmInteractor.cancelAlarm()
-                        .doOnComplete {
-                            useSchedule = false
-                            scheduleTime = 0
-                            scheduleInterval = 0
-                            scheduleLastRun = 0
-                            scheduleOnlyCharging = false
-                            scheduleOnlyIdle = false
-                            scheduleOnlyHighBattery = false
-                        }
-                        .subscribe()
+                    .doOnComplete {
+                        useSchedule = false
+                        scheduleTime = 0
+                        scheduleInterval = 0
+                        scheduleLastRun = 0
+                        scheduleOnlyCharging = false
+                        scheduleOnlyIdle = false
+                        scheduleOnlyHighBattery = false
+                    }
+                    .subscribe()
             }
             true
         }
@@ -121,23 +121,29 @@ class SettingsGlobalFragment : PreferenceFragmentCompat() {
         }
 
         mBackupsPathPreference = findPreference(SettingsManager.KEY_BACKUPS_PATH)
-        mBackupsPathPreference.summary = if (mSettings.backupsPath != null) mSettings.backupsPath else {
-            val spannable = SpannableString(mResources.getString(R.string.pref_backups_path_empty))
-            spannable.setSpan(ForegroundColorSpan(Color.RED), 0, spannable.length,
-                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
-            spannable
-        }
+        mBackupsPathPreference.summary =
+            if (mSettings.backupsPath != null) mSettings.backupsPath else {
+                val spannable =
+                    SpannableString(mResources.getString(R.string.pref_backups_path_empty))
+                spannable.setSpan(
+                    ForegroundColorSpan(Color.RED), 0, spannable.length,
+                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                )
+                spannable
+            }
         mBackupsPathPreference.setOnPreferenceClickListener {
             runWithPermissions(Permission.WRITE_EXTERNAL_STORAGE) {
-                startActivityForResult(Intent(Intent.ACTION_OPEN_DOCUMENT_TREE),
-                        REQUEST_DOCUMENT_TREE)
+                startActivityForResult(
+                    Intent(Intent.ACTION_OPEN_DOCUMENT_TREE),
+                    REQUEST_DOCUMENT_TREE
+                )
             }
             true
         }
 
         val logPreference = findPreference(SettingsManager.KEY_ENABLE_FILE_LOG)
         logPreference.summary = mResources.getString(R.string.pref_summary_enable_file_log)
-                .format(Const.LOG_FILENAME)
+            .format(Const.LOG_FILENAME)
         logPreference.setOnPreferenceChangeListener { it, newValue ->
             val b = newValue as Boolean
             if (b) {
@@ -168,13 +174,13 @@ class SettingsGlobalFragment : PreferenceFragmentCompat() {
                 val b = newValue as Boolean
                 if (b) {
                     Biometric.askFingerprint(
-                            activity = activity!!,
-                            title = R.string.fingerprint_setting_title,
-                            description = R.string.fingerprint_setting_description,
-                            cancelListener = {
-                                mSettings.askFingerprintOnLaunch = false
-                                (it as SwitchPreference).isChecked = false
-                            }
+                        activity = activity!!,
+                        title = R.string.fingerprint_setting_title,
+                        description = R.string.fingerprint_setting_description,
+                        cancelListener = {
+                            mSettings.askFingerprintOnLaunch = false
+                            (it as SwitchPreference).isChecked = false
+                        }
                     )
                 }
                 true
@@ -184,13 +190,13 @@ class SettingsGlobalFragment : PreferenceFragmentCompat() {
                 val b = newValue as Boolean
                 if (b) {
                     Biometric.askFingerprint(
-                            activity = activity!!,
-                            title = R.string.fingerprint_setting_title,
-                            description = R.string.fingerprint_setting_description,
-                            cancelListener = {
-                                mSettings.askFingerprintToReboot = false
-                                (it as SwitchPreference).isChecked = false
-                            }
+                        activity = activity!!,
+                        title = R.string.fingerprint_setting_title,
+                        description = R.string.fingerprint_setting_description,
+                        cancelListener = {
+                            mSettings.askFingerprintToReboot = false
+                            (it as SwitchPreference).isChecked = false
+                        }
                     )
                 }
                 true
@@ -223,7 +229,10 @@ class SettingsGlobalFragment : PreferenceFragmentCompat() {
                         val oldDir = DocumentFile.fromSingleUri(context!!, Uri.parse(it))
                         oldDir?.let { dir ->
                             try {
-                                context!!.contentResolver.releasePersistableUriPermission(dir.uri, flags)
+                                context!!.contentResolver.releasePersistableUriPermission(
+                                    dir.uri,
+                                    flags
+                                )
                             } catch (ignore: SecurityException) {
                             }
                         }

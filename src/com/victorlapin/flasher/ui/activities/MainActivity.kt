@@ -27,24 +27,28 @@ class MainActivity : BaseActivity(), MainActivityView {
 
     override fun askFingerprint() {
         Biometric.askFingerprint(
-                activity = this,
-                title = R.string.fingerprint_auth_title,
-                description = R.string.fingerprint_auth_description,
-                successListener = { presenter.onSuccessfulFingerprint() },
-                cancelListener = { presenter.exit() }
+            activity = this,
+            title = R.string.fingerprint_auth_title,
+            description = R.string.fingerprint_auth_description,
+            successListener = { presenter.onSuccessfulFingerprint() },
+            cancelListener = { presenter.exit() }
         )
     }
 
     override val navigator = object : SupportAppNavigator(this, R.id.fragment_container) {
-        override fun setupFragmentTransaction(command: Command?,
-                                              currentFragment: Fragment?,
-                                              nextFragment: Fragment?,
-                                              fragmentTransaction: FragmentTransaction?) {
+        override fun setupFragmentTransaction(
+            command: Command?,
+            currentFragment: Fragment?,
+            nextFragment: Fragment?,
+            fragmentTransaction: FragmentTransaction?
+        ) {
             nextFragment?.let {
                 fragmentTransaction?.let {
                     if (nextFragment is SettingsGlobalFragment || nextFragment is AboutFragment) {
-                        it.setCustomAnimations(R.animator.slide_up, R.animator.fade_out,
-                                R.animator.fade_in, R.animator.slide_down)
+                        it.setCustomAnimations(
+                            R.animator.slide_up, R.animator.fade_out,
+                            R.animator.fade_in, R.animator.slide_down
+                        )
                     }
                 }
             }

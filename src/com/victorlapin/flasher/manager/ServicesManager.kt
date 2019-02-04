@@ -14,24 +14,28 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class ServicesManager(
-        private val mContext: Context
+    private val mContext: Context
 ) {
     val context = mContext
 
     fun enableBootReceiver() {
         val receiver = ComponentName(mContext, BootReceiver::class.java)
         val pm = mContext.packageManager
-        pm.setComponentEnabledSetting(receiver,
-                PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
-                PackageManager.DONT_KILL_APP)
+        pm.setComponentEnabledSetting(
+            receiver,
+            PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
+            PackageManager.DONT_KILL_APP
+        )
     }
 
     fun disableBootReceiver() {
         val receiver = ComponentName(mContext, BootReceiver::class.java)
         val pm = mContext.packageManager
-        pm.setComponentEnabledSetting(receiver,
-                PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
-                PackageManager.DONT_KILL_APP)
+        pm.setComponentEnabledSetting(
+            receiver,
+            PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
+            PackageManager.DONT_KILL_APP
+        )
     }
 
     val notificationManager by lazy {
@@ -40,13 +44,19 @@ class ServicesManager(
 
     fun showBootNotification(lastRun: Long) {
         val formatter = SimpleDateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT)
-        val notification = NotificationCompat.Builder(mContext,
-                mContext.getString(R.string.channel_default_id))
-                .setShowWhen(true)
-                .setSmallIcon(R.drawable.android_head)
-                .setContentText(mContext.getString(R.string.schedule_last_run_notification,
-                        formatter.format(Date(lastRun))))
-                .build()
+        val notification = NotificationCompat.Builder(
+            mContext,
+            mContext.getString(R.string.channel_default_id)
+        )
+            .setShowWhen(true)
+            .setSmallIcon(R.drawable.android_head)
+            .setContentText(
+                mContext.getString(
+                    R.string.schedule_last_run_notification,
+                    formatter.format(Date(lastRun))
+                )
+            )
+            .build()
         notificationManager.notify(BOOT_NOTIFICATION_ID, notification)
     }
 
@@ -61,12 +71,14 @@ class ServicesManager(
 
     fun showInfoNotification(message: String?) {
         message?.let {
-            val notification = NotificationCompat.Builder(mContext,
-                    mContext.getString(R.string.channel_default_id))
-                    .setShowWhen(true)
-                    .setSmallIcon(R.drawable.android_head)
-                    .setContentText(mContext.getString(R.string.schedule_error_notification, it))
-                    .build()
+            val notification = NotificationCompat.Builder(
+                mContext,
+                mContext.getString(R.string.channel_default_id)
+            )
+                .setShowWhen(true)
+                .setSmallIcon(R.drawable.android_head)
+                .setContentText(mContext.getString(R.string.schedule_error_notification, it))
+                .build()
             notificationManager.notify(INFO_NOTIFICATION_ID, notification)
         }
     }
@@ -82,8 +94,8 @@ class ServicesManager(
     }
 
     fun isFingerprintAvailable(): Boolean =
-            fingerprintManager.isHardwareDetected
-                    && fingerprintManager.hasEnrolledFingerprints()
+        fingerprintManager.isHardwareDetected
+                && fingerprintManager.hasEnrolledFingerprints()
 
     companion object {
         private const val BOOT_NOTIFICATION_ID = 199

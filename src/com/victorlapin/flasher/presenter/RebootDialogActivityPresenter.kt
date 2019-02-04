@@ -8,8 +8,8 @@ import com.victorlapin.flasher.view.RebootDialogActivityView
 
 @InjectViewState
 class RebootDialogActivityPresenter constructor(
-        private val mScriptInteractor: RecoveryScriptInteractor,
-        private val mSettings: SettingsManager
+    private val mScriptInteractor: RecoveryScriptInteractor,
+    private val mSettings: SettingsManager
 ) : MvpPresenter<RebootDialogActivityView>() {
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()

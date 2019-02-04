@@ -5,8 +5,8 @@ import android.os.Bundle
 import android.text.InputType
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.input.input
-import com.victorlapin.flasher.R
 import com.victorlapin.flasher.Const
+import com.victorlapin.flasher.R
 import com.victorlapin.flasher.manager.SettingsManager
 import com.victorlapin.flasher.model.database.entity.Chain
 import com.victorlapin.flasher.presenter.BaseHomeFragmentPresenter
@@ -27,7 +27,7 @@ class ScheduleFragment : HomeFragment() {
 
     private val mSettings by inject<SettingsManager>()
     private val mDateTimeFormatter = SimpleDateFormat
-            .getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT)
+        .getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT)
     private val mTimeFormatter = SimpleDateFormat.getTimeInstance(DateFormat.SHORT)
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -40,8 +40,10 @@ class ScheduleFragment : HomeFragment() {
 
         val lastRun = mSettings.scheduleLastRun
         lbl_last_run.text = mResources.getString(R.string.schedule_last_run)
-                .format(if (lastRun > 0) mDateTimeFormatter.format(Date(lastRun)) else
-                    mResources.getString(R.string.schedule_interval_never).toLowerCase())
+            .format(
+                if (lastRun > 0) mDateTimeFormatter.format(Date(lastRun)) else
+                    mResources.getString(R.string.schedule_interval_never).toLowerCase()
+            )
 
         val time = mSettings.scheduleTime
         if (time > 0) {
@@ -52,8 +54,9 @@ class ScheduleFragment : HomeFragment() {
         lbl_time.setOnClickListener { (presenter as ScheduleHomePresenter).selectTime() }
 
         val interval = mSettings.scheduleInterval
-        lbl_interval.text = if (interval == 0) mResources.getString(R.string.schedule_interval_never) else
-            mResources.getQuantityString(R.plurals.schedule_interval, interval, interval)
+        lbl_interval.text =
+            if (interval == 0) mResources.getString(R.string.schedule_interval_never) else
+                mResources.getQuantityString(R.plurals.schedule_interval, interval, interval)
         lbl_interval.setOnClickListener { (presenter as ScheduleHomePresenter).selectInterval() }
 
         if (time > 0) {
@@ -94,29 +97,33 @@ class ScheduleFragment : HomeFragment() {
             chk_enable.isEnabled = true
             updateNextRun()
         }
-        TimePickerDialog(context!!,
-                callback,
-                defHourOfDay,
-                defMinute,
-                android.text.format.DateFormat.is24HourFormat(context))
-                .show()
+        TimePickerDialog(
+            context!!,
+            callback,
+            defHourOfDay,
+            defMinute,
+            android.text.format.DateFormat.is24HourFormat(context)
+        )
+            .show()
     }
 
     override fun showSelectIntervalDialog(defInterval: Int) {
         MaterialDialog(context!!)
-                .title(res = R.string.schedule_interval_title)
-                .input(inputType = InputType.TYPE_CLASS_NUMBER,
-                        prefill = defInterval.toString()) { _, input ->
-                    val interval = if (input.isBlank()) 0 else input.toString().toInt()
-                    (presenter as ScheduleHomePresenter).onIntervalSelected(interval)
-                    lbl_interval.text = if (interval == 0)
-                        mResources.getString(R.string.schedule_interval_never) else
-                        mResources.getQuantityString(R.plurals.schedule_interval, interval, interval)
-                    updateNextRun()
-                }
-                .positiveButton(res = android.R.string.ok)
-                .negativeButton(res = android.R.string.cancel)
-                .show()
+            .title(res = R.string.schedule_interval_title)
+            .input(
+                inputType = InputType.TYPE_CLASS_NUMBER,
+                prefill = defInterval.toString()
+            ) { _, input ->
+                val interval = if (input.isBlank()) 0 else input.toString().toInt()
+                (presenter as ScheduleHomePresenter).onIntervalSelected(interval)
+                lbl_interval.text = if (interval == 0)
+                    mResources.getString(R.string.schedule_interval_never) else
+                    mResources.getQuantityString(R.plurals.schedule_interval, interval, interval)
+                updateNextRun()
+            }
+            .positiveButton(res = android.R.string.ok)
+            .negativeButton(res = android.R.string.cancel)
+            .show()
     }
 
     private fun updateNextRun() = (presenter as ScheduleHomePresenter).updateNextRun()

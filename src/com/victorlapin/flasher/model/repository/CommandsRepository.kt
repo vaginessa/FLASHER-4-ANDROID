@@ -14,7 +14,7 @@ import io.reactivex.schedulers.Schedulers
 import java.io.File
 
 class CommandsRepository constructor(
-        private val mCommandDao: CommandDao
+    private val mCommandDao: CommandDao
 ) {
     fun getCommands(chainId: Long): Flowable<List<Command>> = mCommandDao.getCommands(chainId)
 
@@ -22,39 +22,39 @@ class CommandsRepository constructor(
 
     fun insertCommand(command: Command) {
         Single.just(command)
-                .map { c ->
-                    if (c.orderNumber == 0) {
-                        c.orderNumber = mCommandDao.getNextOrderNumber(c.chainId)
-                    }
-                    mCommandDao.insert(c)
+            .map { c ->
+                if (c.orderNumber == 0) {
+                    c.orderNumber = mCommandDao.getNextOrderNumber(c.chainId)
                 }
-                .subscribeOn(Schedulers.io())
-                .observeOn(Schedulers.io())
-                .subscribe()
+                mCommandDao.insert(c)
+            }
+            .subscribeOn(Schedulers.io())
+            .observeOn(Schedulers.io())
+            .subscribe()
     }
 
     fun changeOrder(orderedCommands: List<Command>): Completable =
-            Completable.create { emitter ->
-                mCommandDao.update(orderedCommands)
-                emitter.onComplete()
-            }
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
+        Completable.create { emitter ->
+            mCommandDao.update(orderedCommands)
+            emitter.onComplete()
+        }
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
 
     fun updateCommand(command: Command) {
         Single.just(command)
-                .map { c -> mCommandDao.update(c) }
-                .subscribeOn(Schedulers.io())
-                .observeOn(Schedulers.io())
-                .subscribe()
+            .map { c -> mCommandDao.update(c) }
+            .subscribeOn(Schedulers.io())
+            .observeOn(Schedulers.io())
+            .subscribe()
     }
 
     fun deleteCommand(command: Command) {
         Single.just(command)
-                .map { c -> mCommandDao.delete(c) }
-                .subscribeOn(Schedulers.io())
-                .observeOn(Schedulers.io())
-                .subscribe()
+            .map { c -> mCommandDao.delete(c) }
+            .subscribeOn(Schedulers.io())
+            .observeOn(Schedulers.io())
+            .subscribe()
     }
 
     fun exportCommands(fileName: String, json: String): EventArgs {

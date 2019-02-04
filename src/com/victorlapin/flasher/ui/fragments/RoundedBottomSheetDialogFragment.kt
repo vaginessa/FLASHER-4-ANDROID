@@ -15,7 +15,7 @@ import org.koin.android.ext.android.inject
 import org.koin.standalone.KoinComponent
 
 abstract class RoundedBottomSheetDialogFragment : BottomSheetDialogFragment(),
-        KoinComponent {
+    KoinComponent {
     abstract val layoutRes: Int
 
     private val mScope = getKoin().getOrCreateScope(Const.FRAGMENT_BOTTOM)
@@ -23,9 +23,11 @@ abstract class RoundedBottomSheetDialogFragment : BottomSheetDialogFragment(),
 
     var dismissListener: () -> Unit = {}
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? =
-            inflater.inflate(layoutRes, container, false)
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? =
+        inflater.inflate(layoutRes, container, false)
 
     override fun getTheme() = when (mSettings.theme) {
         R.style.AppTheme_Dark,
@@ -36,7 +38,7 @@ abstract class RoundedBottomSheetDialogFragment : BottomSheetDialogFragment(),
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog =
-            BottomSheetDialog(requireContext(), theme)
+        BottomSheetDialog(requireContext(), theme)
 
     override fun onDismiss(dialog: DialogInterface?) {
         super.onDismiss(dialog)

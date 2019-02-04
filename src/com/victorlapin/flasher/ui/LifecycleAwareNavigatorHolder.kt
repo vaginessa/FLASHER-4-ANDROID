@@ -7,9 +7,9 @@ import ru.terrakok.cicerone.Navigator
 import ru.terrakok.cicerone.NavigatorHolder
 
 class LifecycleAwareNavigatorHolder(
-        lifecycle: Lifecycle,
-        private val mNavigatorHolder: NavigatorHolder,
-        private val mNavigator: Navigator?
+    lifecycle: Lifecycle,
+    private val mNavigatorHolder: NavigatorHolder,
+    private val mNavigator: Navigator?
 ) : LifecycleObserver {
     init {
         lifecycle.addObserver(this)

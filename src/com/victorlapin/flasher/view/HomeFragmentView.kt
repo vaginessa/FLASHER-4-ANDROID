@@ -11,35 +11,50 @@ interface HomeFragmentView : MvpView {
     fun setData(commands: List<Command>)
     @StateStrategyType(SkipStrategy::class)
     fun showWipeDialog(command: Command)
+
     @StateStrategyType(SkipStrategy::class)
     fun showBackupDialog(command: Command)
+
     @StateStrategyType(SkipStrategy::class)
     fun showFlashFileDialog(command: Command, startPath: String?)
+
     @StateStrategyType(SkipStrategy::class)
     fun showEditMaskDialog(command: Command)
+
     @StateStrategyType(SkipStrategy::class)
     fun showSelectFolderDialog(command: Command, startPath: String?)
+
     @StateStrategyType(SkipStrategy::class)
     fun showDeletedSnackbar(command: Command)
+
     @StateStrategyType(SkipStrategy::class)
     fun showInfoSnackbar(args: EventArgs)
+
     @StateStrategyType(SkipStrategy::class)
     fun showRebootSnackbar()
+
     @StateStrategyType(SkipStrategy::class)
     fun showExportDialog()
+
     @StateStrategyType(SkipStrategy::class)
     fun showImportDialog()
+
     @StateStrategyType(SkipStrategy::class)
     fun showInfoToast(message: String)
+
     @StateStrategyType(SkipStrategy::class)
     fun showSelectTimeDialog(defHourOfDay: Int, defMinute: Int)
+
     @StateStrategyType(SkipStrategy::class)
     fun showSelectIntervalDialog(defInterval: Int)
+
     @StateStrategyType(AddToEndSingleStrategy::class)
     fun showNextRun(hasNext: Boolean, nextRun: Long)
+
     fun toggleProgress(isVisible: Boolean)
     @StateStrategyType(SkipStrategy::class)
     fun showNavigationFragment(selectedId: Int)
+
     @StateStrategyType(AddToEndSingleStrategy::class)
     fun askFingerprint()
 }

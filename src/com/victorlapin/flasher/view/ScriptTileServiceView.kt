@@ -8,8 +8,10 @@ import com.victorlapin.flasher.model.EventArgs
 interface ScriptTileServiceView : MvpView {
     @StateStrategyType(SkipStrategy::class)
     fun showInfoToast(args: EventArgs)
+
     @StateStrategyType(SkipStrategy::class)
     fun showInfoToast(message: String)
+
     @StateStrategyType(SkipStrategy::class)
     fun showRebootDialog()
 }

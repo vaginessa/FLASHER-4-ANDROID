@@ -32,25 +32,25 @@ class RebootDialogActivity : MvpAppCompatActivity(), RebootDialogActivityView {
 
     override fun showRebootDialog() {
         MaterialDialog(this)
-                .title(res = R.string.app_name)
-                .message(res = R.string.reboot)
-                .positiveButton(res = android.R.string.yes) {
-                    presenter.onRebootRequested()
-                }
-                .negativeButton(res = android.R.string.no) {
-                    finish()
-                }
-                .show()
+            .title(res = R.string.app_name)
+            .message(res = R.string.reboot)
+            .positiveButton(res = android.R.string.yes) {
+                presenter.onRebootRequested()
+            }
+            .negativeButton(res = android.R.string.no) {
+                finish()
+            }
+            .show()
     }
 
     override fun askFingerprint() {
         if (mServices.isFingerprintAvailable()) {
             Biometric.askFingerprint(
-                    activity = this,
-                    title = R.string.fingerprint_reboot_title,
-                    description = R.string.fingerprint_reboot_description,
-                    successListener = { presenter.rebootRecovery(); finish() },
-                    cancelListener = { finish() }
+                activity = this,
+                title = R.string.fingerprint_reboot_title,
+                description = R.string.fingerprint_reboot_description,
+                successListener = { presenter.rebootRecovery(); finish() },
+                cancelListener = { finish() }
             )
         } else {
             presenter.rebootRecovery()

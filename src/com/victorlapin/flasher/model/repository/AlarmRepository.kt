@@ -15,28 +15,34 @@ import java.util.*
 
 class AlarmRepository {
     fun setAlarm(dateBuilder: DateBuilder, settings: SettingsManager): Completable =
-            Completable.create { emitter ->
-                if (dateBuilder.hasNextAlarm()) {
-                    val time = dateBuilder.nextAlarmTime
-                    Timber.i("Adding schedule worker")
-                    Timber.i("Next run: ${SimpleDateFormat.getDateTimeInstance(DateFormat.MEDIUM,
-                            DateFormat.SHORT).format(Date(time))}")
-                    WorkManager.getInstance()
-                            .beginUniqueWork(ScheduleWorker.JOB_TAG,
-                                    ExistingWorkPolicy.REPLACE,
-                                    ScheduleWorker.buildRequest(dateBuilder.nextAlarmTime, settings))
-                            .enqueue()
-                }
-                emitter.onComplete()
+        Completable.create { emitter ->
+            if (dateBuilder.hasNextAlarm()) {
+                val time = dateBuilder.nextAlarmTime
+                Timber.i("Adding schedule worker")
+                Timber.i(
+                    "Next run: ${SimpleDateFormat.getDateTimeInstance(
+                        DateFormat.MEDIUM,
+                        DateFormat.SHORT
+                    ).format(Date(time))}"
+                )
+                WorkManager.getInstance()
+                    .beginUniqueWork(
+                        ScheduleWorker.JOB_TAG,
+                        ExistingWorkPolicy.REPLACE,
+                        ScheduleWorker.buildRequest(dateBuilder.nextAlarmTime, settings)
+                    )
+                    .enqueue()
             }
-                    .subscribeOn(Schedulers.computation())
-                    .observeOn(AndroidSchedulers.mainThread())
+            emitter.onComplete()
+        }
+            .subscribeOn(Schedulers.computation())
+            .observeOn(AndroidSchedulers.mainThread())
 
     fun cancelAlarm(): Completable = Completable.create { emitter ->
         Timber.i("Schedule worker canceled")
         WorkManager.getInstance().cancelUniqueWork(ScheduleWorker.JOB_TAG)
         emitter.onComplete()
     }
-            .subscribeOn(Schedulers.computation())
-            .observeOn(AndroidSchedulers.mainThread())
+        .subscribeOn(Schedulers.computation())
+        .observeOn(AndroidSchedulers.mainThread())
 }

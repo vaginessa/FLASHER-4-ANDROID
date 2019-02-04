@@ -30,18 +30,22 @@ class ScriptTileService : TileService(), ScriptTileServiceView {
 
     override fun showInfoToast(args: EventArgs) {
         args.message?.let {
-            Toast.makeText(baseContext, it.replace("\n", "").trim(),
-                    Toast.LENGTH_LONG).show()
+            Toast.makeText(
+                baseContext, it.replace("\n", "").trim(),
+                Toast.LENGTH_LONG
+            ).show()
             return
         }
         args.messageId?.let {
-            Toast.makeText(baseContext, getString(it),
-                    Toast.LENGTH_LONG).show()
+            Toast.makeText(
+                baseContext, getString(it),
+                Toast.LENGTH_LONG
+            ).show()
         }
     }
 
     override fun showInfoToast(message: String) =
-            Toast.makeText(baseContext, message, Toast.LENGTH_LONG).show()
+        Toast.makeText(baseContext, message, Toast.LENGTH_LONG).show()
 
     override fun showRebootDialog() {
         val intent = Intent(this, RebootDialogActivity::class.java)

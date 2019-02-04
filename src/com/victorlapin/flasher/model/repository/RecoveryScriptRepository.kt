@@ -24,7 +24,7 @@ class RecoveryScriptRepository {
             when (it.type) {
                 Command.TYPE_WIPE -> it.arg1?.let {
                     val partitions = it.toArrayLowerCase()
-                            .map { if (it == "dalvik-cache") "dalvik" else it }
+                        .map { if (it == "dalvik-cache") "dalvik" else it }
                     partitions.forEach {
                         scriptBuilder.appendln("wipe $it")
                     }
@@ -39,8 +39,10 @@ class RecoveryScriptRepository {
                         if (compressBackups) {
                             partString.append("O")
                         }
-                        val dt = SimpleDateFormat("YYYY-MM-dd_HH-mm-ss",
-                                Locale.getDefault()).format(Date())
+                        val dt = SimpleDateFormat(
+                            "YYYY-MM-dd_HH-mm-ss",
+                            Locale.getDefault()
+                        ).format(Date())
                         val out = Shell.sh("getprop ro.build.id").exec().out
                         val buildId = if (out.isNotEmpty()) out[0] else ""
                         val backupName = if (buildId.isNotEmpty())
@@ -72,8 +74,9 @@ class RecoveryScriptRepository {
             }
         }
         val result = BuildScriptResult(
-                script = scriptBuilder.toString(),
-                resolvedFiles = resolvedFilesBuilder.toString())
+            script = scriptBuilder.toString(),
+            resolvedFiles = resolvedFilesBuilder.toString()
+        )
         if (result.resolvedFiles.isNotBlank()) {
             Timber.d("Resolved files:\n${result.resolvedFiles}")
         }
@@ -86,7 +89,7 @@ class RecoveryScriptRepository {
             return try {
                 val scriptFile = SuFile(Const.SCRIPT_FILENAME)
                 val logFiles = scriptFile.parentFile
-                        .listFiles { _, name -> name.contains("log", true) }
+                    .listFiles { _, name -> name.contains("log", true) }
                 logFiles?.let {
                     it.forEach {
                         Timber.i("Deleting ${it.absolutePath}")
@@ -155,9 +158,9 @@ class RecoveryScriptRepository {
             val systemSpace = StatFs("/system").totalBytes
             var zipSpace = 0L
             script.split("\n")
-                    .filter { it.startsWith("install ") }
-                    .map { it -> it.replace("install ", "") }
-                    .forEach { zipSpace += File(it).length() }
+                .filter { it.startsWith("install ") }
+                .map { it -> it.replace("install ", "") }
+                .forEach { zipSpace += File(it).length() }
             if (zipSpace > systemSpace) {
                 Timber.w("Insufficient system space")
                 return EventArgs(isSuccess = false, messageId = R.string.analyze_system_space)
@@ -168,5 +171,5 @@ class RecoveryScriptRepository {
     }
 
     private val mSuDeniedArgs =
-            EventArgs(isSuccess = false, messageId = R.string.permission_denied_su)
+        EventArgs(isSuccess = false, messageId = R.string.permission_denied_su)
 }

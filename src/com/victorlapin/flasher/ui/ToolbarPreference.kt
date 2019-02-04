@@ -11,9 +11,9 @@ import org.koin.standalone.inject
 import ru.terrakok.cicerone.Router
 
 class ToolbarPreference @JvmOverloads constructor(
-        context: Context,
-        attrs: AttributeSet,
-        defStyleAttr: Int = 0
+    context: Context,
+    attrs: AttributeSet,
+    defStyleAttr: Int = 0
 ) : Preference(context, attrs, defStyleAttr), KoinComponent {
     private val mRouter by inject<Router>()
 

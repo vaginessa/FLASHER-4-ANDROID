@@ -8,16 +8,16 @@ import io.reactivex.Completable
 import timber.log.Timber
 
 class AlarmInteractor(
-        private val mRepo: AlarmRepository,
-        private val mSettings: SettingsManager,
-        private val mServices: ServicesManager
+    private val mRepo: AlarmRepository,
+    private val mSettings: SettingsManager,
+    private val mServices: ServicesManager
 ) {
     fun setAlarm(): Completable {
         val dateBuilder = DateBuilder(mSettings.scheduleTime)
         dateBuilder.interval = mSettings.scheduleInterval
         return if (dateBuilder.hasNextAlarm()) {
             mRepo.setAlarm(dateBuilder, mSettings)
-                    .doOnComplete { mServices.enableBootReceiver() }
+                .doOnComplete { mServices.enableBootReceiver() }
         } else {
             Timber.i("Nothing to schedule")
             cancelAlarm()
@@ -25,5 +25,5 @@ class AlarmInteractor(
     }
 
     fun cancelAlarm(): Completable = mRepo.cancelAlarm()
-            .doOnComplete { mServices.disableBootReceiver() }
+        .doOnComplete { mServices.disableBootReceiver() }
 }

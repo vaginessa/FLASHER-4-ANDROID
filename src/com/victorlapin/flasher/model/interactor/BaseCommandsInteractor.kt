@@ -15,18 +15,18 @@ import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
 
 abstract class BaseCommandsInteractor constructor(
-        private val mRepo: CommandsRepository,
-        private val mGson: Gson
+    private val mRepo: CommandsRepository,
+    private val mGson: Gson
 ) {
     protected abstract val mChainId: Long
 
     fun getCommands(): Flowable<List<Command>> = mRepo.getCommands(mChainId)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
 
     fun getCommand(id: Long): Maybe<Command> = mRepo.getCommand(id)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
 
     fun insertCommand(command: Command) = mRepo.insertCommand(command)
 
@@ -35,39 +35,40 @@ abstract class BaseCommandsInteractor constructor(
     fun deleteCommand(command: Command) = mRepo.deleteCommand(command)
 
     fun changeOrder(orderedCommands: List<Command>): Completable =
-            mRepo.changeOrder(orderedCommands)
+        mRepo.changeOrder(orderedCommands)
 
     abstract fun addStubCommand()
 
     fun exportCommands(fileName: String): Single<EventArgs> =
-            getCommands()
-                    .firstOrError()
-                    .map {
-                        val json = mGson.toJson(it)
-                        mRepo.exportCommands(fileName, json)
-                    }
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
+        getCommands()
+            .firstOrError()
+            .map {
+                val json = mGson.toJson(it)
+                mRepo.exportCommands(fileName, json)
+            }
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
 
     fun importCommands(fileName: String): Single<EventArgs> =
-            Single.create<EventArgs> { emitter ->
-                try {
-                    val json = mRepo.importJson(fileName)
-                    val commands = mGson.fromJson<List<Command>>(json, object : TypeToken<List<Command>>() {}.type)
-                    if (commands.isNotEmpty()) {
-                        var i = 0
-                        commands.forEach {
-                            it.chainId = mChainId
-                            it.orderNumber = ++i
-                        }
-                        mRepo.importCommands(commands)
+        Single.create<EventArgs> { emitter ->
+            try {
+                val json = mRepo.importJson(fileName)
+                val commands =
+                    mGson.fromJson<List<Command>>(json, object : TypeToken<List<Command>>() {}.type)
+                if (commands.isNotEmpty()) {
+                    var i = 0
+                    commands.forEach {
+                        it.chainId = mChainId
+                        it.orderNumber = ++i
                     }
-                    emitter.onSuccess(EventArgs(isSuccess = true, messageId = R.string.success))
-                } catch (ex: Exception) {
-                    Timber.e(ex)
-                    emitter.onSuccess(EventArgs(isSuccess = false, message = ex.message))
+                    mRepo.importCommands(commands)
                 }
+                emitter.onSuccess(EventArgs(isSuccess = true, messageId = R.string.success))
+            } catch (ex: Exception) {
+                Timber.e(ex)
+                emitter.onSuccess(EventArgs(isSuccess = false, message = ex.message))
             }
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
+        }
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
 }

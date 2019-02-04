@@ -6,8 +6,8 @@ import com.victorlapin.flasher.model.database.entity.Command
 import com.victorlapin.flasher.model.repository.CommandsRepository
 
 class HomeInteractor constructor(
-        repo: CommandsRepository,
-        gson: Gson
+    repo: CommandsRepository,
+    gson: Gson
 ) : BaseCommandsInteractor(repo, gson) {
     override val mChainId = Chain.DEFAULT_ID
 

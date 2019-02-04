@@ -7,12 +7,12 @@ import com.google.gson.annotations.SerializedName
 
 @Entity(tableName = "chains")
 data class Chain(
-        @PrimaryKey(autoGenerate = true)
-        @SerializedName("id")
-        val id: Long? = null,
-        @ColumnInfo(name = "name")
-        @SerializedName("name")
-        var name: String
+    @PrimaryKey(autoGenerate = true)
+    @SerializedName("id")
+    val id: Long? = null,
+    @ColumnInfo(name = "name")
+    @SerializedName("name")
+    var name: String
 ) {
     companion object {
         const val DEFAULT = "default"

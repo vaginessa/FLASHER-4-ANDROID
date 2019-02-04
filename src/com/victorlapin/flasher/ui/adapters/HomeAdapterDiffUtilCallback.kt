@@ -4,8 +4,8 @@ import androidx.recyclerview.widget.DiffUtil
 import com.victorlapin.flasher.model.database.entity.Command
 
 class HomeAdapterDiffUtilCallback(
-        private val oldList: List<Command>,
-        private val newList: List<Command>
+    private val oldList: List<Command>,
+    private val newList: List<Command>
 ) : DiffUtil.Callback() {
     override fun getOldListSize() = oldList.size
 

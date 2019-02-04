@@ -1,7 +1,10 @@
 package com.victorlapin.flasher.presenter
 
 import com.arellomobile.mvp.MvpPresenter
-import com.victorlapin.flasher.*
+import com.victorlapin.flasher.HomeScreen
+import com.victorlapin.flasher.R
+import com.victorlapin.flasher.ScheduleScreen
+import com.victorlapin.flasher.SettingsScreen
 import com.victorlapin.flasher.manager.SettingsManager
 import com.victorlapin.flasher.model.CommandClickEventArgs
 import com.victorlapin.flasher.model.EventArgs
@@ -16,10 +19,10 @@ import timber.log.Timber
 import java.io.File
 
 abstract class BaseHomeFragmentPresenter constructor(
-        private val mRouter: Router,
-        private val mScriptInteractor: RecoveryScriptInteractor,
-        protected val mSettings: SettingsManager,
-        private val mInteractor: BaseCommandsInteractor
+    private val mRouter: Router,
+    private val mScriptInteractor: RecoveryScriptInteractor,
+    protected val mSettings: SettingsManager,
+    private val mInteractor: BaseCommandsInteractor
 ) : MvpPresenter<HomeFragmentView>() {
     private var mDisposable: Disposable? = null
     private var mReorderSubject = PublishSubject.create<List<Command>>()
@@ -28,14 +31,14 @@ abstract class BaseHomeFragmentPresenter constructor(
     override fun attachView(view: HomeFragmentView?) {
         super.attachView(view)
         mDisposable = mInteractor.getCommands()
-                .subscribe {
-                    viewState.setData(it)
-                }
+            .subscribe {
+                viewState.setData(it)
+            }
         mReorderSubject
-                .switchMapCompletable { commands ->
-                    mInteractor.changeOrder(commands)
-                }
-                .subscribe()
+            .switchMapCompletable { commands ->
+                mInteractor.changeOrder(commands)
+            }
+            .subscribe()
     }
 
     override fun detachView(view: HomeFragmentView?) {
@@ -44,19 +47,19 @@ abstract class BaseHomeFragmentPresenter constructor(
     }
 
     fun onCommandUpdated(command: Command) =
-            mInteractor.updateCommand(command)
+        mInteractor.updateCommand(command)
 
     fun onCommandSwiped(id: Long) {
         mInteractor.getCommand(id)
-                .doOnSuccess {
-                    mInteractor.deleteCommand(it)
-                    viewState.showDeletedSnackbar(it)
-                }
-                .subscribe()
+            .doOnSuccess {
+                mInteractor.deleteCommand(it)
+                viewState.showDeletedSnackbar(it)
+            }
+            .subscribe()
     }
 
     fun onUndoDelete(command: Command) =
-            mInteractor.insertCommand(command)
+        mInteractor.insertCommand(command)
 
     fun onArgumentsClicked(args: CommandClickEventArgs) {
         when (args.argsType) {
@@ -105,33 +108,41 @@ abstract class BaseHomeFragmentPresenter constructor(
     fun buildAndDeploy(chainId: Long) {
         var disposable: Disposable? = null
         disposable = mScriptInteractor.buildScript(chainId)
-                .flatMap {
-                    if (mSettings.showMaskToast && it.resolvedFiles.isNotBlank()) {
-                        viewState.showInfoToast(it.resolvedFiles)
-                    }
-                    mScriptInteractor.deployScript(it.script)
+            .flatMap {
+                if (mSettings.showMaskToast && it.resolvedFiles.isNotBlank()) {
+                    viewState.showInfoToast(it.resolvedFiles)
                 }
-                .doOnSubscribe { viewState.toggleProgress(true) }
-                .doFinally {
-                    viewState.toggleProgress(false)
-                    disposable?.dispose()
+                mScriptInteractor.deployScript(it.script)
+            }
+            .doOnSubscribe { viewState.toggleProgress(true) }
+            .doFinally {
+                viewState.toggleProgress(false)
+                disposable?.dispose()
+            }
+            .subscribe({
+                if (it.isSuccess) {
+                    viewState.showRebootSnackbar()
+                } else {
+                    viewState.showInfoSnackbar(it)
                 }
-                .subscribe({
-                    if (it.isSuccess) {
-                        viewState.showRebootSnackbar()
-                    } else {
-                        viewState.showInfoSnackbar(it)
-                    }
-                }, {
-                    Timber.e(it)
-                    if (it.message!! == "files must not be null") {
-                        viewState.showInfoSnackbar(EventArgs(isSuccess = false,
-                                messageId = R.string.permission_denied_storage))
-                    } else {
-                        viewState.showInfoSnackbar(EventArgs(isSuccess = false,
-                                message = it.message))
-                    }
-                })
+            }, {
+                Timber.e(it)
+                if (it.message!! == "files must not be null") {
+                    viewState.showInfoSnackbar(
+                        EventArgs(
+                            isSuccess = false,
+                            messageId = R.string.permission_denied_storage
+                        )
+                    )
+                } else {
+                    viewState.showInfoSnackbar(
+                        EventArgs(
+                            isSuccess = false,
+                            message = it.message
+                        )
+                    )
+                }
+            })
     }
 
     fun onRebootRequested() {
@@ -144,32 +155,32 @@ abstract class BaseHomeFragmentPresenter constructor(
 
     fun reboot() {
         mScriptInteractor.rebootRecovery()
-                .doOnSubscribe { viewState.toggleProgress(true) }
-                .doOnSuccess {
-                    if (!it.isSuccess) {
-                        viewState.toggleProgress(false)
-                        viewState.showInfoSnackbar(it)
-                    }
+            .doOnSubscribe { viewState.toggleProgress(true) }
+            .doOnSuccess {
+                if (!it.isSuccess) {
+                    viewState.toggleProgress(false)
+                    viewState.showInfoSnackbar(it)
                 }
-                .subscribe()
+            }
+            .subscribe()
     }
 
     fun onExportClicked() = viewState.showExportDialog()
 
     fun exportCommands(fileName: String) {
         mInteractor.exportCommands(fileName)
-                .doOnSuccess { viewState.showInfoSnackbar(it) }
-                .doOnError { Timber.e(it) }
-                .subscribe()
+            .doOnSuccess { viewState.showInfoSnackbar(it) }
+            .doOnError { Timber.e(it) }
+            .subscribe()
     }
 
     fun onImportClicked() = viewState.showImportDialog()
 
     fun importCommands(fileName: String) {
         mInteractor.importCommands(fileName)
-                .doOnSuccess { viewState.showInfoSnackbar(it) }
-                .doOnError { Timber.e(it) }
-                .subscribe()
+            .doOnSuccess { viewState.showInfoSnackbar(it) }
+            .doOnError { Timber.e(it) }
+            .subscribe()
     }
 
     fun onOrderChanged(commands: List<Command>) = mReorderSubject.onNext(commands)

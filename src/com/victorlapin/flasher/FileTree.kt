@@ -18,8 +18,10 @@ class FileTree : Timber.DebugTree() {
             }
             val builder = StringBuilder()
 
-            val dt = SimpleDateFormat("YYYY-MM-dd HH-mm-ss",
-                    Locale.getDefault()).format(Date())
+            val dt = SimpleDateFormat(
+                "YYYY-MM-dd HH-mm-ss",
+                Locale.getDefault()
+            ).format(Date())
             builder.append("$dt: ")
 
             when (priority) {

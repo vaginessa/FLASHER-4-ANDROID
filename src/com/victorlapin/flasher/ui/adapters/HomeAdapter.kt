@@ -17,10 +17,10 @@ import kotlinx.android.synthetic.main.item_command.view.*
 import java.util.*
 
 class HomeAdapter constructor(
-        resources: ResourcesManager,
-        private val changeTypeListener: (Pair<Command, Int>) -> Unit,
-        private val argsClickListener: (CommandClickEventArgs) -> Unit,
-        private val itemInsertListener: (Int) -> Unit
+    resources: ResourcesManager,
+    private val changeTypeListener: (Pair<Command, Int>) -> Unit,
+    private val argsClickListener: (CommandClickEventArgs) -> Unit,
+    private val itemInsertListener: (Int) -> Unit
 ) : RecyclerView.Adapter<HomeAdapter.ViewHolder>() {
     private val mItems: ArrayList<Command> = arrayListOf()
     private val mCommands = resources.getStringArray(R.array.commands)
@@ -58,7 +58,7 @@ class HomeAdapter constructor(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =
-            ViewHolder(parent)
+        ViewHolder(parent)
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val channel = mItems[position]
@@ -75,7 +75,7 @@ class HomeAdapter constructor(
     override fun getItemId(position: Int): Long = mItems[position].id!!
 
     inner class ViewHolder(parent: ViewGroup) :
-            RecyclerView.ViewHolder(parent.inflate(R.layout.item_command)) {
+        RecyclerView.ViewHolder(parent.inflate(R.layout.item_command)) {
 
         fun bind(command: Command) {
             when (command.type) {
@@ -85,25 +85,33 @@ class HomeAdapter constructor(
                 Command.TYPE_FLASH_MASK -> itemView.image.setImageResource(R.drawable.folder_search)
             }
 
-            val adapter = ArrayAdapter<String>(itemView.context,
-                    R.layout.item_spinner,
-                    mCommands)
+            val adapter = ArrayAdapter<String>(
+                itemView.context,
+                R.layout.item_spinner,
+                mCommands
+            )
             adapter.setDropDownViewResource(R.layout.item_spinner_dropdown)
             itemView.spinner_type.adapter = adapter
             itemView.spinner_type.setSelection(command.type)
             itemView.spinner_type.onItemSelectedListener =
-                    object : AdapterView.OnItemSelectedListener {
-                        override fun onNothingSelected(parent: AdapterView<*>?) {}
-                        override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
-                            val pair = Pair(command.clone(), position)
-                            changeTypeListener(pair)
-                        }
+                object : AdapterView.OnItemSelectedListener {
+                    override fun onNothingSelected(parent: AdapterView<*>?) {}
+                    override fun onItemSelected(
+                        parent: AdapterView<*>,
+                        view: View,
+                        position: Int,
+                        id: Long
+                    ) {
+                        val pair = Pair(command.clone(), position)
+                        changeTypeListener(pair)
                     }
+                }
 
             if (command.type == Command.TYPE_FLASH_MASK) {
                 itemView.lbl_arg2.visible(true)
                 itemView.lbl_arg1.text = if (command.arg1 != null) command.arg1 else mEnterMaskText
-                itemView.lbl_arg2.text = if (command.arg2 != null) command.arg2 else mSelectFolderText
+                itemView.lbl_arg2.text =
+                    if (command.arg2 != null) command.arg2 else mSelectFolderText
             } else {
                 itemView.lbl_arg2.visible(false)
                 itemView.lbl_arg1.text = if (command.arg1 != null) command.arg1 else mDefaultArgText
@@ -126,14 +134,14 @@ class HomeAdapter constructor(
 
         fun onSelected() {
             itemView.card.animate()
-                    .translationZ(16F)
-                    .start()
+                .translationZ(16F)
+                .start()
         }
 
         fun onCleared() {
             itemView.card.animate()
-                    .translationZ(0F)
-                    .start()
+                .translationZ(0F)
+                .start()
         }
     }
 

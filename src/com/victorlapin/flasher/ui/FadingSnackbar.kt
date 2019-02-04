@@ -47,20 +47,20 @@ class FadingSnackbar(context: Context, attrs: AttributeSet) : FrameLayout(contex
     fun dismiss() {
         if (visibility == VISIBLE && alpha == 1f) {
             animate()
-                    .alpha(0f)
-                    .withEndAction { visibility = GONE }
-                    .duration = EXIT_DURATION
+                .alpha(0f)
+                .withEndAction { visibility = GONE }
+                .duration = EXIT_DURATION
         }
     }
 
     fun show(
-            @StringRes messageId: Int? = null,
-            messageText: CharSequence? = null,
-            @StringRes actionId: Int? = null,
-            longDuration: Boolean = true,
-            isIndefinite: Boolean = false,
-            actionClick: () -> Unit = { dismiss() },
-            dismissListener: () -> Unit = { }
+        @StringRes messageId: Int? = null,
+        messageText: CharSequence? = null,
+        @StringRes actionId: Int? = null,
+        longDuration: Boolean = true,
+        isIndefinite: Boolean = false,
+        actionClick: () -> Unit = { dismiss() },
+        dismissListener: () -> Unit = { }
     ) {
         message.text = messageText ?: context.getString(messageId!!)
         if (actionId != null) {
@@ -77,8 +77,8 @@ class FadingSnackbar(context: Context, attrs: AttributeSet) : FrameLayout(contex
         alpha = 0f
         visibility = VISIBLE
         animate()
-                .alpha(1f)
-                .duration = ENTER_DURATION
+            .alpha(1f)
+            .duration = ENTER_DURATION
         removeCallbacks(callback)
         if (isIndefinite) {
             callback = null

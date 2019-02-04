@@ -6,9 +6,9 @@ import ru.terrakok.cicerone.Screen
 data class AboutClickEventArgs(val screen: Screen)
 
 data class EventArgs(
-        val isSuccess: Boolean,
-        val message: String? = null,
-        val messageId: Int? = null
+    val isSuccess: Boolean,
+    val message: String? = null,
+    val messageId: Int? = null
 )
 
 data class CommandClickEventArgs(val command: Command, val argsType: Int) {

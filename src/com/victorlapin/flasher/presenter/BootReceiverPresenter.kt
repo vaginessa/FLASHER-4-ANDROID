@@ -6,14 +6,14 @@ import com.victorlapin.flasher.model.interactor.AlarmInteractor
 import timber.log.Timber
 
 class BootReceiverPresenter(
-        private val mSettings: SettingsManager,
-        private val mServices: ServicesManager,
-        private val mAlarmInteractor: AlarmInteractor
+    private val mSettings: SettingsManager,
+    private val mServices: ServicesManager,
+    private val mAlarmInteractor: AlarmInteractor
 ) {
     fun resetAlarm() {
         mAlarmInteractor.setAlarm()
-                .doOnError { Timber.e(it) }
-                .subscribe()
+            .doOnError { Timber.e(it) }
+            .subscribe()
     }
 
     fun showNotification() {

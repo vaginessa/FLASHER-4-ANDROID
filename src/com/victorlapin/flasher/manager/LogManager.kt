@@ -5,7 +5,7 @@ import com.victorlapin.flasher.FileTree
 import timber.log.Timber
 
 class LogManager(
-        private val mSettings: SettingsManager
+    private val mSettings: SettingsManager
 ) {
     private val mTree = FileTree()
 
