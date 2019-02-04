@@ -6,7 +6,7 @@
 
     <PreferenceCategory android:title="@string/pref_category_appearance">
 
-        <ListPreference
+        <Preference
             android:key="interface_theme"
             android:title="@string/pref_title_theme" />
 

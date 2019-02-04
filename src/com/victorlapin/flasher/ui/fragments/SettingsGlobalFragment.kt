@@ -10,13 +10,14 @@ import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
 import androidx.documentfile.provider.DocumentFile
 import androidx.preference.EditTextPreference
-import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.SwitchPreference
 import com.afollestad.assent.Permission
 import com.afollestad.assent.askForPermissions
 import com.afollestad.assent.runWithPermissions
+import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.list.listItemsSingleChoice
 import com.victorlapin.flasher.Const
 import com.victorlapin.flasher.R
 import com.victorlapin.flasher.manager.LogManager
@@ -51,8 +52,8 @@ class SettingsGlobalFragment : PreferenceFragmentCompat() {
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         addPreferencesFromResource(R.xml.preferences_global)
 
-        val themePreference = findPreference(SettingsManager.KEY_THEME) as ListPreference
-        val entries = arrayOf(
+        val themePreference = findPreference(SettingsManager.KEY_THEME)
+        val entries = listOf(
             mResources.getString(R.string.theme_light),
             mResources.getString(R.string.theme_light_pixel),
             mResources.getString(R.string.theme_dark),
@@ -60,7 +61,7 @@ class SettingsGlobalFragment : PreferenceFragmentCompat() {
             mResources.getString(R.string.theme_black),
             mResources.getString(R.string.theme_black_pixel)
         )
-        val values = arrayOf(
+        val values = listOf(
             Integer.toString(R.style.AppTheme_Light),
             Integer.toString(R.style.AppTheme_Light_Pixel),
             Integer.toString(R.style.AppTheme_Dark),
@@ -68,15 +69,23 @@ class SettingsGlobalFragment : PreferenceFragmentCompat() {
             Integer.toString(R.style.AppTheme_Black),
             Integer.toString(R.style.AppTheme_Black_Pixel)
         )
+        val initialSelection = values.indexOf(mSettings.theme.toString())
 
-        val value = mSettings.themeString
-
-        themePreference.entries = entries
-        themePreference.entryValues = values
-        themePreference.value = value
-        themePreference.setOnPreferenceChangeListener { _, newValue ->
-            (activity as BaseActivity)
-                .updateTheme(Integer.valueOf(newValue as String))
+        themePreference.setOnPreferenceClickListener {
+            MaterialDialog(context!!).show {
+                title(R.string.pref_title_theme)
+                listItemsSingleChoice(
+                    items = entries,
+                    initialSelection = initialSelection,
+                    waitForPositiveButton = false
+                ) { dialog, index, _ ->
+                    dialog.dismiss()
+                    val theme = Integer.valueOf(values[index])
+                    mSettings.themeString = values[index]
+                    (activity as BaseActivity).updateTheme(theme)
+                }
+                negativeButton(android.R.string.cancel)
+            }
             true
         }
 

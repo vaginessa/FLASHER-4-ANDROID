@@ -2,9 +2,7 @@ package com.victorlapin.flasher.manager
 
 import android.content.Context
 import androidx.preference.PreferenceManager
-import com.victorlapin.flasher.Const
 import com.victorlapin.flasher.R
-import java.io.File
 
 class SettingsManager(context: Context) {
     companion object {
@@ -35,8 +33,9 @@ class SettingsManager(context: Context) {
 
     private val mPrefs = PreferenceManager.getDefaultSharedPreferences(context)
 
-    val themeString: String
+    var themeString: String
         get() = mPrefs.getString(KEY_THEME, R.style.AppTheme_Light.toString())!!
+        set(theme) = mPrefs.edit().putString(KEY_THEME, theme).apply()
 
     val theme: Int
         get() = Integer.parseInt(themeString)
