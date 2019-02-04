@@ -32,6 +32,7 @@ abstract class BaseHomeFragmentPresenter constructor(
         super.attachView(view)
         mDisposable = mInteractor.getCommands()
             .subscribe {
+                viewState.toggleEmptyView(it.isEmpty())
                 viewState.setData(it)
             }
         mReorderSubject

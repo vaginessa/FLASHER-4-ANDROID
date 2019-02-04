@@ -48,14 +48,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <include
-            android:id="@+id/empty_view"
-            layout="@layout/include_empty_view"
-            app:layout_constraintBottom_toBottomOf="@id/list"
-            app:layout_constraintEnd_toEndOf="@id/list"
-            app:layout_constraintStart_toStartOf="@id/list"
-            app:layout_constraintTop_toTopOf="@id/list" />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.google.android.material.bottomappbar.BottomAppBar

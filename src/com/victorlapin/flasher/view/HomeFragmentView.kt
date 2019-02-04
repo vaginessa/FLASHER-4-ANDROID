@@ -57,4 +57,6 @@ interface HomeFragmentView : MvpView {
 
     @StateStrategyType(AddToEndSingleStrategy::class)
     fun askFingerprint()
+
+    fun toggleEmptyView(isVisible: Boolean)
 }

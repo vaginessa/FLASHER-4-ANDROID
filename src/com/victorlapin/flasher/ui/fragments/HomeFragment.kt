@@ -19,6 +19,7 @@ import com.afollestad.materialdialogs.input.input
 import com.afollestad.materialdialogs.list.listItemsMultiChoice
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
+import com.google.android.material.appbar.AppBarLayout
 import com.victorlapin.flasher.Const
 import com.victorlapin.flasher.R
 import com.victorlapin.flasher.flatten
@@ -166,8 +167,14 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
     override fun setData(commands: List<Command>) {
         list.post {
             (list.adapter as HomeAdapter).setData(commands)
-            empty_view?.visible(commands.isEmpty())
         }
+    }
+
+    override fun toggleEmptyView(isVisible: Boolean) {
+        empty_view?.visible(isVisible)
+        val params = toolbar_title.layoutParams as AppBarLayout.LayoutParams
+        params.scrollFlags = if (isVisible) 0 else AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL
+        toolbar_title.layoutParams = params
     }
 
     override fun showWipeDialog(command: Command) {
