@@ -56,19 +56,23 @@ class FadingSnackbar(context: Context, attrs: AttributeSet) : FrameLayout(contex
     fun show(
         @StringRes messageId: Int? = null,
         messageText: CharSequence? = null,
+        formatArg: Any? = null,
         @StringRes actionId: Int? = null,
         longDuration: Boolean = true,
         isIndefinite: Boolean = false,
-        actionClick: () -> Unit = { dismiss() },
+        actionClick: () -> Unit = { },
         dismissListener: () -> Unit = { }
     ) {
-        message.text = messageText ?: context.getString(messageId!!)
+        message.text = messageText ?: context.getString(messageId!!, formatArg)
         if (actionId != null) {
             action.run {
                 visibility = VISIBLE
                 text = context.getString(actionId)
                 setOnClickListener {
+                    removeCallbacks(callback)
                     actionClick()
+                    dismiss()
+                    dismissListener()
                 }
             }
         } else {
