@@ -9,7 +9,6 @@ import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
 import androidx.documentfile.provider.DocumentFile
-import androidx.preference.EditTextPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.SwitchPreference
@@ -17,6 +16,7 @@ import com.afollestad.assent.Permission
 import com.afollestad.assent.askForPermissions
 import com.afollestad.assent.runWithPermissions
 import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.input.input
 import com.afollestad.materialdialogs.list.listItemsSingleChoice
 import com.victorlapin.flasher.Const
 import com.victorlapin.flasher.R
@@ -117,16 +117,24 @@ class SettingsGlobalFragment : PreferenceFragmentCompat() {
         }
 
         val backupsToKeepPreference = findPreference(SettingsManager.KEY_BACKUPS_TO_KEEP)
-                as EditTextPreference
         backupsToKeepPreference.summary = mSettings.backupsToKeep.toString()
-        backupsToKeepPreference.setOnPreferenceChangeListener { it, newValue ->
-            try {
-                val i = newValue.toString().trim().toInt()
-                it.summary = i.toString()
-                true
-            } catch (ignore: Exception) {
-                false
-            }
+        backupsToKeepPreference.setOnPreferenceClickListener { pref ->
+            MaterialDialog(context!!)
+                .title(R.string.pref_title_backups_to_keep)
+                .input(prefill = mSettings.backupsToKeep.toString()) { _, text ->
+                    try {
+                        val i = text.toString().trim().toInt()
+                        if (i > 0) {
+                            mSettings.backupsToKeep = i
+                            pref.summary = i.toString()
+                        }
+                    } catch (ignore: Exception) {
+                    }
+                }
+                .positiveButton(android.R.string.ok)
+                .negativeButton(android.R.string.cancel)
+                .show()
+            true
         }
 
         mBackupsPathPreference = findPreference(SettingsManager.KEY_BACKUPS_PATH)

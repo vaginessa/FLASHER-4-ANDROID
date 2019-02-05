@@ -79,8 +79,9 @@ class SettingsManager(context: Context) {
     val deleteObsoleteBackups: Boolean
         get() = mPrefs.getBoolean(KEY_DELETE_OLD_BACKUPS, false)
 
-    val backupsToKeep: Int
+    var backupsToKeep: Int
         get() = mPrefs.getString(KEY_BACKUPS_TO_KEEP, "2")!!.toInt()
+        set(value) = mPrefs.edit().putString(KEY_BACKUPS_TO_KEEP, value.toString()).apply()
 
     var enableFileLog: Boolean
         get() = mPrefs.getBoolean(KEY_ENABLE_FILE_LOG, false)

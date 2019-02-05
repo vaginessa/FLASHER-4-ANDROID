@@ -36,7 +36,7 @@
             android:key="delete_old_backups"
             android:title="@string/pref_title_delete_old_backups" />
 
-        <EditTextPreference
+        <Preference
             android:defaultValue="2"
             android:dependency="delete_old_backups"
             android:key="backups_to_keep"
