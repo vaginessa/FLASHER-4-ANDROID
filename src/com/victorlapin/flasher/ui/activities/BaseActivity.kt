@@ -3,7 +3,9 @@ package com.victorlapin.flasher.ui.activities
 import android.os.Bundle
 import android.os.Handler
 import androidx.annotation.StyleRes
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
+import androidx.lifecycle.OnLifecycleEvent
 import com.arellomobile.mvp.MvpAppCompatActivity
 import com.victorlapin.flasher.manager.SettingsManager
 import com.victorlapin.flasher.setNavigator
@@ -37,9 +39,8 @@ abstract class BaseActivity : MvpAppCompatActivity(), LifecycleObserver {
         this.setNavigator(mNavigationHolder, navigator)
     }
 
-    override fun onResume() {
-        super.onResume()
-
+    @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
+    fun checkTheme() {
         val newTheme = mSettings.theme
         if (mCurrentTheme != newTheme) {
             mHandler.post { updateTheme(newTheme) }
