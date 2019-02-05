@@ -1,5 +1,6 @@
 package com.victorlapin.flasher.ui.activities
 
+import android.os.Bundle
 import com.afollestad.materialdialogs.MaterialDialog
 import com.arellomobile.mvp.MvpAppCompatActivity
 import com.arellomobile.mvp.presenter.InjectPresenter
@@ -11,12 +12,11 @@ import com.victorlapin.flasher.presenter.RebootDialogActivityPresenter
 import com.victorlapin.flasher.ui.Biometric
 import com.victorlapin.flasher.view.RebootDialogActivityView
 import org.koin.android.ext.android.get
-import org.koin.android.ext.android.getKoin
 import org.koin.android.ext.android.inject
+import org.koin.androidx.scope.ext.android.bindScope
+import org.koin.androidx.scope.ext.android.createScope
 
 class RebootDialogActivity : MvpAppCompatActivity(), RebootDialogActivityView {
-    private val mScope = getKoin().createScope(Const.ACTIVITY_REBOOT_DIALOG)
-
     @InjectPresenter
     lateinit var presenter: RebootDialogActivityPresenter
 
@@ -25,9 +25,9 @@ class RebootDialogActivity : MvpAppCompatActivity(), RebootDialogActivityView {
 
     private val mServices by inject<ServicesManager>()
 
-    override fun onStop() {
-        super.onStop()
-        mScope.close()
+    override fun onCreate(savedInstanceState: Bundle?) {
+        bindScope(createScope(Const.ACTIVITY_REBOOT_DIALOG))
+        super.onCreate(savedInstanceState)
     }
 
     override fun showRebootDialog() {
