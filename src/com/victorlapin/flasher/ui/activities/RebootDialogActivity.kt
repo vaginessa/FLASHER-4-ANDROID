@@ -8,6 +8,7 @@ import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.victorlapin.flasher.Const
 import com.victorlapin.flasher.R
 import com.victorlapin.flasher.manager.ServicesManager
+import com.victorlapin.flasher.manager.SettingsManager
 import com.victorlapin.flasher.presenter.RebootDialogActivityPresenter
 import com.victorlapin.flasher.ui.Biometric
 import com.victorlapin.flasher.view.RebootDialogActivityView
@@ -24,9 +25,18 @@ class RebootDialogActivity : MvpAppCompatActivity(), RebootDialogActivityView {
     fun providePresenter() = get<RebootDialogActivityPresenter>()
 
     private val mServices by inject<ServicesManager>()
+    private val mSettings by inject<SettingsManager>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         bindScope(createScope(Const.ACTIVITY_REBOOT_DIALOG))
+        val theme = when (mSettings.theme) {
+            R.style.AppTheme_Light -> R.style.AppTheme_Transparent_Light
+            R.style.AppTheme_Light_Pixel -> R.style.AppTheme_Transparent_Light_Pixel
+            R.style.AppTheme_Dark,
+            R.style.AppTheme_Black -> R.style.AppTheme_Transparent_Dark
+            else -> R.style.AppTheme_Transparent_Dark_Pixel
+        }
+        setTheme(theme)
         super.onCreate(savedInstanceState)
     }
 
