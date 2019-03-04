@@ -8,6 +8,7 @@ import androidx.annotation.StringRes
 import androidx.biometric.BiometricConstants
 import androidx.biometric.BiometricPrompt
 import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.FragmentManager
 import timber.log.Timber
 import java.util.concurrent.Executor
 
@@ -65,6 +66,18 @@ object Biometric {
             .authenticate(builder.build())
     }
 
+    fun cancelFingerprint(fm: FragmentManager) {
+        fm.findFragmentByTag(BIOMETRIC_FRAGMENT_TAG)?.let {
+            fm.beginTransaction().remove(it).commitAllowingStateLoss()
+        }
+        fm.findFragmentByTag(DIALOG_FRAGMENT_TAG)?.let {
+            fm.beginTransaction().remove(it).commitAllowingStateLoss()
+        }
+        fm.findFragmentByTag(FINGERPRINT_HELPER_FRAGMENT_TAG)?.let {
+            fm.beginTransaction().remove(it).commitAllowingStateLoss()
+        }
+    }
+
     private class HandlerExecutor : Executor {
         private val mHandler = Handler()
 
@@ -72,4 +85,8 @@ object Biometric {
             mHandler.post(command)
         }
     }
+
+    private const val DIALOG_FRAGMENT_TAG = "FingerprintDialogFragment"
+    private const val FINGERPRINT_HELPER_FRAGMENT_TAG = "FingerprintHelperFragment"
+    private const val BIOMETRIC_FRAGMENT_TAG = "BiometricFragment"
 }

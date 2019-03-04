@@ -35,6 +35,9 @@ class MainActivity : BaseActivity(), MainActivityView {
         )
     }
 
+    override fun cancelFingerprint() =
+        Biometric.cancelFingerprint(supportFragmentManager)
+
     override val navigator = object : SupportAppNavigator(this, R.id.fragment_container) {
         override fun setupFragmentTransaction(
             command: Command?,

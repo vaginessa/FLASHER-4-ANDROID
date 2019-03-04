@@ -31,6 +31,11 @@ class MainActivityPresenter constructor(
         }
     }
 
+    override fun detachView(view: MainActivityView?) {
+        viewState.cancelFingerprint()
+        super.detachView(view)
+    }
+
     private fun selectHome() = mRouter.newRootScreen(HomeScreen())
 
     fun selectAbout() = mRouter.navigateTo(AboutScreen())
