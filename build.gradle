@@ -33,8 +33,8 @@ android {
         applicationId "com.victorlapin.flasher"
         minSdkVersion 24
         targetSdkVersion 28
-        versionCode 45
-        versionName "1.3.2-release"
+        versionCode 46
+        versionName "1.3.3-release"
         archivesBaseName = "Flasher"
         resConfigs "en", "ru"
 
