@@ -17,13 +17,15 @@ class App : Application() {
     private val mServices by inject<ServicesManager>()
     private val mLogs by inject<LogManager>()
 
+    init {
+        Shell.Config.verboseLogging(BuildConfig.DEBUG)
+    }
+
     override fun onCreate() {
         super.onCreate()
         val logger = if (BuildConfig.DEBUG) AndroidLogger() else EmptyLogger()
         startKoin(androidContext = this, modules = allModules, logger = logger)
         createNotificationChannels()
-        Shell.Config.setContainer(Shell.Config.newContainer())
-        Shell.Config.verboseLogging(BuildConfig.DEBUG)
         mLogs.onStartup()
     }
 
