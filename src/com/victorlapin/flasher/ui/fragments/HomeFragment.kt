@@ -40,17 +40,18 @@ import kotlinx.android.synthetic.main.include_progress.*
 import kotlinx.android.synthetic.main.include_toolbar_center.*
 import org.koin.android.ext.android.get
 import org.koin.android.ext.android.inject
+import org.koin.androidx.scope.getFragmentScope
 import java.io.File
 
 open class HomeFragment : BaseFragment(), HomeFragmentView {
     override val layoutRes = R.layout.fragment_home
-    override val scopeName = Const.FRAGMENT_HOME
 
     @InjectPresenter
     lateinit var presenter: BaseHomeFragmentPresenter
 
     @ProvidePresenter
-    open fun providePresenter(): BaseHomeFragmentPresenter = get<DefaultHomePresenter>()
+    open fun providePresenter(): BaseHomeFragmentPresenter =
+        getFragmentScope().get<DefaultHomePresenter>()
 
     private val mServices by inject<ServicesManager>()
     protected val mResources by inject<ResourcesManager>()

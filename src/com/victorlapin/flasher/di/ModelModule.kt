@@ -22,7 +22,7 @@ import com.victorlapin.flasher.model.repository.RecoveryScriptRepository
 import com.victorlapin.flasher.model.serialization.AnnotationExclusionStrategy
 import io.reactivex.Completable
 import io.reactivex.schedulers.Schedulers
-import org.koin.dsl.module.module
+import org.koin.dsl.module
 
 val modelModule = module {
     single {

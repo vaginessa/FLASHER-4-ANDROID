@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
-import com.victorlapin.flasher.Const
 import com.victorlapin.flasher.R
 import com.victorlapin.flasher.model.repository.AboutRepository
 import com.victorlapin.flasher.presenter.AboutFragmentPresenter
@@ -16,16 +15,16 @@ import com.victorlapin.flasher.view.AboutFragmentView
 import kotlinx.android.synthetic.main.fragment_list.*
 import kotlinx.android.synthetic.main.include_toolbar.*
 import org.koin.android.ext.android.get
+import org.koin.androidx.scope.getFragmentScope
 
 class AboutFragment : BaseFragment(), AboutFragmentView {
     override val layoutRes = R.layout.fragment_list
-    override val scopeName = Const.FRAGMENT_ABOUT
 
     @InjectPresenter
     lateinit var presenter: AboutFragmentPresenter
 
     @ProvidePresenter
-    fun providePresenter() = get<AboutFragmentPresenter>()
+    fun providePresenter() = getFragmentScope().get<AboutFragmentPresenter>()
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)

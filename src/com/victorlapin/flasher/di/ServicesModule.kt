@@ -1,9 +1,11 @@
 package com.victorlapin.flasher.di
 
-import com.victorlapin.flasher.Const
 import com.victorlapin.flasher.presenter.ScriptTileServicePresenter
-import org.koin.dsl.module.module
+import com.victorlapin.flasher.ui.services.ScriptTileService
+import org.koin.dsl.module
 
 val servicesModule = module {
-    scope(Const.SERVICE_SCRIPT) { ScriptTileServicePresenter(get(), get()) }
+    scope<ScriptTileService> {
+        scoped { ScriptTileServicePresenter(get(), get()) }
+    }
 }

@@ -5,30 +5,28 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.arellomobile.mvp.MvpAppCompatActivity
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
-import com.victorlapin.flasher.Const
 import com.victorlapin.flasher.R
 import com.victorlapin.flasher.manager.ServicesManager
 import com.victorlapin.flasher.manager.SettingsManager
 import com.victorlapin.flasher.presenter.RebootDialogActivityPresenter
 import com.victorlapin.flasher.ui.Biometric
 import com.victorlapin.flasher.view.RebootDialogActivityView
-import org.koin.android.ext.android.get
 import org.koin.android.ext.android.inject
-import org.koin.androidx.scope.ext.android.bindScope
-import org.koin.androidx.scope.ext.android.createScope
+import org.koin.androidx.scope.bindScope
+import org.koin.androidx.scope.getActivityScope
 
 class RebootDialogActivity : MvpAppCompatActivity(), RebootDialogActivityView {
     @InjectPresenter
     lateinit var presenter: RebootDialogActivityPresenter
 
     @ProvidePresenter
-    fun providePresenter() = get<RebootDialogActivityPresenter>()
+    fun providePresenter() = getActivityScope().get<RebootDialogActivityPresenter>()
 
     private val mServices by inject<ServicesManager>()
     private val mSettings by inject<SettingsManager>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        bindScope(createScope(Const.ACTIVITY_REBOOT_DIALOG))
+        bindScope(getActivityScope())
         val theme = when (mSettings.theme) {
             R.style.AppTheme_Light -> R.style.AppTheme_Transparent_Light
             R.style.AppTheme_Light_Pixel -> R.style.AppTheme_Transparent_Light_Pixel

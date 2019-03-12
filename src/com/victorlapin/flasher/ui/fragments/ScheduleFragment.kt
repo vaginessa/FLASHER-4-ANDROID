@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.text.InputType
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.input.input
-import com.victorlapin.flasher.Const
 import com.victorlapin.flasher.R
 import com.victorlapin.flasher.manager.SettingsManager
 import com.victorlapin.flasher.model.database.entity.Chain
@@ -13,17 +12,17 @@ import com.victorlapin.flasher.presenter.BaseHomeFragmentPresenter
 import com.victorlapin.flasher.presenter.ScheduleHomePresenter
 import kotlinx.android.synthetic.main.fragment_schedule.*
 import kotlinx.android.synthetic.main.include_schedule_settings.*
-import org.koin.android.ext.android.get
 import org.koin.android.ext.android.inject
+import org.koin.androidx.scope.getFragmentScope
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
 class ScheduleFragment : HomeFragment() {
     override val layoutRes = R.layout.fragment_schedule
-    override val scopeName = Const.FRAGMENT_SCHEDULE
 
-    override fun providePresenter(): BaseHomeFragmentPresenter = get<ScheduleHomePresenter>()
+    override fun providePresenter(): BaseHomeFragmentPresenter =
+        getFragmentScope().get<ScheduleHomePresenter>()
 
     private val mSettings by inject<SettingsManager>()
     private val mDateTimeFormatter = SimpleDateFormat

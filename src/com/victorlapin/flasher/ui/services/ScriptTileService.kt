@@ -3,17 +3,15 @@ package com.victorlapin.flasher.ui.services
 import android.content.Intent
 import android.service.quicksettings.TileService
 import android.widget.Toast
-import com.victorlapin.flasher.Const
 import com.victorlapin.flasher.model.EventArgs
 import com.victorlapin.flasher.presenter.ScriptTileServicePresenter
 import com.victorlapin.flasher.ui.activities.RebootDialogActivity
 import com.victorlapin.flasher.view.ScriptTileServiceView
 import org.koin.android.ext.android.getKoin
-import org.koin.android.ext.android.inject
 
 class ScriptTileService : TileService(), ScriptTileServiceView {
-    private val mScope = getKoin().getOrCreateScope(Const.SERVICE_SCRIPT)
-    private val mPresenter by inject<ScriptTileServicePresenter>()
+    private val mScope = getKoin().getOrCreateScopeWithType<ScriptTileService>("")
+    private val mPresenter by mScope.inject<ScriptTileServicePresenter>()
 
     override fun onClick() {
         unlockAndRun {

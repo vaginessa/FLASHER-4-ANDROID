@@ -9,9 +9,11 @@ import com.victorlapin.flasher.di.allModules
 import com.victorlapin.flasher.manager.LogManager
 import com.victorlapin.flasher.manager.ServicesManager
 import org.koin.android.ext.android.inject
-import org.koin.android.ext.android.startKoin
+import org.koin.android.ext.koin.androidContext
 import org.koin.android.logger.AndroidLogger
-import org.koin.log.EmptyLogger
+import org.koin.core.context.startKoin
+import org.koin.core.logger.EmptyLogger
+import org.koin.core.logger.Level
 
 class App : Application() {
     private val mServices by inject<ServicesManager>()
@@ -23,8 +25,14 @@ class App : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        val logger = if (BuildConfig.DEBUG) AndroidLogger() else EmptyLogger()
-        startKoin(androidContext = this, modules = allModules, logger = logger)
+        startKoin {
+            androidContext(this@App)
+            logger(
+                level = Level.DEBUG,
+                logger = if (BuildConfig.DEBUG) AndroidLogger() else EmptyLogger()
+            )
+            modules(allModules)
+        }
         createNotificationChannels()
         mLogs.onStartup()
     }

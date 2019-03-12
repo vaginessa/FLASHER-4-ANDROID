@@ -5,15 +5,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.arellomobile.mvp.MvpAppCompatFragment
-import org.koin.androidx.scope.ext.android.bindScope
-import org.koin.androidx.scope.ext.android.createScope
+import org.koin.androidx.scope.bindScope
+import org.koin.androidx.scope.getFragmentScope
 
 abstract class BaseFragment : MvpAppCompatFragment() {
     abstract val layoutRes: Int
-    abstract val scopeName: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        bindScope(createScope(scopeName))
+        bindScope(getFragmentScope())
         super.onCreate(savedInstanceState)
     }
 
