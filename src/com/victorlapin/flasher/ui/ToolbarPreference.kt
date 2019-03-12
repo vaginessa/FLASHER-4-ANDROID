@@ -6,8 +6,8 @@ import androidx.preference.Preference
 import androidx.preference.PreferenceViewHolder
 import com.victorlapin.flasher.R
 import kotlinx.android.synthetic.main.include_toolbar.view.*
-import org.koin.standalone.KoinComponent
-import org.koin.standalone.inject
+import org.koin.core.KoinComponent
+import org.koin.core.inject
 import ru.terrakok.cicerone.Router
 
 class ToolbarPreference @JvmOverloads constructor(

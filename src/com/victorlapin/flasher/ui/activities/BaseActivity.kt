@@ -11,15 +11,14 @@ import com.victorlapin.flasher.manager.SettingsManager
 import com.victorlapin.flasher.setNavigator
 import kotlinx.android.synthetic.main.include_toolbar.*
 import org.koin.android.ext.android.inject
-import org.koin.androidx.scope.ext.android.bindScope
-import org.koin.androidx.scope.ext.android.createScope
+import org.koin.androidx.scope.bindScope
+import org.koin.androidx.scope.getActivityScope
 import ru.terrakok.cicerone.NavigatorHolder
 import ru.terrakok.cicerone.android.support.SupportAppNavigator
 
 abstract class BaseActivity : MvpAppCompatActivity(), LifecycleObserver {
     abstract val layoutRes: Int
     abstract val navigator: SupportAppNavigator?
-    abstract val scopeName: String
 
     private val mNavigationHolder by inject<NavigatorHolder>()
     private val mSettings by inject<SettingsManager>()
@@ -29,7 +28,7 @@ abstract class BaseActivity : MvpAppCompatActivity(), LifecycleObserver {
     private val mHandler = Handler()
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        bindScope(createScope(scopeName))
+        bindScope(getActivityScope())
         mCurrentTheme = mSettings.theme
         setTheme(mCurrentTheme)
         super.onCreate(savedInstanceState)

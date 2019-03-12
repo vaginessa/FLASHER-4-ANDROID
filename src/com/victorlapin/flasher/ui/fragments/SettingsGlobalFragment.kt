@@ -31,10 +31,10 @@ import com.victorlapin.flasher.ui.activities.BaseActivity
 import com.victorlapin.flasher.ui.activities.MainActivity
 import org.koin.android.ext.android.getKoin
 import org.koin.android.ext.android.inject
-import org.koin.core.scope.Scope
+import org.koin.core.scope.ScopeInstance
 
 class SettingsGlobalFragment : PreferenceFragmentCompat() {
-    private lateinit var mScope: Scope
+    private lateinit var mScope: ScopeInstance
     private val mSettings by inject<SettingsManager>()
     private val mResources by inject<ResourcesManager>()
     private val mServices by inject<ServicesManager>()

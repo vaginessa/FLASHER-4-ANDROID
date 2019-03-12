@@ -12,7 +12,7 @@ import com.victorlapin.flasher.Const
 import com.victorlapin.flasher.R
 import com.victorlapin.flasher.manager.SettingsManager
 import org.koin.android.ext.android.inject
-import org.koin.standalone.KoinComponent
+import org.koin.core.KoinComponent
 
 abstract class RoundedBottomSheetDialogFragment : BottomSheetDialogFragment(),
     KoinComponent {
