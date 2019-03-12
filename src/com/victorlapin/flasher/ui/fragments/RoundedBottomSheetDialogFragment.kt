@@ -8,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.victorlapin.flasher.Const
 import com.victorlapin.flasher.R
 import com.victorlapin.flasher.manager.SettingsManager
 import org.koin.android.ext.android.inject
@@ -18,7 +17,6 @@ abstract class RoundedBottomSheetDialogFragment : BottomSheetDialogFragment(),
     KoinComponent {
     abstract val layoutRes: Int
 
-    private val mScope = getKoin().getOrCreateScope(Const.FRAGMENT_BOTTOM)
     private val mSettings by inject<SettingsManager>()
 
     var dismissListener: () -> Unit = {}
@@ -43,6 +41,5 @@ abstract class RoundedBottomSheetDialogFragment : BottomSheetDialogFragment(),
     override fun onDismiss(dialog: DialogInterface?) {
         super.onDismiss(dialog)
         dismissListener()
-        mScope.close()
     }
 }

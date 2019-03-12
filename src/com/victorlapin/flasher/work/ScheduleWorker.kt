@@ -5,7 +5,6 @@ import androidx.work.Constraints
 import androidx.work.OneTimeWorkRequest
 import androidx.work.RxWorker
 import androidx.work.WorkerParameters
-import com.victorlapin.flasher.Const
 import com.victorlapin.flasher.R
 import com.victorlapin.flasher.manager.ServicesManager
 import com.victorlapin.flasher.manager.SettingsManager
@@ -42,7 +41,6 @@ class ScheduleWorker(context: Context, params: WorkerParameters) :
         .onErrorReturnItem(Result.retry())
         .doOnSubscribe {
             Timber.i("Schedule worker started")
-            getKoin().createScope(Const.WORKER_SCHEDULE)
         }
         .doOnError {
             Timber.e(it)
@@ -59,7 +57,6 @@ class ScheduleWorker(context: Context, params: WorkerParameters) :
         }
         .doFinally {
             Timber.i("Schedule worker finished")
-            getKoin().getScope(Const.WORKER_SCHEDULE).close()
         }
 
     companion object {

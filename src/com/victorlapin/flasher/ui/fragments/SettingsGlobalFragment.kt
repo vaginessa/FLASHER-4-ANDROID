@@ -29,12 +29,9 @@ import com.victorlapin.flasher.model.interactor.RecoveryScriptInteractor
 import com.victorlapin.flasher.ui.Biometric
 import com.victorlapin.flasher.ui.activities.BaseActivity
 import com.victorlapin.flasher.ui.activities.MainActivity
-import org.koin.android.ext.android.getKoin
 import org.koin.android.ext.android.inject
-import org.koin.core.scope.ScopeInstance
 
 class SettingsGlobalFragment : PreferenceFragmentCompat() {
-    private lateinit var mScope: ScopeInstance
     private val mSettings by inject<SettingsManager>()
     private val mResources by inject<ResourcesManager>()
     private val mServices by inject<ServicesManager>()
@@ -43,11 +40,6 @@ class SettingsGlobalFragment : PreferenceFragmentCompat() {
     private val mAlarmInteractor by inject<AlarmInteractor>()
 
     private lateinit var mBackupsPathPreference: Preference
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        mScope = getKoin().createScope(Const.FRAGMENT_SETTINGS)
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         addPreferencesFromResource(R.xml.preferences_global)
@@ -226,11 +218,6 @@ class SettingsGlobalFragment : PreferenceFragmentCompat() {
             fpRebootPreference.isChecked = false
             fpRebootPreference.isEnabled = false
         }
-    }
-
-    override fun onStop() {
-        super.onStop()
-        mScope.close()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, intent: Intent?) {
