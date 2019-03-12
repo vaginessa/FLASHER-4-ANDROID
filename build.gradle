@@ -9,7 +9,7 @@ buildscript {
     apply from: 'repos.gradle'
     addRepos(repositories)
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.4.0-beta05'
+        classpath 'com.android.tools.build:gradle:3.4.0-rc01'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$version_kotlin"
         classpath 'com.google.android.gms:oss-licenses-plugin:0.9.4'
     }
@@ -129,7 +129,7 @@ dependencies {
     implementation "com.github.topjohnwu.libsu:io:2.3.1"
     implementation "com.google.code.gson:gson:2.8.5"
     implementation "com.jakewharton.timber:timber:4.7.1"
-    implementation ("android.arch.work:work-rxjava2:1.0.0-rc02") {
+    implementation ("androidx.work:work-rxjava2:2.0.0-rc01") {
         exclude group: "io.reactivex.rxjava2"
     }
     implementation "androidx.biometric:biometric:1.0.0-alpha03"
