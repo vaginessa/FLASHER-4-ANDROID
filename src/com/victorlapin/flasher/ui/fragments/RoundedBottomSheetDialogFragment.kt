@@ -38,7 +38,7 @@ abstract class RoundedBottomSheetDialogFragment : BottomSheetDialogFragment(),
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog =
         BottomSheetDialog(requireContext(), theme)
 
-    override fun onDismiss(dialog: DialogInterface?) {
+    override fun onDismiss(dialog: DialogInterface) {
         super.onDismiss(dialog)
         dismissListener()
     }
