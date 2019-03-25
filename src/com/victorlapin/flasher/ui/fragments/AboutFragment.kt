@@ -15,7 +15,7 @@ import com.victorlapin.flasher.view.AboutFragmentView
 import kotlinx.android.synthetic.main.fragment_list.*
 import kotlinx.android.synthetic.main.include_toolbar.*
 import org.koin.android.ext.android.get
-import org.koin.androidx.scope.getFragmentScope
+import org.koin.androidx.scope.currentScope
 
 class AboutFragment : BaseFragment(), AboutFragmentView {
     override val layoutRes = R.layout.fragment_list
@@ -24,7 +24,7 @@ class AboutFragment : BaseFragment(), AboutFragmentView {
     lateinit var presenter: AboutFragmentPresenter
 
     @ProvidePresenter
-    fun providePresenter() = getFragmentScope().get<AboutFragmentPresenter>()
+    fun providePresenter() = currentScope.get<AboutFragmentPresenter>()
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)

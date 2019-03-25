@@ -10,7 +10,7 @@ import com.victorlapin.flasher.ui.Biometric
 import com.victorlapin.flasher.ui.fragments.AboutFragment
 import com.victorlapin.flasher.ui.fragments.SettingsGlobalFragment
 import com.victorlapin.flasher.view.MainActivityView
-import org.koin.androidx.scope.getActivityScope
+import org.koin.androidx.scope.currentScope
 import ru.terrakok.cicerone.android.support.SupportAppNavigator
 import ru.terrakok.cicerone.commands.Command
 
@@ -21,7 +21,7 @@ class MainActivity : BaseActivity(), MainActivityView {
     lateinit var presenter: MainActivityPresenter
 
     @ProvidePresenter
-    fun providePresenter() = getActivityScope().get<MainActivityPresenter>()
+    fun providePresenter() = currentScope.get<MainActivityPresenter>()
 
     override fun askFingerprint() {
         Biometric.askFingerprint(

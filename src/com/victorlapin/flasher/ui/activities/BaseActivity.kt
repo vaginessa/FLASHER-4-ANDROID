@@ -12,7 +12,7 @@ import com.victorlapin.flasher.setNavigator
 import kotlinx.android.synthetic.main.include_toolbar.*
 import org.koin.android.ext.android.inject
 import org.koin.androidx.scope.bindScope
-import org.koin.androidx.scope.getActivityScope
+import org.koin.androidx.scope.currentScope
 import ru.terrakok.cicerone.NavigatorHolder
 import ru.terrakok.cicerone.android.support.SupportAppNavigator
 
@@ -28,7 +28,7 @@ abstract class BaseActivity : MvpAppCompatActivity(), LifecycleObserver {
     private val mHandler = Handler()
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        bindScope(getActivityScope())
+        bindScope(currentScope)
         mCurrentTheme = mSettings.theme
         setTheme(mCurrentTheme)
         super.onCreate(savedInstanceState)

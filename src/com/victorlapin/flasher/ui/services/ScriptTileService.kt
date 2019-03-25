@@ -8,9 +8,13 @@ import com.victorlapin.flasher.presenter.ScriptTileServicePresenter
 import com.victorlapin.flasher.ui.activities.RebootDialogActivity
 import com.victorlapin.flasher.view.ScriptTileServiceView
 import org.koin.android.ext.android.getKoin
+import org.koin.core.qualifier.named
 
 class ScriptTileService : TileService(), ScriptTileServiceView {
-    private val mScope = getKoin().getOrCreateScopeWithType<ScriptTileService>("")
+    private val mScope = getKoin().getOrCreateScope(
+        scopeId = "ScriptTileService",
+        qualifier = named<ScriptTileService>()
+    )
     private val mPresenter by mScope.inject<ScriptTileServicePresenter>()
 
     override fun onClick() {

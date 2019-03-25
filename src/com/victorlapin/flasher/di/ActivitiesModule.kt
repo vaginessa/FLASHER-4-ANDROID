@@ -10,26 +10,27 @@ import com.victorlapin.flasher.ui.activities.RebootDialogActivity
 import com.victorlapin.flasher.ui.fragments.AboutFragment
 import com.victorlapin.flasher.ui.fragments.HomeFragment
 import com.victorlapin.flasher.ui.fragments.ScheduleFragment
+import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
 val activitiesModule = module {
-    scope<MainActivity> {
+    scope(named<MainActivity>()) {
         scoped { MainActivityPresenter(get(), get(), get()) }
     }
 
-    scope<HomeFragment> {
+    scope(named<HomeFragment>()) {
         scoped { DefaultHomePresenter(get(), get(), get(), get()) }
     }
 
-    scope<ScheduleFragment> {
+    scope(named<ScheduleFragment>()) {
         scoped { ScheduleHomePresenter(get(), get(), get(), get(), get()) }
     }
 
-    scope<AboutFragment> {
+    scope(named<AboutFragment>()) {
         scoped { AboutFragmentPresenter(get(), get()) }
     }
 
-    scope<RebootDialogActivity> {
+    scope(named<RebootDialogActivity>()) {
         scoped { RebootDialogActivityPresenter(get(), get()) }
     }
 }

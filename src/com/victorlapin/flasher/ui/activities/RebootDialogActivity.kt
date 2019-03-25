@@ -13,20 +13,20 @@ import com.victorlapin.flasher.ui.Biometric
 import com.victorlapin.flasher.view.RebootDialogActivityView
 import org.koin.android.ext.android.inject
 import org.koin.androidx.scope.bindScope
-import org.koin.androidx.scope.getActivityScope
+import org.koin.androidx.scope.currentScope
 
 class RebootDialogActivity : MvpAppCompatActivity(), RebootDialogActivityView {
     @InjectPresenter
     lateinit var presenter: RebootDialogActivityPresenter
 
     @ProvidePresenter
-    fun providePresenter() = getActivityScope().get<RebootDialogActivityPresenter>()
+    fun providePresenter() = currentScope.get<RebootDialogActivityPresenter>()
 
     private val mServices by inject<ServicesManager>()
     private val mSettings by inject<SettingsManager>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        bindScope(getActivityScope())
+        bindScope(currentScope)
         val theme = when (mSettings.theme) {
             R.style.AppTheme_Light -> R.style.AppTheme_Transparent_Light
             R.style.AppTheme_Light_Pixel -> R.style.AppTheme_Transparent_Light_Pixel

@@ -27,10 +27,7 @@ class App : Application() {
         super.onCreate()
         startKoin {
             androidContext(this@App)
-            logger(
-                level = Level.DEBUG,
-                logger = if (BuildConfig.DEBUG) AndroidLogger() else EmptyLogger()
-            )
+            logger(if (BuildConfig.DEBUG) AndroidLogger(Level.DEBUG) else EmptyLogger())
             modules(allModules)
         }
         createNotificationChannels()
