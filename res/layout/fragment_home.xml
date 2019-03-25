@@ -65,6 +65,7 @@
         android:layout_width="wrap_content"
         android:layout_height="@dimen/fab_size"
         android:text="@string/action_add"
+        android:textColor="@android:color/white"
         app:cornerRadius="@dimen/fab_corner_radius"
         app:icon="@drawable/plus"
         app:iconTint="@android:color/white"

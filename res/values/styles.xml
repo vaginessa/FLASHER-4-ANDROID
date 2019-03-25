@@ -1,15 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <style name="Base.Light" parent="Theme.MaterialComponents.Light.NoActionBar">
-        <item name="colorPrimary">@android:color/transparent</item>
-        <item name="colorPrimaryDark">@android:color/transparent</item>
+        <item name="colorPrimary">@*android:color/accent_device_default_light</item>
+        <item name="colorPrimaryDark">@*android:color/accent_device_default_light</item>
         <item name="colorAccent">@*android:color/accent_device_default_light</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:windowLightStatusBar">true</item>
         <item name="android:timePickerDialogTheme">@style/TimePickerDialog.Light</item>
-        <!--Preferences-->
-        <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
-        <item name="android:activatedBackgroundIndicator">?android:attr/selectableItemBackground</item>
         <!--Dialogs-->
         <item name="md_corner_radius">@dimen/margin_8</item>
         <item name="md_color_content">?android:attr/textColorSecondary</item>
@@ -18,15 +15,12 @@
     </style>
 
     <style name="Base.Dark" parent="Theme.MaterialComponents.NoActionBar">
-        <item name="colorPrimary">@android:color/transparent</item>
-        <item name="colorPrimaryDark">@android:color/transparent</item>
+        <item name="colorPrimary">@*android:color/accent_device_default_dark</item>
+        <item name="colorPrimaryDark">@*android:color/accent_device_default_dark</item>
         <item name="colorAccent">@*android:color/accent_device_default_dark</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:windowLightStatusBar">false</item>
         <item name="android:timePickerDialogTheme">@style/TimePickerDialog.Dark</item>
-        <!--Preferences-->
-        <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
-        <item name="android:activatedBackgroundIndicator">?android:attr/selectableItemBackground</item>
         <!--Dialogs-->
         <item name="md_corner_radius">@dimen/margin_8</item>
         <item name="md_color_content">?android:attr/textColorSecondary</item>
@@ -72,18 +66,24 @@
     <style name="AppTheme.Oss" parent="Base.AppTheme.Oss" />
 
     <style name="AppTheme.Light.Pixel" parent="AppTheme.Light">
+        <item name="colorPrimary">@color/pixel</item>
+        <item name="colorPrimaryDark">@color/pixel</item>
         <item name="colorAccent">@color/pixel</item>
         <item name="navigation_color_selected">@color/pixel</item>
         <item name="android:timePickerDialogTheme">@style/TimePickerDialog.Light.Pixel</item>
     </style>
 
     <style name="AppTheme.Dark.Pixel" parent="AppTheme.Dark">
+        <item name="colorPrimary">@color/pixel</item>
+        <item name="colorPrimaryDark">@color/pixel</item>
         <item name="colorAccent">@color/pixel</item>
         <item name="navigation_color_selected">@color/pixel</item>
         <item name="android:timePickerDialogTheme">@style/TimePickerDialog.Dark.Pixel</item>
     </style>
 
     <style name="AppTheme.Black.Pixel" parent="AppTheme.Black">
+        <item name="colorPrimary">@color/pixel</item>
+        <item name="colorPrimaryDark">@color/pixel</item>
         <item name="colorAccent">@color/pixel</item>
         <item name="navigation_color_selected">@color/pixel</item>
         <item name="android:timePickerDialogTheme">@style/TimePickerDialog.Dark.Pixel</item>
