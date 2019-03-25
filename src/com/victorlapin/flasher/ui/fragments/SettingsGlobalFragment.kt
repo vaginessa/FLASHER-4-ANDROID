@@ -44,7 +44,7 @@ class SettingsGlobalFragment : PreferenceFragmentCompat() {
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         addPreferencesFromResource(R.xml.preferences_global)
 
-        val themePreference = findPreference(SettingsManager.KEY_THEME)
+        val themePreference = findPreference<Preference>(SettingsManager.KEY_THEME)
         val entries = listOf(
             mResources.getString(R.string.theme_light),
             mResources.getString(R.string.theme_light_pixel),
@@ -63,7 +63,7 @@ class SettingsGlobalFragment : PreferenceFragmentCompat() {
         )
         val initialSelection = values.indexOf(mSettings.theme.toString())
 
-        themePreference.setOnPreferenceClickListener {
+        themePreference!!.setOnPreferenceClickListener {
             MaterialDialog(context!!).show {
                 title(R.string.pref_title_theme)
                 listItemsSingleChoice(
@@ -81,17 +81,17 @@ class SettingsGlobalFragment : PreferenceFragmentCompat() {
             true
         }
 
-        findPreference(SettingsManager.KEY_ABOUT).setOnPreferenceClickListener {
+        findPreference<Preference>(SettingsManager.KEY_ABOUT)!!.setOnPreferenceClickListener {
             (activity as MainActivity).presenter.selectAbout()
             true
         }
 
-        findPreference(SettingsManager.KEY_DELETE_DEPLOYED_SCRIPT).setOnPreferenceClickListener {
+        findPreference<Preference>(SettingsManager.KEY_DELETE_DEPLOYED_SCRIPT)!!.setOnPreferenceClickListener {
             mScriptInteractor.deleteScript().subscribe()
             true
         }
 
-        findPreference(SettingsManager.KEY_CLEAR_SCHEDULE).setOnPreferenceClickListener {
+        findPreference<Preference>(SettingsManager.KEY_CLEAR_SCHEDULE)!!.setOnPreferenceClickListener {
             mSettings.apply {
                 mAlarmInteractor.cancelAlarm()
                     .doOnComplete {
@@ -108,8 +108,9 @@ class SettingsGlobalFragment : PreferenceFragmentCompat() {
             true
         }
 
-        val backupsToKeepPreference = findPreference(SettingsManager.KEY_BACKUPS_TO_KEEP)
-        backupsToKeepPreference.summary = mSettings.backupsToKeep.toString()
+        val backupsToKeepPreference =
+            findPreference<Preference>(SettingsManager.KEY_BACKUPS_TO_KEEP)
+        backupsToKeepPreference!!.summary = mSettings.backupsToKeep.toString()
         backupsToKeepPreference.setOnPreferenceClickListener { pref ->
             MaterialDialog(context!!)
                 .title(R.string.pref_title_backups_to_keep)
@@ -129,7 +130,7 @@ class SettingsGlobalFragment : PreferenceFragmentCompat() {
             true
         }
 
-        mBackupsPathPreference = findPreference(SettingsManager.KEY_BACKUPS_PATH)
+        mBackupsPathPreference = findPreference(SettingsManager.KEY_BACKUPS_PATH)!!
         mBackupsPathPreference.summary =
             if (mSettings.backupsPath != null) mSettings.backupsPath else {
                 val spannable =
@@ -150,8 +151,8 @@ class SettingsGlobalFragment : PreferenceFragmentCompat() {
             true
         }
 
-        val logPreference = findPreference(SettingsManager.KEY_ENABLE_FILE_LOG)
-        logPreference.summary = mResources.getString(R.string.pref_summary_enable_file_log)
+        val logPreference = findPreference<SwitchPreference>(SettingsManager.KEY_ENABLE_FILE_LOG)
+        logPreference!!.summary = mResources.getString(R.string.pref_summary_enable_file_log)
             .format(Const.LOG_FILENAME)
         logPreference.setOnPreferenceChangeListener { it, newValue ->
             val b = newValue as Boolean
@@ -172,13 +173,13 @@ class SettingsGlobalFragment : PreferenceFragmentCompat() {
         }
 
         val isFPAvailable = mServices.isFingerprintAvailable()
-        val fpPreference = findPreference(SettingsManager.KEY_ASK_FINGERPRINT_ON_LAUNCH)
-                as SwitchPreference
-        val fpRebootPreference = findPreference(SettingsManager.KEY_ASK_FINGERPRINT_TO_REBOOT)
-                as SwitchPreference
+        val fpPreference =
+            findPreference<SwitchPreference>(SettingsManager.KEY_ASK_FINGERPRINT_ON_LAUNCH)
+        val fpRebootPreference =
+            findPreference<SwitchPreference>(SettingsManager.KEY_ASK_FINGERPRINT_TO_REBOOT)
         if (isFPAvailable) {
-            fpPreference.isEnabled = true
-            fpRebootPreference.isEnabled = true
+            fpPreference!!.isEnabled = true
+            fpRebootPreference!!.isEnabled = true
             fpPreference.setOnPreferenceChangeListener { it, newValue ->
                 val b = newValue as Boolean
                 if (b) {
@@ -212,10 +213,10 @@ class SettingsGlobalFragment : PreferenceFragmentCompat() {
             }
         } else {
             mSettings.askFingerprintOnLaunch = false
-            fpPreference.isChecked = false
+            fpPreference!!.isChecked = false
             fpPreference.isEnabled = false
             mSettings.askFingerprintToReboot = false
-            fpRebootPreference.isChecked = false
+            fpRebootPreference!!.isChecked = false
             fpRebootPreference.isEnabled = false
         }
     }
