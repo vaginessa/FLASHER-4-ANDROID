@@ -1,9 +1,9 @@
 package com.victorlapin.flasher.ui.fragments
 
-import android.app.TimePickerDialog
 import android.os.Bundle
 import android.text.InputType
 import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.datetime.timePicker
 import com.afollestad.materialdialogs.input.input
 import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
 import com.victorlapin.flasher.R
@@ -91,20 +91,28 @@ class ScheduleFragment : HomeFragment() {
     }
 
     override fun showSelectTimeDialog(defHourOfDay: Int, defMinute: Int) {
-        val callback = TimePickerDialog.OnTimeSetListener { _, hourOfDay, minute ->
-            (presenter as ScheduleHomePresenter).onTimeSelected(hourOfDay, minute)
-            lbl_time.text = mTimeFormatter.format(Date(mSettings.scheduleTime))
-            chk_enable.isEnabled = true
-            updateNextRun()
+        val defCal = Calendar.getInstance().apply {
+            set(Calendar.HOUR_OF_DAY, defHourOfDay)
+            set(Calendar.MINUTE, defMinute)
         }
-        TimePickerDialog(
-            context!!,
-            callback,
-            defHourOfDay,
-            defMinute,
-            android.text.format.DateFormat.is24HourFormat(context)
-        )
-            .show()
+        MaterialDialog(context!!).show {
+            lifecycleOwner(this@ScheduleFragment)
+            timePicker(
+                currentTime = defCal,
+                show24HoursView = android.text.format.DateFormat.is24HourFormat(context)
+            ) { _, datetime ->
+                (presenter as ScheduleHomePresenter).onTimeSelected(
+                    datetime.get(Calendar.HOUR_OF_DAY),
+                    datetime.get(Calendar.MINUTE)
+                )
+                this@ScheduleFragment.lbl_time.text =
+                    mTimeFormatter.format(Date(mSettings.scheduleTime))
+                this@ScheduleFragment.chk_enable.isEnabled = true
+                updateNextRun()
+            }
+            positiveButton(res = android.R.string.ok)
+            negativeButton(res = android.R.string.cancel)
+        }
     }
 
     override fun showSelectIntervalDialog(defInterval: Int) {
