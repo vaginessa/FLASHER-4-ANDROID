@@ -124,6 +124,7 @@ dependencies {
     implementation "com.afollestad.material-dialogs:input:$version_dialogs"
     implementation "com.afollestad.material-dialogs:files:$version_dialogs"
     implementation "com.afollestad.material-dialogs:lifecycle:$version_dialogs"
+    implementation "com.afollestad.material-dialogs:datetime:$version_dialogs"
     implementation ("com.afollestad:assent:2.2.3") {
         exclude group: "com.jakewharton.timber"
         exclude group: "androidx.appcompat"
