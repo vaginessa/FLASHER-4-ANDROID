@@ -6,7 +6,6 @@
         <item name="colorAccent">@*android:color/accent_device_default_light</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:windowLightStatusBar">true</item>
-        <item name="android:timePickerDialogTheme">@style/TimePickerDialog.Light</item>
         <!--Dialogs-->
         <item name="md_corner_radius">@dimen/margin_8</item>
         <item name="md_color_content">?android:attr/textColorSecondary</item>
@@ -20,7 +19,6 @@
         <item name="colorAccent">@*android:color/accent_device_default_dark</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:windowLightStatusBar">false</item>
-        <item name="android:timePickerDialogTheme">@style/TimePickerDialog.Dark</item>
         <!--Dialogs-->
         <item name="md_corner_radius">@dimen/margin_8</item>
         <item name="md_color_content">?android:attr/textColorSecondary</item>
@@ -70,7 +68,6 @@
         <item name="colorPrimaryDark">@color/pixel</item>
         <item name="colorAccent">@color/pixel</item>
         <item name="navigation_color_selected">@color/pixel</item>
-        <item name="android:timePickerDialogTheme">@style/TimePickerDialog.Light.Pixel</item>
     </style>
 
     <style name="AppTheme.Dark.Pixel" parent="AppTheme.Dark">
@@ -78,7 +75,6 @@
         <item name="colorPrimaryDark">@color/pixel</item>
         <item name="colorAccent">@color/pixel</item>
         <item name="navigation_color_selected">@color/pixel</item>
-        <item name="android:timePickerDialogTheme">@style/TimePickerDialog.Dark.Pixel</item>
     </style>
 
     <style name="AppTheme.Black.Pixel" parent="AppTheme.Black">
@@ -86,7 +82,6 @@
         <item name="colorPrimaryDark">@color/pixel</item>
         <item name="colorAccent">@color/pixel</item>
         <item name="navigation_color_selected">@color/pixel</item>
-        <item name="android:timePickerDialogTheme">@style/TimePickerDialog.Dark.Pixel</item>
     </style>
 
     <style name="AppTheme.Transparent.Light" parent="AppTheme.Light">
@@ -152,35 +147,5 @@
     <style name="BottomSheetDialog.Light" parent="Base.BottomSheetDialog.Light" />
 
     <style name="BottomSheetDialog.Dark" parent="Base.BottomSheetDialog.Dark" />
-
-    <style name="TimePickerDialog.Light" parent="@style/Theme.MaterialComponents.Light.Dialog.Alert">
-        <item name="android:windowBackground">?android:attr/colorBackground</item>
-        <item name="colorAccent">@*android:color/accent_device_default_light</item>
-        <item name="android:buttonBarPositiveButtonStyle">
-            @style/Widget.MaterialComponents.Button.TextButton.Dialog
-        </item>
-        <item name="android:buttonBarNegativeButtonStyle">
-            @style/Widget.MaterialComponents.Button.TextButton.Dialog
-        </item>
-    </style>
-
-    <style name="TimePickerDialog.Dark" parent="@style/Theme.MaterialComponents.Dialog.Alert">
-        <item name="android:windowBackground">?android:attr/colorBackground</item>
-        <item name="colorAccent">@*android:color/accent_device_default_dark</item>
-        <item name="android:buttonBarPositiveButtonStyle">
-            @style/Widget.MaterialComponents.Button.TextButton.Dialog
-        </item>
-        <item name="android:buttonBarNegativeButtonStyle">
-            @style/Widget.MaterialComponents.Button.TextButton.Dialog
-        </item>
-    </style>
-
-    <style name="TimePickerDialog.Light.Pixel" parent="TimePickerDialog.Light">
-        <item name="colorAccent">@color/pixel</item>
-    </style>
-
-    <style name="TimePickerDialog.Dark.Pixel" parent="TimePickerDialog.Dark">
-        <item name="colorAccent">@color/pixel</item>
-    </style>
 
 </resources>
