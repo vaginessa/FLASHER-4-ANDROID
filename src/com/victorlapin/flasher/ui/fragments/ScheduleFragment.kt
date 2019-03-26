@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.text.InputType
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.input.input
+import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
 import com.victorlapin.flasher.R
 import com.victorlapin.flasher.manager.SettingsManager
 import com.victorlapin.flasher.model.database.entity.Chain
@@ -107,9 +108,10 @@ class ScheduleFragment : HomeFragment() {
     }
 
     override fun showSelectIntervalDialog(defInterval: Int) {
-        MaterialDialog(context!!)
-            .title(res = R.string.schedule_interval_title)
-            .input(
+        MaterialDialog(context!!).show {
+            lifecycleOwner(this@ScheduleFragment)
+            title(res = R.string.schedule_interval_title)
+            input(
                 inputType = InputType.TYPE_CLASS_NUMBER,
                 prefill = defInterval.toString()
             ) { _, input ->
@@ -120,9 +122,9 @@ class ScheduleFragment : HomeFragment() {
                     mResources.getQuantityString(R.plurals.schedule_interval, interval, interval)
                 updateNextRun()
             }
-            .positiveButton(res = android.R.string.ok)
-            .negativeButton(res = android.R.string.cancel)
-            .show()
+            positiveButton(res = android.R.string.ok)
+            negativeButton(res = android.R.string.cancel)
+        }
     }
 
     private fun updateNextRun() = (presenter as ScheduleHomePresenter).updateNextRun()

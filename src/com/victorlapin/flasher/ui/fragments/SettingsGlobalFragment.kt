@@ -17,6 +17,7 @@ import com.afollestad.assent.askForPermissions
 import com.afollestad.assent.runWithPermissions
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.input.input
+import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
 import com.afollestad.materialdialogs.list.listItemsSingleChoice
 import com.victorlapin.flasher.Const
 import com.victorlapin.flasher.R
@@ -65,6 +66,7 @@ class SettingsGlobalFragment : PreferenceFragmentCompat() {
 
         themePreference!!.setOnPreferenceClickListener {
             MaterialDialog(context!!).show {
+                lifecycleOwner(this@SettingsGlobalFragment)
                 title(R.string.pref_title_theme)
                 listItemsSingleChoice(
                     items = entries,
@@ -112,9 +114,10 @@ class SettingsGlobalFragment : PreferenceFragmentCompat() {
             findPreference<Preference>(SettingsManager.KEY_BACKUPS_TO_KEEP)
         backupsToKeepPreference!!.summary = mSettings.backupsToKeep.toString()
         backupsToKeepPreference.setOnPreferenceClickListener { pref ->
-            MaterialDialog(context!!)
-                .title(R.string.pref_title_backups_to_keep)
-                .input(prefill = mSettings.backupsToKeep.toString()) { _, text ->
+            MaterialDialog(context!!).show {
+                lifecycleOwner(this@SettingsGlobalFragment)
+                title(R.string.pref_title_backups_to_keep)
+                input(prefill = mSettings.backupsToKeep.toString()) { _, text ->
                     try {
                         val i = text.toString().trim().toInt()
                         if (i > 0) {
@@ -124,9 +127,9 @@ class SettingsGlobalFragment : PreferenceFragmentCompat() {
                     } catch (ignore: Exception) {
                     }
                 }
-                .positiveButton(android.R.string.ok)
-                .negativeButton(android.R.string.cancel)
-                .show()
+                positiveButton(android.R.string.ok)
+                negativeButton(android.R.string.cancel)
+            }
             true
         }
 

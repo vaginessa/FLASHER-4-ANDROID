@@ -16,6 +16,7 @@ import com.afollestad.materialdialogs.files.FileFilter
 import com.afollestad.materialdialogs.files.fileChooser
 import com.afollestad.materialdialogs.files.folderChooser
 import com.afollestad.materialdialogs.input.input
+import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
 import com.afollestad.materialdialogs.list.listItemsMultiChoice
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
@@ -185,18 +186,19 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
             preselected.forEach { i.add(mWipePartitions.indexOf(it)) }
             i.toIntArray()
         } else intArrayOf()
-        MaterialDialog(context!!)
-            .title(res = R.string.command_wipe)
-            .listItemsMultiChoice(
+        MaterialDialog(context!!).show {
+            lifecycleOwner(this@HomeFragment)
+            title(res = R.string.command_wipe)
+            listItemsMultiChoice(
                 items = mWipePartitions,
                 initialSelection = indices
             ) { _, _, items ->
                 command.arg1 = items.toSet().toString().flatten()
                 presenter.onCommandUpdated(command)
             }
-            .positiveButton(res = android.R.string.ok)
-            .negativeButton(res = android.R.string.cancel)
-            .show()
+            positiveButton(res = android.R.string.ok)
+            negativeButton(res = android.R.string.cancel)
+        }
     }
 
     override fun showBackupDialog(command: Command) {
@@ -206,18 +208,19 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
             preselected.forEach { i.add(mBackupPartitions.indexOf(it)) }
             i.toIntArray()
         } else intArrayOf()
-        MaterialDialog(context!!)
-            .title(res = R.string.command_backup)
-            .listItemsMultiChoice(
+        MaterialDialog(context!!).show {
+            lifecycleOwner(this@HomeFragment)
+            title(res = R.string.command_backup)
+            listItemsMultiChoice(
                 items = mBackupPartitions,
                 initialSelection = indices
             ) { _, _, items ->
                 command.arg1 = items.toSet().toString().flatten()
                 presenter.onCommandUpdated(command)
             }
-            .positiveButton(res = android.R.string.ok)
-            .negativeButton(res = android.R.string.cancel)
-            .show()
+            positiveButton(res = android.R.string.ok)
+            negativeButton(res = android.R.string.cancel)
+        }
     }
 
     override fun showFlashFileDialog(command: Command, startPath: String?) =
@@ -228,8 +231,9 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
                     it.isDirectory ||
                             it.name.endsWith(".zip", true)
                 }
-                MaterialDialog(context!!)
-                    .fileChooser(
+                MaterialDialog(context!!).show {
+                    lifecycleOwner(this@HomeFragment)
+                    fileChooser(
                         initialDirectory = File(initialPath),
                         filter = filter,
                         emptyTextRes = R.string.folder_empty
@@ -239,36 +243,39 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
                         presenter.onCommandUpdated(command)
                         presenter.onFileSelected(file)
                     }
-                    .positiveButton(res = android.R.string.ok)
-                    .negativeButton(res = android.R.string.cancel)
-                    .show()
+                    positiveButton(res = android.R.string.ok)
+                    negativeButton(res = android.R.string.cancel)
+                }
             } else {
-                MaterialDialog(context!!)
-                    .title(res = R.string.app_name)
-                    .message(res = R.string.permission_denied_storage)
-                    .positiveButton(res = android.R.string.ok)
-                    .show()
+                MaterialDialog(context!!).show {
+                    lifecycleOwner(this@HomeFragment)
+                    title(res = R.string.app_name)
+                    message(res = R.string.permission_denied_storage)
+                    positiveButton(res = android.R.string.ok)
+                }
             }
         }
 
     override fun showEditMaskDialog(command: Command) {
-        MaterialDialog(context!!)
-            .title(res = R.string.enter_mask)
-            .input(prefill = command.arg1) { _, input ->
+        MaterialDialog(context!!).show {
+            lifecycleOwner(this@HomeFragment)
+            title(res = R.string.enter_mask)
+            input(prefill = command.arg1) { _, input ->
                 command.arg1 = if (input.isEmpty()) null else input.toString()
                 presenter.onCommandUpdated(command)
             }
-            .positiveButton(res = android.R.string.ok)
-            .negativeButton(res = android.R.string.cancel)
-            .show()
+            positiveButton(res = android.R.string.ok)
+            negativeButton(res = android.R.string.cancel)
+        }
     }
 
     override fun showSelectFolderDialog(command: Command, startPath: String?) =
         askForPermissions(Permission.WRITE_EXTERNAL_STORAGE) { result ->
             if (result.isAllGranted(Permission.WRITE_EXTERNAL_STORAGE)) {
                 val initialPath = startPath ?: Const.FALLBACK_FOLDER
-                MaterialDialog(context!!)
-                    .folderChooser(
+                MaterialDialog(context!!).show {
+                    lifecycleOwner(this@HomeFragment)
+                    folderChooser(
                         initialDirectory = File(initialPath),
                         emptyTextRes = R.string.folder_empty
                     ) { _, folder ->
@@ -276,15 +283,16 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
                         presenter.onCommandUpdated(command)
                         presenter.onFileSelected(folder)
                     }
-                    .positiveButton(res = android.R.string.ok)
-                    .negativeButton(res = android.R.string.cancel)
-                    .show()
+                    positiveButton(res = android.R.string.ok)
+                    negativeButton(res = android.R.string.cancel)
+                }
             } else {
-                MaterialDialog(context!!)
-                    .title(res = R.string.app_name)
-                    .message(res = R.string.permission_denied_storage)
-                    .positiveButton(res = android.R.string.ok)
-                    .show()
+                MaterialDialog(context!!).show {
+                    lifecycleOwner(this@HomeFragment)
+                    title(res = R.string.app_name)
+                    message(res = R.string.permission_denied_storage)
+                    positiveButton(res = android.R.string.ok)
+                }
             }
         }
 
@@ -339,22 +347,24 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
     override fun showExportDialog() =
         askForPermissions(Permission.WRITE_EXTERNAL_STORAGE) { result ->
             if (result.isAllGranted(Permission.WRITE_EXTERNAL_STORAGE)) {
-                MaterialDialog(context!!)
-                    .title(res = R.string.enter_file_name)
-                    .input { _, input ->
+                MaterialDialog(context!!).show {
+                    lifecycleOwner(this@HomeFragment)
+                    title(res = R.string.enter_file_name)
+                    input { _, input ->
                         val fileName = if (input.endsWith(".json", true))
                             input.toString() else "$input.json"
                         presenter.exportCommands(fileName)
                     }
-                    .positiveButton(res = android.R.string.ok)
-                    .negativeButton(res = android.R.string.cancel)
-                    .show()
+                    positiveButton(res = android.R.string.ok)
+                    negativeButton(res = android.R.string.cancel)
+                }
             } else {
-                MaterialDialog(context!!)
-                    .title(res = R.string.app_name)
-                    .message(res = R.string.permission_denied_storage)
-                    .positiveButton(res = android.R.string.ok)
-                    .show()
+                MaterialDialog(context!!).show {
+                    lifecycleOwner(this@HomeFragment)
+                    title(res = R.string.app_name)
+                    message(res = R.string.permission_denied_storage)
+                    positiveButton(res = android.R.string.ok)
+                }
             }
         }
 
@@ -365,23 +375,25 @@ open class HomeFragment : BaseFragment(), HomeFragmentView {
                     it.isDirectory ||
                             it.name.endsWith(".json", true)
                 }
-                MaterialDialog(context!!)
-                    .fileChooser(
+                MaterialDialog(context!!).show {
+                    lifecycleOwner(this@HomeFragment)
+                    fileChooser(
                         initialDirectory = File(Const.APP_FOLDER),
                         filter = filter,
                         emptyTextRes = R.string.folder_empty
                     ) { _, file ->
                         presenter.importCommands(file.absolutePath)
                     }
-                    .positiveButton(res = android.R.string.ok)
-                    .negativeButton(res = android.R.string.cancel)
-                    .show()
+                    positiveButton(res = android.R.string.ok)
+                    negativeButton(res = android.R.string.cancel)
+                }
             } else {
-                MaterialDialog(context!!)
-                    .title(res = R.string.app_name)
-                    .message(res = R.string.permission_denied_storage)
-                    .positiveButton(res = android.R.string.ok)
-                    .show()
+                MaterialDialog(context!!).show {
+                    lifecycleOwner(this@HomeFragment)
+                    title(res = R.string.app_name)
+                    message(res = R.string.permission_denied_storage)
+                    positiveButton(res = android.R.string.ok)
+                }
             }
         }
 

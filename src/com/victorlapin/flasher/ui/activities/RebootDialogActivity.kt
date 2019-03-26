@@ -2,6 +2,7 @@ package com.victorlapin.flasher.ui.activities
 
 import android.os.Bundle
 import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
 import com.arellomobile.mvp.MvpAppCompatActivity
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
@@ -39,16 +40,17 @@ class RebootDialogActivity : MvpAppCompatActivity(), RebootDialogActivityView {
     }
 
     override fun showRebootDialog() {
-        MaterialDialog(this)
-            .title(res = R.string.app_name)
-            .message(res = R.string.reboot)
-            .positiveButton(res = android.R.string.yes) {
+        MaterialDialog(this).show {
+            lifecycleOwner(this@RebootDialogActivity)
+            title(res = R.string.app_name)
+            message(res = R.string.reboot)
+            positiveButton(res = android.R.string.yes) {
                 presenter.onRebootRequested()
             }
-            .negativeButton(res = android.R.string.no) {
+            negativeButton(res = android.R.string.no) {
                 finish()
             }
-            .show()
+        }
     }
 
     override fun askFingerprint() {
